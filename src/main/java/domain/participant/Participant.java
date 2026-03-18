@@ -46,4 +46,8 @@ public abstract class Participant {
     public void updateBalance(int betting){
         this.balance = new Balance(balance.getBalance() + betting);
     }
+
+    public int getBalance() {
+        return balance.getBalance();
+    }
 }
