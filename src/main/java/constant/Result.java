@@ -26,25 +26,31 @@ public enum Result {
         if (dealer.isBust()) {
             return Result.WIN;
         }
+        Result blackjackResult = determineByBlackjack(dealer, player);
+        if (blackjackResult != null) {
+            return blackjackResult;
+        }
+        return determineByScore(dealer, player);
+    }
 
-        boolean dealerBlackjack = dealer.isBlackjack();
-        boolean playerBlackjack = player.isBlackjack();
-        if (dealerBlackjack && !playerBlackjack) {
+    private static Result determineByBlackjack(Dealer dealer, Player player) {
+        if (dealer.isBlackjack() && !player.isBlackjack()) {
             return Result.LOSE;
         }
-        if (dealerBlackjack && playerBlackjack) {
+        if (dealer.isBlackjack() && player.isBlackjack()) {
             return Result.PUSH;
         }
-        if (playerBlackjack) {
+        if (player.isBlackjack()) {
             return Result.BLACKJACK;
         }
+        return null; // blackjack 여부로 결정을 할 수 없을 때, null을 발생시킵니다.
+    }
 
-        int dealerScore = dealer.calculateScore();
-        int playerScore = player.calculateScore();
-        if (dealerScore == playerScore) {
+    private static Result determineByScore(Dealer dealer, Player player) {
+        if (dealer.calculateScore() == player.calculateScore()) {
             return Result.PUSH;
         }
-        if (dealerScore > playerScore) {
+        if (dealer.calculateScore() > player.calculateScore()) {
             return Result.LOSE;
         }
         return Result.WIN;
