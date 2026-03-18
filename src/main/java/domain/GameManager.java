@@ -1,7 +1,6 @@
 package domain;
 
 import domain.card.CardsSnapshot;
-import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
@@ -31,21 +30,11 @@ public class GameManager {
         }
     }
 
-    public CardsSnapshot getStartingCard(Dealer dealer) {
-        return dealer.startingHandInfo();
-    }
-
     public CardsSnapshot getCardsResult(Participant participant) {
         return participant.handInfo();
     }
 
-    public void dealStartingCards(Participant participant) {
-        for (int i = 0; i < STARTING_CARD_COUNT; i++) {
-            participant.add(deck.pop());
-        }
-    }
-
-    public void dealStartingCards(Participants participants) {
+    public void dealInitialCards(Participants participants) {
         participants.distributeCardsToAll(deck, STARTING_CARD_COUNT);
     }
 }

@@ -2,24 +2,19 @@ package controller;
 
 import domain.Command;
 import domain.GameManager;
-import domain.Referee;
 import domain.betting.BettingAmount;
 import domain.betting.BettingAmountParser;
 import domain.betting.BettingTable;
 import domain.betting.ParticipantsProfitResult;
 import domain.betting.PlayerBetting;
 import domain.betting.PlayerBettingResult;
-import domain.card.CardsSnapshot;
-import domain.dto.GameResultDto;
 import domain.dto.InitialDealingResult;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
 import domain.participant.PlayerParser;
 import domain.participant.Players;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -42,7 +37,6 @@ public class GameController {
 
         readyPhase(participants);
         playPhase(dealer, players);
-        resultPhase(dealer, players);
         bettingResultPhase(bettingTable, participants);
     }
 
@@ -69,36 +63,13 @@ public class GameController {
         return BettingAmountParser.parse(rawBettingAmount);
     }
 
-    private void readyPhase(Dealer dealer, Players players) {
-        gameManager.dealStartingCards(dealer);
-        gameManager.dealCardTo(players, 2);
-
-        Map<String, CardsSnapshot> result = new LinkedHashMap<>();
-        result.put(dealer.name(), gameManager.getStartingCard(dealer));
-        for (Player player : players) {
-            result.put(player.name(), gameManager.getCardsResult(player));
-        }
-
-        outputView.printGameInitResult(result);
-        outputView.printNewLine();
-    }
-
     private void readyPhase(Participants participants) {
-        gameManager.dealStartingCards(participants);
+        gameManager.dealInitialCards(participants);
 
         InitialDealingResult initialDealingResult = InitialDealingResult.from(participants);
         outputView.printInitialDealingResult(initialDealingResult);
     }
 
-    private void resultPhase(Dealer dealer, Players players) {
-        Referee referee = new Referee();
-        Map<String, Integer> scoreByPlayerNames = new LinkedHashMap<>();
-        for (Player player : players) {
-            scoreByPlayerNames.put(player.name(), player.getScore());
-        }
-        GameResultDto gameResultDto = referee.createGameResult(dealer.getScore(), scoreByPlayerNames);
-        outputView.printResult(gameResultDto);
-    }
 
     private void playPhase(Dealer dealer, Players players) {
         playPlayersTurn(players);

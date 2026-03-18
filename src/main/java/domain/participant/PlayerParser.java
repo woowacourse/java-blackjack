@@ -8,6 +8,7 @@ public class PlayerParser {
     private static final String DELIMITER = ",";
 
     public static Players parseToPlayers(String rawPlayerNames) {
+        
         validateRawPlayerNames(rawPlayerNames);
 
         List<Player> players = splitByDelimiter(rawPlayerNames).stream()

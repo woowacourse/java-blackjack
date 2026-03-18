@@ -17,7 +17,7 @@ public class GameManagerTest {
         GameManager manager = GameManager.createWith(Deck.create());
         Dealer dealer = new Dealer();
 
-        manager.dealStartingCards(dealer);
+        manager.dealInitialCards(dealer);
 
         CardsSnapshot actual = manager.getCardsResult(dealer);
 
@@ -29,7 +29,7 @@ public class GameManagerTest {
         GameManager manager = GameManager.createWith(Deck.create());
         Player player = new Player(Name.from("나무"));
 
-        manager.dealStartingCards(player);
+        manager.dealInitialCards(player);
 
         CardsSnapshot actual = manager.getCardsResult(player);
 
@@ -45,7 +45,7 @@ public class GameManagerTest {
         Players players = Players.of(List.of(player1, player2));
 
         for (Player player : players) {
-            manager.dealStartingCards(player);
+            manager.dealInitialCards(player);
 
             CardsSnapshot actual = manager.getCardsResult(player);
 
