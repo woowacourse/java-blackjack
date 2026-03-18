@@ -1,53 +1,48 @@
 package view;
 
 import java.util.List;
-import java.util.Map;
+import model.AbstractParticipant;
 import model.Card;
 import model.Dealer;
-import model.GameStatus;
+import model.Participant;
 import model.Player;
+import model.Players;
 
 public class OutputView {
 
-    public static void printCardOpen(List<Player> players) {
-        List<String> names = players.stream()
-                .map(Player::getName)
+    public static void printCardOpen(Players players) {
+        List<String> names = players.players().stream()
+                .map(Player::name)
                 .toList();
         System.out.println();
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", String.join(", ", names));
     }
 
-    public static void printCardByPlayers(List<Player> players) {
-        players.forEach(OutputView::printCardByPlayer);
-        System.out.println();
-    }
-
     public static void printCardByDealer(Dealer dealer) {
-        Card firstCard = dealer.getCards().getFirst();
+        Card firstCard = dealer.cards().getFirst();
         String card = convert(firstCard);
-        System.out.println(dealer.getName() + "카드: " + card);
+        System.out.println(dealer.name() + "카드: " + card);
     }
 
     public static void printCardByPlayer(Player player) {
-        List<String> cards = player.getCards()
+        List<String> cards = player.cards()
                 .stream()
                 .map(OutputView::convert)
                 .toList();
-        System.out.printf("%s카드: %s%n", player.getName(), String.join(", ", cards));
+        System.out.printf("%s카드: %s%n", player.name(), String.join(", ", cards));
     }
 
 
-    public static void printCardByPlayerWithScore(Player player) {
-        int sum = player.calculateTotalScore();
-        List<String> cards = player.getCards()
+    public static void printCardByPlayerWithScore(AbstractParticipant player, int score) {
+        List<String> cards = player.cards()
                 .stream()
                 .map(OutputView::convert)
                 .toList();
-        System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), String.join(", ", cards), sum);
+        System.out.printf("%s카드: %s - 결과: %d%n", player.name(), String.join(", ", cards), score);
     }
 
     private static String convert(Card card) {
-        return card.value().getSymbol() + card.shape().getShape();
+        return card.value().symbol() + card.shape().shape();
     }
 
     public static void printToOpenDealerNewCard(String name) {
@@ -79,8 +74,19 @@ public class OutputView {
         System.out.println(result.toString().trim());
     }
 
-    public static void printResultByPlayers(Map<Player, GameStatus> result) {
-        result.forEach((player, status) -> System.out.printf("%s: %s%n", player.getName(), status.getName()));
+    public static void printBettingResultHeader() {
+        System.out.println();
+        System.out.println("## 최종 수익");
+    }
+
+    public static void printBettingResult(List<Participant> participants) {
+        for (Participant participant : participants) {
+            if (participant instanceof Dealer dealer) {
+                System.out.println(participant.name() + ": " + dealer.profit());
+            } else if (participant instanceof Player player) {
+                System.out.println(participant.name() + ": " + player.profit());
+            }
+        }
     }
 
     public static void printErrorMessage(final String message) {

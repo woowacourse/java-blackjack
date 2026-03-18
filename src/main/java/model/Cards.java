@@ -40,10 +40,6 @@ public class Cards {
         this.cards.add(card);
     }
 
-    public int size() {
-        return cards.size();
-    }
-
     public Card pickCard() {
         if (cards.isEmpty()) {
             throw new IllegalArgumentException("카드가 존재하지 않습니다.");
@@ -51,9 +47,17 @@ public class Cards {
         return cards.removeLast();
     }
 
+    public List<Card> cards() {
+        return List.copyOf(this.cards);
+    }
+
+    public int size() {
+        return cards.size();
+    }
+
     public int calculateScore() {
         return cards.stream()
-                .mapToInt(Card::getScore)
+                .mapToInt(Card::score)
                 .sum();
     }
 
@@ -61,9 +65,5 @@ public class Cards {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
-    }
-
-    public List<Card> getCards() {
-        return List.copyOf(this.cards);
     }
 }
