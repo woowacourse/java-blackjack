@@ -29,18 +29,15 @@ public class BlackjackGame {
         playerGroup = new PlayerGroup(players);
     }
 
-    public void dealDealerCardsOut() {
+    public void dealParticipantsCardsOut() {
         dealCardsOut(dealer);
-    }
 
-    public void dealPlayerCardsOut() {
         for (Player player : playerGroup.getPlayers()) {
             dealCardsOut(player);
         }
     }
 
-    public void playerHit(Name name) {
-        Player player = playerGroup.findByName(name);
+    public void playerHit(Player player) {
         player.drawCard(cardDeck.getCard());
     }
 
@@ -52,7 +49,13 @@ public class BlackjackGame {
         return false;
     }
 
-    public void decideDealerResult(WinStatus winStatus) {
+    public void decideDealerResult() {
+        playerGroup.getPlayers().stream()
+                .map(player -> decidePlayerResult(player))
+                .forEach(winstatus -> saveDealerResult(winstatus));
+    }
+
+    private void saveDealerResult(WinStatus winStatus) {
         dealer.saveResult(winStatus);
     }
 
@@ -66,16 +69,8 @@ public class BlackjackGame {
         }
     }
 
-    public Player findByName(Name name) {
-        return playerGroup.findByName(name);
-    }
-
-    public boolean isBust(Name name) {
-        return playerGroup.findByName(name).isBust();
-    }
-
-    public WinStatus decidePlayerResult(Name name) {
-        return playerGroup.findByName(name).decideWinStatus(dealer);
+    public WinStatus decidePlayerResult(Player player) {
+        return player.decideWinStatus(dealer);
     }
 
     public List<Player> getPlayers() {

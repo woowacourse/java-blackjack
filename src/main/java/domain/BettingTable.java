@@ -1,9 +1,9 @@
 package domain;
 
+import domain.participant.Dealer;
 import domain.participant.WinStatus;
+import domain.participant.player.Player;
 import domain.vo.Money;
-import domain.vo.Name;
-import dto.ResultForBettingDto;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -12,31 +12,33 @@ import java.util.Map;
 
 public class BettingTable {
     private static final double BLACKJACK_BONUS = 1.5;
-    private final Map<Name, Money> bettingTable = new HashMap<>();
+    private final Map<Player, Money> bettingTable = new HashMap<>();
 
-    public void placeBet(Name name, Money money) {
-        bettingTable.put(name, money);
+    public void placeBet(Player player, Money money) {
+        bettingTable.put(player, money);
     }
 
-    public Money calculateProfit(ResultForBettingDto dto) {
-        if (dto.getWinStatus() == WinStatus.WIN && dto.isBlackjack()) {
-            return new Money(bettingTable.get(dto.getName()).multiplyDouble(BLACKJACK_BONUS));
+    public Money calculateProfit(Player player, Dealer dealer) {
+        WinStatus playerWinStatus = player.decideWinStatus(dealer);
+
+        if (playerWinStatus == WinStatus.WIN && player.isBlackjack()) {
+            return new Money(bettingTable.get(player).multiplyDouble(BLACKJACK_BONUS));
         }
 
-        if (dto.getWinStatus() == WinStatus.LOSS) {
-            return bettingTable.get(dto.getName()).negate();
+        if (playerWinStatus == WinStatus.LOSS) {
+            return bettingTable.get(player).negate();
         }
 
-        if (dto.getWinStatus() == WinStatus.DRAW) {
+        if (playerWinStatus == WinStatus.DRAW) {
             return new Money(BigDecimal.ZERO);
         }
 
-        return bettingTable.get(dto.getName());
+        return bettingTable.get(player);
     }
 
-    public Money getDealerProfit(List<ResultForBettingDto> dtos) {
-        return dtos.stream()
-                .map((dto) -> calculateProfit(dto))
+    public Money getDealerProfit(List<Player> players, Dealer dealer) {
+        return players.stream()
+                .map(player -> calculateProfit(player, dealer))
                 .reduce(new Money(BigDecimal.ZERO), Money::add)
                 .negate();
     }
