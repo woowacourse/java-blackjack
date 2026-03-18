@@ -1,5 +1,7 @@
-package blackjack.model.card;
+package blackjack.model.state;
 
+import blackjack.model.card.Card;
+import blackjack.model.card.Hand;
 import blackjack.model.gameresult.GameResult;
 
 public class Blackjack extends Finished {

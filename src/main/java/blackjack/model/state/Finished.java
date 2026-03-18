@@ -1,4 +1,6 @@
-package blackjack.model.card;
+package blackjack.model.state;
+
+import blackjack.model.card.Hand;
 
 public abstract class Finished implements HandState{
 
