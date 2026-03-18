@@ -32,10 +32,12 @@ class UsernameTest {
     @ValueSource(strings = {"pobi!", "jason1"})
     @DisplayName("이름에 영어와 한글 외의 문자가 존재할 경우 예외 발생")
     void create_username_fail_when_invalid_name(String invalidName) {
+        // given
+        String expectedErrorMessage = ERROR_INVALID_PLAYER_NAME.formatted(invalidName);
+
         //when & then
         assertThatThrownBy(() -> new Username(invalidName))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ERROR_INVALID_PLAYER_NAME)
-                .hasMessageContaining(invalidName);
+                .hasMessage(expectedErrorMessage);
     }
 }

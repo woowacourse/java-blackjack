@@ -32,21 +32,25 @@ class BetAmountTest {
     @ValueSource(strings = {"a", "1a", "123*"})
     @DisplayName("입력값이 숫자 형태가 아닐 경우 예외 발생")
     void createBetAmount_fail_when_input_is_not_number(String stringInput) {
+        // given
+        String expectedErrorMessage = ERROR_BET_AMOUNT_NOT_INTEGER.formatted(stringInput);
+
         //when & then
         Assertions.assertThatThrownBy(() -> new BetAmount(stringInput))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ERROR_BET_AMOUNT_NOT_INTEGER)
-                .hasMessageContaining(stringInput);
+                .hasMessage(expectedErrorMessage);
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"0", "-1"})
     @DisplayName("입력값이 0원 이하일 경우 예외 발생")
     void createBetAmount_fail_when_input_is_not_positive(String negativeInput) {
+        // given
+        String expectedErrorMessage = ERROR_BET_AMOUNT_NOT_POSITIVE.formatted(Integer.parseInt(negativeInput));
+
         //when & then
         Assertions.assertThatThrownBy(() -> new BetAmount(negativeInput))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ERROR_BET_AMOUNT_NOT_POSITIVE)
-                .hasMessageContaining(negativeInput);
+                .hasMessage(expectedErrorMessage);
     }
 }

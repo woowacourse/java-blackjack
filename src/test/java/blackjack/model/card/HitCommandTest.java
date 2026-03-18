@@ -33,11 +33,13 @@ class HitCommandTest {
     @ValueSource(strings = {"ad", "y*"})
     @DisplayName("정해진 입력 외의 문자열을 입력할 경우 예외 발생")
     void create_hitCommand_fail_when_invalid_input(String invalidInput) {
+        // given
+        String expectedErrorMessage = ERROR_NOT_Y_N_INPUT.formatted(invalidInput);
+
         //when & then
         assertThatThrownBy(() -> new HitCommand(invalidInput))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ERROR_NOT_Y_N_INPUT)
-                .hasMessageContaining(invalidInput);
+                .hasMessage(expectedErrorMessage);
     }
 
     @ParameterizedTest
