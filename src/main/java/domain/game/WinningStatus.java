@@ -3,8 +3,6 @@ package domain.game;
 import domain.participant.Dealer;
 import domain.participant.Player;
 
-import java.util.Optional;
-
 public enum WinningStatus {
     WIN,
     TIE,
