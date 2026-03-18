@@ -7,6 +7,7 @@ import domain.card.Grade;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.result.GameResult;
+import domain.result.Referee;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -24,8 +25,10 @@ public class GameResultTest {
         player.initHand(deck);
         Dealer dealer = new Dealer();
         dealer.initHand(deck);
+
+        Referee referee = new Referee();
         // when
-        GameResult gameResult = GameResult.judge(dealer, player);
+        GameResult gameResult = referee.judge(dealer, player);
 
         // then
         Assertions.assertThat(gameResult).isEqualTo(GameResult.WIN);
@@ -44,8 +47,9 @@ public class GameResultTest {
         dealer.playTurn(deck);
         dealer.playTurn(deck);
 
+        Referee referee = new Referee();
         // when
-        GameResult gameResult = GameResult.judge(dealer, player);
+        GameResult gameResult = referee.judge(dealer, player);
 
         // then
         Assertions.assertThat(gameResult).isEqualTo(GameResult.BLACKJACK);
@@ -64,9 +68,10 @@ public class GameResultTest {
         Dealer dealer = new Dealer();
         dealer.initHand(deck);
         dealer.playTurn(deck);
+        Referee referee = new Referee();
 
         // when
-        GameResult gameResult = GameResult.judge(dealer, player);
+        GameResult gameResult = referee.judge(dealer, player);
 
         // then
         Assertions.assertThat(gameResult).isEqualTo(GameResult.BLACKJACK);
@@ -85,8 +90,9 @@ public class GameResultTest {
         player.playTurn(deck);
         Dealer dealer = new Dealer();
 
+        Referee referee = new Referee();
         // when
-        GameResult gameResult = GameResult.judge(dealer, player);
+        GameResult gameResult = referee.judge(dealer, player);
 
         // then
         Assertions.assertThat(gameResult).isEqualTo(GameResult.LOSE);

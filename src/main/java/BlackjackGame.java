@@ -99,7 +99,8 @@ public class BlackjackGame {
     private void judge(Dealer dealer, Players players) {
         Referee referee = new Referee();
         Map<Player, GameResult> playerResultMap = referee.judge(dealer, players);
-        GameStatistics statistics = new GameStatistics(playerResultMap);
+        Map<GameResult, Integer> dealerResultMap = referee.judgeDealer(dealer, players);
+        GameStatistics statistics = new GameStatistics(playerResultMap, dealerResultMap);
         OutputView.showGameResult(statistics.getPlayerResult(), statistics.getDealerResult());
 
         GameProfit gameProfit = new GameProfit(playerResultMap);

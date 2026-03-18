@@ -2,7 +2,6 @@ package domain.result;
 
 import domain.participant.Player;
 import java.util.Collections;
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -11,29 +10,10 @@ public class GameStatistics {
     private final Map<Player, GameResult> playerResult;
     private final Map<GameResult, Integer> dealerResult;
 
-    public GameStatistics(Map<Player, GameResult> gameResultMap) {
+    public GameStatistics(Map<Player, GameResult> gameResultMap,
+                          Map<GameResult, Integer> dealerResult) {
         this.playerResult = gameResultMap;
-        this.dealerResult = initializeMap();
-        initializeDealerResult();
-    }
-
-    private Map<GameResult, Integer> initializeMap() {
-        EnumMap<GameResult, Integer> dealerResult = new EnumMap<>(GameResult.class);
-
-        for (GameResult gameResult : GameResult.values()) {
-            dealerResult.put(gameResult, 0);
-        }
-        return dealerResult;
-    }
-
-    public void initializeDealerResult() {
-        for (Map.Entry<Player, GameResult> playerResult : playerResult.entrySet()) {
-            addDealerResult(playerResult.getValue().reverse());
-        }
-    }
-
-    public void addDealerResult(GameResult gameResult) {
-        dealerResult.put(gameResult, dealerResult.getOrDefault(gameResult, 0) + 1);
+        this.dealerResult = dealerResult;
     }
 
     public Map<String, String> getPlayerResult() {

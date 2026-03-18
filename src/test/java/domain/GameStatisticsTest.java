@@ -15,7 +15,11 @@ public class GameStatisticsTest {
                 new Player("이안", 2000), GameResult.LOSE,
                 new Player("에덴", 3000), GameResult.DRAW,
                 new Player("녀녕", 10000), GameResult.BLACKJACK);
-        GameStatistics gameStatistics = new GameStatistics(testMap);
+
+        Map<GameResult, Integer> testDealerMap = Map.of(GameResult.WIN, 1,
+                GameResult.LOSE, 2, GameResult.DRAW, 1);
+
+        GameStatistics gameStatistics = new GameStatistics(testMap, testDealerMap);
         // when
         Map<String, String> playerResult = gameStatistics.getPlayerResult();
 
@@ -34,7 +38,10 @@ public class GameStatisticsTest {
                 new Player("이안", 2000), GameResult.LOSE,
                 new Player("에덴", 3000), GameResult.DRAW,
                 new Player("녀녕", 10000), GameResult.BLACKJACK);
-        GameStatistics statistics = new GameStatistics(testMap);
+        Map<GameResult, Integer> testDealerMap = Map.of(GameResult.WIN, 1,
+                GameResult.LOSE, 2, GameResult.DRAW, 1);
+
+        GameStatistics statistics = new GameStatistics(testMap, testDealerMap);
 
         // when
         Map<String, Integer> dealerResult = statistics.getDealerResult();
