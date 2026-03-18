@@ -26,19 +26,6 @@ public class Player {
         add(deck.pop());
     }
 
-    public MatchCase calculateMatchCase(int dealerTotal) {
-        if (cards.getFinalScore() > dealerTotal) {
-            return MatchCase.WIN;
-        }
-        if (cards.getFinalScore() == dealerTotal) {
-            return MatchCase.DRAW;
-        }
-        if (cards.getFinalScore() < dealerTotal) {
-            return MatchCase.LOSE;
-        }
-        throw new IllegalArgumentException("[ERROR] 일치하는 enum이 없습니다.");
-    }
-
     public void calculateMoney(MatchCase matchCase, boolean isDealerBlackjack) {
         if (cards.isBlackjack() && !isDealerBlackjack) {
             betting.gainMoney();

@@ -39,7 +39,7 @@ public class Game {
 
     private Map<String, MatchCase> getGeneralCase(Map<String, MatchCase> matchResult) {
         for (Player player : players) {
-            MatchCase matchCase = player.calculateMatchCase(dealer.getCardsTotalSum());
+            MatchCase matchCase = MatchCase.from(player.getCardsTotalSum(), dealer.getCardsTotalSum());
             matchResult.put(player.getName(), matchCase);
             player.calculateMoney(matchCase, dealer.isDealerBlackjack());
         }

@@ -11,6 +11,18 @@ public enum MatchCase {
         this.reverseResult = reverseResult;
     }
 
+    public static MatchCase from(int playerScore, int DealerScore) {
+        if (playerScore > DealerScore) {
+            return MatchCase.WIN;
+        }
+        else if (playerScore == DealerScore) {
+            return MatchCase.DRAW;
+        }
+        else {
+            return MatchCase.LOSE;
+        }
+    }
+
     public String getKorResult() {
         return korResult;
     }
