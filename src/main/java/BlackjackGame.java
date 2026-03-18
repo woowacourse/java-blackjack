@@ -43,7 +43,7 @@ public class BlackjackGame {
     }
 
     private Player createPlayer(String name, Deck deck) {
-        int amount = Parser.parseByBattingAmount(InputView.readBattingAmount(name));
+        long amount = Parser.parseByBattingAmount(InputView.readBattingAmount(name));
 
         Player player = new Player(name, amount);
         player.initHand(deck);

@@ -17,9 +17,9 @@ public class Parser {
                 .toList();
     }
 
-    public static int parseByBattingAmount(String input) {
+    public static long parseByBattingAmount(String input) {
         try {
-            return Integer.parseInt(input);
+            return Long.parseLong(input);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(ExceptionMessage.INVALID_BATTING_INPUT.getMessage());
         }
