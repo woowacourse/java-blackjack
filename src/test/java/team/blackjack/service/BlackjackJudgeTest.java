@@ -62,6 +62,14 @@ class BlackjackJudgeTest {
     }
 
     @Test
+    void 플레이어_블랙잭_딜러_버스트_시에도_블랙잭_승() {
+        Player player = participantWithCards(Card.ACE_OF_HEARTS, Card.KING_OF_HEARTS);
+        Dealer dealer = dealerWithCards(Card.KING_OF_CLUBS, Card.SEVEN_OF_CLUBS, Card.SIX_OF_CLUBS);
+
+        assertThat(blackjackJudge.judge(player, dealer)).isEqualTo(Result.BLACKJACK);
+    }
+
+    @Test
     void 승_시_배팅금_그대로_수익() {
         Player player = playerWithBatMoney("pobi", 1000);
 
