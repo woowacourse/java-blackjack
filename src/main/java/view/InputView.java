@@ -13,23 +13,23 @@ public class InputView {
     private static final String YN_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n";
     private static final String BETTING_FORMAT = "%s의 베팅 금액은?\n";
 
-    private static final Scanner sc = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static List<String> askPlayerNames() {
         System.out.println(START_MESSAGE);
-        return Arrays.stream(sc.nextLine().split(","))
+        return Arrays.stream(scanner.nextLine().split(","))
                 .map(String::trim)
                 .collect(Collectors.toList());
     }
 
     public static String askPlayerBettingMoney(String name) {
         System.out.printf(BETTING_FORMAT, name);
-        return sc.nextLine();
+        return scanner.nextLine();
     }
 
     public static String askPlayerCommand(String name) {
         System.out.printf(YN_FORMAT, name);
-        String input = sc.nextLine();
+        String input = scanner.nextLine();
         if (input.equals("y") || input.equals("n")) {
             return input;
         }
