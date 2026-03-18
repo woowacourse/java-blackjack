@@ -1,8 +1,8 @@
 package team.blackjack.service.dto;
 
-import java.util.Map;
+import java.util.LinkedHashMap;
 
 public record RevenueResult(
         double dealerRevenue,
-        Map<String, Double> playerRevenueMap
+        LinkedHashMap<String, Double> playerRevenueMap
 ) { }

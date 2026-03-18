@@ -1,20 +1,10 @@
 package team.blackjack.control;
 
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import team.blackjack.domain.Card;
-import team.blackjack.domain.Deck;
-import team.blackjack.domain.Result;
-import team.blackjack.service.RevenueService;
-import team.blackjack.domain.Dealer;
-import team.blackjack.domain.Player;
-import team.blackjack.domain.Players;
-import team.blackjack.service.dto.DrawResult;
-import team.blackjack.service.dto.RevenueResult;
-import team.blackjack.service.dto.ScoreResult;
 import team.blackjack.service.BlackjackService;
 import team.blackjack.view.InputView;
 import team.blackjack.view.OutputView;
@@ -24,54 +14,43 @@ public class BlackJackController {
     public static final String NO_INPUT = "n";
 
     private final BlackjackService blackJackService;
-    private final RevenueService revenueService;
 
-    public BlackJackController(BlackjackService blackJackService,
-                               RevenueService revenueService) {
+    public BlackJackController(BlackjackService blackJackService) {
         this.blackJackService = blackJackService;
-        this.revenueService = revenueService;
     }
 
     public void run() {
-        final Deck deck = new Deck();
-        final Dealer dealer = new Dealer();
-        final Players players = new Players(readPlayerNames());
 
-        blackJackService.drawInitialCards(deck, players, dealer);
+        final LinkedHashSet<String> playerNames = readPlayerNames();
+        playerNames.forEach(blackJackService::addPlayer);
 
-        readAllPlayerBattingMoneyRetry(players.getPlayerList());
+        blackJackService.initParticipantCard();
 
-        DrawResult drawResult = blackJackService.getDrawResult(dealer, players);
-        OutputView.printDrawResult(drawResult);
+        readAllPlayerBattingMoneyRetry(playerNames);
+        OutputView.printDrawResult(blackJackService.getDrawResult());
 
-        readPlayerHitDecision(deck, players);
+        hitAllPlayerUntilStand(playerNames);
+        hitDealerUntilStand();
 
-        while (blackJackService.shouldDealerHit(dealer)) {
-            OutputView.printDealerHitMessage();
-            blackJackService.hit(deck, dealer);
-        }
-
-        ScoreResult scoreResult = blackJackService.calculateAllParticipantScore(players, dealer);
-        OutputView.printParticipantScoreResult(scoreResult);
-
-        final Map<Player, Result> judgeResults = players.getPlayerList().stream()
-                .collect(Collectors.toMap(
-                        player -> player,
-                        player -> blackJackService.judge(player, dealer)
-                ));
-
-        RevenueResult revenueResult = revenueService.getRevenueResult(judgeResults);
-        OutputView.printRevenueResult(revenueResult);
+        OutputView.printParticipantScoreResult(blackJackService.getParticipantScoreResult());
+        OutputView.printRevenueResult(blackJackService.getRevenueResult());
     }
 
-    public void readAllPlayerBattingMoneyRetry(List<Player> playerNames) {
-       playerNames.forEach(player -> {
-           int battingMoney = readPlayerBattingMoneyRetry(player.getName());
-           blackJackService.batMoney(player, battingMoney);
+    private void hitDealerUntilStand() {
+        while (blackJackService.shouldDealerHit()) {
+            OutputView.printDealerHitMessage();
+            blackJackService.hitDealer();
+        }
+    }
+
+    private void readAllPlayerBattingMoneyRetry(Set<String> playerNames) {
+       playerNames.forEach(name -> {
+           int battingMoney = readPlayerBattingMoneyUntilPositive(name);
+           blackJackService.batMoney(name, battingMoney);
        });
     }
 
-    private int readPlayerBattingMoneyRetry(String playerName) {
+    private int readPlayerBattingMoneyUntilPositive(String playerName) {
         int battingMoney;
 
         do {
@@ -83,6 +62,7 @@ public class BlackJackController {
 
     private int readPlayerBattingMoney(String playerName) {
         int battingMoney = -1;
+        
         OutputView.printAskBettingMoney(playerName);
         try {
             battingMoney = InputView.readPlayerBattingMoney();
@@ -93,7 +73,7 @@ public class BlackJackController {
         return battingMoney;
     }
 
-    private Set<String> readPlayerNames(){
+    private LinkedHashSet<String> readPlayerNames(){
         OutputView.printPlayerNameRequest();
         List<String> playerNames = InputView.readPlayerNames();
 
@@ -102,41 +82,47 @@ public class BlackJackController {
             OutputView.printPlayerNameRequest();
             playerNames = InputView.readPlayerNames();
         }
-        return new HashSet<>(playerNames);
+
+        return new LinkedHashSet<>(playerNames);
     }
 
     private boolean hasDuplicatedName(List<String> playerNames) {
         return playerNames.size() != new HashSet<>(playerNames).size();
     }
 
-    private void readPlayerHitDecision(Deck deck, Players players) {
-        try {
-            players.getPlayerList()
-                    .forEach(player -> processPlayerHit(deck, player));
-        } catch (IllegalStateException e) {
+    private void hitAllPlayerUntilStand(Set<String> playerNames) {
+            playerNames.forEach(this::hitPlayerUntilStand);
+    }
+
+    private void hitPlayerUntilStand(String playerName) {
+        while (isPlayerInputHit(playerName)) {
+            blackJackService.hitPlayer(playerName);
+            OutputView.printPlayerCards(playerName, blackJackService.getPlayerCardNames(playerName));
+        }
+    }
+
+    private boolean isPlayerInputHit(String playerName) {
+        if (!blackJackService.canPlayerHit(playerName)) {
             OutputView.printBustMessage();
+            return false;
         }
-    }
 
-    private void processPlayerHit(Deck deck, Player player) {
-        while (readPlayerHitDecision(player.getName())) {
-            blackJackService.hit(deck, player);
-            OutputView.printPlayerCards(player.getName(), player.getCards().stream()
-                    .map(Card::getCardName)
-                    .toList());
-        }
-    }
-
-    private boolean readPlayerHitDecision(String playerName) {
         OutputView.printAskDrawCard(playerName);
-        String hitYn = InputView.readHitDecision();
-
-        while (!YES_INPUT.equalsIgnoreCase(hitYn) && !NO_INPUT.equalsIgnoreCase(hitYn)) {
-            OutputView.printWrongDecisionInputMessage();
+        String hitYn;
+        do {
             hitYn = InputView.readHitDecision();
-        }
+        } while (!validateDecisionInput(hitYn));
 
         return YES_INPUT.equalsIgnoreCase(hitYn);
+    }
+
+     private boolean validateDecisionInput(String input) {
+        if (!YES_INPUT.equalsIgnoreCase(input) && !NO_INPUT.equalsIgnoreCase(input)) {
+            OutputView.printWrongDecisionInputMessage();
+            return false;
+        }
+
+        return true;
     }
 
 }

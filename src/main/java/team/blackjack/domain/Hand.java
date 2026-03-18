@@ -1,6 +1,5 @@
 package team.blackjack.domain;
 
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,7 @@ public class Hand {
     }
 
     public Set<Card> getCards() {
-        return new HashSet<>(cards);
+        return new LinkedHashSet<>(cards);
     }
 
     public List<String> getCardNames() {

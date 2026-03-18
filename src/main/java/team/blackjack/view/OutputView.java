@@ -21,9 +21,7 @@ public class OutputView {
         println("딜러와 %s에게 2장을 나누었습니다.".formatted(playerNames));
 
         println("딜러카드: %s".formatted(result.dealerCard()));
-        for (Entry<String, List<String>> entry : result.playerCards().entrySet()) {
-            printPlayerCards(entry.getKey(), entry.getValue());
-        }
+        result.playerCards().forEach(OutputView::printPlayerCards);
     }
 
     public static void printAskDrawCard(String playerName) {

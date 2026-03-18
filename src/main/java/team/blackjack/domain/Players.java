@@ -1,21 +1,36 @@
 package team.blackjack.domain;
 
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Players {
-    private final List<Player> players;
+    private final Set<Player> players;
 
     public Players(Set<String> playerNames) {
         this.players =  playerNames.stream()
                 .map(Player::new)
-                .toList();
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
-    public List<Player> getPlayerList() {
-        return List.copyOf(players);
+    public Players() {
+        this.players = new LinkedHashSet<>();
+    }
+
+    public Set<Player> getPlayers() {
+        return new LinkedHashSet<>(players);
+    }
+
+    public Map<String, Integer> getScoresByPlayer() {
+        final HashMap<String, Integer> result = new HashMap<>();
+        for (Player player : players) {
+            result.put(player.getName(), player.getScore());
+        }
+
+        return result;
     }
 
     public void initPlayerHands(Deck deck) {
@@ -45,5 +60,9 @@ public class Players {
                 .filter(player -> player.getName().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당 이름의 플레이어가 존재하지 않습니다."));
+    }
+
+    public void addPlayer(String name) {
+        players.add(new Player(name));
     }
 }
