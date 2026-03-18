@@ -33,4 +33,5 @@ public class Hit extends State {
     public boolean isFinished() {
         return false;
     }
+
 }

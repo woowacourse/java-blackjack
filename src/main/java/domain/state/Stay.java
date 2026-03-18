@@ -10,20 +10,17 @@ public class Stay extends State {
 
     @Override
     public State draw(Card card) {
-        hand.add(card);
-        if (hand.isBust()) {
-            return new Bust(hand);
-        }
-        return new Hit(hand);
+        throw new IllegalArgumentException("[ERROR] Stay 상태에서는 카드를 더 이상 뽑을 수 없습니다.");
     }
 
     @Override
     public State stay() {
-        return new Stay(hand);
+        throw new IllegalArgumentException("[ERROR] Stay 상태에서는 stay 할 수 없습니다.");
     }
 
     @Override
     public boolean isFinished() {
         return true;
     }
+
 }

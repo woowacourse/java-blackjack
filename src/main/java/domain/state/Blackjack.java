@@ -11,13 +11,12 @@ public class Blackjack extends State {
 
     @Override
     public State draw(Card card) {
-        hand.add(card);
-        return new Bust(hand);
+        throw new IllegalArgumentException("[ERROR] Blackjack 상태에서는 카드를 더 이상 뽑을 수 없습니다.");
     }
 
     @Override
     public State stay() {
-        return new Blackjack(hand);
+        throw new IllegalArgumentException("[ERROR] Blackjack 상태에서는 stay 할 수 없습니다.");
     }
 
     @Override
