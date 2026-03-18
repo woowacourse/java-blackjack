@@ -6,7 +6,9 @@ public enum IOMessage {
     ASK_PLAYER_BETTING("의 배팅 금액은?"),
     INVALID_HIT_OR_STAND_DECISION("잘못된 입력입니다. y 또는 n만 입력해주세요."),
     DEALER_HIT_ONE_CARD("딜러는 16이하라 한장의 카드를 더 받았습니다."),
-    WINNING_STATISTICS("## 최종 승패");
+    WINNING_STATISTICS("## 최종 승패"),
+    FINAL_PROFIT("## 최종 수익"),
+    DEALER_NAME("딜러");
 
     private final String message;
 
