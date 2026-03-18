@@ -2,26 +2,27 @@ package domain.result;
 
 import domain.participant.Dealer;
 import domain.participant.Player;
+import java.math.BigDecimal;
 
 public enum GameResult {
-    BLACKJACK("블랙잭", 3, 2),
-    WIN("승", 1, 1),
-    DRAW("무", 0, 1),
-    LOSE("패", -1, 1);
+    BLACKJACK("블랙잭", new BigDecimal("1.5")),
+    WIN("승", BigDecimal.ONE),
+    DRAW("무", BigDecimal.ZERO),
+    LOSE("패", new BigDecimal("-1"));
 
     private final String description;
-    private final int numerator;
-    private final int denominator;
+    private final BigDecimal multiplier;
 
-    GameResult(final String description, final int numerator, final int denominator) {
+    GameResult(final String description, final BigDecimal multiplier) {
         this.description = description;
-        this.numerator = numerator;
-        this.denominator = denominator;
+        this.multiplier = multiplier;
     }
 
 
     public int calculateBetProfit(final int betAmount) {
-        return betAmount * numerator / denominator;
+        return multiplier
+                .multiply(BigDecimal.valueOf(betAmount))
+                .intValue();
     }
 
     public static GameResult judge(final Dealer dealer, final Player player) {
