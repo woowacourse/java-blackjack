@@ -3,16 +3,23 @@ package view;
 import domain.state.HitStand;
 import domain.participant.Player;
 import dto.domain.PlayerNameAndBettingDto;
+import error.ErrorMessage;
 import java.util.List;
 import java.util.Scanner;
 import message.IOMessage;
+import util.NameParser;
 
 public class InputView {
     private final Scanner scanner = new Scanner(System.in);
 
-    public String getPlayerNames() {
-        System.out.println(IOMessage.ASK_GAME_PARTICIPANT.message());
-        return scanner.nextLine();
+    public List<String> getPlayerNames() {
+        while (true) {
+            System.out.println(IOMessage.ASK_GAME_PARTICIPANT.message());
+            final List<String> playerNames = NameParser.makeNameList(scanner.nextLine());
+            if (isValidPlayerNames(playerNames)) {
+                return playerNames;
+            }
+        }
     }
 
     public boolean askHitOrStand(Player player) {
@@ -24,7 +31,7 @@ public class InputView {
                 return HitStand.isHit(input);
             }
 
-            System.out.println(IOMessage.INVALID_HIT_OR_STAND_DECISION.message());
+            System.out.println(ErrorMessage.INVALID_HIT_OR_STAND.message());
         }
     }
 
@@ -39,10 +46,35 @@ public class InputView {
             System.out.println(name + IOMessage.ASK_PLAYER_BETTING.message());
             final String input = scanner.nextLine().trim();
             try {
-                return new PlayerNameAndBettingDto(name, Integer.parseInt(input));
+                final int betting = Integer.parseInt(input);
+                if (betting < 1) {
+                    System.out.println(ErrorMessage.INVALID_BETTING_AMOUNT.message());
+                    continue;
+                }
+                return new PlayerNameAndBettingDto(name, betting);
             } catch (NumberFormatException e) {
-                System.out.println("숫자만 입력해주세요.");
+                System.out.println(ErrorMessage.INVALID_BETTING_FORMAT.message());
             }
         }
+    }
+
+    private boolean isValidPlayerNames(List<String> playerNames) {
+        if (playerNames.isEmpty()) {
+            System.out.println(ErrorMessage.EMPTY_PLAYER_NAMES.message());
+            return false;
+        }
+
+        if (playerNames.stream().anyMatch(String::isBlank)) {
+            System.out.println(ErrorMessage.INVALID_PLAYER_NAME.message());
+            return false;
+        }
+
+        final long distinctCount = playerNames.stream().distinct().count();
+        if (distinctCount != playerNames.size()) {
+            System.out.println(ErrorMessage.DUPLICATED_PLAYER_NAME.message());
+            return false;
+        }
+
+        return true;
     }
 }
