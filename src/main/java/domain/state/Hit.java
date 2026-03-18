@@ -15,13 +15,13 @@ public final class Hit extends Started {
     @Override
     public ParticipantState draw(Card card) {
         hand.addCard(card);
-        if (hand.getSum() > BlackjackRule.BLACKJACK_SCORE) {
+        if (hand.calculateScore() > BlackjackRule.BLACKJACK_SCORE) {
             return new Bust(hand);
         }
-        if (hand.getSize() == BLACKJACK_HAND_SIZE && hand.getSum() == BlackjackRule.BLACKJACK_SCORE) {
+        if (hand.getSize() == BLACKJACK_HAND_SIZE && hand.calculateScore() == BlackjackRule.BLACKJACK_SCORE) {
             return new BlackJack(hand);
         }
-        if (hand.getSum() == BlackjackRule.BLACKJACK_SCORE) {
+        if (hand.calculateScore() == BlackjackRule.BLACKJACK_SCORE) {
             return new Stay(hand);
         }
         return this;

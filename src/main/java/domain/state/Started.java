@@ -23,7 +23,7 @@ public abstract class Started implements ParticipantState {
 
     @Override
     public int getScore(){
-        return hand.getSum();
+        return hand.calculateScore();
     }
 
     @Override

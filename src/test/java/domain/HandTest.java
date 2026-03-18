@@ -5,8 +5,6 @@ import domain.card.Rank;
 import domain.card.Suit;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,7 +19,7 @@ class HandTest {
         hand.addCard(new Card(Suit.SPADES, Rank.JACK));
 
         // when, then
-        assertEquals(18, hand.getSum());
+        assertEquals(18, hand.calculateScore());
     }
 
     @Test
@@ -33,7 +31,7 @@ class HandTest {
         hand.addCard(new Card(Suit.SPADES, Rank.QUEEN));
 
         // when, then
-        assertEquals(14, hand.getSum());
+        assertEquals(14, hand.calculateScore());
     }
 
     @Test
@@ -45,7 +43,7 @@ class HandTest {
         hand.addCard(new Card(Suit.SPADES, Rank.NUM4));
 
         // when, then
-        assertEquals(18, hand.getSum());
+        assertEquals(18, hand.calculateScore());
     }
 
     @Test

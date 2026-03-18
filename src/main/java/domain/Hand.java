@@ -13,8 +13,8 @@ public class Hand {
         cards = new ArrayList<>();
     }
 
-    public int getSum() {
-        int sum = getInitSum();
+    public int calculateScore() {
+        int sum = calculateInitSum();
         long aceCount = countAce();
 
         while (aceCount > 0 && sum > BlackjackRule.BLACKJACK_SCORE) {
@@ -25,7 +25,7 @@ public class Hand {
         return sum;
     }
 
-    private int getInitSum() {
+    private int calculateInitSum() {
         return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
