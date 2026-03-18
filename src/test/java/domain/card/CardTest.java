@@ -16,9 +16,8 @@ class CardTest {
         Card card = new Card(Rank.ACE, Suit.DIAMOND);
         //when
         //then
-        assertThat(card.suitString()).isEqualTo("다이아");
-        assertThat(card.rankString()).isEqualTo("A");
         assertThat(card.rank()).isEqualTo(Rank.ACE);
+        assertThat(card.suit()).isEqualTo(Suit.DIAMOND);
         assertThat(card.rankScore()).isEqualTo(1);
     }
 
