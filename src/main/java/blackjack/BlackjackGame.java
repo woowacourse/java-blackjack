@@ -32,7 +32,7 @@ public class BlackjackGame {
 
     public BetAmounts createBetAmount(Function<User, String> readBetAmount, Users users) {
         Map<User, BetAmount> betAmounts = new HashMap<>();
-        for (User user : users.getUsers()) {
+        for (User user : users.getPlayers()) {
             String input = readBetAmount.apply(user);
             BetAmount betAmount = new BetAmount(input);
             betAmounts.put(user, betAmount);
@@ -68,11 +68,7 @@ public class BlackjackGame {
 
     private void hitPlayer(User user, Function<User, String> readHitCommand, Consumer<User> printPlayerCards,
                            Runnable printCantHit) {
-        if (!isHitAvailable(user, printCantHit)) {
-            return;
-        }
-
-        while (retryUntilSuccess(() -> checkY(user, readHitCommand))) {
+        while (retryUntilSuccess(() -> checkY(user, readHitCommand)) && isHitAvailable(user, printCantHit)) {
             cardProvider.provideOneCard(user);
             printPlayerCards.accept(user);
         }
