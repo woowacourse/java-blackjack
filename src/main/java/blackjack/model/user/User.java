@@ -39,14 +39,6 @@ public abstract class User {
         return hand.isFinished();
     }
 
-    public boolean isBlackjack() {
-        return hand.isBlackjack();
-    }
-
-    public boolean isBust() {
-        return hand.isBust();
-    }
-
     public int totalScore() {
         return hand.calculateTotalScore();
     }
