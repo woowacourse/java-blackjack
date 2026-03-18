@@ -4,6 +4,10 @@ public enum HandState {
     HIT {
         @Override
         public Outcome against(HandState dealerState, int playerScore, int dealerScore) {
+            if(dealerState == BLACKJACK){
+                return Outcome.LOSE;
+            }
+
             if (dealerState.isBust()) {
                 return Outcome.DEFAULT_WIN;
             }
