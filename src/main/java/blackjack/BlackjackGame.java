@@ -43,19 +43,20 @@ public class BlackjackGame {
         cardProvider.drawInitCards(users);
     }
 
-    public void hitPlayers(List<User> users, Function<User, String> readHitCommand,
+    public void hitPlayers(Users users, Function<User, String> readHitCommand,
                            Consumer<User> printPlayerCards, Runnable printCantHit) {
-        for (User user : users) {
-            hitPlayer(user, readHitCommand, printPlayerCards, printCantHit);
+        for (User player : users.getPlayers()) {
+            hitPlayer(player, readHitCommand, printPlayerCards, printCantHit);
         }
     }
 
-    public void hitDealer(User user, Runnable printDealerHit) {
-        while (user.isHitAvailable()) {
-            cardProvider.drawOneCard(user);
+    public void hitDealer(Users users, Runnable printDealerHit) {
+        User dealer = users.getDealer();
+        while (dealer.isHitAvailable()) {
+            cardProvider.drawOneCard(dealer);
             printDealerHit.run();
         }
-        user.stay();
+        dealer.stay();
     }
 
     public ProfitResult judgeWinner(Users users, BetAmounts betAmounts) {
@@ -66,23 +67,23 @@ public class BlackjackGame {
         closeScanner.run();
     }
 
-    private void hitPlayer(User user, Function<User, String> readHitCommand, Consumer<User> printPlayerCards,
+    private void hitPlayer(User player, Function<User, String> readHitCommand, Consumer<User> printPlayerCards,
                            Runnable printCantHit) {
-        while (retryUntilSuccess(() -> checkY(user, readHitCommand)) && isHitAvailable(user, printCantHit)) {
-            cardProvider.drawOneCard(user);
-            printPlayerCards.accept(user);
+        while (retryUntilSuccess(() -> checkY(player, readHitCommand)) && isHitAvailable(player, printCantHit)) {
+            cardProvider.drawOneCard(player);
+            printPlayerCards.accept(player);
         }
-        user.stay();
+        player.stay();
     }
 
-    private boolean checkY(User user, Function<User, String> readHitCommand) {
-        String input = readHitCommand.apply(user);
+    private boolean checkY(User player, Function<User, String> readHitCommand) {
+        String input = readHitCommand.apply(player);
         HitCommand hitCommand = new HitCommand(input);
         return hitCommand.isY();
     }
 
-    private boolean isHitAvailable(User user, Runnable printCantHit) {
-        if (user.isHitAvailable()) {
+    private boolean isHitAvailable(User player, Runnable printCantHit) {
+        if (player.isHitAvailable()) {
             return true;
         }
         printCantHit.run();

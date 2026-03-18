@@ -41,9 +41,9 @@ public class BlackjackController {
     }
 
     private void hit(Users users) {
-        blackjackGame.hitPlayers(users.getPlayers(), InputView::readHitCommand, OutputView::printPlayerCards,
+        blackjackGame.hitPlayers(users, InputView::readHitCommand, OutputView::printPlayerCards,
                 OutputView::printCantHit);
-        blackjackGame.hitDealer(users.getDealer(), OutputView::printDealerHit);
+        blackjackGame.hitDealer(users, OutputView::printDealerHit);
     }
 
     private void printHandStatus(Users users) {
