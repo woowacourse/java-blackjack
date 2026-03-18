@@ -23,7 +23,7 @@ public class OutputView {
     private static final String DEALER_PROFIT = "딜러: %d";
     private static final String PLAYER_PROFIT = "%s: %d";
 
-    public void printPlayers(DealerCardDto dealerCardDto, List<PlayerCardDto> playerCardDtos) {
+    public void printParticipantCards(DealerCardDto dealerCardDto, List<PlayerCardDto> playerCardDtos) {
         String playerNames = playerCardDtos.stream()
                 .map(PlayerCardDto::name)
                 .collect(Collectors.joining(", "));

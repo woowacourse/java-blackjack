@@ -51,7 +51,7 @@ public class Blackjack {
         );
         dealer.receiveInitialCards(initCards(deck));
 
-        outputView.printPlayers(DealerCardDto.from(dealer.getHand()), getPlayerCardDtos(players));
+        outputView.printParticipantCards(DealerCardDto.from(dealer.getHand()), getPlayerCardDtos(players));
     }
 
     private List<Card> initCards(Deck deck) {
