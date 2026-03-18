@@ -8,7 +8,7 @@ import domain.card.Suit;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static domain.BlackjackRule.INITIAL_CARDS_COUNT;
+import static domain.game.BlackjackRule.INITIAL_CARDS_COUNT;
 
 public class Deck {
     private final Cards cards;
@@ -28,10 +28,6 @@ public class Deck {
         List<Card> cards = cardShuffleStrategy.shuffle(beginningCards);
 
         return new Deck(cards);
-    }
-
-    public int size() {
-        return cards.size();
     }
 
     public Card draw() {

@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 public class BlackjackRule {
     public static final int BLACK_JACK = 21;

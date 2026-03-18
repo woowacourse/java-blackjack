@@ -20,12 +20,11 @@ class DeckTest {
         CardShuffleStrategy cardShuffleStrategy = new RandomShuffleStrategy();
         Deck deck = Deck.createDeck(cardShuffleStrategy);
 
-        assertThat(deck.size()).isEqualTo(52);
-
         Set<Card> cards = new HashSet<>();
-        while (deck.size() > 0) {
+        for (int i = 0; i < 52; i++) {
             cards.add(deck.draw());
         }
+
 
         assertThat(cards).hasSize(52);
     }
@@ -33,24 +32,12 @@ class DeckTest {
     @Test
     void 덱이_빈_상태에서_카드를_뽑을_경우_예외를_발생시킨다() {
         Deck deck = Deck.createDeck(new RandomShuffleStrategy());
-        int deckSize = deck.size();
 
-        for (int i = 0; i < deckSize; i++) {
+        for (int i = 0; i < 52; i++) {
             deck.draw();
         }
 
         assertThatThrownBy(deck::draw)
                 .isInstanceOf(NoSuchElementException.class);
-    }
-
-    @Test
-    void 덱에서_카드를_한_장_뽑으면_덱의_사이즈가_감소한다() {
-        Deck deck = Deck.createDeck(new RandomShuffleStrategy());
-        int size = deck.size();
-
-        deck.draw();
-        int changedSize = deck.size();
-
-        assertThat(changedSize).isEqualTo(size - 1);
     }
 }

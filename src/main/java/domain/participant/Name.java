@@ -9,7 +9,7 @@ public record Name(String name) {
 
     private void validateNameLength(String name) {
         if (name.length() > NAME_LENGTH_THRESHOLD) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("이름은 5글자 이내여야 합니다.");
         }
     }
 }

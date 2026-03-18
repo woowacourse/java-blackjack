@@ -6,13 +6,10 @@ import java.util.stream.Collectors;
 
 public class Players {
     private static final int PLAYER_THRESHOLD = 5;
-    private final List<Player> players = new ArrayList<>();
+    private final List<Player> players;
 
-    public Players(List<String> names) {
-        for (String name : names) {
-            Player player = new Player(name);
-            players.add(player);
-        }
+    public Players(List<Player> players) {
+        this.players = new ArrayList<>(players);
 
         validatePlayerCount(players);
         validateDuplicatedName(players);
@@ -20,7 +17,7 @@ public class Players {
 
     private void validatePlayerCount(List<Player> players) {
         if (players.size() > PLAYER_THRESHOLD) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("플레이어 수는 최대 5인까지 가능합니다.");
         }
     }
 
@@ -31,7 +28,7 @@ public class Players {
                 .count());
 
         if (playersNameDistinctSize != players.size()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("중복된 이름이 존재합니다.");
         }
     }
 
@@ -42,6 +39,6 @@ public class Players {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return List.copyOf(players);
     }
 }

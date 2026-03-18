@@ -21,7 +21,7 @@ public class InputParser {
 
     private static void validateEmptyInput(List<String> names) {
         if (names.isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("입력값이 비었습니다.");
         }
     }
 }

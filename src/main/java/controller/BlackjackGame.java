@@ -1,23 +1,15 @@
 package controller;
 
-import domain.deck.CardShuffleStrategy;
 import domain.deck.Deck;
-import domain.deck.RandomShuffleStrategy;
 import domain.game.GameResult;
-import domain.participant.Dealer;
-import domain.participant.Participant;
-import domain.participant.Player;
-import domain.participant.Players;
+import domain.participant.*;
 
 import java.util.ArrayList;
 
-import util.InputParser;
 import view.InputView;
 import view.OutputView;
 
 import java.util.List;
-
-import static domain.BlackjackRule.DEALER_NAME;
 
 public class BlackjackGame {
     private final InputView inputView;
@@ -29,14 +21,10 @@ public class BlackjackGame {
     }
 
     public void run() {
-        String names = inputView.getNames();
-        List<String> parsedName = InputParser.parseName(names);
-
-        Players players = new Players(parsedName);
-        Dealer dealer = new Dealer(DEALER_NAME);
-
-        CardShuffleStrategy cardShuffleStrategy = new RandomShuffleStrategy();
-        Deck deck = Deck.createDeck(cardShuffleStrategy);
+        BlackjackGameSetUp blackjackGameSetUp = new BlackjackGameSetUp(inputView);
+        Players players = blackjackGameSetUp.setUpPlayer();
+        Dealer dealer = blackjackGameSetUp.setUpDealer();
+        Deck deck = blackjackGameSetUp.setUpDeck();
 
         playGame(players, dealer, deck);
     }
@@ -69,14 +57,24 @@ public class BlackjackGame {
     }
 
     private void playerTurn(Player player, Deck deck) {
-        while (player.canDraw()) {
-            if (inputView.getChoice(player.name()).equals("n")) {
-                break;
-            }
-
+        while (shouldPlayerDraw(player)) {
             player.receive(deck.draw());
             outputView.printParticipantCards(player);
         }
+    }
+
+    private boolean shouldPlayerDraw(Player player) {
+        if (!player.canDraw()) {
+            return false;
+        }
+
+        String choice = inputView.getChoice(player.name());
+
+        if (!choice.equals("y") && !choice.equals("n")) {
+            throw new IllegalArgumentException("입력값이 잘못되었습니다.");
+        }
+
+        return choice.equals("y");
     }
 
     private void showGameResult(Players players, Dealer dealer) {
@@ -85,6 +83,6 @@ public class BlackjackGame {
         participants.forEach(outputView::printFinalResult);
 
         GameResult gameResult = new GameResult(players, dealer);
-        outputView.printGameResult(gameResult, dealer);
+        outputView.printGameResult(gameResult, players, dealer);
     }
 }
