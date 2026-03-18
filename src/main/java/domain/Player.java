@@ -27,22 +27,11 @@ public class Player {
     }
 
     public void calculateMoney(MatchCase matchCase, boolean isDealerBlackjack) {
-        if (cards.isBlackjack() && !isDealerBlackjack) {
-            betting.gainMoney();
-            return;
-        }
-        if (matchCase.equals(MatchCase.LOSE)) {
-            betting.loseMoney();
-            return;
-        }
-        if (matchCase.equals(MatchCase.WIN)) {
-            return;
-        }
-        betting.resetMoneyZero();
+        betting.calculateMoney(matchCase, cards.isBlackjack(), isDealerBlackjack);
     }
 
     public boolean isBust() {
-        return cards.getFinalScore() > Game.BLACKJACK_VALUE;
+        return cards.isBust();
     }
 
     public String getName() {

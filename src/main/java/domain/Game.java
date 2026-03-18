@@ -41,7 +41,7 @@ public class Game {
         for (Player player : players) {
             MatchCase matchCase = MatchCase.from(player.getCardsTotalSum(), dealer.getCardsTotalSum());
             matchResult.put(player.getName(), matchCase);
-            player.calculateMoney(matchCase, dealer.isDealerBlackjack());
+            player.calculateMoney(matchCase,dealer.isBlackjack());
         }
         return matchResult;
     }
@@ -50,11 +50,11 @@ public class Game {
         for (Player player : players) {
             if (!player.isBust()) {
                 matchResult.put(player.getName(), MatchCase.WIN);
-                player.calculateMoney(MatchCase.WIN, dealer.isDealerBlackjack());
+                player.calculateMoney(MatchCase.WIN, dealer.isBlackjack());
                 continue;
             }
             matchResult.put(player.getName(), MatchCase.LOSE);
-            player.calculateMoney(MatchCase.LOSE, dealer.isDealerBlackjack());
+            player.calculateMoney(MatchCase.LOSE,dealer.isBlackjack());
         }
         return matchResult;
     }
@@ -62,7 +62,7 @@ public class Game {
     private Map<String, MatchCase> getPlayersAllBurstCase(Map<String, MatchCase> matchResult) {
         for (Player player : players) {
             matchResult.put(player.getName(), MatchCase.LOSE);
-            player.calculateMoney(MatchCase.LOSE, dealer.isDealerBlackjack());
+            player.calculateMoney(MatchCase.LOSE, dealer.isBlackjack());
         }
         return matchResult;
     }

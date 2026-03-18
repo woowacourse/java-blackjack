@@ -1,5 +1,7 @@
 package domain;
 
+import domain.enums.MatchCase;
+
 public class Betting {
     public static final double BLACKJACK_BONUS = 1.5;
 
@@ -9,6 +11,21 @@ public class Betting {
     public Betting(int bettingMoney) {
         this.bettingMoney = bettingMoney;
         this.bettingScore = 0;
+    }
+
+    public void calculateMoney(MatchCase matchCase, boolean isPlayerBlackjack, boolean isDealerBlackjack) {
+        if (isPlayerBlackjack && !isDealerBlackjack) {
+            gainMoney();
+            return;
+        }
+        if (matchCase.equals(MatchCase.LOSE)) {
+            loseMoney();
+            return;
+        }
+        if (matchCase.equals(MatchCase.WIN)) {
+            return;
+        }
+        resetMoneyZero();
     }
 
     public void resetMoneyZero() {

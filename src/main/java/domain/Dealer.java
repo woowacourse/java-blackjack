@@ -27,7 +27,7 @@ public class Dealer {
         return cards.getFinalScore() > Game.BLACKJACK_VALUE;
     }
 
-    public boolean isDealerBlackjack() {
+    public boolean isBlackjack() {
         return cards.isBlackjack();
     }
 

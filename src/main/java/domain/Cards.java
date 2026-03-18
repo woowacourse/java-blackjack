@@ -26,6 +26,10 @@ public class Cards {
         return getFinalScore() == Game.BLACKJACK_VALUE && cards.size() == CARD_COUNT;
     }
 
+    public boolean isBust() {
+        return getFinalScore() > Game.BLACKJACK_VALUE;
+    }
+
     public int calculateScore() {
         int total = 0;
         for (Card card : cards) {
