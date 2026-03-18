@@ -160,6 +160,62 @@ class PlayerTest {
     }
 
     @Test
+    @DisplayName("플레이어가 블랙잭이고 딜러가 카드 3장으로 21점이면 플레이어가 승리한다.")
+    void determinePlayerBlackjackWinsAgainstDealerTwentyOne() {
+        // given
+        Dealer dealer = Dealer.from();
+        Hand dealerTwentyOne = Hand.from(List.of(
+            new Card(Rank.SEVEN, Suit.SPADE),
+            new Card(Rank.SEVEN, Suit.HEART),
+            new Card(Rank.SEVEN, Suit.DIAMOND)
+        ));
+        Hand playerBlackjack = Hand.from(List.of(
+            new Card(Rank.ACE, Suit.SPADE),
+            new Card(Rank.JACK, Suit.HEART)
+        ));
+        dealer.receiveCard(dealerTwentyOne.getCards());
+        Player player = new Player(Nickname.from("boye"), Role.PLAYER, Amount.from("10000"));
+        player.receiveCard(playerBlackjack.getCards());
+
+        // when
+        PlayerGameResult playerGameResult = player.determinePlayerResult(dealer);
+
+        // then
+        assertAll(
+            () -> assertThat(playerGameResult.matchResult()).isEqualTo(MatchResult.WIN),
+            () -> assertThat(playerGameResult.profit()).isEqualTo(15000L)
+        );
+    }
+
+    @Test
+    @DisplayName("딜러가 블랙잭이고 플레이어가 카드 3장으로 21점이면 플레이어는 패배한다.")
+    void determineDealerBlackjackWinsAgainstPlayerTwentyOne() {
+        // given
+        Dealer dealer = Dealer.from();
+        Hand dealerBlackjack = Hand.from(List.of(
+            new Card(Rank.ACE, Suit.SPADE),
+            new Card(Rank.JACK, Suit.HEART)
+        ));
+        Hand playerTwentyOne = Hand.from(List.of(
+            new Card(Rank.SEVEN, Suit.SPADE),
+            new Card(Rank.SEVEN, Suit.HEART),
+            new Card(Rank.SEVEN, Suit.DIAMOND)
+        ));
+        dealer.receiveCard(dealerBlackjack.getCards());
+        Player player = new Player(Nickname.from("boye"), Role.PLAYER, Amount.from("10000"));
+        player.receiveCard(playerTwentyOne.getCards());
+
+        // when
+        PlayerGameResult playerGameResult = player.determinePlayerResult(dealer);
+
+        // then
+        assertAll(
+            () -> assertThat(playerGameResult.matchResult()).isEqualTo(MatchResult.LOSE),
+            () -> assertThat(playerGameResult.profit()).isEqualTo(-10000L)
+        );
+    }
+
+    @Test
     @DisplayName("플레이어가 bust되면 돈을 모두 잃는다.")
     void determineWhenPlayerBusted() {
         // given
