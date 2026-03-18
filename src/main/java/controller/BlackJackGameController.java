@@ -54,19 +54,21 @@ public class BlackJackGameController {
         return new Money(InputView.askPlayerBettingMoney(playerName));
     }
 
-
     private void playGame(BlackJackGame blackJackGame) {
-        blackJackGame.getPlayers().forEach(player -> playGameWithPlayer(blackJackGame, player));
+        playGameWithCurrentPlayer(blackJackGame);
         playGameWithDealer(blackJackGame);
     }
 
-    private void playGameWithPlayer(BlackJackGame blackJackGame, Player player) {
-        while (blackJackGame.canPlayerReceiveCard(player)) {
-            if (isStopGame(player)) {
-                break;
+    private void playGameWithCurrentPlayer(BlackJackGame blackJackGame) {
+        while (blackJackGame.hasCurrentPlayer()) {
+            while (blackJackGame.canCurrentPlayerReceiveCard()) {
+                if (isStopGame(blackJackGame)) {
+                    break;
+                }
+                blackJackGame.hitCurrentPlayer();
+                OutputView.printCards(ParticipantCardsDto.from(blackJackGame.getCurrentPlayer()));
             }
-            blackJackGame.playGameWithPlayer(player);
-            OutputView.printCards(ParticipantCardsDto.from(player));
+            blackJackGame.moveToNextPlayer();
         }
     }
 
@@ -77,9 +79,9 @@ public class BlackJackGameController {
         }
     }
 
-    private boolean isStopGame(Player player) {
-        if (isStop(InputView.askContinue(player.getName()))) {
-            OutputView.printCards(ParticipantCardsDto.from(player));
+    private boolean isStopGame(BlackJackGame blackJackGame) {
+        if (isStop(InputView.askContinue(blackJackGame.getCurrentPlayerName()))) {
+            OutputView.printCards(ParticipantCardsDto.from(blackJackGame.getCurrentPlayer()));
             return true;
         }
         return false;

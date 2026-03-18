@@ -4,14 +4,33 @@ import java.util.List;
 
 public class BlackJackGame {
     private static final int INITIAL_CARD_COUNT = 2;
+
     private final Deck deck;
     private final List<Player> players;
     private final Dealer dealer;
+    private int currentPlayerIndex;
 
     public BlackJackGame(Deck deck, List<Player> players, Dealer dealer) {
         this.deck = deck;
         this.players = players;
         this.dealer = dealer;
+        currentPlayerIndex = 0;
+    }
+
+    public void moveToNextPlayer() {
+        currentPlayerIndex++;
+    }
+
+    public boolean hasCurrentPlayer() {
+        return players.size() > currentPlayerIndex;
+    }
+
+    public Player getCurrentPlayer() {
+        return players.get(currentPlayerIndex);
+    }
+
+    public String getCurrentPlayerName() {
+        return getCurrentPlayer().getName();
     }
 
     public void distributeInitialCards() {
@@ -23,12 +42,12 @@ public class BlackJackGame {
         distributeCard(dealer);
     }
 
-    public void playGameWithPlayer(Player player) {
-        distributeCard(player);
+    public void hitCurrentPlayer() {
+        distributeCard(getCurrentPlayer());
     }
 
-    public boolean canPlayerReceiveCard(Player player) {
-        return player.canReceiveCard();
+    public boolean canCurrentPlayerReceiveCard() {
+        return getCurrentPlayer().canReceiveCard();
     }
 
     public boolean canDealerReceiveCard() {
