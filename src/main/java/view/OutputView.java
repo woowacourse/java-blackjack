@@ -1,12 +1,9 @@
 package view;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import domain.Card;
 import domain.Dealer;
-import domain.Game;
 import domain.dto.BettingResultDto;
 import domain.dto.CardContentDto;
 import domain.dto.FinalCardDto;

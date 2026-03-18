@@ -41,7 +41,7 @@ public class Game {
         for (Player player : players) {
             MatchCase matchCase = MatchCase.from(player.getCardsTotalSum(), dealer.getCardsTotalSum());
             matchResult.put(player.getName(), matchCase);
-            player.calculateMoney(matchCase,dealer.isBlackjack());
+            player.calculateMoney(matchCase, dealer.isBlackjack());
         }
         return matchResult;
     }
@@ -54,7 +54,7 @@ public class Game {
                 continue;
             }
             matchResult.put(player.getName(), MatchCase.LOSE);
-            player.calculateMoney(MatchCase.LOSE,dealer.isBlackjack());
+            player.calculateMoney(MatchCase.LOSE, dealer.isBlackjack());
         }
         return matchResult;
     }

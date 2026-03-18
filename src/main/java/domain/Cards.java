@@ -30,10 +30,6 @@ public class Cards {
         return getFinalScore() > Game.BLACKJACK_VALUE;
     }
 
-    public boolean needAdditionalCard(int threshold) {
-        return getFinalScore() <= Dealer.ADDITIONAL_THRESHOLD;
-    }
-
     public int calculateScore() {
         int total = 0;
         for (Card card : cards) {
@@ -53,9 +49,10 @@ public class Cards {
         return calculateScore() + calculateAceScore();
     }
 
-    public  Card getFirstCard() {
+    public Card getFirstCard() {
         return getCards().getFirst();
     }
+
     public List<Card> getCards() {
         return new ArrayList<>(cards);
     }

@@ -4,7 +4,8 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
-    protected Cards cards = new Cards();;
+    protected Cards cards = new Cards();
+    ;
 
     public void addInitializedCard(Deck deck) {
         add(deck.pop());
@@ -34,6 +35,5 @@ public abstract class Participant {
     public int getCardsTotalSum() {
         return cards.getFinalScore();
     }
-
 
 }

@@ -22,10 +22,6 @@ public class Card {
         return cardRank;
     }
 
-    public CardShape getCardShape() {
-        return cardShape;
-    }
-
     public String getCardDisplay() {
         return cardShape.getName()+cardRank.getName();
     }
