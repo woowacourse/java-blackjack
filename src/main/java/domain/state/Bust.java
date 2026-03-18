@@ -3,6 +3,7 @@ package domain.state;
 import domain.Hand;
 import domain.WinningStatus;
 import domain.card.Card;
+import exception.ErrorMessage;
 
 public final class Bust extends Started {
 
@@ -12,7 +13,7 @@ public final class Bust extends Started {
 
     @Override
     public ParticipantState draw(Card card) {
-        throw new IllegalStateException("Bust 상태에서는 hit할 수 없습니다.");
+        throw new IllegalStateException(ErrorMessage.CANNOT_HIT_ON_BUST.getMessage());
     }
 
     @Override

@@ -4,6 +4,7 @@ import domain.BlackjackRule;
 import domain.Hand;
 import domain.WinningStatus;
 import domain.card.Card;
+import exception.ErrorMessage;
 
 public final class Hit extends Started {
     public static final int BLACKJACK_HAND_SIZE = 2;
@@ -29,7 +30,7 @@ public final class Hit extends Started {
 
     @Override
     public WinningStatus calculateWinningStatus(ParticipantState dealerState){
-        throw new IllegalStateException("Hit 상태에서는 승패를 계산할 수 없습니다.");
+        throw new IllegalStateException(ErrorMessage.CANNOT_CALCULATE_WINNING_STATUS_ON_HIT.getMessage());
     }
 
     @Override
