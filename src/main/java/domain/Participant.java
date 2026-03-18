@@ -7,10 +7,10 @@ import domain.state.ParticipantState;
 import java.util.List;
 
 public abstract class Participant {
-    protected final String name;
+    protected final Name name;
     protected ParticipantState state;
 
-    protected Participant(String name) {
+    protected Participant(Name name) {
         this.name = name;
         this.state = new Hit(new Hand());
     }
@@ -34,7 +34,7 @@ public abstract class Participant {
     public abstract boolean canHit();
 
     public String getName() {
-        return name;
+        return name.name();
     }
 
     public int getScore() {

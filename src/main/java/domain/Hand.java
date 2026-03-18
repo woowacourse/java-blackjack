@@ -37,10 +37,6 @@ public class Hand {
                 .count();
     }
 
-    public boolean isBurst() {
-        return getSum() > BlackjackRule.BLACKJACK_SCORE;
-    }
-
     public int getSize() {
         return cards.size();
     }

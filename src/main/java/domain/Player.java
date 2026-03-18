@@ -4,7 +4,7 @@ import domain.state.ParticipantState;
 
 public class Player extends Participant {
 
-    public Player(String name) {
+    public Player(Name name) {
         super(name);
     }
 

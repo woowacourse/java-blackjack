@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PlayerTest {
 
     private Player createPlayerWithCards(String name, Card... cards) {
-        Player player = new Player(name);
+        Player player = new Player(new Name(name));
         for (Card card : cards) {
             player.draw(card);
         }
@@ -20,7 +20,7 @@ class PlayerTest {
     @Test
     void 플레이어가_카드를_뽑으면_손패의_크기가_1_증가한다() {
         // given
-        Player player = new Player("봉구스");
+        Player player = new Player(new Name("봉구스"));
 
         // when
         player.draw(new Card(Suit.CLUBS, Rank.ACE));
@@ -31,7 +31,7 @@ class PlayerTest {
 
     @Test
     void 플레이어는_초기상태에서_hit할수있다() {
-        Player player = new Player("봉구스");
+        Player player = new Player(new Name("시오"));
         assertTrue(player.canHit());
     }
 

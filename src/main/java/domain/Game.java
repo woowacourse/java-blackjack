@@ -19,7 +19,6 @@ public class Game {
         this.deck = deck;
         this.dealer = new Dealer();
         this.players = playerNames.stream()
-                .map(Name::name)
                 .map(Player::new)
                 .toList();
         initCards();

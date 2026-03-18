@@ -2,7 +2,6 @@ package domain;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,8 +11,8 @@ class BettingTableTest {
     @Test
     void 승리시_베팅금액은_1배로_정산된다() {
         // given
-        Player player1 = new Player("시오");
-        Player player2 = new Player("봉구스");
+        Player player1 = new Player(new Name("시오"));
+        Player player2 = new Player(new Name("봉구스"));
         Map<Player, Money> bets = Map.of(
                 player1, new Money(1000L),
                 player2, new Money(2000L)
@@ -32,7 +31,7 @@ class BettingTableTest {
     @Test
     void 패배시_베팅금액은_1배로_차감된다() {
         // given
-        Player player1 = new Player("시오");
+        Player player1 = new Player(new Name("시오"));
         Map<Player, Money> bets = Map.of(
                 player1, new Money(1000L)
         );
@@ -48,7 +47,7 @@ class BettingTableTest {
     @Test
     void 블랙잭일_때_베팅금액은_일점오배로_정산된다() {
         // given
-        Player player1 = new Player("시오");
+        Player player1 = new Player(new Name("시오"));
         Map<Player, Money> bets = Map.of(
                 player1, new Money(1000L)
         );
@@ -64,8 +63,8 @@ class BettingTableTest {
     @Test
     void 승리한_플레이어들의_베팅금액만큼_딜러수익은_차감된다() {
         // given
-        Player player1 = new Player("시오");
-        Player player2 = new Player("봉구스");
+        Player player1 = new Player(new Name("시오"));
+        Player player2 = new Player(new Name("봉구스"));
         Map<Player, Money> bets = Map.of(
                 player1, new Money(1000L),
                 player2, new Money(2000L)
@@ -83,8 +82,8 @@ class BettingTableTest {
     @Test
     void 패배한_플레이어들의_베팅금액만큼_딜러수익은_증가한다() {
         // given
-        Player player1 = new Player("시오");
-        Player player2 = new Player("봉구스");
+        Player player1 = new Player(new Name("시오"));
+        Player player2 = new Player(new Name("봉구스"));
         Map<Player, Money> bets = Map.of(
                 player1, new Money(2000L),
                 player2, new Money(3000L)
@@ -102,8 +101,8 @@ class BettingTableTest {
     @Test
     void 블랙잭으로_승리한_플레이어들의_베팅금액만큼_딜러수익은_차감된다() {
         // given
-        Player player1 = new Player("시오");
-        Player player2 = new Player("봉구스");
+        Player player1 = new Player(new Name("시오"));
+        Player player2 = new Player(new Name("봉구스"));
         Map<Player, Money> bets = Map.of(
                 player1, new Money(1000L),
                 player2, new Money(2000L)
