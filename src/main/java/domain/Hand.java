@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
+    public static final int BLACKJACK_SCORE = 21;
     public static final int ACE_SCORE_ADJUSTMENT = 10;
     private final List<Card> cards;
 
@@ -17,7 +18,7 @@ public class Hand {
         int sum = calculateInitSum();
         long aceCount = countAce();
 
-        while (aceCount > 0 && sum > BlackjackRule.BLACKJACK_SCORE) {
+        while (aceCount > 0 && sum > BLACKJACK_SCORE) {
             sum -= ACE_SCORE_ADJUSTMENT;
             aceCount--;
         }
