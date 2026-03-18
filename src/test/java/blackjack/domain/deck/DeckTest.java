@@ -8,9 +8,12 @@ import org.junit.jupiter.api.Test;
 public class DeckTest {
 
     @Test
-    void 카드_뽑기_테스트() {
+    void 카드_꺼내오기_테스트() {
+        // given
+        Deck deck = Deck.createWithShuffled();
+
         // when
-        Card card = Deck.pop();
+        Card card = deck.pop();
 
         // then
         assertThat(card).isInstanceOf(Card.class);

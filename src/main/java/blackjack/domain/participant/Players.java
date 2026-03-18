@@ -23,9 +23,9 @@ public class Players {
         return new Players(playersName);
     }
 
-    public void draw() {
+    public void draw(Deck deck) {
         for (Player player : players) {
-            player.draw(Deck.pop());
+            player.draw(deck.pop());
         }
     }
 

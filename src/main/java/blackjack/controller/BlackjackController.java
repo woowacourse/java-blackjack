@@ -30,12 +30,13 @@ public class BlackjackController {
     public void run() {
         Players players = readPlayers();
         Dealer dealer = new Dealer();
+        Deck deck = Deck.createWithShuffled();
 
         Bettings bettings = readBettingAmounts(players);
-        setInitialCards(players, dealer);
+        setInitialCards(players, dealer, deck);
         printInitialSettings(players, dealer);
 
-        getMoreCardsOfParticipants(players, dealer);
+        getMoreCardsOfParticipants(players, dealer, deck);
 
         printCardsOfParticipants(players, dealer);
         printResult(bettings, players, dealer);
@@ -55,11 +56,10 @@ public class BlackjackController {
         return Bettings.of(bettings);
     }
 
-    private void setInitialCards(Players players, Dealer dealer) {
-        Deck.shuffle();
+    private void setInitialCards(Players players, Dealer dealer, Deck deck) {
         for (int i = 0; i < SIZE_OF_INITIAL_CARD; i++) {
-            players.draw();
-            dealer.draw(Deck.pop());
+            players.draw(deck);
+            dealer.draw(deck.pop());
         }
     }
 
@@ -72,20 +72,20 @@ public class BlackjackController {
         outputView.println();
     }
 
-    private void getMoreCardsOfParticipants(Players players, Dealer dealer) {
-        getMoreCardsOfPlayers(players);
-        getMoreCardsOfDealer(dealer, players);
+    private void getMoreCardsOfParticipants(Players players, Dealer dealer, Deck deck) {
+        getMoreCardsOfPlayers(players, deck);
+        getMoreCardsOfDealer(dealer, players, deck);
     }
 
-    private void getMoreCardsOfPlayers(Players players) {
+    private void getMoreCardsOfPlayers(Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
-            getMoreCardsOfPlayer(player);
+            getMoreCardsOfPlayer(player, deck);
         }
     }
 
-    private void getMoreCardsOfPlayer(Player player) {
+    private void getMoreCardsOfPlayer(Player player, Deck deck) {
         while (player.canDraw() && readPlayerWantMoreCard(player)) {
-            player.draw(Deck.pop());
+            player.draw(deck.pop());
             outputView.printCards(player.getName(), player.getCardsName());
         }
         if (player.hasNeverDrawn(SIZE_OF_INITIAL_CARD)) {
@@ -97,12 +97,12 @@ public class BlackjackController {
         return inputView.readMoreCard(player.getName());
     }
 
-    private void getMoreCardsOfDealer(Dealer dealer, Players players) {
+    private void getMoreCardsOfDealer(Dealer dealer, Players players, Deck deck) {
         if (players.isAllPlayersBurst()) {
             return;
         }
         while (dealer.canDraw()) {
-            dealer.draw(Deck.pop());
+            dealer.draw(deck.pop());
             outputView.printGetMoreCardsMessageForDealer(dealer.getName());
         }
     }
