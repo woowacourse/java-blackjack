@@ -81,7 +81,7 @@ public class UserTest {
 
     @Test
     @DisplayName("카드 합이 21점 초과인 경우, 버스트다.")
-    void 유저_카드_버스트_테스트() {
+    void 유저_카드_버스트_초과_테스트() {
         // given
         User user = UserFixture.createUserWithCards(
                 List.of(new Card(Suit.SPADE, Rank.SEVEN),
@@ -91,5 +91,19 @@ public class UserTest {
 
         // when & then
         assertThat(user.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("카드 합이 21점 이하인 경우, 버스트가 아니다.")
+    void 유저_카드_버스트_이하_테스트() {
+        // given
+        User user = UserFixture.createUserWithCards(
+                List.of(new Card(Suit.SPADE, Rank.SEVEN),
+                        new Card(Suit.CLUB, Rank.SEVEN),
+                        new Card(Suit.CLUB, Rank.SEVEN))
+        );
+
+        // when & then
+        assertThat(user.isBust()).isFalse();
     }
 }
