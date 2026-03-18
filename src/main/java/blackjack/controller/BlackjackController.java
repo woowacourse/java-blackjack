@@ -24,7 +24,7 @@ public class BlackjackController {
         BetAmounts betAmounts = retryUntilSuccess(
                 () -> blackjackGame.createBetAmount(InputView::readBetAmount, users));
 
-        provideInitCardsAndPrint(users);
+        drawInitCardsAndPrint(users);
 
         hit(users);
 
@@ -35,8 +35,8 @@ public class BlackjackController {
         blackjackGame.end(InputView::closeScanner);
     }
 
-    private void provideInitCardsAndPrint(Users users) {
-        blackjackGame.provideInitCards(users);
+    private void drawInitCardsAndPrint(Users users) {
+        blackjackGame.drawInitCards(users);
         OutputView.printInitCards(users);
     }
 
@@ -51,7 +51,7 @@ public class BlackjackController {
     }
 
     private void printProfitResult(Users users, BetAmounts betAmounts) {
-        ProfitResult profitResult = blackjackGame.determineWinner(users, betAmounts);
+        ProfitResult profitResult = blackjackGame.judgeWinner(users, betAmounts);
         OutputView.printGameResult(profitResult, users);
     }
 }

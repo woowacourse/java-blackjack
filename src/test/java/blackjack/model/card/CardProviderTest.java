@@ -22,7 +22,7 @@ class CardProviderTest {
         Users users = new Users(players, dealer);
 
         // when
-        cardProvider.provideInitCards(users);
+        cardProvider.drawInitCards(users);
 
         // then
         assertThat(players).allSatisfy(player ->
@@ -36,7 +36,7 @@ class CardProviderTest {
         Player player = new Player("pobi");
         CardProvider cardProvider = new CardProvider();
 
-        cardProvider.provideOneCard(player);
+        cardProvider.drawOneCard(player);
 
         assertThat(player.cards().size()).isEqualTo(1);
     }

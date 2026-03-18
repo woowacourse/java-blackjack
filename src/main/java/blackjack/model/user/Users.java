@@ -41,7 +41,7 @@ public class Users {
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_DEALER_NOT_FOUND));
     }
 
-    public ProfitResult determineWinner(BetAmounts betAmounts) {
+    public ProfitResult judgeWinner(BetAmounts betAmounts) {
         Map<User, Integer> result = new HashMap<>();
         List<User> players = getPlayers();
         User dealer = getDealer();

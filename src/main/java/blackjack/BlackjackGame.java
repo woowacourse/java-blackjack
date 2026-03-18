@@ -7,7 +7,6 @@ import blackjack.model.bet.BetAmounts;
 import blackjack.model.card.CardProvider;
 import blackjack.model.card.HitCommand;
 import blackjack.model.gameresult.ProfitResult;
-import blackjack.model.user.Dealer;
 import blackjack.model.user.User;
 import blackjack.model.user.Users;
 import java.util.HashMap;
@@ -40,8 +39,8 @@ public class BlackjackGame {
         return new BetAmounts(betAmounts);
     }
 
-    public void provideInitCards(Users users) {
-        cardProvider.provideInitCards(users);
+    public void drawInitCards(Users users) {
+        cardProvider.drawInitCards(users);
     }
 
     public void hitPlayers(List<User> users, Function<User, String> readHitCommand,
@@ -53,13 +52,13 @@ public class BlackjackGame {
 
     public void hitDealer(User user, Runnable printDealerHit) {
         while (user.isHitAvailable()) {
-            cardProvider.provideOneCard(user);
+            cardProvider.drawOneCard(user);
             printDealerHit.run();
         }
     }
 
-    public ProfitResult determineWinner(Users users, BetAmounts betAmounts) {
-        return users.determineWinner(betAmounts);
+    public ProfitResult judgeWinner(Users users, BetAmounts betAmounts) {
+        return users.judgeWinner(betAmounts);
     }
 
     public void end(Runnable closeScanner) {
@@ -69,7 +68,7 @@ public class BlackjackGame {
     private void hitPlayer(User user, Function<User, String> readHitCommand, Consumer<User> printPlayerCards,
                            Runnable printCantHit) {
         while (retryUntilSuccess(() -> checkY(user, readHitCommand)) && isHitAvailable(user, printCantHit)) {
-            cardProvider.provideOneCard(user);
+            cardProvider.drawOneCard(user);
             printPlayerCards.accept(user);
         }
     }

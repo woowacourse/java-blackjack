@@ -30,22 +30,22 @@ public class CardProvider {
         this.deck.addAll(cards);
     }
 
-    public void provideInitCards(Users users) {
+    public void drawInitCards(Users users) {
         for (User user : users.getUsers()) {
-            provideTwoCard(user);
+            drawTwoCard(user);
         }
     }
 
-    public void provideOneCard(User user) {
+    public void drawOneCard(User user) {
         if (deck.peek() == null) {
             initDeck();
         }
-        user.addCard(deck.poll());
+        user.draw(deck.poll());
     }
 
-    private void provideTwoCard(User user) {
+    private void drawTwoCard(User user) {
         for (int i = INIT_CARDS_START_IDX; i < INIT_CARDS_END_IDX; i++) {
-            provideOneCard(user);
+            drawOneCard(user);
         }
     }
 }

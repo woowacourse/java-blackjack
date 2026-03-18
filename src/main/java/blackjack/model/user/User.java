@@ -27,7 +27,7 @@ public abstract class User {
         return hand.getCards();
     }
 
-    public void addCard(Card card) {
+    public void draw(Card card) {
         hand.draw(card);
     }
 

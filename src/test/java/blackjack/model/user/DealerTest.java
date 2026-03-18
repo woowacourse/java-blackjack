@@ -14,8 +14,8 @@ class DealerTest {
     void isHitAvailable_return_true() {
         //given
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Rank.K, Suit.DIAMOND));
-        dealer.addCard(new Card(Rank.SIX, Suit.DIAMOND));
+        dealer.draw(new Card(Rank.K, Suit.DIAMOND));
+        dealer.draw(new Card(Rank.SIX, Suit.DIAMOND));
 
         //when & then
         Assertions.assertThat(dealer.isHitAvailable()).isTrue();
@@ -26,8 +26,8 @@ class DealerTest {
     void isHitAvailable_return_false() {
         //given
         blackjack.model.user.Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Rank.K, Suit.DIAMOND));
-        dealer.addCard(new Card(Rank.SEVEN, Suit.DIAMOND));
+        dealer.draw(new Card(Rank.K, Suit.DIAMOND));
+        dealer.draw(new Card(Rank.SEVEN, Suit.DIAMOND));
 
         //when & then
         Assertions.assertThat(dealer.isHitAvailable()).isFalse();
