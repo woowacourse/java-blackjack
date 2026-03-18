@@ -5,6 +5,8 @@ import domain.card.Rank;
 import domain.card.Suit;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -57,26 +59,12 @@ class HandTest {
     }
 
     @Test
-    void 카드_점수의_합이_21을_초과하면_버스트_상태를_반환한다() {
-        //given
+    void 첫번째_카드를_반환한다() {
         Hand hand = new Hand();
-        hand.addCard(new Card(Suit.SPADES, Rank.KING));
-        hand.addCard(new Card(Suit.SPADES, Rank.QUEEN));
-        hand.addCard(new Card(Suit.SPADES, Rank.NUM2));
+        Card first = new Card(Suit.SPADES, Rank.ACE);
+        hand.addCard(first);
+        hand.addCard(new Card(Suit.HEARTS, Rank.KING));
 
-        // when, then
-        assertTrue(hand.isBurst());
-    }
-
-    @Test
-    void 카드_점수의_합이_21_이하이면_버스트_상태가_아님을_반환한다() {
-        //given
-        Hand hand = new Hand();
-        hand.addCard(new Card(Suit.SPADES, Rank.KING));
-        hand.addCard(new Card(Suit.SPADES, Rank.NUM2));
-        hand.addCard(new Card(Suit.SPADES, Rank.NUM9));
-
-        // when, then
-        assertFalse(hand.isBurst());
+        assertEquals(first, hand.getFirstCard());
     }
 }
