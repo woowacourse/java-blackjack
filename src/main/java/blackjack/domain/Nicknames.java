@@ -43,6 +43,9 @@ public class Nicknames {
         if (nicknames == null) {
             throw new IllegalArgumentException("닉네임 목록이 존재하지 않습니다.");
         }
+        if (nicknames.isEmpty()) {
+            throw new IllegalArgumentException("플레이어 이름은 1명 이상 입력해야 합니다.");
+        }
         long uniqueCount = nicknames.stream().distinct().count();
         if (nicknames.size() != uniqueCount) {
             throw new IllegalArgumentException("중복된 닉네임이 존재합니다.");
