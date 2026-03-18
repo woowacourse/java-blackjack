@@ -9,7 +9,7 @@ public enum WinningStatus {
     LOSE;
 
     public static WinningStatus of(Player player, Dealer dealer) {
-        if (isBustCase(player, dealer)) { // 버스트 승패 판단이 가능한 경우
+        if (isBustCase(player, dealer)) {
             return bustResult(player, dealer);
         }
 
@@ -33,7 +33,7 @@ public enum WinningStatus {
             return WIN;
         }
 
-        throw new IllegalStateException("버스트 상태가 올바르지 않습니다.");
+        throw new IllegalStateException("버스트 판정 분기에 진입했지만, 플레이어와 딜러 모두 버스트 상태가 아닙니다.");
     }
 
     private static boolean isBlackjackCase(Player player, Dealer dealer) {
@@ -56,7 +56,7 @@ public enum WinningStatus {
             return LOSE;
         }
 
-        throw new IllegalStateException("블랙잭 상태가 올바르지 않습니다.");
+        throw new IllegalStateException("블랙잭 판정 분기에 진입했지만, 플레이어와 딜러 모두 블랙잭이 아닙니다.");
     }
 
     private static WinningStatus compareScore(int playerScore, int dealerScore) {
