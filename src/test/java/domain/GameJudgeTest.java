@@ -2,6 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import fixture.DealerFixture;
 import fixture.UserFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +16,7 @@ public class GameJudgeTest {
     @DisplayName("유저가 21점을 초과하면, 무조건 패배한다.")
     void 유저_버스트_패배_테스트() {
         // given 딜러 18점
-        Dealer dealer = createDealerWithCards(List.of(
+        Dealer dealer = DealerFixture.createDealerWithCards(List.of(
                 new Card(Suit.CLUB, Rank.QUEEN),
                 new Card(Suit.CLUB, Rank.EIGHT)
         ));
@@ -38,7 +39,7 @@ public class GameJudgeTest {
     @DisplayName("딜러와 유저가 모두 2장으로 21점인 경우, 무승부가 된다.")
     void 둘_다_블랙잭인_경우_무승부_테스트() {
         // given
-        Dealer dealer = createDealerWithCards(List.of(
+        Dealer dealer = DealerFixture.createDealerWithCards(List.of(
                 new Card(Suit.SPADE, Rank.ACE),
                 new Card(Suit.SPADE, Rank.KING)
         ));
@@ -60,7 +61,7 @@ public class GameJudgeTest {
     @DisplayName("딜러가 블랙잭이고, 유저가 3장으로 21점인 경우, 딜러가 블랙잭으로 승리한다.")
     void 딜러_블랙잭_유저_블랙잭_아님_테스트() {
         // given
-        Dealer dealer = createDealerWithCards(List.of(
+        Dealer dealer = DealerFixture.createDealerWithCards(List.of(
                 new Card(Suit.SPADE, Rank.ACE),
                 new Card(Suit.SPADE, Rank.KING)
         ));
@@ -83,7 +84,7 @@ public class GameJudgeTest {
     @DisplayName("딜러가 21점을 초과하고, 유저는 21점 이하인 경우, 유저가 무조건 승리한다.")
     void 딜러_버스트_유저_승리_테스트() {
         // given 딜러 26점
-        Dealer dealer = createDealerWithCards(List.of(
+        Dealer dealer = DealerFixture.createDealerWithCards(List.of(
                 new Card(Suit.CLUB, Rank.TEN),
                 new Card(Suit.CLUB, Rank.EIGHT),
                 new Card(Suit.CLUB, Rank.EIGHT)
@@ -106,7 +107,7 @@ public class GameJudgeTest {
     @DisplayName("딜러가 18점이고, 유저가 19점인 경우, 유저가 승리한다.")
     void 딜러_21점_미만_유저_승리_테스트() {
         // given 딜러 18점
-        Dealer dealer = createDealerWithCards(List.of(
+        Dealer dealer = DealerFixture.createDealerWithCards(List.of(
                 new Card(Suit.CLUB, Rank.QUEEN),
                 new Card(Suit.CLUB, Rank.EIGHT)
         ));
@@ -128,7 +129,7 @@ public class GameJudgeTest {
     @DisplayName("딜러가 18점이고, 유저가 2장으로 21점인 경우, 유저가 블랙잭으로 승리한다.")
     void 딜러_21점_미만_유저_블랙잭_테스트() {
         // given 딜러 18점
-        Dealer dealer = createDealerWithCards(List.of(
+        Dealer dealer = DealerFixture.createDealerWithCards(List.of(
                 new Card(Suit.CLUB, Rank.QUEEN),
                 new Card(Suit.CLUB, Rank.EIGHT)
         ));
@@ -150,7 +151,7 @@ public class GameJudgeTest {
     @DisplayName("딜러가 18점이고, 유저가 3장으로 21점인 경우, 유저가 일반 승리한다.")
     void 딜러_21점_미만_유저_카드_세_장_블랙잭_아님_테스트() {
         // given 딜러 18점
-        Dealer dealer = createDealerWithCards(List.of(
+        Dealer dealer = DealerFixture.createDealerWithCards(List.of(
                 new Card(Suit.CLUB, Rank.QUEEN),
                 new Card(Suit.CLUB, Rank.EIGHT)
         ));
@@ -167,14 +168,5 @@ public class GameJudgeTest {
 
         // then
         assertThat(gameResult).isEqualTo(GameResult.WIN);
-    }
-
-    private Dealer createDealerWithCards(List<Card> cards) {
-        Dealer dealer = new Dealer();
-        for (Card card : cards) {
-            dealer.receiveCard(card);
-        }
-        dealer.calculateScore();
-        return dealer;
     }
 }
