@@ -4,7 +4,6 @@ import model.BettingCalculator;
 import model.Dealer;
 import model.GameResult;
 import model.Players;
-import view.OutputView;
 
 public class BlackJackGame {
     private final BlackJackRound round;
@@ -17,7 +16,6 @@ public class BlackJackGame {
 
     public void prepare() {
         round.betPlayers();
-        OutputView.printBlank();
         round.initialDeal();
     }
 
