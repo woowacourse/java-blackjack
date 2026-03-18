@@ -1,5 +1,6 @@
 package blackjack.model.card;
 
+import blackjack.model.gameresult.GameResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,19 +9,31 @@ import java.util.stream.Collectors;
 public class Hand {
 
     private static final int BLACKJACK_SCORE = 21;
-    private static final int INIT_CARDS_START_IDX = 0;
-    private static final int INIT_CARDS_END_IDX = 2;
     private static final int ACE_SCORE_ONE = 1;
     private static final int ACE_SCORE_ELEVEN = 11;
 
     private final List<Card> cards;
+    private HandState handState;
 
     public Hand() {
         this.cards = new ArrayList<>();
+        this.handState = new Hit();
     }
 
-    public List<Card> getCards() {
-        return List.copyOf(cards);
+    public GameResult judge(Hand otherHand) {
+        return handState.judge(this, otherHand);
+    }
+
+    public void setState(HandState handState) {
+        this.handState = handState;
+    }
+
+    public int size() {
+        return cards.size();
+    }
+
+    public void draw(Card card) {
+        handState.draw(this, card);
     }
 
     public void addCard(Card card) {
@@ -28,12 +41,15 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        List<Card> initCards = cards.subList(INIT_CARDS_START_IDX, INIT_CARDS_END_IDX);
-        return totalScore(initCards) == BLACKJACK_SCORE;
+        return handState.isBlackjack();
     }
 
     public boolean isBust() {
-        return totalScore(cards) > BLACKJACK_SCORE;
+        return handState.isBust();
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 
     public int calculateTotalScore() {

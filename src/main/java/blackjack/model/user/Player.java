@@ -10,7 +10,7 @@ public class Player extends User {
 
     @Override
     public boolean isHitAvailable() {
-        return totalScore() < BLACKJACK_SCORE;
+        return !isBlackjack() && !isBust();
     }
 
     @Override
