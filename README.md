@@ -32,15 +32,11 @@
 - [x] 참가자 별 베팅 금액 저장 
 
 ## 피드백
-- [x] HandTest isBusted() 테스트 추가하기
-- [x] isExactlyInstanceOf()로 변경
-- [x] AppConfig 에 DrawStrategy 변경
-- [x] WinDrawLose 네이밍
-- [x] 레포지토리 책임 조정하기
-  - 레포지토리 삭제
-- [x] domain의 common 패키지 조정하기
-- [x] DrawStrategy 한 곳에서만 상태를 관리하게 하기
-  - 피드백에 따라 카드나 전략을 파라미터로 전달하는 방식에 대해 많은 고민을 해봤습니다.
-  객체의 깊이가 깊어짐에 따라 파라미터로 주입되어야 하는 체인이 길어져 영향 범위가 커질 것이라 판단했습니다.
-  그래서 하나의 카드 덱을 공유하는 블랙잭 특성상 `AppConfig`에서 단 하나의 덱 인스턴스를 생성해 주입하되, 
-  여러 참가자 인스턴스가 생성되는 지점에서는 `sharedDeck`이라는 네이밍으로 공유 의도를 명시했습니다.
+- [ ] CardInfo, NameAndCardInfo 제거하거나 변경
+- [ ] DrawStrategy 의존성 변경
+- [ ] 네이밍 
+  - [ ] InfiniteDeck
+  - [ ] BlackJackNumber -> Score
+- [ ] PlayedGameResult -> Participants 에서 직접
+- [ ] 예외처리 NumberFormatException
+ 
