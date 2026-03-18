@@ -21,12 +21,10 @@ public class BettingResultTest {
         // given
         Dealer dealer = new Dealer();
         dealerCards.forEach(dealer::addCard);
-        dealer.checkBlackJack();
 
         Player player = new Player("pobi");
         playerCards.forEach(player::addCard);
         player.setMoney(new BettingMoney(playerStartMoney));
-        player.checkBlackJack();
 
         // when
         BettingResult bettingResult = new BettingResult();

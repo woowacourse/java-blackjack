@@ -20,14 +20,12 @@ public class MultiBettingResultTest {
         // given
         Dealer dealer = new Dealer();
         dealerCards.forEach(dealer::addCard);
-        dealer.checkBlackJack();
 
         List<Player> players = new ArrayList<>();
         for (PlayerScenario playerScenario : playerScenarios) {
             Player player = new Player(playerScenario.name());
             playerScenario.cards().forEach(player::addCard);
             player.setMoney(playerScenario.bettingMoney());
-            player.checkBlackJack();
             players.add(player);
         }
 
