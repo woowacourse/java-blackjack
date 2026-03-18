@@ -15,16 +15,16 @@ public enum Rank {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    private final String description;
+    private final String symbol;
     private final int score;
 
-    Rank(String description, int score) {
-        this.description = description;
+    Rank(String symbol, int score) {
+        this.symbol = symbol;
         this.score = score;
     }
 
-    public String getDescription() {
-        return description;
+    public String getSymbol() {
+        return symbol;
     }
 
     public int getScore() {
