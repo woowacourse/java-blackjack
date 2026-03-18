@@ -1,10 +1,10 @@
 package domain;
 
-import static domain.BlackjackRule.BLACKJACK_TARGET_SCORE;
-
 import vo.GameResult;
 
 public class GameJudge {
+    private GameJudge() {}
+
     public static GameResult judgeResultForUser(User user, Dealer dealer) {
         int userTotalScore = user.getTotalScore();
         boolean isUserBlackjack = user.isBlackjack();
