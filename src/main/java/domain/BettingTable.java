@@ -18,14 +18,14 @@ public class BettingTable {
         return new BettingTable(moneyMap);
     }
 
-    public void settleBettingTable(Map<Player, WinningStatus> winningStatusMap) {
+    public void updateProfits(Map<Player, WinningStatus> winningStatusMap) {
         for (Map.Entry<Player, WinningStatus> entry : winningStatusMap.entrySet()) {
             WinningStatus winningStatus = winningStatusMap.get(entry.getKey());
-            settleBet(entry.getKey(), winningStatus);
+            updateProfit(entry.getKey(), winningStatus);
         }
     }
 
-    public void settleBet(Player player, WinningStatus winningStatus) {
+    public void updateProfit(Player player, WinningStatus winningStatus) {
         Money initialAmount = moneyTable.get(player);
         Money profit = initialAmount.calculateProfit(winningStatus);
         moneyTable.put(player, profit);

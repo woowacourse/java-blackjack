@@ -20,8 +20,8 @@ class BettingTableTest {
         BettingTable bettingTable = new BettingTable(bets);
 
         // when
-        bettingTable.settleBet(player1, WinningStatus.WIN);
-        bettingTable.settleBet(player2, WinningStatus.WIN);
+        bettingTable.updateProfit(player1, WinningStatus.WIN);
+        bettingTable.updateProfit(player2, WinningStatus.WIN);
 
         // then
         assertEquals(1000L, bettingTable.getPlayerMoneyAmount(player1));
@@ -38,7 +38,7 @@ class BettingTableTest {
         BettingTable bettingTable = new BettingTable(bets);
 
         // when
-        bettingTable.settleBet(player1, WinningStatus.LOSE);
+        bettingTable.updateProfit(player1, WinningStatus.LOSE);
 
         // then
         assertEquals(-1000L, bettingTable.getPlayerMoneyAmount(player1));
@@ -54,7 +54,7 @@ class BettingTableTest {
         BettingTable bettingTable = new BettingTable(bets);
 
         // when
-        bettingTable.settleBet(player1, WinningStatus.BLACKJACK_WIN);
+        bettingTable.updateProfit(player1, WinningStatus.BLACKJACK_WIN);
 
         // then
         assertEquals(1500L, bettingTable.getPlayerMoneyAmount(player1));
@@ -72,8 +72,8 @@ class BettingTableTest {
         BettingTable bettingTable = new BettingTable(bets);
 
         // when
-        bettingTable.settleBet(player1, WinningStatus.WIN);
-        bettingTable.settleBet(player2, WinningStatus.WIN);
+        bettingTable.updateProfit(player1, WinningStatus.WIN);
+        bettingTable.updateProfit(player2, WinningStatus.WIN);
 
         // then
         assertEquals(-3000L, bettingTable.calculateDealerProfit());
@@ -91,8 +91,8 @@ class BettingTableTest {
         BettingTable bettingTable = new BettingTable(bets);
 
         // when
-        bettingTable.settleBet(player1, WinningStatus.LOSE);
-        bettingTable.settleBet(player2, WinningStatus.LOSE);
+        bettingTable.updateProfit(player1, WinningStatus.LOSE);
+        bettingTable.updateProfit(player2, WinningStatus.LOSE);
 
         // then
         assertEquals(5000L, bettingTable.calculateDealerProfit());
@@ -110,8 +110,8 @@ class BettingTableTest {
         BettingTable bettingTable = new BettingTable(bets);
 
         // when
-        bettingTable.settleBet(player1, WinningStatus.BLACKJACK_WIN);
-        bettingTable.settleBet(player2, WinningStatus.BLACKJACK_WIN);
+        bettingTable.updateProfit(player1, WinningStatus.BLACKJACK_WIN);
+        bettingTable.updateProfit(player2, WinningStatus.BLACKJACK_WIN);
 
         // then
         assertEquals(-4500L, bettingTable.calculateDealerProfit());

@@ -22,7 +22,7 @@ public class BlackJackController {
         playDealer(game);
 
         Map<Player, WinningStatus> winningStatusMap = game.calculateAllResults();
-        bettingTable.settleBettingTable(winningStatusMap);
+        bettingTable.updateProfits(winningStatusMap);
         OutputView.printFinalResult(OutputDtoAssembler
                 .toFinalResultDto(game.getDealer(), game.getPlayers(), bettingTable));
     }
