@@ -7,16 +7,22 @@ import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
+import service.CardGenerator;
 
 public class Deck {
     private final Queue<Card> cards = new ArrayDeque<>();
 
-    public Deck(List<Card> cards) {
-        validateDuplicatedCards(cards);
+    private Deck(List<Card> cards) {
         this.cards.addAll(cards);
     }
 
-    private void validateDuplicatedCards(List<Card> cards) {
+    public static Deck create(CardGenerator cardGenerator) {
+        List<Card> generatedCards = cardGenerator.generate();
+        validateDuplicatedCards(generatedCards);
+        return new Deck(generatedCards);
+    }
+
+    private static void validateDuplicatedCards(List<Card> cards) {
         Set<Card> distinctCards = Set.copyOf(cards);
 
         if (distinctCards.size() != cards.size()) {

@@ -19,33 +19,18 @@ public class Hand {
     }
 
     public int calculateScore() {
-
-        int score = cards.stream()
-                .filter(card -> !card.getRank().equals(Rank.ACE))
-                .mapToInt(Card::getRankScore)
+        int totalScore = cards.stream()
+                .mapToInt(Card::rankScore)
                 .sum();
 
-        boolean aceExist = cards.stream()
-                .anyMatch(card -> card.getRank().equals(Rank.ACE));
+        boolean hasAce = cards.stream()
+                .anyMatch(card -> card.rank().equals(Rank.ACE));
 
-        if (aceExist) {
-            return (score + calculateAceScore(BLACKJACK_CRITERION - score));
+        if (hasAce && (totalScore + ACE_BONUS_SCORE) <= BLACKJACK_CRITERION) {
+            return totalScore + ACE_BONUS_SCORE;
         }
 
-        return score;
-    }
-
-    private int calculateAceScore(int remainScore) {
-        int minAceScore = cards.stream()
-                .filter(card -> card.getRank().equals(Rank.ACE))
-                .mapToInt(Card::getRankScore)
-                .sum();
-
-        if (remainScore < minAceScore + ACE_BONUS_SCORE) {
-            return minAceScore;
-        }
-
-        return minAceScore + ACE_BONUS_SCORE;
+        return totalScore;
     }
 
     public boolean isBust() {
@@ -54,5 +39,9 @@ public class Hand {
 
     public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    public int getSize() {
+        return cards.size();
     }
 }

@@ -1,11 +1,15 @@
 package util;
 
 import static constant.GameRule.YES_ANSWER;
+import static message.ErrorMessage.BETTING_MONEY_NOT_AVAILABLE;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class InputParser {
+
+    private InputParser() {
+    }
 
     private static final String DELIMITER = ",";
 
@@ -16,5 +20,13 @@ public class InputParser {
 
     public static boolean parseHitAnswer(String input) {
         return YES_ANSWER.contains(input);
+    }
+
+    public static long parseMoney(String input) {
+        try {
+            return Long.parseLong(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(BETTING_MONEY_NOT_AVAILABLE.getMessage());
+        }
     }
 }

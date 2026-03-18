@@ -6,26 +6,28 @@ import static message.ErrorMessage.PLAYER_NAME_DUPLICATED;
 import static message.ErrorMessage.PLAYER_NOT_FOUND;
 import static message.ErrorMessage.PLAYER_NUMBER_OUT_OF_RANGE;
 
+import domain.BlackjackRule;
 import domain.card.Card;
-import domain.enums.Result;
-import java.util.ArrayList;
+import domain.enums.GameResult;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 public class Players {
-    private final List<Player> players = new ArrayList<>();
+    private final Map<Name, Player> players = new LinkedHashMap<>();
 
     public Players(List<String> names) {
         validatePlayers(names);
-        players.addAll(names.stream()
-                .map(Player::new)
-                .toList());
+        names.forEach(name -> {
+            Name playerName = new Name(name);
+            players.put(playerName, new Player(playerName));
+        });
     }
 
-    public List<String> getAllPlayersName() {
-        return players.stream()
-                .map(Player::getName)
-                .toList();
+    public List<Name> getAllPlayerNames() {
+        return List.copyOf(players.keySet());
     }
 
     private void validatePlayers(List<String> names) {
@@ -46,49 +48,44 @@ public class Players {
         }
     }
 
-    public void distributeCard(String name, Card card) {
+    public void distributeCard(Name name, Card card) {
         Player foundPlayer = findPlayerByName(name);
         foundPlayer.addCard(card);
     }
 
-    public void distributeCards(String name, List<Card> cards) {
+    public void initializeCards(Name name, List<Card> cards) {
         Player foundPlayer = findPlayerByName(name);
-        foundPlayer.addCards(cards);
+        foundPlayer.receiveInitialCards(cards);
     }
 
-    private Player findPlayerByName(String name) {
-        return players.stream()
-                .filter(player -> player.getName().equals(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(PLAYER_NOT_FOUND.getMessage()));
-    }
-
-    public List<Result> decideAllResults(int dealerScore, boolean dealerBurst) {
-        List<Result> results = new ArrayList<>();
-        for (Player player : players) {
-            Result playerResult = Result.calculatePlayerResult(player, dealerScore, dealerBurst);
-            results.add(playerResult);
+    private Player findPlayerByName(Name name) {
+        if (!players.containsKey(name)) {
+            throw new IllegalArgumentException(PLAYER_NOT_FOUND.getMessage());
         }
-        return results;
+
+        return players.get(name);
     }
 
-    public boolean checkScoreUnderCriterion(String name) {
-        Player foundPlayer = findPlayerByName(name);
-        return foundPlayer.checkScoreUnderCriterion();
+    public Map<Name, GameResult> decidePlayerResults(Dealer dealer) {
+        Map<Name, GameResult> playerResults = new LinkedHashMap<>();
+        for (Entry<Name, Player> playerEntry : players.entrySet()) {
+            playerResults.put(playerEntry.getKey(), BlackjackRule.judgePlayerResult(playerEntry.getValue(), dealer));
+        }
+        return playerResults;
     }
 
-    public List<Card> getPlayerCards(String name) {
+    public List<Card> getPlayerCards(Name name) {
         Player foundPlayer = findPlayerByName(name);
         return foundPlayer.getHand();
     }
 
-    public Result getPlayerResult(String name, int dealerScore, boolean dealerBust) {
-        Player foundPlayer = findPlayerByName(name);
-        return Result.calculatePlayerResult(foundPlayer, dealerScore, dealerBust);
-    }
-
-    public int getPlayerScore(String name) {
+    public int getPlayerScore(Name name) {
         Player foundPlayer = findPlayerByName(name);
         return foundPlayer.getScore();
+    }
+
+    public boolean canDraw(Name name) {
+        Player foundPlayer = findPlayerByName(name);
+        return foundPlayer.canDraw();
     }
 }
