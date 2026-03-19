@@ -21,7 +21,7 @@ public class Hand {
         return from(new ArrayList<>());
     }
 
-    public Hand add(List<Card> cards) {
+    public Hand receive(List<Card> cards) {
         List<Card> copiedCards = new ArrayList<>(getCards());
         copiedCards.addAll(cards);
         return from(copiedCards);

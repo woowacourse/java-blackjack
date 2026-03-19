@@ -44,7 +44,7 @@ public abstract class Participant {
     }
 
     public Hand receiveCard(List<Card> drewCards) {
-        hand = hand.add(drewCards);
+        hand = hand.receive(drewCards);
         return hand;
     }
 
