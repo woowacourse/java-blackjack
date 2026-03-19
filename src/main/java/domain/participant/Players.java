@@ -7,12 +7,8 @@ import java.util.List;
 public class Players {
     private final List<Player> players;
 
-    private Players(final List<Player> players) {
+    public Players(final List<Player> players) {
         this.players = new ArrayList<>(players);
-    }
-
-    public static Players of(List<Player> playersList) {
-        return new Players(playersList);
     }
 
     public void dealOneCardToPlayers(Deck deck) {

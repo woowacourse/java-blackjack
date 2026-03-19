@@ -31,7 +31,7 @@ public class GameResultJudgeTest {
         player.addCard(new Card(Rank.QUEEN, Suit.DIAMOND));
         player.addCard(new Card(Rank.TWO, Suit.HEART)); // 22 bust
 
-        Players players = Players.of(List.of(player));
+        Players players = new Players(List.of(player));
 
         GameResultDto result = GameResultJudge.judge(dealer, players);
 
@@ -57,7 +57,7 @@ public class GameResultJudgeTest {
         player.addCard(new Card(Rank.TEN, Suit.CLUB));
         player.addCard(new Card(Rank.EIGHT, Suit.DIAMOND)); // 18
 
-        Players players = Players.of(List.of(player));
+        Players players = new Players(List.of(player));
 
         GameResultDto result = GameResultJudge.judge(dealer, players);
         PlayerResultDto playerResult = result.getPlayerResults().getFirst();
@@ -77,7 +77,7 @@ public class GameResultJudgeTest {
         player.addCard(new Card(Rank.TEN, Suit.CLUB));
         player.addCard(new Card(Rank.EIGHT, Suit.DIAMOND)); // 18
 
-        Players players = Players.of(List.of(player));
+        Players players = new Players(List.of(player));
 
         GameResultDto result = GameResultJudge.judge(dealer, players);
         PlayerResultDto playerResult = result.getPlayerResults().getFirst();
@@ -97,7 +97,7 @@ public class GameResultJudgeTest {
         player.addCard(new Card(Rank.NINE, Suit.CLUB));
         player.addCard(new Card(Rank.NINE, Suit.DIAMOND)); // 18
 
-        Players players = Players.of(List.of(player));
+        Players players = new Players(List.of(player));
 
         GameResultDto result = GameResultJudge.judge(dealer, players);
         PlayerResultDto playerResult = result.getPlayerResults().getFirst();
@@ -117,7 +117,7 @@ public class GameResultJudgeTest {
         player.addCard(new Card(Rank.ACE, Suit.CLUB));
         player.addCard(new Card(Rank.KING, Suit.DIAMOND)); // natural blackjack
 
-        Players players = Players.of(List.of(player));
+        Players players = new Players(List.of(player));
 
         GameResultDto result = GameResultJudge.judge(dealer, players);
         PlayerResultDto playerResult = result.getPlayerResults().getFirst();
@@ -142,7 +142,7 @@ public class GameResultJudgeTest {
         losePlayer.addCard(new Card(Rank.TEN, Suit.HEART));
         losePlayer.addCard(new Card(Rank.SEVEN, Suit.CLUB)); // 17 -> LOSE
 
-        Players players = Players.of(List.of(winPlayer, losePlayer));
+        Players players = new Players(List.of(winPlayer, losePlayer));
 
         GameResultDto result = GameResultJudge.judge(dealer, players);
 

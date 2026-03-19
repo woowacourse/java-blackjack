@@ -44,7 +44,7 @@ public class BlackJackGame {
             players.add(new Player(playerNames.get(i), bettingMoneyList.get(i)));
         }
 
-        this.players = Players.of(players);
+        this.players = new Players(players);
     }
 
     public List<Player> getPlayersToPlay() {

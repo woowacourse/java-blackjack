@@ -15,7 +15,7 @@ public class PlayersTest {
 
     @Test
     void 플레이어를_등록한다() {
-        Players players = Players.of(List.of(
+        Players players = new Players(List.of(
                 new Player(new Name("pobi"), new BettingMoney(1000L)),
                 new Player(new Name("abc"), new BettingMoney(1000L))
         ));
@@ -53,7 +53,7 @@ public class PlayersTest {
         normalPlayer.addCard(new Card(Rank.TWO, Suit.CLUB));
         normalPlayer.addCard(new Card(Rank.THREE, Suit.DIAMOND));
 
-        Players players = Players.of(List.of(blackJackPlayer, normalPlayer));
+        Players players = new Players(List.of(blackJackPlayer, normalPlayer));
 
         List<Player> result = players.getPlayersInTurn();
 

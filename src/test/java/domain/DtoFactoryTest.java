@@ -25,7 +25,7 @@ public class DtoFactoryTest {
         player.addCard(new Card(Rank.TWO, Suit.CLUB));
         player.addCard(new Card(Rank.THREE, Suit.DIAMOND));
 
-        Players players = Players.of(List.of(player));
+        Players players = new Players(List.of(player));
 
         List<GameInitialInfoDto> result = DtoFactory.toInitialInfo(dealer, players);
 
@@ -44,7 +44,7 @@ public class DtoFactoryTest {
         player.addCard(new Card(Rank.TWO, Suit.CLUB));
         player.addCard(new Card(Rank.THREE, Suit.DIAMOND));
 
-        Players players = Players.of(List.of(player));
+        Players players = new Players(List.of(player));
 
         List<GameInitialInfoDto> result = DtoFactory.toInitialInfo(dealer, players);
 
@@ -62,7 +62,7 @@ public class DtoFactoryTest {
         player.addCard(new Card(Rank.NINE, Suit.CLUB));
         player.addCard(new Card(Rank.EIGHT, Suit.DIAMOND));
 
-        Players players = Players.of(List.of(player));
+        Players players = new Players(List.of(player));
 
         List<GameScoreResultDto> result = DtoFactory.toScoreResults(dealer, players);
 
