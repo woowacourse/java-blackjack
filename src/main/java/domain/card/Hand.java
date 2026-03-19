@@ -14,6 +14,10 @@ public class Hand {
         this.cards = new ArrayList<>();
     }
 
+    private Hand(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
+    }
+
     public int calculateScore() {
         int basicScore = calculateBasicScore();
         boolean hasAce = hasAce();
@@ -43,8 +47,10 @@ public class Hand {
         return hasAce && score + ACE_BONUS <= BUST_THRESHOLD;
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
+    public Hand addCard(Card card) {
+        List<Card> newCards = new ArrayList<>(cards);
+        newCards.add(card);
+        return new Hand(newCards);
     }
 
     public boolean isBlackjack() {

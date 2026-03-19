@@ -24,14 +24,14 @@ public class Hit implements HandState {
 
     @Override
     public HandState draw(Card card) {
-        hand.addCard(card);
-        if (hand.isBlackjack()) {
-            return new Blackjack(hand);
+        Hand newHand = hand.addCard(card);
+        if (newHand.isBlackjack()) {
+            return new Blackjack(newHand);
         }
-        if (hand.isBust()) {
-            return new Bust(hand);
+        if (newHand.isBust()) {
+            return new Bust(newHand);
         }
-        return this;
+        return new Hit(newHand);
     }
 
     @Override

@@ -79,49 +79,49 @@ public class HandStateTest {
     @Test
     void Hit에서_블랙잭이_되면_Blackjack으로_전이한다() {
         Hit hit = new Hit(new Hand());
-        hit.draw(new Card(Rank.ACE, Suit.SPADE));
-        HandState result = hit.draw(new Card(Rank.KING, Suit.HEART));
+        HandState afterFirst = hit.draw(new Card(Rank.ACE, Suit.SPADE));
+        HandState result = afterFirst.draw(new Card(Rank.KING, Suit.HEART));
         assertThat(result).isInstanceOf(Blackjack.class);
     }
 
     @DisplayName("Hit에서 점수가 21을 초과하면 Bust로 전이한다")
     @Test
     void Hit에서_버스트가_되면_Bust로_전이한다() {
-        Hit hit = new Hit(new Hand());
-        hit.draw(new Card(Rank.KING, Suit.SPADE));
-        hit.draw(new Card(Rank.KING, Suit.HEART));
-        HandState result = hit.draw(new Card(Rank.TWO, Suit.DIAMOND));
-        assertThat(result).isInstanceOf(Bust.class);
+        HandState state = new Hit(new Hand());
+        state = state.draw(new Card(Rank.KING, Suit.SPADE));
+        state = state.draw(new Card(Rank.KING, Suit.HEART));
+        state = state.draw(new Card(Rank.TWO, Suit.DIAMOND));
+        assertThat(state).isInstanceOf(Bust.class);
     }
 
     @DisplayName("Hit에서 stay하면 Stay로 전이한다")
     @Test
     void Hit에서_stay하면_Stay로_전이한다() {
-        Hit hit = new Hit(new Hand());
-        hit.draw(new Card(Rank.KING, Suit.SPADE));
-        HandState result = hit.stay();
+        HandState state = new Hit(new Hand());
+        state = state.draw(new Card(Rank.KING, Suit.SPADE));
+        HandState result = state.stay();
         assertThat(result).isInstanceOf(Stay.class);
     }
 
     private Blackjack createBlackjack() {
-        Hand hand = new Hand();
-        hand.addCard(new Card(Rank.ACE, Suit.SPADE));
-        hand.addCard(new Card(Rank.KING, Suit.HEART));
+        Hand hand = new Hand()
+                .addCard(new Card(Rank.ACE, Suit.SPADE))
+                .addCard(new Card(Rank.KING, Suit.HEART));
         return new Blackjack(hand);
     }
 
     private Bust createBust() {
-        Hand hand = new Hand();
-        hand.addCard(new Card(Rank.KING, Suit.SPADE));
-        hand.addCard(new Card(Rank.KING, Suit.HEART));
-        hand.addCard(new Card(Rank.TWO, Suit.DIAMOND));
+        Hand hand = new Hand()
+                .addCard(new Card(Rank.KING, Suit.SPADE))
+                .addCard(new Card(Rank.KING, Suit.HEART))
+                .addCard(new Card(Rank.TWO, Suit.DIAMOND));
         return new Bust(hand);
     }
 
     private Stay createStay(Rank rank1, Rank rank2) {
-        Hand hand = new Hand();
-        hand.addCard(new Card(rank1, Suit.SPADE));
-        hand.addCard(new Card(rank2, Suit.HEART));
+        Hand hand = new Hand()
+                .addCard(new Card(rank1, Suit.SPADE))
+                .addCard(new Card(rank2, Suit.HEART));
         return new Stay(hand);
     }
 }
