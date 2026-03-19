@@ -95,7 +95,7 @@ public class GameController {
     }
 
     private void processRound(Player player, Deck deck) {
-        while (!player.isBust() && !player.isBlackjack()) {
+        while (player.canHit()) {
             String hitOption = inputView.readHitOption(player.getName());
             InputValidator.validateHitOption(hitOption);
             if (hitOption.equals("n")) {

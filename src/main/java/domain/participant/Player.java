@@ -23,6 +23,10 @@ public class Player extends Participant {
         }
     }
 
+    public boolean canHit() {
+        return !isBust() && !isBlackjack();
+    }
+
     public String getName() {
         return name;
     }
