@@ -3,7 +3,7 @@ package controller;
 import dto.GameInitialInfoDto;
 import domain.BettingMoney;
 import domain.Name;
-import domain.game.GameManager;
+import domain.game.BlackJackGame;
 import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +12,11 @@ import view.OutputView;
 
 public class GameController {
 
-    private final GameManager manager;
+    private final BlackJackGame manager;
     private final InputView inputView;
     private final OutputView outputView;
 
-    public GameController(GameManager manager, InputView inputView, OutputView outputView) {
+    public GameController(BlackJackGame manager, InputView inputView, OutputView outputView) {
         this.manager = manager;
         this.inputView = inputView;
         this.outputView = outputView;
@@ -66,7 +66,7 @@ public class GameController {
     }
 
     private void initGame() {
-        manager.startGame();
+        manager.dealInitialCards();
 
         List<GameInitialInfoDto> initialInfo = manager.getInitialInfo();
         outputView.printInitialInfo(initialInfo);
@@ -84,7 +84,7 @@ public class GameController {
 
             List<String> playerHand = player.getHandToString();
             if (wantsToDraw) {
-                playerHand = manager.drawPlayerCard(player);
+                playerHand = manager.hit(player);
             }
             outputView.printHand(playerHand, player.getName());
 
@@ -99,7 +99,7 @@ public class GameController {
     }
 
     private void playDealerTurn() {
-        while (manager.proceedDealerTurn()) {
+        while (manager.dealerHit()) {
             outputView.printDealerTurn();
         }
     }

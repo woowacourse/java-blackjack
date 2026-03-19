@@ -13,26 +13,26 @@ import domain.participant.Players;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameManager {
+public class BlackJackGame {
     private static final int FIRST_DRAW_CARDS = 2;
 
     private final Deck deck;
     private Players players;
     private final Dealer dealer;
 
-    public GameManager(Deck deck) {
+    public BlackJackGame(Deck deck) {
         this.deck = deck;
         this.dealer = new Dealer();
     }
 
-    public void startGame() {
+    public void dealInitialCards() {
         for (int i = 0; i < FIRST_DRAW_CARDS; i++) {
             players.receiveOneCardFrom(deck);
             dealer.receiveCard(deck.draw());
         }
     }
 
-    public List<String> drawPlayerCard(Player player) {
+    public List<String> hit(Player player) {
         player.receiveCard(deck.draw());
         return player.getHandToString();
     }
@@ -59,7 +59,7 @@ public class GameManager {
         return DtoFactory.toInitialInfo(dealer, players);
     }
 
-    public boolean proceedDealerTurn() {
+    public boolean dealerHit() {
         if (!dealer.canDraw()) {
             return false;
         }
