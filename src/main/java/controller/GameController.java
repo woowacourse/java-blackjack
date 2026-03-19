@@ -25,7 +25,7 @@ public class GameController {
     public void run() {
         registerPlayer();
         initGame();
-        playPlayerTurn();
+        play();
         playDealerTurn();
         outputView.printScoreResults(manager.getScoreResults());
         outputView.printFinalResult(manager.getFinalResult());
@@ -72,7 +72,7 @@ public class GameController {
         outputView.printInitialInfo(initialInfo);
     }
 
-    private void playPlayerTurn() {
+    private void play() {
         for (Player player : manager.getPlayersToPlay()) {
             playSinglePlayerTurn(player);
         }
