@@ -18,6 +18,12 @@ public class InputView {
         return List.of(split);
     }
 
+    public int readBetAmount(String name) {
+        System.out.println(name + "의 배팅 금액은?");
+        String input = readLine();
+        return Integer.parseInt(input);
+    }
+
     public String readHitStand(String name) {
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = readLine();

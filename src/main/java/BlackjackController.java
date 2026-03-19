@@ -2,7 +2,6 @@ import domain.BlackjackGame;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import dto.DealerDto;
-import dto.ParticipantDto;
 import dto.PlayerDto;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +21,7 @@ public class BlackjackController {
 
     public void run() {
         readAndRegistPlayers();
+        readBetAmount(blackjackGame.getPlayers());
         blackjackGame.giveHand();
 
         List<Player> players = blackjackGame.getPlayers();
@@ -40,6 +40,12 @@ public class BlackjackController {
 
         resultView.printCardsWithResult(finalPlayerDtos, finalDealerDto);
         resultView.printResultStatistics(finalPlayerDtos, finalDealerDto);
+    }
+
+    private void readBetAmount(List<Player> players) {
+        for (Player player : players) {
+            int betAmount = inputView.readBetAmount(player.getName());
+        }
     }
 
     private List<PlayerDto> toPlayerDtos(List<Player> players) {
