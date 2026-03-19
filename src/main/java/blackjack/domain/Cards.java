@@ -15,9 +15,11 @@ public class Cards {
     private static final int ACE_SCORE = 10;
 
     private final List<Card> cards;
+    private State state;
 
     public Cards() {
         this.cards = new ArrayList<>();
+        this.state = new Stay(0);
     }
 
     public Cards(List<Card> cards) {
@@ -25,13 +27,7 @@ public class Cards {
     }
 
     public State getState() {
-        if (isBust()) {
-            return new Bust(sumScore());
-        }
-        if (isBlackjack()) {
-            return new Blackjack();
-        }
-        return new Stay(sumScore());
+        return state;
     }
 
     public int sumScore() {
@@ -60,6 +56,19 @@ public class Cards {
             throw new IllegalArgumentException("[ERROR] 카드를 추가할 수 없습니다.");
         }
         cards.add(card);
+        updateState();
+    }
+
+    private void updateState() {
+        if (isBust()) {
+            this.state = new Bust(sumScore());
+            return;
+        }
+        if (isBlackjack()) {
+            this.state = new Blackjack();
+            return;
+        }
+        this.state = new Stay(sumScore());
     }
 
     public List<String> getCardNames() {
