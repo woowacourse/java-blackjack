@@ -1,7 +1,7 @@
 package blackjack.view;
 
+import blackjack.domain.Money;
 import blackjack.domain.ParticipantResult;
-import blackjack.domain.ScoreCompareResult;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +30,7 @@ public class OutputView {
 
     public static void printDealerCardDrawnResult(int cardCount) {
         System.out.println();
-        System.out.println("딜러는 " + cardCount + "장의 카드를 더 뽑았습니다.");
+        System.out.println("딜러는 16이하라 " + cardCount + "장의 카드를 더 뽑았습니다.");
     }
 
     public static void printFinalCardScores(List<ParticipantResult> playerResult, ParticipantResult dealerResult) {
@@ -45,30 +45,11 @@ public class OutputView {
         }
     }
 
-    public static void printFinalResult(
-            Map<ScoreCompareResult, Integer> dealerResult,
-            Map<String, ScoreCompareResult> playerResults) {
-        System.out.println();
-        System.out.println("## 최종 승패");
-        int wins = dealerResult.getOrDefault(ScoreCompareResult.DEALER_WIN, 0);
-        int losses = dealerResult.getOrDefault(ScoreCompareResult.DEALER_LOSS, 0);
-        int pushes = dealerResult.getOrDefault(ScoreCompareResult.PUSH, 0);
-        System.out.printf("딜러: %d승 %d무 %d패%n", wins, pushes, losses);
-
-        for (Map.Entry<String, ScoreCompareResult> entry : playerResults.entrySet()) {
-            System.out.println(entry.getKey() + ": " + toKorean(entry.getValue()));
+    public static void printFinalProfit(long dealerProfit, Map<String, Long> playersProfit) {
+        System.out.println("\n## 최종 수익");
+        System.out.println("딜러: " + dealerProfit);
+        for (Map.Entry<String, Long> entry : playersProfit.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
-
-    private static String toKorean(ScoreCompareResult result) {
-        if (result == ScoreCompareResult.PLAYER_WIN) {
-            return "승";
-        }
-        if (result == ScoreCompareResult.PLAYER_LOSS) {
-            return "패";
-        }
-        return "무";
-    }
-
-
 }

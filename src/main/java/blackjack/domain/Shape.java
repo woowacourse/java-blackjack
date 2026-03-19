@@ -16,10 +16,4 @@ public enum Shape {
         return name;
     }
 
-    public static Shape from(String name) {
-        return java.util.Arrays.stream(values())
-                .filter(s -> s.getName().equals(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Shape입니다: " + name));
-    }
 }

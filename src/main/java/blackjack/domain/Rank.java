@@ -35,10 +35,4 @@ public enum Rank {
         return this == ACE;
     }
 
-    public static Rank from(String name) {
-        return java.util.Arrays.stream(values())
-                .filter(r -> r.getName().equals(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank입니다: " + name));
-    }
 }

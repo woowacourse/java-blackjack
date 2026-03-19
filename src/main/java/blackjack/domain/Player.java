@@ -1,14 +1,21 @@
 package blackjack.domain;
 
 public class Player extends Participant {
-    private final String name;
+    private static final double BONUS_AMOUNT = 1.5;
+    private final Money money;
 
-    public Player(String name) {
+    public Player(String name, Money money) {
         super(name);
-        this.name = name;
+        this.money = money;
     }
 
-    public String getName() {
-        return name;
+    public Money calculateFinalProfit(ScoreCompareResult result) {
+        if (isBlackjack() && result.isPlayerWin()) {
+            return money.multiplyBettingAmount(BONUS_AMOUNT);
+        }
+        if (result.isPlayerLoss()) {
+            return money.lossBettingAmount();
+        }
+        return money.keepBettingAmount();
     }
 }

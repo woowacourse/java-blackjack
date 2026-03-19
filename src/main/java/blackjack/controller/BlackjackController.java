@@ -5,11 +5,8 @@ import blackjack.service.CardDistributor;
 import blackjack.service.Game;
 import blackjack.utils.InputParser;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -23,8 +20,7 @@ public class BlackjackController {
 
     public void startGame() {
         List<String> playerNames = getPlayerNames();
-        List<Participant> players = getPlayers(playerNames);
-
+        List<Participant> players = createPlayers(playerNames);
         Participant dealer = Participant.createDealer();
 
         setupInitialHand(players, dealer, playerNames);
@@ -32,18 +28,20 @@ public class BlackjackController {
         playDealerTurn(dealer);
 
         calculateFinalScore(players, dealer);
-        calculateFinalGameResult(players, dealer);
+        calculateFinalGameProfit(players, dealer);
     }
 
-    private static List<String> getPlayerNames() {
-        String playerNamesStr = InputView.askPlayerNames();
-        return InputParser.splitPlayerNames(playerNamesStr);
+    private List<String> getPlayerNames() {
+        String names = InputView.askPlayerNames();
+        return InputParser.splitPlayerNames(names);
     }
 
-    private List<Participant> getPlayers(List<String> playerNames) {
+    private List<Participant> createPlayers(List<String> playerNames) {
         List<Participant> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            players.add(Participant.createPlayer(playerName));
+            String amountStr = InputView.askPlayerBettingAmount(playerName);
+            long amount = InputParser.convertNumber(amountStr);
+            players.add(Participant.createPlayer(playerName, Money.fromBettingAmount(amount)));
         }
         return players;
     }
@@ -78,7 +76,9 @@ public class BlackjackController {
 
     private void playDealerTurn(Participant dealer) {
         int additionalCount = game.dealerDrawsCardsUntilDone(dealer);
-        OutputView.printDealerCardDrawnResult(additionalCount);
+        if (additionalCount > 0) {
+            OutputView.printDealerCardDrawnResult(additionalCount);
+        }
     }
 
     private boolean isHit(Participant player) {
@@ -93,26 +93,38 @@ public class BlackjackController {
     }
 
     private void calculateFinalScore(List<Participant> players, Participant dealer) {
-        List<ParticipantResult> playerResults = new ArrayList<>();
-        for (Participant player : players) {
-            ParticipantResult participantResult = new ParticipantResult(player.getName(), player.getCardNames(), player.calculateTotalScore());
-            playerResults.add(participantResult);
-        }
+        List<ParticipantResult> playerResults = players.stream()
+                .map(player -> new ParticipantResult(player.getName(), player.getCardNames(), player.calculateTotalScore()))
+                .collect(Collectors.toList());
 
         ParticipantResult dealerResult = new ParticipantResult(dealer.getName(), dealer.getCardNames(), dealer.calculateTotalScore());
         OutputView.printFinalCardScores(playerResults, dealerResult);
     }
 
-    private void calculateFinalGameResult(List<Participant> players, Participant dealer) {
-        GameResult gameResult = dealer.judgeResult(players, dealer);
-        Map<ScoreCompareResult, Integer> dealerResult = gameResult.dealerResult();
-        Map<Participant, ScoreCompareResult> playerResult = gameResult.playerResults();
-        HashMap<String, ScoreCompareResult> playerNameResult = new HashMap<>();
-
-        for (Entry<Participant, ScoreCompareResult> entry : playerResult.entrySet()) {
-            playerNameResult.put(entry.getKey().getName(), entry.getValue());
-        }
-        OutputView.printFinalResult(dealerResult, playerNameResult);
+    private void calculateFinalGameProfit(List<Participant> players, Participant dealer) {
+        Map<String, Long> playersProfit = calculatePlayersProfit(players, (Dealer) dealer);
+        long dealerProfit = calculateDealerProfit(playersProfit);
+        OutputView.printFinalProfit(dealerProfit, playersProfit);
     }
 
+    private Map<String, Long> calculatePlayersProfit(List<Participant> players, Dealer dealer) {
+        GameResult gameResult = dealer.judgeResult(players);
+        Map<Participant, ScoreCompareResult> results = gameResult.playerResults();
+        Map<String, Long> playersProfit = new LinkedHashMap<>();
+        for (Participant participant : players) {
+            Player player = (Player) participant;
+
+            ScoreCompareResult result = results.get(player);
+            Money profit = player.calculateFinalProfit(result);
+            playersProfit.put(player.getName(), profit.getBettingMoney());
+        }
+        return playersProfit;
+    }
+
+    private long calculateDealerProfit(Map<String, Long> playersProfit) {
+        long totalPlayersProfit = playersProfit.values().stream()
+                .mapToLong(Long::longValue)
+                .sum();
+        return -totalPlayersProfit;
+    }
 }
