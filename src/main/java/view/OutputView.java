@@ -9,8 +9,12 @@ import java.util.List;
 import util.DisplayFormatter;
 
 public class OutputView {
-    public void printMessage(String message) {
-        System.out.println(message);
+    public void printParticipantsNameRequest() {
+        System.out.println(Message.INPUT_PARTICIPANTS_MESSAGE);
+    }
+
+    public void printBettingMoneyRequest(String userName) {
+        System.out.println(DisplayFormatter.formatBettingMoneyRequest(userName));
     }
 
     public void printErrorMessage(String errorMessage) {

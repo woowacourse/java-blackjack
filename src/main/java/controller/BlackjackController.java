@@ -82,7 +82,7 @@ public class BlackjackController {
     private List<String> readPlayersName() {
         while (true) {
             try {
-                outputView.printMessage(Message.INPUT_PARTICIPANTS_MESSAGE);
+                outputView.printParticipantsNameRequest();
                 String playersName = inputView.readPlayersName();
                 validator.validatePlayersName(playersName);
                 return parser.parsePlayersName(playersName);
@@ -93,10 +93,9 @@ public class BlackjackController {
     }
 
     private Money readBettingMoney(String userName) {
-        String getBettingMoneyRequestMessage = DisplayFormatter.formatBettingMoneyRequest(userName);
         while (true) {
             try {
-                outputView.printMessage(getBettingMoneyRequestMessage);
+                outputView.printBettingMoneyRequest(userName);
                 String bettingMoney = inputView.readBettingMoney();
                 validator.validateEmptyBettingMoney(bettingMoney);
                 Money parsedBettingMoney = parser.parseBettingMoney(bettingMoney);
