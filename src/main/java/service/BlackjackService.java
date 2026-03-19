@@ -1,16 +1,16 @@
 package service;
 
+import domain.Card;
 import domain.Deck;
 import domain.Participants;
+import dto.DealerCardDTO;
 import dto.DealerResultDTO;
 import dto.ParticipantsInitDTO;
 import dto.ProfitResultDTO;
 import dto.UserCardsDTO;
 import dto.UserResultDTO;
 import java.util.List;
-import util.DisplayFormatter;
 import util.RandomShuffleStrategy;
-import view.Message;
 
 public class BlackjackService {
     private Participants participants;
@@ -30,76 +30,60 @@ public class BlackjackService {
         }
     }
 
-    public String makeUserNameFormat() {
-        return String.format(Message.DEAL_CARDS_MESSAGE, participants.getUserNames());
+    public List<String> getParticipantsNames() {
+        return participants.getPlayerNames();
     }
 
-    public String makeDealerOneCardDisplay() {
-        return String.format(Message.DEALER_CARDS_MESSAGE, participants.getDealerOneCardDisplay());
+    public DealerCardDTO getDealerFirstCard() {
+        Card card = participants.getDealerFirstCard();
+        return new DealerCardDTO(card.getDisplayName());
     }
 
-    public List<String> makeExtraCardRequests() {
-        List<String> playerNames = participants.getPlayerNames();
-        return playerNames.stream()
-                .map(DisplayFormatter::formatExtraCardRequest)
-                .toList();
+    public List<String> getPlayerNames() {
+        return participants.getPlayerNames();
     }
 
-    public List<String> getUserCardsDisplays() {
-        List<UserCardsDTO> userCardsDTOS = participants.getUserCards();
-        return userCardsDTOS.stream()
-                .map(this::makeOneUserCardDisplay)
-                .toList();
+    public List<UserCardsDTO> getUserCards() {
+        return participants.getUserCards();
     }
 
-    private String makeOneUserCardDisplay(UserCardsDTO userCardsDTO) {
-        return DisplayFormatter.formatUserCardsDisplay(userCardsDTO);
-    }
-
-    public String hit(int index) {
+    public UserCardsDTO hit(int index) {
         participants.dealCard(deck, index);
         participants.calculateUserScore(index);
-        UserCardsDTO userCardsDTO = participants.getPlayerCards(index);
-        return DisplayFormatter.formatUserCardsDisplay(userCardsDTO);
+        return participants.getPlayerCards(index);
     }
 
-    public String stand(int index) {
+    public UserCardsDTO stand(int index) {
         calculateUserScore(index);
-        UserCardsDTO userCardsDTO = participants.getPlayerCards(index);
-        return DisplayFormatter.formatUserCardsDisplay(userCardsDTO);
+        return participants.getPlayerCards(index);
     }
 
     public void calculateDealerScore() {
         participants.calculateDealerScore();
     }
 
-    public String dealExtraCardIfNeeded() {
+    public boolean dealExtraCardIfNeeded() {
         if (participants.shouldDealerDraw()) {
             participants.dealCardToDealer(deck.drawCard());
-            return Message.DEALER_CARD_RECEIVE_ANNOUNCE;
+            return true;
         }
-        return "";
+        return false;
     }
 
-    public String makeDealerFinalResultDisplay() {
-        DealerResultDTO dealerResultDTO = participants.getDealerResult();
-        return DisplayFormatter.formatDealerResultDisplay(dealerResultDTO);
+    public DealerResultDTO makeDealerFinalResult() {
+        return participants.getDealerResult();
     }
 
-    public List<String> makeUserFinalResultDisplay() {
-        List<UserResultDTO> userResultDTOS = participants.getUserResults();
-        return userResultDTOS.stream()
-                .map(DisplayFormatter::formatUserResultDisplay)
-                .toList();
+    public List<UserResultDTO> makeUserFinalResult() {
+        return participants.getUserResults();
     }
 
     private void calculateUserScore(int index) {
         participants.calculateUserScore(index);
     }
 
-    public List<String> evaluateGame() {
-        ProfitResultDTO profitResultDTO = participants.calculateProfit();
-        return DisplayFormatter.formatProfitResult(profitResultDTO);
+    public ProfitResultDTO evaluateGame() {
+        return participants.calculateProfit();
     }
 
     public boolean isBust(int index) {

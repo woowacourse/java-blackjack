@@ -41,12 +41,8 @@ public class Participants {
         dealer.receiveCard(deck.drawCard());
     }
 
-    public String getUserNames() {
-        return players.stream().map(User::getUserName).collect(Collectors.joining(", "));
-    }
-
-    public String getDealerOneCardDisplay() {
-        return dealer.getOneCardDisplay();
+    public Card getDealerFirstCard() {
+        return dealer.getFirstCard();
     }
 
     public List<UserCardsDTO> getUserCards() {

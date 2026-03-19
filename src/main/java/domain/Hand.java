@@ -22,8 +22,8 @@ public class Hand {
         cards.add(card);
     }
 
-    public String getOneCardDisplay() {
-        return cards.getFirst().getDisplayName();
+    public Card getFirstCard() {
+        return cards.getFirst();
     }
 
     public String getCardsDisplay() {

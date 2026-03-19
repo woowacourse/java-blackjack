@@ -1,6 +1,10 @@
 package controller;
 
+import dto.DealerResultDTO;
 import dto.ParticipantsInitDTO;
+import dto.ProfitResultDTO;
+import dto.UserCardsDTO;
+import dto.UserResultDTO;
 import java.util.List;
 import service.BlackjackService;
 import util.DisplayFormatter;
@@ -45,23 +49,22 @@ public class BlackjackController {
     }
 
     private void printFinalResult() {
-        outputView.printMessage(blackjackService.makeDealerFinalResultDisplay());
-        blackjackService.makeUserFinalResultDisplay().forEach(outputView::printMessage);
+        DealerResultDTO dealerResultDTO = blackjackService.makeDealerFinalResult();
+        List<UserResultDTO> userResultDTOS = blackjackService.makeUserFinalResult();
+        outputView.printFinalResult(dealerResultDTO, userResultDTOS);
     }
 
     private void printProfitResult() {
         outputView.printMessage(Message.FINAL_PROFIT_ANNOUNCE);
-        blackjackService.evaluateGame().forEach(outputView::printMessage);
+        ProfitResultDTO profitResultDTO = blackjackService.evaluateGame();
+        outputView.printProfitResult(profitResultDTO);
     }
 
     private void processDealerTurn() {
         blackjackService.calculateDealerScore();
-        String dealerDrawMessage = dealExtraCardToDealer();
-        outputView.printMessage(dealerDrawMessage);
-    }
-
-    private String dealExtraCardToDealer() {
-        return blackjackService.dealExtraCardIfNeeded();
+        if (blackjackService.dealExtraCardIfNeeded()) {
+            outputView.printDealerDrawMessage();
+        }
     }
 
     private void dealInitialCards() {
@@ -71,9 +74,10 @@ public class BlackjackController {
     }
 
     private void printDealResult() {
-        outputView.printMessage(blackjackService.makeUserNameFormat());
-        outputView.printMessage(blackjackService.makeDealerOneCardDisplay());
-        blackjackService.getUserCardsDisplays().forEach(outputView::printMessage);
+        List<String> userNames = blackjackService.getParticipantsNames();
+        outputView.printInitMessages(userNames);
+        outputView.printDealerFirstCard(blackjackService.getDealerFirstCard());
+        outputView.printUserCards(blackjackService.getUserCards());
     }
 
     private List<String> readPlayersName() {
@@ -106,20 +110,19 @@ public class BlackjackController {
     }
 
     private void processAllPlayersHitOrStand() {
-        List<String> requestMessages = extraCardRequest();
-        for (int index = 0; index < requestMessages.size(); index++) {
-            processOnePlayerHitOrStand(index, requestMessages.get(index));
+        List<String> playerNames = blackjackService.getPlayerNames();
+        for (int index = 0; index < playerNames.size(); index++) {
+            String name = playerNames.get(index);
+            processOnePlayerHitOrStand(index, name);
         }
     }
 
-    private List<String> extraCardRequest() {
-        return blackjackService.makeExtraCardRequests();
-    }
-
-    private void processOnePlayerHitOrStand(int index, String message) {
+    private void processOnePlayerHitOrStand(int index, String name) {
         while (canKeepPlaying(index)) {
-            String answer = readHitOrStand(message);
-            processHitOrStand(answer, index);
+            outputView.printExtraCardRequest(name);
+            String answer = readHitOrStand();
+            UserCardsDTO userCardsDTO = processHitOrStand(answer, index);
+            outputView.printSingleUserCards(userCardsDTO);
 
             if (isStopCommand(answer)) {
                 break;
@@ -127,10 +130,13 @@ public class BlackjackController {
         }
     }
 
-    private String readHitOrStand(String message) {
+    private boolean canKeepPlaying(int index) {
+        return !blackjackService.isBust(index);
+    }
+
+    private String readHitOrStand() {
         while (true) {
             try {
-                outputView.printMessage(message);
                 String answer = inputView.readYesOrNo();
                 validator.validateAnswer(answer);
                 return answer;
@@ -140,19 +146,11 @@ public class BlackjackController {
         }
     }
 
-    private void processHitOrStand(String answer, int index) {
-        String cardDrawMessage = "";
+    private UserCardsDTO processHitOrStand(String answer, int index) {
         if (answer.equalsIgnoreCase("y")) {
-            cardDrawMessage = blackjackService.hit(index);
+            return blackjackService.hit(index);
         }
-        if (answer.equalsIgnoreCase("n")) {
-            cardDrawMessage = blackjackService.stand(index);
-        }
-        outputView.printMessage(cardDrawMessage);
-    }
-
-    private boolean canKeepPlaying(int index) {
-        return !blackjackService.isBust(index);
+        return blackjackService.stand(index);
     }
 
     private boolean isStopCommand(String answer) {

@@ -11,8 +11,8 @@ public class Dealer {
         hand.saveCard(card);
     }
 
-    public String getOneCardDisplay() {
-        return hand.getOneCardDisplay();
+    public Card getFirstCard() {
+        return hand.getFirstCard();
     }
 
     public String getCardsDisplay() {
