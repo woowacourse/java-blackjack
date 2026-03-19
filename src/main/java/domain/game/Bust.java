@@ -1,15 +1,15 @@
 package domain.game;
 
 import domain.card.Card;
-import domain.card.CardBundle;
+import domain.card.Hand;
 import java.util.List;
 
 public class Bust implements HandState {
 
-    private final CardBundle cardBundle;
+    private final Hand hand;
 
-    public Bust(CardBundle cardBundle) {
-        this.cardBundle = cardBundle;
+    public Bust(Hand hand) {
+        this.hand = hand;
     }
 
     @Override
@@ -34,11 +34,11 @@ public class Bust implements HandState {
 
     @Override
     public List<Card> cards() {
-        return cardBundle.getCards();
+        return hand.getCards();
     }
 
     @Override
     public int score() {
-        return cardBundle.calculateScore();
+        return hand.calculateScore();
     }
 }

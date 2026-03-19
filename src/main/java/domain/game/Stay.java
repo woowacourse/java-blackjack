@@ -1,15 +1,15 @@
 package domain.game;
 
 import domain.card.Card;
-import domain.card.CardBundle;
+import domain.card.Hand;
 import java.util.List;
 
 public class Stay implements HandState {
 
-    private final CardBundle cardBundle;
+    private final Hand hand;
 
-    public Stay(CardBundle cardBundle) {
-        this.cardBundle = cardBundle;
+    public Stay(Hand hand) {
+        this.hand = hand;
     }
 
     @Override
@@ -40,12 +40,12 @@ public class Stay implements HandState {
 
     @Override
     public List<Card> cards() {
-        return cardBundle.getCards();
+        return hand.getCards();
     }
 
     @Override
     public int score() {
-        return cardBundle.calculateScore();
+        return hand.calculateScore();
     }
 
     private Outcome compareScore(Stay other) {

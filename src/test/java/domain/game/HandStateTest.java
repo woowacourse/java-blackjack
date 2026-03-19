@@ -3,7 +3,7 @@ package domain.game;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import domain.card.Card;
-import domain.card.CardBundle;
+import domain.card.Hand;
 import domain.card.Rank;
 import domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
@@ -70,7 +70,7 @@ public class HandStateTest {
     @DisplayName("Hit에서 카드를 뽑아도 버스트/블랙잭이 아니면 Hit을 유지한다")
     @Test
     void Hit에서_일반_카드를_뽑으면_Hit을_유지한다() {
-        Hit hit = new Hit(new CardBundle());
+        Hit hit = new Hit(new Hand());
         HandState result = hit.draw(new Card(Rank.FIVE, Suit.SPADE));
         assertThat(result).isInstanceOf(Hit.class);
     }
@@ -78,7 +78,7 @@ public class HandStateTest {
     @DisplayName("Hit에서 2장으로 21점이 되면 Blackjack으로 전이한다")
     @Test
     void Hit에서_블랙잭이_되면_Blackjack으로_전이한다() {
-        Hit hit = new Hit(new CardBundle());
+        Hit hit = new Hit(new Hand());
         hit.draw(new Card(Rank.ACE, Suit.SPADE));
         HandState result = hit.draw(new Card(Rank.KING, Suit.HEART));
         assertThat(result).isInstanceOf(Blackjack.class);
@@ -87,7 +87,7 @@ public class HandStateTest {
     @DisplayName("Hit에서 점수가 21을 초과하면 Bust로 전이한다")
     @Test
     void Hit에서_버스트가_되면_Bust로_전이한다() {
-        Hit hit = new Hit(new CardBundle());
+        Hit hit = new Hit(new Hand());
         hit.draw(new Card(Rank.KING, Suit.SPADE));
         hit.draw(new Card(Rank.KING, Suit.HEART));
         HandState result = hit.draw(new Card(Rank.TWO, Suit.DIAMOND));
@@ -97,31 +97,31 @@ public class HandStateTest {
     @DisplayName("Hit에서 stay하면 Stay로 전이한다")
     @Test
     void Hit에서_stay하면_Stay로_전이한다() {
-        Hit hit = new Hit(new CardBundle());
+        Hit hit = new Hit(new Hand());
         hit.draw(new Card(Rank.KING, Suit.SPADE));
         HandState result = hit.stay();
         assertThat(result).isInstanceOf(Stay.class);
     }
 
     private Blackjack createBlackjack() {
-        CardBundle cardBundle = new CardBundle();
-        cardBundle.addCard(new Card(Rank.ACE, Suit.SPADE));
-        cardBundle.addCard(new Card(Rank.KING, Suit.HEART));
-        return new Blackjack(cardBundle);
+        Hand hand = new Hand();
+        hand.addCard(new Card(Rank.ACE, Suit.SPADE));
+        hand.addCard(new Card(Rank.KING, Suit.HEART));
+        return new Blackjack(hand);
     }
 
     private Bust createBust() {
-        CardBundle cardBundle = new CardBundle();
-        cardBundle.addCard(new Card(Rank.KING, Suit.SPADE));
-        cardBundle.addCard(new Card(Rank.KING, Suit.HEART));
-        cardBundle.addCard(new Card(Rank.TWO, Suit.DIAMOND));
-        return new Bust(cardBundle);
+        Hand hand = new Hand();
+        hand.addCard(new Card(Rank.KING, Suit.SPADE));
+        hand.addCard(new Card(Rank.KING, Suit.HEART));
+        hand.addCard(new Card(Rank.TWO, Suit.DIAMOND));
+        return new Bust(hand);
     }
 
     private Stay createStay(Rank rank1, Rank rank2) {
-        CardBundle cardBundle = new CardBundle();
-        cardBundle.addCard(new Card(rank1, Suit.SPADE));
-        cardBundle.addCard(new Card(rank2, Suit.HEART));
-        return new Stay(cardBundle);
+        Hand hand = new Hand();
+        hand.addCard(new Card(rank1, Suit.SPADE));
+        hand.addCard(new Card(rank2, Suit.HEART));
+        return new Stay(hand);
     }
 }

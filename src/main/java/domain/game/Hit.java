@@ -1,20 +1,20 @@
 package domain.game;
 
 import domain.card.Card;
-import domain.card.CardBundle;
+import domain.card.Hand;
 import java.util.List;
 
 public class Hit implements HandState {
 
-    private final CardBundle cardBundle;
+    private final Hand hand;
 
-    public Hit(CardBundle cardBundle) {
-        this.cardBundle = cardBundle;
+    public Hit(Hand hand) {
+        this.hand = hand;
     }
 
     @Override
     public Outcome versus(HandState other) {
-        return new Stay(cardBundle).versus(other);
+        return new Stay(hand).versus(other);
     }
 
     @Override
@@ -24,28 +24,28 @@ public class Hit implements HandState {
 
     @Override
     public HandState draw(Card card) {
-        cardBundle.addCard(card);
-        if (cardBundle.isBlackjack()) {
-            return new Blackjack(cardBundle);
+        hand.addCard(card);
+        if (hand.isBlackjack()) {
+            return new Blackjack(hand);
         }
-        if (cardBundle.isBust()) {
-            return new Bust(cardBundle);
+        if (hand.isBust()) {
+            return new Bust(hand);
         }
         return this;
     }
 
     @Override
     public HandState stay() {
-        return new Stay(cardBundle);
+        return new Stay(hand);
     }
 
     @Override
     public List<Card> cards() {
-        return cardBundle.getCards();
+        return hand.getCards();
     }
 
     @Override
     public int score() {
-        return cardBundle.calculateScore();
+        return hand.calculateScore();
     }
 }

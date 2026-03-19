@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.CardBundle;
+import domain.card.Hand;
 import domain.game.HandState;
 import domain.game.Hit;
 import java.util.List;
@@ -13,7 +13,7 @@ public abstract class Participant {
 
     protected Participant(String name) {
         this.playerName = new PlayerName(name);
-        this.state = new Hit(new CardBundle());
+        this.state = new Hit(new Hand());
     }
 
     public boolean canHit() {

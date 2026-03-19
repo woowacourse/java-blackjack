@@ -3,13 +3,13 @@ package domain.card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardBundle {
+public class Hand {
     private final List<Card> cards;
     private static final int BUST_THRESHOLD = 21;
     private static final int ACE_BONUS = 10;
     private static final int BLACKJACK_CARD_COUNT = 2;
 
-    public CardBundle() {
+    public Hand() {
         this.cards = new ArrayList<>();
     }
 
