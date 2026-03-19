@@ -69,7 +69,6 @@ public class MultiPlayers {
     public void executeBet(Player player, BetAmount betAmount) {
         String playerName = player.getName();
         applyAction(playerName, p -> p.bet(betAmount));
-//        notBettingPlayers.remove(playerName);
     }
 
     public Player executeHit(Player player, Supplier<Card> cardSupplier) {
