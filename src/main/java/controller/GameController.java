@@ -1,20 +1,22 @@
 package controller;
 
-import domain.game.GameManager;
+import dto.GameInitialInfoDto;
+import domain.BettingMoney;
+import domain.Name;
+import domain.game.BlackJackGame;
 import domain.participant.Player;
-import domain.dto.GameInitialInfoDto;
+import java.util.ArrayList;
+import java.util.List;
 import view.InputView;
 import view.OutputView;
 
-import java.util.List;
-
 public class GameController {
 
-    private final GameManager manager;
+    private final BlackJackGame manager;
     private final InputView inputView;
     private final OutputView outputView;
 
-    public GameController(GameManager manager, InputView inputView, OutputView outputView) {
+    public GameController(BlackJackGame manager, InputView inputView, OutputView outputView) {
         this.manager = manager;
         this.inputView = inputView;
         this.outputView = outputView;
@@ -22,49 +24,73 @@ public class GameController {
 
     public void run() {
         registerPlayer();
-        // TODO: 베팅 기능 추가 시 플레이어 등록 후 베팅 입력 단계가 추가 필요
         initGame();
-        playPlayerTurn();
+        play();
         playDealerTurn();
         outputView.printScoreResults(manager.getScoreResults());
         outputView.printFinalResult(manager.getFinalResult());
     }
 
     private void registerPlayer() {
-        // TODO: 베팅 기능 추가 시 이름 입력 후 각 플레이어의 베팅 금액도 함께 등록
-        while (true) {
-            try {
-                List<String> playerNames = inputView.readPlayerName();
-                validatePlayerNames(playerNames);
-
-                for (String playerName : playerNames) {
-                    manager.addPlayer(playerName);
-                }
-                return;
-
-            } catch (IllegalArgumentException e) {
-                outputView.printError(e.getMessage());
-            }
+        boolean isRegistered = false;
+        while (!isRegistered) {
+            isRegistered = tryRegisterPlayers();
         }
     }
 
+    private boolean tryRegisterPlayers() {
+        try {
+            List<String> rawPlayerNames = inputView.readPlayerName();
+            List<Name> playerNames = toNames(rawPlayerNames);
+            registerPlayersWithBettingMoney(playerNames);
+            return true;
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return false;
+        }
+    }
+
+    private List<Name> toNames(List<String> rawPlayerNames) {
+        return rawPlayerNames.stream()
+                .map(Name::new)
+                .toList();
+    }
+
+    private void registerPlayersWithBettingMoney(List<Name> playerNames) {
+        List<BettingMoney> bettingMoneys = new ArrayList<>();
+        for (Name playerName : playerNames) {
+            BettingMoney bettingMoney = inputView.readBettingMoney(playerName.getValue());
+            bettingMoneys.add(bettingMoney);
+        }
+        manager.registerPlayers(playerNames, bettingMoneys);
+    }
+
     private void initGame() {
-        manager.startGame();
+        manager.dealInitialCards();
 
         List<GameInitialInfoDto> initialInfo = manager.getInitialInfo();
         outputView.printInitialInfo(initialInfo);
     }
 
-    private void playPlayerTurn() {
-        for (Player player : manager.getPlayerSequence()) {
+    private void play() {
+        for (Player player : manager.getPlayersToPlay()) {
             playSinglePlayerTurn(player);
         }
     }
 
     private void playSinglePlayerTurn(Player player) {
-        while (player.canDraw() && wantsToDraw(player)) {
-            List<String> playerHand = manager.drawPlayerCard(player);
+        while (player.canDraw()) {
+            boolean wantsToDraw = wantsToDraw(player);
+
+            List<String> playerHand = player.revealCards();
+            if (wantsToDraw) {
+                playerHand = manager.hit(player);
+            }
             outputView.printHand(playerHand, player.getName());
+
+            if (!wantsToDraw) {
+                break;
+            }
         }
     }
 
@@ -73,18 +99,8 @@ public class GameController {
     }
 
     private void playDealerTurn() {
-        while (manager.proceedDealerTurn()) {
+        while (manager.dealerHit()) {
             outputView.printDealerTurn();
-        }
-    }
-
-    private void validatePlayerNames(List<String> playerNames) {
-        if (playerNames == null || playerNames.isEmpty()) {
-            throw new IllegalArgumentException("플레이어 이름을 입력해야 합니다.");
-        }
-
-        if (playerNames.stream().anyMatch(name -> name == null || name.isBlank())) {
-            throw new IllegalArgumentException("플레이어 이름은 비어 있을 수 없습니다.");
         }
     }
 }

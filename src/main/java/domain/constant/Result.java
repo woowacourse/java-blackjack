@@ -1,15 +1,37 @@
 package domain.constant;
 
+import domain.participant.Dealer;
+import domain.participant.Player;
+
 public enum Result {
-    WIN("승"), DRAW("무"), LOSE("패");
+    BUST,
+    BLACKJACK,
+    WIN,
+    LOSE,
+    DRAW;
 
-    private String name;
+    public static Result from(Player player, Dealer dealer) {
+        int playerScore = player.getScore();
+        int dealerScore = dealer.getScore();
 
-    Result(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name + " ";
+        if (player.isBust()) {
+            return BUST;
+        }
+        if (player.isNaturalBlackJack() && dealer.isNaturalBlackJack()) {
+            return DRAW;
+        }
+        if (player.isNaturalBlackJack()) {
+            return BLACKJACK;
+        }
+        if (dealer.isBust()) {
+            return WIN;
+        }
+        if (playerScore > dealerScore) {
+            return WIN;
+        }
+        if (playerScore < dealerScore) {
+            return LOSE;
+        }
+        return DRAW;
     }
 }

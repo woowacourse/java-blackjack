@@ -18,10 +18,6 @@ public class Hand {
         hand.add(card);
     }
 
-    public List<Card> getHand() {
-        return List.copyOf(hand);
-    }
-
     public List<String> toStringList() {
         return hand.stream()
                 .map(Card::toString)
@@ -36,22 +32,6 @@ public class Hand {
         return score;
     }
 
-    public int calculateScore() {
-        int currentScore = sumScore();
-        boolean hasACE = hand.stream()
-                .anyMatch(c -> c.getRank() == Rank.ACE);
-
-        if (!hasACE) {
-            return currentScore;
-        }
-
-        if (currentScore + ACE_BONUS_SCORE > BLACKJACK_SCORE) {
-            return currentScore;
-        }
-
-        return currentScore + ACE_BONUS_SCORE;
-    }
-
     public boolean isBust() {
         return calculateScore() > BLACKJACK_SCORE;
     }
@@ -62,5 +42,28 @@ public class Hand {
 
     public int size() {
         return hand.size();
+    }
+
+    public int calculateScore() {
+        int currentScore = sumScore();
+
+        if (!hasAce()) {
+            return currentScore;
+        }
+
+        if (!canApplyAceBonus(currentScore)) {
+            return currentScore;
+        }
+
+        return currentScore + ACE_BONUS_SCORE;
+    }
+
+    private boolean hasAce() {
+        return hand.stream()
+                .anyMatch(card -> card.getRank() == Rank.ACE);
+    }
+
+    private boolean canApplyAceBonus(int currentScore) {
+        return currentScore + ACE_BONUS_SCORE <= BLACKJACK_SCORE;
     }
 }

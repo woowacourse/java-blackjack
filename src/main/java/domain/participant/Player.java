@@ -1,49 +1,29 @@
 package domain.participant;
 
-import domain.card.Card;
-import domain.Hand;
+import domain.BettingMoney;
+import domain.Name;
+import domain.constant.Result;
 import java.util.List;
 
-public class Player {
-    private final String name;
-    private final Hand hand = new Hand();
-    // TODO: 베팅 기능 추가 시 베팅 금액 필드 또는 일급 객체 필요
+public class Player extends Participant {
+    private final BettingMoney bettingMoney;
 
-
-    public Player(String name) {
-        this.name = name;
-        // TODO: 베팅 기능 추가 시 생성자에서 베팅 금액도 함께 받아야 할 수 있음
+    public Player(Name name, BettingMoney bettingMoney) {
+        super(name);
+        this.bettingMoney = bettingMoney;
     }
 
-    public boolean isBust() {
-        return hand.isBust();
+    public double calculateProceeds(Result result) {
+        return bettingMoney.calculateProceeds(result);
     }
 
-    public void receiveCard(Card card) {
-        hand.add(card);
-    }
-
+    @Override
     public boolean canDraw() {
-        return !(isBust()|| hand.isBlackjack());
+        return !(isBust() || isNaturalBlackJack());
     }
 
-    public int handSize() {
-        return hand.size();
-    }
-
-    public List<String> getHandToString() {
-        return hand.toStringList();
-    }
-
-    public int getScore(){
-        return hand.calculateScore();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Hand getHand() {
-        return hand;
+    @Override
+    public List<String> getInitialOpenCards() {
+        return revealCards();
     }
 }
