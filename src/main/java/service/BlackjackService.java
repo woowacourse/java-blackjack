@@ -12,15 +12,20 @@ import dto.ProfitResultDTO;
 import dto.UserCardsDTO;
 import dto.UserResultDTO;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import util.RandomShuffleStrategy;
+import vo.Money;
 
 public class BlackjackService {
     private Participants participants;
     private Deck deck;
 
     public void initParticipant(List<ParticipantsInitDTO> participantsInitDTOS) {
-        participants = new Participants(participantsInitDTOS);
+        List<User> users = participantsInitDTOS.stream()
+                .map(dto -> new User(dto.getUserName(), dto.getBettingMoney()))
+                .toList();
+        participants = new Participants(users);
     }
 
     public void makeDeck() {
@@ -95,7 +100,9 @@ public class BlackjackService {
     }
 
     public ProfitResultDTO evaluateGame() {
-        return participants.calculateProfit();
+        Map<String, Money> playersProfit = participants.calculatePlayersProfit();
+        Money dealerProfit = participants.calculateDealerProfit(playersProfit);
+        return new ProfitResultDTO(dealerProfit, playersProfit);
     }
 
     public boolean isBust(int index) {

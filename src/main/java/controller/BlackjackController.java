@@ -55,7 +55,6 @@ public class BlackjackController {
     }
 
     private void printProfitResult() {
-        outputView.printMessage(Message.FINAL_PROFIT_ANNOUNCE);
         ProfitResultDTO profitResultDTO = blackjackService.evaluateGame();
         outputView.printProfitResult(profitResultDTO);
     }

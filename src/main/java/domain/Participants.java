@@ -2,8 +2,7 @@ package domain;
 
 import static domain.BlackjackRule.MAX_PARTICIPANTS_COUNT;
 
-import dto.ParticipantsInitDTO;
-import dto.ProfitResultDTO;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,16 +14,14 @@ public class Participants {
     private final List<User> players;
     private final Dealer dealer;
 
-    public Participants(List<ParticipantsInitDTO> participantsInitDTOS) {
-        validateParticipantsNumbers(participantsInitDTOS);
-        this.players = participantsInitDTOS.stream()
-                .map(dto -> new User(dto.getUserName(), dto.getBettingMoney()))
-                .collect(Collectors.toList());
+    public Participants(List<User> users) {
+        validateParticipantsNumbers(users.size());
+        this.players = new ArrayList<>(users);
         this.dealer = new Dealer();
     }
 
-    private void validateParticipantsNumbers(List<ParticipantsInitDTO> participantsInitDTOS) {
-        if (participantsInitDTOS.size() > MAX_PARTICIPANTS_COUNT) {
+    private void validateParticipantsNumbers(int userCount) {
+        if (userCount > MAX_PARTICIPANTS_COUNT) {
             String errorMessage = String.format("[ERROR] 최대 참가 인원은 %d명 이하여야 합니다.", MAX_PARTICIPANTS_COUNT);
             throw new IllegalArgumentException(errorMessage);
         }
@@ -81,18 +78,22 @@ public class Participants {
         return dealer;
     }
 
-    public ProfitResultDTO calculateProfit() {
-        Map<String, Money> participantsProfit = new LinkedHashMap<>();
-        Money dealerProfit = new Money(0);
-
+    public Map<String, Money> calculatePlayersProfit() {
+        Map<String, Money> playersProfit = new LinkedHashMap<>();
         for (User user : players) {
             GameResult isUserWin = GameJudge.judgeResultForUser(user, dealer);
             Money earnedMoney = isUserWin.calculateProfit(user.getBettingMoney());
-            dealerProfit = dealerProfit.subtract(earnedMoney);
-            participantsProfit.put(user.getUserName(), earnedMoney);
+            playersProfit.put(user.getUserName(), earnedMoney);
         }
+        return playersProfit;
+    }
 
-        return new ProfitResultDTO(dealerProfit, participantsProfit);
+    public Money calculateDealerProfit(Map<String, Money> playersProfit) {
+        Money dealerProfit = new Money(0);
+        for (Money playerProfit : playersProfit.values()) {
+            dealerProfit = dealerProfit.subtract(playerProfit);
+        }
+        return dealerProfit;
     }
 
     public boolean isBust(int index) {
