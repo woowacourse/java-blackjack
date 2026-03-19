@@ -29,7 +29,7 @@ public class ResultViewMapper {
 
     public StartBlackJackDto toStartBlackJackDto(Players players, Dealer dealer) {
         return new StartBlackJackDto(
-                resultView.formatCardName(dealer.getCardList().get(0)),
+                resultView.formatCardName(dealer.getCards().get(0)),
                 toPlayerCardsDtos(players)
         );
     }
@@ -37,13 +37,13 @@ public class ResultViewMapper {
     public ResultDto toResultDto(Players players, Dealer dealer) {
         final ParticipantResultDto dealerResult = new ParticipantResultDto(
                 IOMessage.DEALER_NAME.message(),
-                resultView.joinCardNames(dealer.getCardList()),
+                resultView.joinCardNames(dealer.getCards()),
                 dealer.getScore()
         );
         final List<ParticipantResultDto> playerResults = new ArrayList<>();
         players.forEachPlayer(player -> playerResults.add(new ParticipantResultDto(
                 player.getName(),
-                resultView.joinCardNames(player.getCardList()),
+                resultView.joinCardNames(player.getCards()),
                 player.getScore()
         )));
         return new ResultDto(dealerResult, playerResults);
@@ -72,7 +72,7 @@ public class ResultViewMapper {
         final List<PlayerCardsDto> playerCardsDtos = new ArrayList<>();
         players.forEachPlayer(player -> playerCardsDtos.add(new PlayerCardsDto(
                 player.getName(),
-                toCardNames(player.getCardList())
+                toCardNames(player.getCards())
         )));
         return playerCardsDtos;
     }

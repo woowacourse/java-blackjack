@@ -19,7 +19,7 @@ public class ResultCalculator {
             final HandState playerState = player.getHandState();
             final Outcome playerOutcome = playerState.against(dealerState, playerScore, dealerScore);
             final Outcome dealerOutcome = reverse(playerOutcome);
-            player.updateBalance(playerOutcome);
+            player.applyOutcome(playerOutcome);
             playerOutcomes.put(player.getName(), playerOutcome);
             dealerOutcomeCounts.put(dealerOutcome, dealerOutcomeCounts.get(dealerOutcome) + 1);
         });

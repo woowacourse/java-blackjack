@@ -21,7 +21,7 @@ public class PlayerTest {
 
         player.drawCard(cards);
 
-        assertEquals(1, player.getCardList().size());
+        assertEquals(1, player.getCards().size());
     }
 
     @Test

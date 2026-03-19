@@ -24,7 +24,7 @@ public final class Player extends Participant {
         return name.getName();
     }
 
-    public void updateBalance(Outcome outcome){
-        updateBalance((int) (betting.getBettingMoney() * outcome.winningCoefficient()));
+    public void applyOutcome(Outcome outcome){
+        addBalance((int) (betting.getBetting() * outcome.winningCoefficient()));
     }
 }

@@ -7,7 +7,7 @@ public class Betting {
         this.betting = betting;
     }
 
-    public int getBettingMoney(){
+    public int getBetting(){
         return betting;
     }
 }

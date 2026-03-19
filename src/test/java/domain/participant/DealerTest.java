@@ -16,6 +16,6 @@ public class DealerTest {
 
         dealer.drawCard(cards);
 
-        assertEquals(1, dealer.getCardList().size());
+        assertEquals(1, dealer.getCards().size());
     }
 }

@@ -19,7 +19,7 @@ public abstract class Participant {
         hand.addCard(cards.draw());
     }
 
-    public List<Card> getCardList() {
+    public List<Card> getCards() {
         return hand.getCards();
     }
 
@@ -47,8 +47,8 @@ public abstract class Participant {
         return hand.canDraw();
     }
 
-    public void updateBalance(int betting){
-        this.balance = new Balance(balance.getBalance() + betting);
+    protected void addBalance(int amount){
+        this.balance = new Balance(balance.getBalance() + amount);
     }
 
     public int getBalance() {

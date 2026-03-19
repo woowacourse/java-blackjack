@@ -16,7 +16,7 @@ public class BlackJackGameTest {
                 new PlayerNameAndBettingDto("jason", 1000)
         ));
 
-        assertEquals(2, game.dealer().getCardList().size());
-        game.players().forEachPlayer(player -> assertEquals(2, player.getCardList().size()));
+        assertEquals(2, game.dealer().getCards().size());
+        game.players().forEachPlayer(player -> assertEquals(2, player.getCards().size()));
     }
 }
