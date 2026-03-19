@@ -17,8 +17,14 @@ public enum Result {
         if (player.isBust()) {
             return BUST;
         }
+        if (player.isNaturalBlackJack() && dealer.isNaturalBlackJack()) {
+            return DRAW;
+        }
         if (player.isNaturalBlackJack()) {
             return BLACKJACK;
+        }
+        if (dealer.isBust()) {
+            return WIN;
         }
         if (playerScore > dealerScore) {
             return WIN;
@@ -26,7 +32,6 @@ public enum Result {
         if (playerScore < dealerScore) {
             return LOSE;
         }
-
         return DRAW;
     }
 }

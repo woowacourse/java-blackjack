@@ -26,6 +26,10 @@ public abstract class Participant {
         return hand.isBlackjack();
     }
 
+    public boolean isNaturalBlackJack() {
+        return hasTwoCards() && isBlackJack();
+    }
+
     public void addCard(Card card) {
         hand.add(card);
     }
