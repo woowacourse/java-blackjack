@@ -2,11 +2,8 @@ package domain;
 
 import static domain.BlackjackRule.MAX_PARTICIPANTS_COUNT;
 
-import dto.DealerResultDTO;
 import dto.ParticipantsInitDTO;
 import dto.ProfitResultDTO;
-import dto.UserCardsDTO;
-import dto.UserResultDTO;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,14 +42,12 @@ public class Participants {
         return dealer.getFirstCard();
     }
 
-    public List<UserCardsDTO> getUserCards() {
-        return players.stream()
-                .map(UserCardsDTO::fromUser)
-                .collect(Collectors.toList());
+    public List<User> getPlayers() {
+        return List.copyOf(players);
     }
 
-    public UserCardsDTO getPlayerCards(int userIndex) {
-        return UserCardsDTO.fromUser(players.get(userIndex));
+    public User getPlayer(int index) {
+        return players.get(index);
     }
 
     public List<String> getPlayerNames() {
@@ -82,14 +77,8 @@ public class Participants {
         dealer.calculateScore();
     }
 
-    public DealerResultDTO getDealerResult() {
-        return DealerResultDTO.fromDealer(dealer);
-    }
-
-    public List<UserResultDTO> getUserResults() {
-        return players.stream()
-                .map(UserResultDTO::fromUser)
-                .collect(Collectors.toList());
+    public Dealer getDealer() {
+        return dealer;
     }
 
     public ProfitResultDTO calculateProfit() {

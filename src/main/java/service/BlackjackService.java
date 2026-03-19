@@ -1,8 +1,10 @@
 package service;
 
 import domain.Card;
+import domain.Dealer;
 import domain.Deck;
 import domain.Participants;
+import domain.User;
 import dto.DealerCardDTO;
 import dto.DealerResultDTO;
 import dto.ParticipantsInitDTO;
@@ -10,6 +12,7 @@ import dto.ProfitResultDTO;
 import dto.UserCardsDTO;
 import dto.UserResultDTO;
 import java.util.List;
+import java.util.stream.Collectors;
 import util.RandomShuffleStrategy;
 
 public class BlackjackService {
@@ -44,18 +47,23 @@ public class BlackjackService {
     }
 
     public List<UserCardsDTO> getUserCards() {
-        return participants.getUserCards();
+        List<User> players = participants.getPlayers();
+        return players.stream()
+                .map(UserCardsDTO::fromUser)
+                .collect(Collectors.toList());
     }
 
     public UserCardsDTO hit(int index) {
         participants.dealCard(deck, index);
         participants.calculateUserScore(index);
-        return participants.getPlayerCards(index);
+        User user = participants.getPlayer(index);
+        return UserCardsDTO.fromUser(user);
     }
 
     public UserCardsDTO stand(int index) {
         calculateUserScore(index);
-        return participants.getPlayerCards(index);
+        User user = participants.getPlayer(index);
+        return UserCardsDTO.fromUser(user);
     }
 
     public void calculateDealerScore() {
@@ -71,11 +79,15 @@ public class BlackjackService {
     }
 
     public DealerResultDTO makeDealerFinalResult() {
-        return participants.getDealerResult();
+        Dealer dealer = participants.getDealer();
+        return DealerResultDTO.fromDealer(dealer);
     }
 
     public List<UserResultDTO> makeUserFinalResult() {
-        return participants.getUserResults();
+        List<User> players = participants.getPlayers();
+        return players.stream()
+                .map(UserResultDTO::fromUser)
+                .collect(Collectors.toList());
     }
 
     private void calculateUserScore(int index) {
