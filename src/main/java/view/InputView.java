@@ -19,6 +19,7 @@ public class InputView {
     }
 
     public int readBetAmount(String name) {
+        printEmptyLine();
         System.out.println(name + "의 배팅 금액은?");
         String input = readLine();
         return Integer.parseInt(input);
@@ -35,5 +36,9 @@ public class InputView {
 
     private String readLine() {
         return scanner.nextLine();
+    }
+
+    private void printEmptyLine() {
+        System.out.println();
     }
 }
