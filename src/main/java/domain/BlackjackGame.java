@@ -74,6 +74,6 @@ public class BlackjackGame {
     }
 
     public List<Player> getPlayers() {
-        return playerGroup.getPlayers();
+        return List.copyOf(playerGroup.getPlayers());
     }
 }
