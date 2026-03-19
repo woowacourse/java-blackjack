@@ -3,6 +3,7 @@ package blackjack.domain.betting;
 import blackjack.domain.participant.Player;
 import blackjack.domain.state.State;
 import java.util.Map;
+import java.util.Optional;
 
 public class Bettings {
 
@@ -17,8 +18,13 @@ public class Bettings {
     }
 
     public double calculateProfit(Player player, State state) {
-        BettingAmount bettingAmount = bettings.get(player);
+        BettingAmount bettingAmount = findByPlayer(player)
+                .orElseThrow(() -> new IllegalArgumentException("없는 플레이어입니다."));
         return state.apply(bettingAmount.amount());
+    }
+
+    private Optional<BettingAmount> findByPlayer(Player player) {
+        return Optional.ofNullable(bettings.get(player));
     }
 
 }
