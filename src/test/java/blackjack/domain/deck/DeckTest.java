@@ -10,7 +10,7 @@ public class DeckTest {
     @Test
     void 카드_꺼내오기_테스트() {
         // given
-        Deck deck = Deck.createWithShuffled();
+        Deck deck = Deck.createWithShuffled(new CollectionsShuffle());
 
         // when
         Card card = deck.pop();

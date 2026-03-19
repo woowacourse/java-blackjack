@@ -2,7 +2,6 @@ package blackjack.domain.deck;
 
 import blackjack.domain.card.Card;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Deck {
@@ -13,9 +12,9 @@ public class Deck {
         this.cards = cards;
     }
 
-    public static Deck createWithShuffled() {
+    public static Deck createWithShuffled(ShuffleStrategy shuffleStrategy) {
         List<Card> copy = new ArrayList<>(Card.getAllCards());
-        Collections.shuffle(copy);
+        shuffleStrategy.shuffle(copy);
 
         return new Deck(copy);
     }
