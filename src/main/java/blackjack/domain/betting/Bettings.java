@@ -1,6 +1,7 @@
 package blackjack.domain.betting;
 
 import blackjack.domain.participant.Player;
+import blackjack.domain.state.State;
 import java.util.Map;
 
 public class Bettings {
@@ -15,8 +16,9 @@ public class Bettings {
         return new Bettings(bettings);
     }
 
-    public BettingAmount findByPlayer(Player player) {
-        return bettings.get(player);
+    public double calculateProfit(Player player, State state) {
+        BettingAmount bettingAmount = bettings.get(player);
+        return state.apply(bettingAmount.amount());
     }
 
 }

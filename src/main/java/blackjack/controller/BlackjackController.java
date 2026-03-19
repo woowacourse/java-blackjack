@@ -8,7 +8,6 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.dto.CardResult;
 import blackjack.dto.ProfitResult;
-import blackjack.dto.StateResult;
 import blackjack.view.input.InputView;
 import blackjack.view.output.OutputView;
 import java.util.HashMap;
@@ -38,7 +37,6 @@ public class BlackjackController {
         printInitialSettings(players, dealer);
 
         getMoreCardsOfParticipants(players, dealer, deck);
-
         printCardsOfParticipants(players, dealer);
         printResult(bettings, players, dealer);
     }
@@ -115,8 +113,7 @@ public class BlackjackController {
     }
 
     private void printResult(Bettings bettings, Players players, Dealer dealer) {
-        StateResult stateResult = StateResult.from(players, dealer);
-        outputView.printResult(ProfitResult.from(players, stateResult, bettings));
+        outputView.printResult(ProfitResult.from(players, dealer, bettings));
     }
 
 }
