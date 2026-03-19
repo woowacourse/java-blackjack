@@ -49,10 +49,6 @@ public class ResultView {
         ));
     }
 
-    public String formatCardName(final Card card) {
-        return card.getRank().symbol() + card.getSuit().suit();
-    }
-
     public void printResult(ResultDto resultDto) {
         System.out.println("딜러카드: " + resultDto.dealer().cards() + " - 결과: " + resultDto.dealer().score());
         resultDto.players().forEach(player -> System.out.printf(
@@ -88,10 +84,14 @@ public class ResultView {
         return playerNames.toString();
     }
 
-    public String joinCardNames(List<Card> cardList) {
-        return cardList.stream()
+    public String joinCardNames(final List<Card> cards) {
+        return cards.stream()
                 .map(this::formatCardName)
                 .collect(Collectors.joining(", "));
+    }
+
+    private String formatCardName(final Card card) {
+        return card.getRank().symbol() + card.getSuit().suit();
     }
 
     private void printDealerOutcome(ParticipantStatsDto participantStatsDto) {
