@@ -16,15 +16,22 @@ public class PlayerBet {
         return new PlayerBet(player, BettingAmount.of(amount));
     }
 
-    public boolean applyProfitIfBlackjackAndReturnApplied() {
-        if (player.isBlackjack()) {
-            bettingAmount.applyBlackjackBonus();
-            return true;
+    public void applyResult(Dealer dealer) {
+        if (dealer.isBlackjack()) {
+            applyProfitIfDealerBlackjack();
+            return;
         }
-        return false;
+        if (applyProfitIfBlackjackAndReturnApplied()) {
+            return;
+        }
+        if (dealer.isBust()) {
+            IsBustLoseBettingAmount();
+            return;
+        }
+        applyProfitByDealerScore(dealer.calculateScore());
     }
 
-    public void applyProfitIfDealerBlackjack() {
+    private void applyProfitIfDealerBlackjack() {
         if (player.isBlackjack()) {
             bettingAmount.applyDrawAmount();
             return;
@@ -32,13 +39,21 @@ public class PlayerBet {
         bettingAmount.applyLoseAmount();
     }
 
-    public void IsBustLoseBettingAmount() {
+    private boolean applyProfitIfBlackjackAndReturnApplied() {
+        if (player.isBlackjack()) {
+            bettingAmount.applyBlackjackBonus();
+            return true;
+        }
+        return false;
+    }
+
+    private void IsBustLoseBettingAmount() {
         if (player.isBust()) {
             bettingAmount.applyLoseAmount();
         }
     }
 
-    public void applyProfitByDealerScore(int dealerScore) {
+    private void applyProfitByDealerScore(int dealerScore) {
         if (player.isBust()) {
             bettingAmount.applyLoseAmount();
             return;

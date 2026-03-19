@@ -1,6 +1,5 @@
 package controller;
 
-import domain.BlackjackBettingCalculator;
 import domain.Card;
 import domain.Deck;
 import domain.Dealer;
@@ -186,7 +185,7 @@ public class BlackjackController {
 
     private void printGameResult(Dealer dealer, Players players, PlayerBets playerBets) {
         outputView.separatorLine();
-        BlackjackBettingCalculator.calculate(dealer, playerBets);
+        playerBets.applyGameResult(dealer);
 
         outputView.println(OutputMessage.FINAL_MESSAGE.getMessage());
 
@@ -197,8 +196,8 @@ public class BlackjackController {
 
     private void printDealerProfitResult(PlayerBets playerBets) {
         BigDecimal dealerBettingAmount = BigDecimal.ZERO;
-        for (PlayerBet playerBet : playerBets.getPlayersBets()) {
-            dealerBettingAmount = dealerBettingAmount.add(playerBet.amount().negate());
+        for (BigDecimal bettingAmount : playerBets.bettingAmounts()) {
+            dealerBettingAmount = dealerBettingAmount.add(bettingAmount.negate());
         }
         outputView.println(OutputMessage.DEALER_PROFIT_RESULT_FORMAT.format(dealerBettingAmount.stripTrailingZeros().toPlainString()));
     }
@@ -206,8 +205,8 @@ public class BlackjackController {
     private void printPlayerProfitResult(Players players, PlayerBets playerBets) {
         for (int i = 0; i < players.getPlayers().size(); i++) {
             String userName = players.getUserNames().get(i);
-            PlayerBet playerBet = playerBets.getPlayersBets().get(i);
-            outputView.println(OutputMessage.PLAYER_RESULT_FORMAT.format(userName, playerBet.amount().stripTrailingZeros().toPlainString()));
+            BigDecimal bettingAmount = playerBets.bettingAmounts().get(i);
+            outputView.println(OutputMessage.PLAYER_RESULT_FORMAT.format(userName, bettingAmount.stripTrailingZeros().toPlainString()));
         }
     }
 
