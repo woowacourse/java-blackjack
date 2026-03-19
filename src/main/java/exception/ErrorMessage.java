@@ -15,7 +15,8 @@ public enum ErrorMessage {
     PLAYER_NAME_BLANK("게임 참가자의 이름은 공백이 될 수 없습니다."),
     MONEY_NOT_NUMBER("베팅 금액은 숫자만 입력할 수 있습니다."),
     MONEY_OUT_OF_RANGE(
-        String.format("베팅 금액은 %d원 이상 %d원 이하여야 합니다.", PolicyConstant.MONEY_MIN_VALUE, PolicyConstant.MONEY_MAX_VALUE)),
+        String.format("베팅 금액은 %d원 이상 %d원 이하의 정수여야 합니다.", PolicyConstant.MONEY_MIN_VALUE,
+            PolicyConstant.MONEY_MAX_VALUE)),
     INVALID_MONEY_UNIT(String.format("베팅 금액의 단위는 %d원 입니다.", PolicyConstant.MONEY_UNIT)),
     NO_CARDS_LEFT_TO_DRAW("카드를 더 이상 뽑을 수 없습니다."),
     ;
