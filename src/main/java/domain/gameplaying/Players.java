@@ -8,14 +8,14 @@ import java.util.List;
 class Players {
 
     private final Deque<Player> players;
-    private final BlackJackDeck sharedDeck;
+    private final DrawStrategy sharedDeck;
 
-    private Players(List<Player> players, BlackJackDeck sharedDeck) {
+    private Players(List<Player> players, DrawStrategy sharedDeck) {
         this.players = new ArrayDeque<>(players);
         this.sharedDeck = sharedDeck;
     }
 
-    static Players noOne(BlackJackDeck sharedDeck) {
+    static Players noOne(DrawStrategy sharedDeck) {
         return new Players(List.of(), sharedDeck);
     }
 
@@ -56,7 +56,7 @@ class Players {
         Player gameFinishedPlayer = players.poll();
         return PlayedGameResult.from(
                 gameFinishedPlayer.name(),
-                gameFinishedPlayer.cardInfos(),
+                gameFinishedPlayer.cards(),
                 gameFinishedPlayer.scoreSum());
     }
 

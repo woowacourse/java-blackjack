@@ -13,7 +13,7 @@ public class Participants {
         this.players = players;
     }
 
-    public static Participants onlyDealer(BlackJackDeck sharedDeck) {
+    public static Participants onlyDealer(DrawStrategy sharedDeck) {
         return new Participants(Dealer.of(sharedDeck), Players.noOne(sharedDeck));
     }
 
@@ -71,7 +71,7 @@ public class Participants {
     }
 
     public PlayedGameResult dealerResult() {
-        return PlayedGameResult.from(dealer.name(), dealer.cardInfos(), dealer.scoreSum());
+        return PlayedGameResult.from(dealer.name(), dealer.cards(), dealer.scoreSum());
     }
 
     public boolean isDealerPlayable() {

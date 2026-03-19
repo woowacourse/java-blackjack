@@ -2,7 +2,7 @@ package domain.gameplaying;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import domain.gameplaying.strategy.InfiniteDeck;
+import domain.gameplaying.strategy.InfiniteRandomDrawStrategy;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,11 +10,11 @@ import org.junit.jupiter.api.Test;
 class DealerTest {
 
     static Hand playableHand = new Hand(
-            new InfiniteDeck(),
+            new InfiniteRandomDrawStrategy(),
             List.of(new Card(CardRank.QUEEN, CardMark.SPADE),
                     new Card(CardRank.TWO, CardMark.HEART)));
     static Hand stopHand = new Hand(
-            new InfiniteDeck(),
+            new InfiniteRandomDrawStrategy(),
             List.of(new Card(CardRank.QUEEN, CardMark.SPADE),
                     new Card(CardRank.EIGHT, CardMark.HEART)));
 

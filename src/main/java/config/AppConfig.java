@@ -1,16 +1,16 @@
 package config;
 
 import controller.BlackJackController;
-import domain.gameplaying.BlackJackDeck;
+import domain.gameplaying.DrawStrategy;
 import domain.gameplaying.Participants;
-import domain.gameplaying.strategy.OnlyOneDeck;
+import domain.gameplaying.strategy.OnlyOneDeckDrawStrategy;
 import domain.result.ScoreBoard;
 import service.BlackJackCommandService;
 import service.BlackJackQueryService;
 
 public class AppConfig {
 
-    private static final BlackJackDeck sharedDeck = new OnlyOneDeck();
+    private static final DrawStrategy sharedDeck = new OnlyOneDeckDrawStrategy();
 
     public BlackJackController blackJackController() {
         Participants participants = Participants.onlyDealer(sharedDeck);

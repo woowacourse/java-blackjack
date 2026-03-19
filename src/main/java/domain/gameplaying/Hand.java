@@ -1,6 +1,5 @@
 package domain.gameplaying;
 
-import domain.CardInfo;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,26 +8,24 @@ class Hand {
     private static final int BUST_THRESHOLD = 21;
     private static final int ACE_WEIGHT = 10;
 
-    private final BlackJackDeck deck;
+    private final DrawStrategy drawStrategy;
     private final List<Card> cards;
 
-    Hand(BlackJackDeck deck, List<Card> cards) {
-        this.deck = deck;
+    Hand(DrawStrategy drawStrategy, List<Card> cards) {
+        this.drawStrategy = drawStrategy;
         this.cards = new ArrayList<>(cards);
     }
 
-    static Hand with(BlackJackDeck deck) {
+    static Hand using(DrawStrategy deck) {
         return new Hand(deck, new ArrayList<>());
     }
 
     void drawCard() {
-        cards.add(deck.draw());
+        cards.add(drawStrategy.draw());
     }
 
-    List<CardInfo> cardInfos() {
-        return cards.stream()
-                .map(Card::info)
-                .toList();
+    List<Card> cards() {
+        return List.copyOf(cards);
     }
 
     boolean isBusted() {
@@ -41,9 +38,13 @@ class Hand {
 
     int scoreSum() {
         int total = rawScoreSum();
-        if (isExceededBustNumber(total)) {
-            total -= aceCount() * ACE_WEIGHT;
+        int aces = aceCount();
+
+        while (isExceededBustNumber(total) && aces > 0) {
+            total -= ACE_WEIGHT;
+            aces--;
         }
+
         return total;
     }
 

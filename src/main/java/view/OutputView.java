@@ -45,7 +45,7 @@ public final class OutputView {
     }
 
     public static void participantResult(PlayedGameResultResponse response) {
-        String nameAndCards = nameAndAllCards(response.name(), response.cardInfos());
+        String nameAndCards = nameAndAllCards(response.name(), response.cardsInfo());
         int score = response.scoreSum();
 
         System.out.println(OutputMessage.PARTICIPANTS_RESULT.description(nameAndCards, score));

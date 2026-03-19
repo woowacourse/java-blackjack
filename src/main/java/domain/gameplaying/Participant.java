@@ -1,6 +1,5 @@
 package domain.gameplaying;
 
-import domain.CardInfo;
 import domain.PlayedGameResult;
 import java.util.List;
 
@@ -31,7 +30,7 @@ abstract class Participant {
     }
 
     PlayedGameResult infos() {
-        return PlayedGameResult.from(name, this.cardInfos(), this.scoreSum());
+        return PlayedGameResult.from(this.name(), this.cards(), this.scoreSum());
     }
 
     boolean isBusted() {
@@ -46,8 +45,8 @@ abstract class Participant {
         return name;
     }
 
-    List<CardInfo> cardInfos() {
-        return hand.cardInfos();
+    List<Card> cards() {
+        return hand.cards();
     }
 
     private void requirePlayableHand() {
