@@ -19,11 +19,11 @@ public class DealerTest {
         // when
         dealer.receiveCard(new Card(Suit.SPADE, Rank.ACE));
         dealer.receiveCard(new Card(Suit.HEART, Rank.JACK));
-        String exceptedOneCardResult = "A스페이드";
+        Card exceptedFirstCard = new Card(Suit.SPADE, Rank.ACE);
         String expectedCardsResult = "A스페이드, J하트";
 
         // then
-        assertThat(dealer.getOneCardDisplay()).isEqualTo(exceptedOneCardResult);
+        assertThat(dealer.getFirstCard()).isEqualTo(exceptedFirstCard);
         assertThat(dealer.getCardsDisplay()).isEqualTo(expectedCardsResult);
     }
 
