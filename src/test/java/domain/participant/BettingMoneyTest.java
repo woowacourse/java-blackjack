@@ -42,4 +42,11 @@ public class BettingMoneyTest {
         BettingMoney money2 = new BettingMoney(2_000);
         assertThat(money1).isNotEqualTo(money2);
     }
+
+    @DisplayName("베팅 금액이 100원 단위가 아니면 예외가 발생한다.")
+    @Test
+    void 베팅_금액이_100원_단위가_아니면_예외처리_한다() {
+        assertThatThrownBy(() -> new BettingMoney(999))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }

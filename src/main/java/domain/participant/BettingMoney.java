@@ -14,6 +14,9 @@ public class BettingMoney {
         if (amount <= 0) {
             throw new IllegalArgumentException("베팅 금액이 0이하 일 수 없습니다.");
         }
+        if (amount % 100 != 0) {
+            throw new IllegalArgumentException("베팅 금액은 100원 단위여야 합니다.");
+        }
     }
 
     public int getAmount() {
