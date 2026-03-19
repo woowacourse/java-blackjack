@@ -13,24 +13,33 @@ public record PlayedGameResult(NameAndCards nameAndCards, int scoreSum) {
         return new PlayedGameResult(infos, scoreSum);
     }
 
+    public static PlayedGameResult none() {
+        NameAndCards infos = new NameAndCards("", List.of());
+        return new PlayedGameResult(infos, 0);
+    }
+
     public String name() {
-        return nameAndCards.name();
+        return nameAndCards().name();
     }
 
     public List<Card> cards() {
-        return nameAndCards.cards();
+        return List.copyOf(this.nameAndCards().cards());
     }
 
-    public int cardCount() {
-        return this.cards().size();
+    public boolean isNone() {
+        return this.cards().isEmpty() && this.scoreSum() == 0;
     }
 
     public boolean isBlackJack() {
-        return scoreSum == BLACK_JACK_SCORE && this.cardCount() == INITIAL_CARD_COUNT;
+        return this.scoreSum() == BLACK_JACK_SCORE && this.cardCount() == INITIAL_CARD_COUNT;
     }
 
     public boolean isBusted() {
-        return scoreSum > BLACK_JACK_SCORE;
+        return this.scoreSum() > BLACK_JACK_SCORE;
+    }
+
+    private int cardCount() {
+        return this.cards().size();
     }
 
     private record NameAndCards(String name, List<Card> cards) {

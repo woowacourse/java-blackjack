@@ -6,10 +6,11 @@ import domain.PlayedGameResult;
 class PlayerState {
 
     private final Money bettingMoney;
-    private PlayedGameResult playedGameResult;
+    private final PlayedGameResult playedGameResult;
 
     private PlayerState(Money bettingMoney) {
         this.bettingMoney = bettingMoney;
+        this.playedGameResult = PlayedGameResult.none();
     }
 
     private PlayerState(Money bettingMoney, PlayedGameResult playedGameResult) {
@@ -30,6 +31,9 @@ class PlayerState {
     }
 
     Money evaluateProfitWith(PlayedGameResult dealerGameResult) {
+        if(IsPlayerGameResultNone()) {
+            throw new IllegalStateException("게임 결과가 기록되지 않았습니다.");
+        }
         return determinePlayerGameOutcomeWith(dealerGameResult).calculate(bettingMoney);
     }
 
@@ -78,5 +82,9 @@ class PlayerState {
         }
 
         return PlayerGameOutcome.WIN;
+    }
+
+    private boolean IsPlayerGameResultNone() {
+        return playedGameResult.isNone();
     }
 }

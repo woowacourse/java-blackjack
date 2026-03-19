@@ -84,18 +84,18 @@ public class BlackJackQueryService {
     private ProfitResponse dealerPayout() {
         PlayedGameResult dealerResult = participants.dealerResult();
         ProfitInfo dealerProfitInfo = scoreBoard.evaluateDealerProfitInfo(dealerResult);
-        return payoutResponseFrom(dealerProfitInfo);
+        return profitResponseFrom(dealerProfitInfo);
     }
 
     private List<ProfitResponse> playerPayouts() {
         PlayedGameResult dealerResult = participants.dealerResult();
         return scoreBoard.evaluatePlayerProfitInfosWith(dealerResult)
                 .stream()
-                .map(this::payoutResponseFrom)
+                .map(this::profitResponseFrom)
                 .toList();
     }
 
-    private ProfitResponse payoutResponseFrom(ProfitInfo info) {
+    private ProfitResponse profitResponseFrom(ProfitInfo info) {
         return ProfitResponse.from(info.name(), info.money());
     }
 }
