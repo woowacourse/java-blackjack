@@ -72,5 +72,6 @@ public class BlackjackController {
             blackjackGame.giveCard(player);
             resultView.printCards(PlayerDto.from(player));
         }
+        resultView.printCards(PlayerDto.from(player));
     }
 }
