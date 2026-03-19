@@ -46,6 +46,10 @@ public class BlackjackService {
         players.addCardPlayer(playerIndex, cardMachine.drawCard());
     }
 
+    public int getPlayerScore(int playerIndex) {
+        return players.getPlayerByIndex(playerIndex).calculateScore();
+    }
+
     public void dealInitialCards() {
         for (Player player : players.getAllPlayers()) {
             player.addCard(List.of(cardMachine.drawCard(), cardMachine.drawCard()));

@@ -1,6 +1,7 @@
 package controller;
 
 import constant.PlayerAction;
+import constant.PolicyConstant;
 import domain.bet.Money;
 import domain.participant.Name;
 import domain.participant.Names;
@@ -79,11 +80,11 @@ public class BlackjackController {
     private void inputPlayerAction(int playerIndex) {
         boolean isStandSelected = true;
         while (isStandSelected) {
-            isStandSelected = isStandSelected(playerIndex);
+            isStandSelected = processPlayerAction(playerIndex);
         }
     }
 
-    private boolean isStandSelected(int playerIndex) {
+    private boolean processPlayerAction(int playerIndex) {
         String name = blackjackService.getPlayerName(playerIndex);
         String input = inputView.inputHitOrStand(name);
         if (PlayerAction.from(input).isStand()) {
@@ -92,6 +93,6 @@ public class BlackjackController {
         }
         blackjackService.updatePlayer(playerIndex);
         outputView.printlnPlayer(blackjackService.createPlayerDto(playerIndex));
-        return true;
+        return blackjackService.getPlayerScore(playerIndex) <= PolicyConstant.BLACKJACK_SCORE;
     }
 }
