@@ -1,9 +1,12 @@
 package view;
 
+import domain.BetAmount;
 import java.util.List;
 
 public interface InputView {
     List<String> readNames();
 
-    String readHitOrStand();
+    BetAmount readBetAmountValue();
+
+    Boolean wantToHit();
 }

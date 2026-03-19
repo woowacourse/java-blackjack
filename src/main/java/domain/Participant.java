@@ -25,12 +25,4 @@ public abstract class Participant {
     public int getOwnCardsSum() {
         return this.gameState.getCardsSum();
     }
-//
-//    public boolean isBust() {
-//        return gameState.is();
-//    }
-//
-//    public boolean isBlackJack() {
-//        return hand.isBlackJack();
-//    }
 }

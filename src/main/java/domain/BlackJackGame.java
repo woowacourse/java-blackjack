@@ -1,9 +1,9 @@
 package domain;
 
-import common.ErrorMessage;
 import domain.state.GameState;
 import dto.DealerResultDto;
 import dto.GameResultDto;
+import dto.GameStateDto;
 import dto.ParticipantDto;
 import dto.PlayerResultDto;
 import java.util.List;
@@ -33,43 +33,47 @@ public class BlackJackGame {
         List<Card> dealersInitialCards = totalDeck.drawTwoCards();
         Hand initialDealerHand = Hand.of(
                 dealersInitialCards.get(0),
-                dealersInitialCards.get(1)
-        );
+                dealersInitialCards.get(1));
         return Dealer.from(
-                GameState.createDealerInitialGameState(initialDealerHand)
-        );
+                GameState.createDealerInitialGameState(initialDealerHand));
     }
 
-    public Optional<Player> whoseTurn() {
-        return multiPlayers.findNotStayPlayer();
+    public Optional<Player> whoseBettingTurn() {
+        return multiPlayers.getNextBetPlayer();
     }
 
-    public ParticipantDto doHitProcess() {
-        Player newPlayer = multiPlayers.findNotStayPlayer()
-                .map(player -> multiPlayers.executeHit(player, totalDeck::drawCard))
-                .orElseThrow(() -> new IllegalStateException(ErrorMessage.NO_MORE_PLAYABLE_PLAYER.getMessage()));
+    public Optional<Player> whosePlayTurn() {
+        return multiPlayers.getNextPlayablePlayer();
+    }
+
+    public void doBetProcess(Player target, BetAmount betAmount) {
+        multiPlayers.executeBet(target, betAmount);
+    }
+
+    public ParticipantDto doHitProcess(Player target) {
+        Player newPlayer = multiPlayers.executeHit(target, totalDeck::drawCard);
         return ParticipantDto.from(newPlayer);
     }
 
-    public ParticipantDto doStandProcess() {
-        Player newPlayer = multiPlayers.findNotStayPlayer()
-                .map(multiPlayers::executeStand)
-                .orElseThrow(() -> new IllegalStateException(ErrorMessage.NO_MORE_PLAYABLE_PLAYER.getMessage()));
+    public ParticipantDto doStandProcess(Player target) {
+        Player newPlayer = multiPlayers.executeStand(target);
         return ParticipantDto.from(newPlayer);
     }
 
     public boolean doDealerHitOrStandProcess() {
+        if (dealer.gameState.isFinished()) {
+            return false;
+        }
         Dealer newDealer = dealer.addCard(totalDeck::drawCard);
         updateDealer(newDealer);
         return !newDealer.gameState.isFinished();
     }
 
-    public List<ParticipantDto> getPlayersGameSettingStates() {
-        return multiPlayers.getInitialStates();
-    }
-
-    public ParticipantDto getDealerGameSettingState() {
-        return ParticipantDto.consistWithInitialInfo(dealer);
+    public GameStateDto getGameSettingState() {
+        return GameStateDto.from(
+                ParticipantDto.consistWithInitialInfo(dealer),
+                multiPlayers.getInitialStates()
+        );
     }
 
     public GameResultDto getGameResults() {

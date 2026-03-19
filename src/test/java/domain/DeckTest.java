@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import common.ErrorMessage;
 import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,19 +15,16 @@ import org.junit.jupiter.api.Test;
 
 class DeckTest {
     Deck deck;
-    CardCreationStrategy fixedCardCreationStrategy = new CardCreationStrategy() {
-        @Override
-        public Deque<Card> create() {
-            Card spadeJ = new Card(CardShape.스페이드, CardContents.J);
-            Card clover5 = new Card(CardShape.클로버, CardContents.FIVE);
+    CardCreationStrategy fixedCardCreationStrategy = () -> {
+        Card spadeJ = new Card(CardShape.스페이드, CardContents.J);
+        Card clover5 = new Card(CardShape.클로버, CardContents.FIVE);
 
-            return new ArrayDeque<>(List.of(spadeJ, clover5));
-        }
+        return new ArrayDeque<>(List.of(spadeJ, clover5));
     };
 
     @BeforeEach
     void init() {
-        deck = Deck.createDeck(fixedCardCreationStrategy); //TODO : 전략 넣기
+        deck = Deck.createDeck(fixedCardCreationStrategy);
     }
 
     @Test

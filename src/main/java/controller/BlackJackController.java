@@ -1,11 +1,13 @@
 package controller;
 
+import domain.BetAmount;
 import domain.BlackJackGame;
 import domain.CardCreationStrategy;
 import domain.Player;
 import dto.GameResultDto;
 import dto.ParticipantDto;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 import view.InputView;
 import view.OutputView;
@@ -15,9 +17,7 @@ public class BlackJackController {
     private final OutputView outputView;
     private final CardCreationStrategy strategy;
 
-    public BlackJackController(InputView inputView,
-                               OutputView outputView,
-                               CardCreationStrategy strategy) {
+    public BlackJackController(InputView inputView, OutputView outputView, CardCreationStrategy strategy) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.strategy = strategy;
@@ -25,16 +25,28 @@ public class BlackJackController {
 
     public void doGameProcess() {
         BlackJackGame game = retry(this::readyGame);
-        outputView.printInitialStates(
-                game.getDealerGameSettingState(),
-                game.getPlayersGameSettingStates()
-        );
+        betPlayers(game);
+        outputView.printInitialStates(game.getGameSettingState());
 
         playPlayersTurn(game);
         playDealerTurn(game);
 
         GameResultDto gameResults = game.getGameResults();
         outputView.printGameResult(gameResults);
+    }
+
+    private void betPlayers(BlackJackGame game) {
+        while (true) {
+            Optional<Player> player = game.whoseBettingTurn();
+            if (player.isEmpty()) {
+                break;
+            }
+            Player currentPlayer = player.get();
+
+            outputView.printBetAmountPrompt(currentPlayer.getName());
+            BetAmount userBetAmount = retry(inputView::readBetAmountValue);
+            game.doBetProcess(currentPlayer, userBetAmount);
+        }
     }
 
     private BlackJackGame readyGame() {
@@ -50,37 +62,36 @@ public class BlackJackController {
     }
 
     private void playPlayersTurn(BlackJackGame game) {
-        while (game.whoseTurn().isPresent()) {
-            Player currentPlayer = game.whoseTurn().get();
-
-            if (currentPlayer.isFinished()) {
-                handlePlayerStandProcess(game);
-                continue;
+        while (true) {
+            Optional<Player> player = game.whosePlayTurn();
+            if (player.isEmpty()) {
+                break;
             }
+            Player currentPlayer = player.get();
 
             outputView.printHitOrStandPrompt(currentPlayer.getName());
-            String hitOrStandInfo = retry(inputView::readHitOrStand);
-            doHitOrStand(hitOrStandInfo, game);
+            boolean wantToHit = retry(inputView::wantToHit);
+            doHitOrStand(game, currentPlayer, wantToHit);
         }
     }
 
-    private void doHitOrStand(String hitOrStand, BlackJackGame game) {
-        if (hitOrStand.equals("y")) {
-            handlePlayerHitProcess(game);
-        } else {
-            handlePlayerStandProcess(game);
+    private void doHitOrStand(BlackJackGame game, Player player, boolean wantToHit) {
+        if (wantToHit) {
+            handlePlayerHitProcess(game, player);
+            return;
         }
+        handlePlayerStandProcess(game, player);
     }
 
-    private void handlePlayerStandProcess(BlackJackGame game) {
-        ParticipantDto playerState = game.doStandProcess();
+    private void handlePlayerStandProcess(BlackJackGame game, Player player) {
+        ParticipantDto playerState = game.doStandProcess(player);
         if (playerState.cards().size() == 2) {
             outputView.printUserState(playerState);
         }
     }
 
-    private void handlePlayerHitProcess(BlackJackGame game) {
-        ParticipantDto playerState = game.doHitProcess();
+    private void handlePlayerHitProcess(BlackJackGame game, Player player) {
+        ParticipantDto playerState = game.doHitProcess(player);
         outputView.printUserState(playerState);
     }
 
@@ -94,4 +105,3 @@ public class BlackJackController {
         }
     }
 }
-

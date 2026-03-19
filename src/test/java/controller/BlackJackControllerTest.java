@@ -2,11 +2,13 @@ package controller;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import domain.BetAmount;
 import domain.Card;
 import domain.CardContents;
 import domain.CardCreationStrategy;
 import domain.CardShape;
 import dto.GameResultDto;
+import dto.GameStateDto;
 import dto.ParticipantDto;
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -40,7 +42,8 @@ class BlackJackControllerTest {
 
     static class TestInputViewImpl implements InputView {
 
-        private static final Deque<String> hitOrStandOrder = new ArrayDeque<>(List.of("y", "n", "n", "n"));
+        private static final Deque<Boolean> hitOrStandOrder = new ArrayDeque<>(
+                List.of(Boolean.TRUE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE));
 
         @Override
         public List<String> readNames() {
@@ -48,7 +51,12 @@ class BlackJackControllerTest {
         }
 
         @Override
-        public String readHitOrStand() {
+        public BetAmount readBetAmountValue() {
+            return BetAmount.of(100_000);
+        }
+
+        @Override
+        public Boolean wantToHit() {
             return hitOrStandOrder.poll();
         }
     }
@@ -64,7 +72,11 @@ class BlackJackControllerTest {
         }
 
         @Override
-        public void printInitialStates(ParticipantDto dealerDto, List<ParticipantDto> players) {
+        public void printBetAmountPrompt(String name) {
+        }
+
+        @Override
+        public void printInitialStates(GameStateDto gameStateDto) {
         }
 
         @Override

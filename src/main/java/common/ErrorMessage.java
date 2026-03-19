@@ -8,8 +8,12 @@ public enum ErrorMessage {
     ONLY_KO_AND_ENG("이름은 영어 또는 한국어만 가능합니다: "),
     NAME_UNIQUENESS_ERR("이름은 중복되면 안됩니다"),
     PLAYER_NOT_FOUND("해당 플레이어를 찾을 수 없습니다"),
-    NO_MORE_PLAYABLE_PLAYER("더 이상 게임을 진행할 수 있는 플레이어가 없습니다."),
+    NO_MORE_PLAYABLE_PLAYER("더 이상 게임을 진행할 수 있는 플레이어를 찾지 못했습니다"),
+    NO_MORE_BETTABLE_PLAYER("베팅을 진행할 수 있는 플레이어를 찾지 못했습니다"),
     NOT_ALLOW_METHOD_CALL("현재 상태에서 허용되지 않는 메소드 호출입니다"),
+    ZERO_MINUS_MONEY("0원 이하 금액을 베팅할 수는 없습니다"),
+    ONLY_NUMBER("숫자만 입력 가능합니다"),
+    TEST_STATE_EROR("테스트 조건이 이상합니다"),
     MAX_PLAYER_ERROR("최대 인원을 초과했습니다.");
 
     private final String message;

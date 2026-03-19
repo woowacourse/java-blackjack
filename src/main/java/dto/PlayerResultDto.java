@@ -1,19 +1,18 @@
 package dto;
 
-import domain.GameResult;
+import domain.Dealer;
 import domain.Player;
-import domain.state.GameState;
 
 public record PlayerResultDto(
         ParticipantDto playerDto,
         int score,
-        GameResult result
+        double playerEarnMoney
 ) {
-    public static PlayerResultDto from(Player player, GameState dealerGameState) {
+    public static PlayerResultDto from(Player player, Dealer dealer) {
         return new PlayerResultDto(
                 ParticipantDto.from(player),
                 player.getOwnCardsSum(),
-                player.calculateGameResult(dealerGameState)
+                player.calculateEarnMoney(dealer)
         );
     }
 }

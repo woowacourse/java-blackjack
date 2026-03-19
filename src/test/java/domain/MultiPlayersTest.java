@@ -39,19 +39,18 @@ class MultiPlayersTest {
         @Test
         @DisplayName("생성 잘 한다")
         void of_good() {
-            //when, then
+            // when, then
             assertDoesNotThrow(
-                    () -> MultiPlayers.of(TEST_PLAYER_NAMES, totalDeck)
-            );
+                    () -> MultiPlayers.of(TEST_PLAYER_NAMES, totalDeck));
         }
 
         @Test
         @DisplayName("이름이 중복되면 오류가 발생한다")
         void of_fail_duplication() {
-            //given
+            // given
             List<String> testPlayerNames = List.of("pobi", "pobi");
 
-            //when && then
+            // when && then
             assertThatThrownBy(() -> MultiPlayers.of(testPlayerNames, totalDeck))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining(ErrorMessage.NAME_UNIQUENESS_ERR.getMessage());
@@ -60,13 +59,51 @@ class MultiPlayersTest {
         @Test
         @DisplayName("5명 초과 시 오류가 발생한다")
         void of_fail_too_many_players() {
-            //given
+            // given
             List<String> testPlayerNames = List.of("pobi", "gump", "rati", "terry", "neo", "james");
 
-            //when && then
+            // when && then
             assertThatThrownBy(() -> MultiPlayers.of(testPlayerNames, totalDeck))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining(ErrorMessage.MAX_PLAYER_ERROR.getMessage());
+        }
+    }
+
+    @Nested
+    class findNotBetPlayer {
+        @Test
+        @DisplayName("isBet가 False인 사용자가 있으면 Player를 반환한다")
+        void findNotStayPlayer_exist() {
+            // given
+            MultiPlayers testMultiPlayers = MultiPlayers.of(TEST_PLAYER_NAMES, totalDeck);
+
+            // when
+            Optional<Player> result = testMultiPlayers.getNextBetPlayer();
+
+            // then
+            assertTrue(result.isPresent());
+        }
+
+        @Test
+        @DisplayName("모든 플레이어가 베팅을 끝내면 없으면 빈 Optional를 반환한다")
+        void findNotStayPlayer_not_exist() {
+            // given
+            int commonBetAmountValue = 1_000;
+            BetAmount commonBetAmount = BetAmount.of(commonBetAmountValue);
+            MultiPlayers testMultiPlayers = MultiPlayers.of(TEST_PLAYER_NAMES, totalDeck);
+            while (true) {
+                Optional<Player> findResult = testMultiPlayers.getNextBetPlayer();
+                if (findResult.isEmpty()) {
+                    break;
+                }
+                testMultiPlayers.executeBet(findResult.get(), commonBetAmount);
+            }
+
+            // when
+            Optional<Player> result = testMultiPlayers.getNextBetPlayer();
+
+            // then
+            assertTrue(result.isEmpty());
         }
     }
 
@@ -75,33 +112,33 @@ class MultiPlayersTest {
         @Test
         @DisplayName("stay가 아닌 사용자가 있으면 Player를 반환한다")
         void findNotStayPlayer_exist() {
-            //given
+            // given
             MultiPlayers testMultiPlayers = MultiPlayers.of(TEST_PLAYER_NAMES, totalDeck);
 
-            //when
-            Optional<Player> result = testMultiPlayers.findNotStayPlayer();
+            // when
+            Optional<Player> result = testMultiPlayers.getNextPlayablePlayer();
 
-            //then
+            // then
             assertNotNull(result.get());
         }
 
         @Test
-        @DisplayName("stay가 아닌 사용자가 없으면 빈 Optional를 반환한다")
+        @DisplayName("모든 Player가 종료된 상태가 되면 빈 Optional를 반환한다")
         void findNotStayPlayer_not_exist() {
-            //given
+            // given
             MultiPlayers testMultiPlayers = MultiPlayers.of(TEST_PLAYER_NAMES, totalDeck);
             while (true) {
-                Optional<Player> findResult = testMultiPlayers.findNotStayPlayer();
+                Optional<Player> findResult = testMultiPlayers.getNextPlayablePlayer();
                 if (findResult.isEmpty()) {
                     break;
                 }
                 testMultiPlayers.executeStand(findResult.get());
             }
 
-            //when
-            Optional<Player> result = testMultiPlayers.findNotStayPlayer();
+            // when
+            Optional<Player> result = testMultiPlayers.getNextPlayablePlayer();
 
-            //then
+            // then
             assertTrue(result.isEmpty());
         }
     }
@@ -111,36 +148,50 @@ class MultiPlayersTest {
         @Test
         @DisplayName("hit가 정상적으로 다른 플레이이에게 요청이 되면 결과로 Player 객체를 받는다")
         void executeHit_good() {
-            //given
+            // given
             MultiPlayers testMultiPlayers = MultiPlayers.of(TEST_PLAYER_NAMES, totalDeck);
-            Player testPlayer = testMultiPlayers.findNotStayPlayer().get();
+            Player testPlayer = testMultiPlayers.getNextPlayablePlayer().get();
 
-            //when
+            // when
             Player result = testMultiPlayers.executeHit(testPlayer, totalDeck::drawCard);
 
-            //then
+            // then
             assertEquals(Player.class, result.getClass());
         }
 
         @Test
         @DisplayName("stand가 정상적으로 다른 플레이이에게 요청이 되면 결과로 Player 객체를 받는다")
         void executeStand_good() {
-            //given
+            // given
             MultiPlayers testMultiPlayers = MultiPlayers.of(TEST_PLAYER_NAMES, totalDeck);
-            Player testPlayer = testMultiPlayers.findNotStayPlayer().get();
+            Player testPlayer = testMultiPlayers.getNextPlayablePlayer().get();
 
-            //when
+            // when
             Player result = testMultiPlayers.executeStand(testPlayer);
 
-            //then
+            // then
             assertEquals(Player.class, result.getClass());
+        }
+
+        @Test
+        @DisplayName("양수의 금액으로 bet를 플레이이에게 요청 시 오류가 발생하지 않는다.")
+        void executeBet_good() {
+            // given
+            int betMoney = 10_000;
+            BetAmount betAmount = BetAmount.of(betMoney);
+            MultiPlayers testMultiPlayers = MultiPlayers.of(TEST_PLAYER_NAMES, totalDeck);
+            Player testPlayer = testMultiPlayers.getNextPlayablePlayer().get();
+
+            // when, then
+            assertDoesNotThrow(
+                    () -> testMultiPlayers.executeBet(testPlayer, betAmount));
         }
     }
 
     @Test
     @DisplayName("초기 상태를 잘 가져온다")
     void getInitialState_success() {
-        //given
+        // given
         String testerName = "pobi";
         Card heartTen = new Card(CardShape.하트, CardContents.TEN);
         Card heartJ = new Card(CardShape.하트, CardContents.J);
@@ -151,21 +202,19 @@ class MultiPlayersTest {
         ParticipantDto expect = ParticipantDto.from(
                 Player.from(
                         testerName,
-                        GameState.createPlayerInitialGameState(Hand.of(heartTen, heartJ))
-                )
-        );
+                        GameState.createPlayerInitialGameState(Hand.of(heartTen, heartJ))));
 
-        //when
+        // when
         List<ParticipantDto> result = multiPlayers.getInitialStates();
 
-        //then
+        // then
         Assertions.assertEquals(expect, result.getFirst());
     }
 
     @Test
     @DisplayName("게임 결과를 잘 가져온다")
     void checkPlayersGameResult_success() {
-        //given
+        // given
         String testerName = "pobi";
         List<String> onlyOneNames = List.of(testerName);
 
@@ -176,23 +225,20 @@ class MultiPlayersTest {
         Queue<Card> onlyTwoTenCards = new LinkedList<>(List.of(heartTen, heartJ));
 
         Dealer testDealer = Dealer.from(
-                GameState.createDealerInitialGameState(Hand.of(heartTwo, heartThree))
-        );
+                GameState.createDealerInitialGameState(Hand.of(heartTwo, heartThree)));
         Player expectedPlayer = Player.from(
                 testerName,
-                GameState.createPlayerInitialGameState(Hand.of(heartTen, heartJ))
-        );
+                GameState.createPlayerInitialGameState(Hand.of(heartTen, heartJ)));
         CardCreationStrategy onlyTwoTenCardsCreationStrategy = () -> new ArrayDeque<>(onlyTwoTenCards);
         MultiPlayers multiPlayers = MultiPlayers.of(onlyOneNames, Deck.createDeck(onlyTwoTenCardsCreationStrategy));
-        PlayerResultDto expect = PlayerResultDto.from(expectedPlayer, testDealer.gameState);
+        PlayerResultDto expect = PlayerResultDto.from(expectedPlayer, testDealer);
 
-        //when
+        // when
         List<PlayerResultDto> result = multiPlayers.checkPlayersGameResult(testDealer);
 
-        //then
+        // then
         Assertions.assertEquals(expect, result.getFirst());
     }
-
 
     private Deque<Card> createSampleCards() {
         CardShape[] shapes = CardShape.values();

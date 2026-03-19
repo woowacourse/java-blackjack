@@ -6,19 +6,39 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 public class Player extends Participant {
-    private Player(String name, GameState gameState) {
+    private final BetAmount betAmount;
+
+    private Player(String name, GameState gameState, BetAmount betAmount) {
         super(name, gameState);
+        this.betAmount = betAmount;
     }
 
     public static Player from(String name, GameState gameState) {
-        return new Player(name, gameState);
+        return new Player(name, gameState, BetAmount.empty());
+    }
+
+    public Player bet(BetAmount betAmount) {
+        return new Player(
+                this.participantName.name(),
+                this.gameState,
+                betAmount
+        );
+    }
+
+    public boolean isBet() {
+        return betAmount.isBetPlaced();
+    }
+
+    public int getBetAmount() {
+        return betAmount.value();
     }
 
     public Player hit(Supplier<Card> cardSupplier) {
         GameState newGameState = gameState.hit(cardSupplier);
         return new Player(
                 this.participantName.name(),
-                newGameState
+                newGameState,
+                this.betAmount
         );
     }
 
@@ -26,16 +46,26 @@ public class Player extends Participant {
         GameState newStandGameState = gameState.stay();
         return new Player(
                 this.participantName.name(),
-                newStandGameState
+                newStandGameState,
+                this.betAmount
         );
+    }
+
+    public boolean isPlayable() {
+        return gameState.isPlayable();
     }
 
     public boolean isFinished() {
         return gameState.isFinished();
     }
 
-    public GameResult calculateGameResult(GameState dealerGameState) {
-        return gameState.compare(gameState, dealerGameState);
+    public double calculateEarnMoney(Dealer dealer) {
+        GameResult gameResult = calculateGameResult(dealer);
+        return gameResult.getAllocation() * getBetAmount();
+    }
+
+    private GameResult calculateGameResult(Dealer dealer) {
+        return GameResult.decidePlayerResult(this, dealer);
     }
 
     @Override

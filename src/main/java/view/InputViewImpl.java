@@ -1,13 +1,16 @@
 package view;
 
 import common.ErrorMessage;
+import domain.BetAmount;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class InputViewImpl implements InputView {
     private static final String DELIMITER = ",";
-    private static final List<String> HIT_OR_STAND = List.of("y", "n");
+    private static final String HIT_INPUT_VALUE = "y";
+    private static final String STAND_INPUT_VALUE = "n";
+    private static final List<String> HIT_OR_STAND = List.of(HIT_INPUT_VALUE, STAND_INPUT_VALUE);
     private static final Scanner sc = new Scanner(System.in);
 
     public List<String> readNames() {
@@ -16,11 +19,17 @@ public class InputViewImpl implements InputView {
         return Arrays.stream(line.split(DELIMITER)).toList();
     }
 
-    public String readHitOrStand() {
+    public BetAmount readBetAmountValue() {
+        int betValue = sc.nextInt();
+        sc.nextLine();
+        return BetAmount.of(betValue);
+    }
+
+    public Boolean wantToHit() {
         String input = sc.nextLine().trim();
         validateIsBlank(input);
         validateHitOrStandValue(input);
-        return input;
+        return input.equals(HIT_INPUT_VALUE);
     }
 
     private void validateIsBlank(String line) {

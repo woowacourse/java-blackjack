@@ -1,7 +1,9 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import common.ErrorMessage;
 import domain.state.GameState;
 import java.util.ArrayDeque;
 import java.util.List;
@@ -46,5 +48,31 @@ public class DealerTest {
         Assertions.assertDoesNotThrow(
                 () -> dealer.addCard(totalDeck::drawCard)
         );
+    }
+
+    @Test
+    @DisplayName("딜러는 카드의 합이 16 초과면 카드를 한 장 Exception이 발생하여 더 받을 수 없다")
+    void addCard_exception() {
+        //given
+        CardCreationStrategy onlyACardCreation = () -> new ArrayDeque<>(
+                List.of(
+                        new Card(CardShape.스페이드, CardContents.A)
+                )
+        );
+        Deck totalDeck = Deck.createDeck(onlyACardCreation);
+
+        GameState dealerGameState = GameState.createDealerInitialGameState(
+                Hand.of(
+                        new Card(CardShape.하트, CardContents.SEVEN),
+                        new Card(CardShape.스페이드, CardContents.TEN)
+                )
+        );
+        Dealer dealer = Dealer.from(dealerGameState);
+
+        //when, then
+        assertThatThrownBy(
+                () -> dealer.addCard(totalDeck::drawCard)
+        ).isInstanceOf(IllegalStateException.class)
+                .hasMessage(ErrorMessage.NOT_ALLOW_METHOD_CALL.getMessage());
     }
 }

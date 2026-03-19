@@ -3,6 +3,7 @@ package domain;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import common.ErrorMessage;
 import domain.state.GameState;
@@ -16,6 +17,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
+    private static final String GUMP = "gump";
+
     @Test
     @DisplayName("Player를 생성할 때 오류 발생 안함")
     void player_create_success() {
@@ -24,10 +27,8 @@ class PlayerTest {
                 new Card(CardShape.클로버, CardContents.K)
         );
 
-        String name = "pobi";
-
         assertDoesNotThrow(
-                () -> Player.from(name, GameState.createPlayerInitialGameState(playerHand))
+                () -> Player.from(GUMP, GameState.createPlayerInitialGameState(playerHand))
         );
     }
 
@@ -45,9 +46,8 @@ class PlayerTest {
         ));
         Supplier<Card> onlyTwoTenCardSupplier = onlyTwoTenCards::poll;
 
-        String testName = "gump";
         Player testPlayerWhoHoldTotal15Cards = Player.from(
-                testName,
+                GUMP,
                 GameState.createPlayerInitialGameState(playerHand)
         );
 
@@ -88,9 +88,8 @@ class PlayerTest {
                     new Card(CardShape.스페이드, CardContents.TEN),
                     new Card(CardShape.클로버, CardContents.TEN)
             );
-            String testName = "gump";
             Player testPlayer = Player.from(
-                    testName,
+                    GUMP,
                     GameState.createPlayerInitialGameState(playerHand)
             );
             testPlayer.hit(onlyTwoTenCardSupplier);
@@ -111,9 +110,8 @@ class PlayerTest {
                 new Card(CardShape.스페이드, CardContents.J),
                 new Card(CardShape.클로버, CardContents.FIVE)
         );
-        String testName = "gump";
         Player testPlayer = Player.from(
-                testName,
+                GUMP,
                 GameState.createPlayerInitialGameState(playerHand)
         );
 
@@ -125,35 +123,8 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("compare는 게임 결과 객체를 잘 반환한다")
-    void lose_when_dealer_blackjack() {
-        //given
-        String testPlayerName = "rati";
-        Hand blackJackHand = Hand.of(
-                new Card(CardShape.스페이드, CardContents.J),
-                new Card(CardShape.클로버, CardContents.A)
-        );
-        Hand notBlackJackAndNotBustHand = Hand.of(
-                new Card(CardShape.스페이드, CardContents.TWO),
-                new Card(CardShape.클로버, CardContents.THREE)
-        );
-        GameState dealerGameState = GameState.createDealerInitialGameState(blackJackHand);
-        Player testPlayer = Player.from(
-                testPlayerName,
-                GameState.createPlayerInitialGameState(notBlackJackAndNotBustHand)
-        );
-
-        //when
-        GameResult result = testPlayer.calculateGameResult(dealerGameState);
-
-        //then
-        assertEquals(GameResult.class, result.getClass());
-    }
-
-    @Test
     @DisplayName("이름이 같으면 같은 Player로 본다")
     void equal_when_name_equal() {
-        String testName = "gump";
         Hand playerHand1 = Hand.of(
                 new Card(CardShape.스페이드, CardContents.A),
                 new Card(CardShape.클로버, CardContents.TWO)
@@ -163,14 +134,124 @@ class PlayerTest {
                 new Card(CardShape.클로버, CardContents.FOUR)
         );
         Player firstGump = Player.from(
-                testName,
+                GUMP,
                 GameState.createPlayerInitialGameState(playerHand1)
         );
         Player secondGump = Player.from(
-                testName,
+                GUMP,
                 GameState.createPlayerInitialGameState(playerHand2)
         );
         //when, then
         Assertions.assertThat(firstGump.equals(secondGump)).isTrue();
+    }
+
+    @Test
+    @DisplayName("베팅을 하면 베팅 한 것으로 인정된다")
+    void bet_after_isBet_True() {
+        //given
+        Hand playerHand = Hand.of(
+                new Card(CardShape.스페이드, CardContents.A),
+                new Card(CardShape.클로버, CardContents.TWO)
+        );
+        Player gump = Player.from(
+                GUMP,
+                GameState.createPlayerInitialGameState(playerHand)
+        );
+
+        int gumpBetAmountValue = 1000;
+        BetAmount gumpBetAmount = BetAmount.of(gumpBetAmountValue);
+
+        //when
+        Player bettedGump = gump.bet(gumpBetAmount);
+
+        //then
+        assertTrue(bettedGump.isBet());
+    }
+
+    @Nested
+    class BetResultTest {
+        int gumpBetAmountValue = 10_000;
+        BetAmount gumpBetAmount = BetAmount.of(gumpBetAmountValue);
+
+        Hand blackJackHand = Hand.of(
+                new Card(CardShape.스페이드, CardContents.A),
+                new Card(CardShape.클로버, CardContents.TEN)
+        );
+
+        Hand normalHandFive = Hand.of(
+                new Card(CardShape.스페이드, CardContents.TWO),
+                new Card(CardShape.클로버, CardContents.THREE)
+        );
+
+        Hand normalHandTwenty = Hand.of(
+                new Card(CardShape.스페이드, CardContents.J),
+                new Card(CardShape.클로버, CardContents.K)
+        );
+
+        Hand normalHandAnotherTwenty = Hand.of(
+                new Card(CardShape.하트, CardContents.J),
+                new Card(CardShape.다이아몬드, CardContents.K)
+        );
+
+        @Test
+        @DisplayName("본인의 베팅에 따른 수익을 잘 구한다 - 블랙잭 승리")
+        void player_win_blackjack() {
+            int gumpBetAmountValue = 1000;
+            BetAmount gumpBetAmount = BetAmount.of(gumpBetAmountValue);
+            double blackJackAllocation = 1.5;
+            Player gump = Player.from(
+                    GUMP,
+                    GameState.createPlayerInitialGameState(blackJackHand)
+            );
+            gump = gump.bet(gumpBetAmount);
+            Dealer dealer = Dealer.from(
+                    GameState.createDealerInitialGameState(normalHandTwenty)
+            );
+
+            double expect = gumpBetAmountValue * blackJackAllocation;
+
+            double result = gump.calculateEarnMoney(dealer);
+
+            assertEquals(expect, result);
+        }
+
+        @Test
+        @DisplayName("본인의 베팅에 따른 수익을 잘 구한다 - 일반 승리")
+        void player_win_normal() {
+            double normalAllocation = 1.0;
+            Player gump = Player.from(
+                    GUMP,
+                    GameState.createPlayerInitialGameState(normalHandTwenty)
+            );
+            gump = gump.bet(gumpBetAmount);
+            Dealer dealer = Dealer.from(
+                    GameState.createDealerInitialGameState(normalHandFive)
+            );
+
+            double expect = gumpBetAmountValue * normalAllocation;
+
+            double result = gump.calculateEarnMoney(dealer);
+
+            assertEquals(expect, result);
+        }
+
+        @Test
+        @DisplayName("본인의 베팅에 따른 수익을 잘 구한다 - 무승부")
+        void player_draw() {
+            Player gump = Player.from(
+                    GUMP,
+                    GameState.createPlayerInitialGameState(normalHandTwenty)
+            );
+            gump = gump.bet(gumpBetAmount);
+            Dealer dealer = Dealer.from(
+                    GameState.createDealerInitialGameState(normalHandAnotherTwenty)
+            );
+
+            double expect = 0;
+
+            double result = gump.calculateEarnMoney(dealer);
+
+            assertEquals(expect, result);
+        }
     }
 }
