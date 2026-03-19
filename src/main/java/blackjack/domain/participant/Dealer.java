@@ -11,7 +11,7 @@ public final class Dealer extends Participant {
 
     @Override
     public boolean canDraw() {
-        return getSumOfCards() < DEALER_CAN_DRAW_THRESHOLD;
+        return getScore() < DEALER_CAN_DRAW_THRESHOLD;
     }
 
 }

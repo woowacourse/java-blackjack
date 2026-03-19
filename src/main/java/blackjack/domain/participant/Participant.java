@@ -18,7 +18,7 @@ public abstract class Participant {
         cards.add(card);
     }
 
-    public final int getSumOfCards() {
+    public final int getScore() {
         return cards.calculateSumOfCards();
     }
 

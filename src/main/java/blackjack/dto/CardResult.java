@@ -10,7 +10,7 @@ public record CardResult(
 ) {
 
     public static CardResult from(Participant participant) {
-        return new CardResult(participant.getName(), participant.getCardsName(), participant.getSumOfCards());
+        return new CardResult(participant.getName(), participant.getCardsName(), participant.getScore());
     }
 
 }

@@ -13,7 +13,7 @@ public final class Player extends Participant {
         if (this.isBurst()) {
             return false;
         }
-        return other.getSumOfCards() < this.getSumOfCards();
+        return other.getScore() < this.getScore();
     }
 
     @Override

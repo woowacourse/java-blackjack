@@ -42,7 +42,7 @@ public class PlayerTest {
         player.draw(new Card(CardValue.TWO, CardShape.DIAMOND));
 
         // when
-        int sum = player.getSumOfCards();
+        int sum = player.getScore();
 
         // then
         assertThat(sum).isEqualTo(6);
@@ -87,7 +87,7 @@ public class PlayerTest {
         player.draw(new Card(CardValue.THREE, CardShape.DIAMOND));
 
         // when
-        int sum = player.getSumOfCards();
+        int sum = player.getScore();
 
         // then
         assertThat(sum).isEqualTo(14);
@@ -101,7 +101,7 @@ public class PlayerTest {
         player.draw(new Card(CardValue.TEN, CardShape.DIAMOND));
 
         // when
-        int sum = player.getSumOfCards();
+        int sum = player.getScore();
 
         // then
         assertThat(sum).isEqualTo(21);
@@ -179,5 +179,5 @@ public class PlayerTest {
         // then
         assertThat(canDraw).isTrue();
     }
-    
+
 }
