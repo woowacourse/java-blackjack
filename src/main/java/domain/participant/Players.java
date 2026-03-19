@@ -6,6 +6,9 @@ import static exception.ErrorMessage.PLAYER_NAME_IS_DUPLICATE;
 import java.util.List;
 
 public class Players {
+    private static final int MINIMUM_PLAYER_COUNT = 1;
+    private static final int MAXIMUM_PLAYER_COUNT = 8;
+
     private final List<Player> players;
 
     public Players(List<Player> players) {
@@ -30,7 +33,7 @@ public class Players {
 
     private void validatePlayerCounts(List<Player> players) {
         if (players.isEmpty() || players.size() > 8) {
-            throw new IllegalArgumentException(PLAYERS_INVALID_COUNT.getMessage());
+            throw new IllegalArgumentException(PLAYERS_INVALID_COUNT.getMessage(MINIMUM_PLAYER_COUNT, MAXIMUM_PLAYER_COUNT));
         }
     }
 

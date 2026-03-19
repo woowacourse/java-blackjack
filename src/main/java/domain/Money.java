@@ -22,13 +22,13 @@ public class Money {
 
     private void validateRange(int betAmount) {
         if (betAmount < MINIMUM_BET_AMOUNT || betAmount > MAXIMUM_BET_AMOUNT) {
-            throw new IllegalArgumentException(MONEY_INVALID_RANGE.getMessage());
+            throw new IllegalArgumentException(MONEY_INVALID_RANGE.getMessage(MINIMUM_BET_AMOUNT, MAXIMUM_BET_AMOUNT));
         }
     }
 
     private void validateUnit(int betAmount) {
         if (betAmount % MONEY_DIVIDE_UNIT != 0) {
-            throw new IllegalArgumentException(MONEY_INVALID_UNIT.getMessage());
+            throw new IllegalArgumentException(MONEY_INVALID_UNIT.getMessage(MONEY_DIVIDE_UNIT));
         }
     }
 
