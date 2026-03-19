@@ -1,6 +1,7 @@
 package domain.vo;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class Money {
     private static final BigDecimal MIN_INCREMENT = BigDecimal.valueOf(10_000);
@@ -49,5 +50,17 @@ public class Money {
             throw new IllegalArgumentException("[ERROR] " + MIN_INCREMENT + "원 단위여야 하며, 최소 금액은 " + MIN_INCREMENT + "합니다. "
                     + "그런데 현재 입력값이" + value.toPlainString() + "입니다.");
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(money);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Money other)) return false;
+        return Objects.equals(this.money, other.money);
     }
 }

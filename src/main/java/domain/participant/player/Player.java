@@ -6,6 +6,8 @@ import domain.participant.Participant;
 import domain.participant.WinStatus;
 import domain.vo.Name;
 
+import java.util.Objects;
+
 public class Player extends Participant {
     private final Name name;
 
@@ -42,5 +44,17 @@ public class Player extends Participant {
 
     private boolean isDrawCondition(Dealer dealer) {
         return getScore() == dealer.getScore();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Player player)) return false;
+        return Objects.equals(name, player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
