@@ -8,7 +8,7 @@ public enum Outcome {
 
     private final double profitRate;
 
-    Outcome(double profitRate) {
+    private Outcome(double profitRate) {
         this.profitRate = profitRate;
     }
 
