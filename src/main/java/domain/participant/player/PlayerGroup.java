@@ -1,7 +1,5 @@
 package domain.participant.player;
 
-import domain.vo.Name;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -39,12 +37,5 @@ public class PlayerGroup {
         if (distinctNames.size() != players.size()) {
             throw new IllegalArgumentException("[ERROR] 플레이어 내에 동명이인이 있습니다.");
         }
-    }
-
-    public Player findByName(Name name) {
-        return players.stream()
-                .filter(player -> player.getName().equals(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] " + name.getValueOf() + "라는 이름의 플레이어가 없습니다."));
     }
 }
