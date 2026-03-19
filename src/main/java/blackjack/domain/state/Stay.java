@@ -11,16 +11,28 @@ public class Stay implements State {
 
     @Override
     public ScoreCompareResult compare(State otherState) {
-        if (otherState instanceof Blackjack) return ScoreCompareResult.PLAYER_LOSS;
-        if (otherState instanceof Bust) return ScoreCompareResult.PLAYER_WIN;
-        int otherScore = otherState.getScore();
-        if (this.score > otherScore) {
+        return otherState.compareWithStay(this);
+    }
+
+    @Override
+    public ScoreCompareResult compareWithStay(Stay playerStay) {
+        if (playerStay.getScore() > this.score) {
             return ScoreCompareResult.PLAYER_WIN;
         }
-        if (this.score < otherScore) {
+        if (playerStay.getScore() < this.score) {
             return ScoreCompareResult.PLAYER_LOSS;
         }
         return ScoreCompareResult.PUSH;
+    }
+
+    @Override
+    public ScoreCompareResult compareWithBlackjack(Blackjack playerBlackjack) {
+        return ScoreCompareResult.PLAYER_WIN;
+    }
+
+    @Override
+    public ScoreCompareResult compareWithBust(Bust playerBust) {
+        return ScoreCompareResult.PLAYER_LOSS;
     }
 
     @Override

@@ -26,7 +26,7 @@ public class Cards {
 
     public State getState() {
         if (isBust()) {
-            return new Bust();
+            return new Bust(sumScore());
         }
         if (isBlackjack()) {
             return new Blackjack();
