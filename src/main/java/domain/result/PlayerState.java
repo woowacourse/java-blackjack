@@ -9,8 +9,7 @@ class PlayerState {
     private final PlayedGameResult playedGameResult;
 
     private PlayerState(Money bettingMoney) {
-        this.bettingMoney = bettingMoney;
-        this.playedGameResult = PlayedGameResult.none();
+        this(bettingMoney, PlayedGameResult.none());
     }
 
     private PlayerState(Money bettingMoney, PlayedGameResult playedGameResult) {
@@ -31,7 +30,7 @@ class PlayerState {
     }
 
     Money evaluateProfitWith(PlayedGameResult dealerGameResult) {
-        if(IsPlayerGameResultNone()) {
+        if(isPlayerGameResultNone()) {
             throw new IllegalStateException("게임 결과가 기록되지 않았습니다.");
         }
         return determinePlayerGameOutcomeWith(dealerGameResult).calculate(bettingMoney);
@@ -84,7 +83,7 @@ class PlayerState {
         return PlayerGameOutcome.WIN;
     }
 
-    private boolean IsPlayerGameResultNone() {
+    private boolean isPlayerGameResultNone() {
         return playedGameResult.isNone();
     }
 }
