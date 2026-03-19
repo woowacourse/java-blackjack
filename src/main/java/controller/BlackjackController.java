@@ -97,9 +97,8 @@ public class BlackjackController {
         outputView.printFinalResult(dealer, results);
     }
 
-    private void printProfit(Referee referee,Players players, Results results, Dealer dealer) {
-        Profits profits = new Profits(referee, results);
-        Profit dealerProfit = profits.getDealerProfit();
-        outputView.printFinalProfit(dealer, players, profits, dealerProfit);
+    private void printProfit(Referee referee, Players players, Results results, Dealer dealer) {
+        Profits profits = new Profits(referee, dealer, results);
+        outputView.printFinalProfit(dealer, profits);
     }
 }

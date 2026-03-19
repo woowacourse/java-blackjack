@@ -14,6 +14,7 @@ import domain.Suit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class OutputView {
 
@@ -77,22 +78,20 @@ public class OutputView {
         System.out.println(dealer.getName() + ": " + dealerWin + "승 " + dealerTie + "무 " + dealerLose + "패");
     }
 
-    public void printFinalProfit(Dealer dealer, Players players, Profits profits,
-                                 Profit dealerProfit) {
-
+    public void printFinalProfit(Dealer dealer, Profits profits) {
         System.out.println("\n## 최종 수익");
-        printDealerProfit(dealer, dealerProfit);
-        printPlayerProfit(players, profits);
+        printDealerProfit(dealer, profits);
+        printPlayerProfit(profits);
     }
 
-    private void printPlayerProfit(Players players, Profits profits) {
-        for (int i = 0; i < players.getSize(); i++) {
-            System.out.println(players.getGamePlayers().get(i).getName() + ": " + profits.getProfits().get(i).getProfit());
+    private void printPlayerProfit(Profits profits) {
+        for (Entry<Participant, Profit> profit : profits.getProfits().entrySet()) {
+            System.out.println(profit.getKey().getName()+ ": " + profit.getValue().getProfit());
         }
     }
 
-    private void printDealerProfit(Dealer dealer, Profit dealerProfit) {
-        System.out.println(dealer.getName() + ": " + dealerProfit.getProfit());
+    private void printDealerProfit(Dealer dealer, Profits profits) {
+        System.out.println(dealer.getName() + ": " + profits.getDealerProfit().getProfit());
     }
 
     private String formatCards(List<Card> cards) {
