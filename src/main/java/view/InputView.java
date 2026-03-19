@@ -18,7 +18,7 @@ public class InputView {
         System.out.println();
         System.out.println(player + "는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)");
         String input = SCANNER.nextLine();
-        InputValidator.validateContinueResponse(input);
+        validateContinueResponse(input);
         return input;
     }
 
@@ -35,5 +35,11 @@ public class InputView {
                 .map(String::trim)
                 .toList();
         return playerNames;
+    }
+
+    private static void validateContinueResponse(String input) {
+        if (!input.matches("[yn]")) {
+            throw new IllegalArgumentException("응답은 y와 n만 허용됩니다.");
+        }
     }
 }
