@@ -105,11 +105,11 @@ class BlackJackGameTest {
         manager.dealInitialCards();
         Player player = manager.getPlayersToPlay().getFirst();
 
-        int before = player.getHandToString().size();
+        int before = player.revealCards().size();
 
         manager.hit(player);
 
-        int after = player.getHandToString().size();
+        int after = player.revealCards().size();
 
         assertThat(after).isEqualTo(before + 1);
     }

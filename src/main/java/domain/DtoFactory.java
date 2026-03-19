@@ -35,7 +35,7 @@ public class DtoFactory {
     private static GameScoreResultDto toScoreResult(Participant participant) {
         return new GameScoreResultDto(
                 participant.getName(),
-                participant.getHandToString(),
+                participant.revealCards(),
                 participant.getScore()
         );
     }

@@ -34,7 +34,7 @@ public class BlackJackGame {
 
     public List<String> hit(Player player) {
         player.addCard(deck.draw());
-        return player.getHandToString();
+        return player.revealCards();
     }
 
     public void registerPlayers(List<Name> playerNames, List<BettingMoney> bettingMoneyList) {

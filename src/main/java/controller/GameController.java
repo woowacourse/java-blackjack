@@ -82,7 +82,7 @@ public class GameController {
         while (player.canDraw()) {
             boolean wantsToDraw = wantsToDraw(player);
 
-            List<String> playerHand = player.getHandToString();
+            List<String> playerHand = player.revealCards();
             if (wantsToDraw) {
                 playerHand = manager.hit(player);
             }

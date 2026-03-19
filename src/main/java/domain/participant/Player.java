@@ -46,6 +46,6 @@ public class Player extends Participant {
 
     @Override
     public List<String> getInitialOpenCards(){
-        return getHandToString();
+        return revealCards();
     }
 }

@@ -30,7 +30,7 @@ public abstract class Participant {
         hand.add(card);
     }
 
-    public List<String> getHandToString() {
+    public List<String> revealCards() {
         return hand.toStringList();
     }
 

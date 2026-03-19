@@ -21,6 +21,6 @@ public class Dealer extends Participant {
     }
 
     private String getOpenCard() {
-        return getHandToString().getFirst();
+        return revealCards().getFirst();
     }
 }
