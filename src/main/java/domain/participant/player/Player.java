@@ -1,43 +1,60 @@
 package domain.participant.player;
 
+import domain.participant.Dealer;
 import domain.participant.HandCards;
 import domain.participant.Participant;
 import domain.participant.WinStatus;
 import domain.vo.Name;
 
+import java.util.Objects;
+
 public class Player extends Participant {
     private final Name name;
-    private WinStatus winStatus;
 
     public Player(Name name, HandCards handCards) {
         super(handCards);
         this.name = name;
     }
 
-    public String getName() {
-        return name.getName();
+    public Name getName() {
+        return name;
     }
 
-    public WinStatus getWinStatus() {
-        return winStatus;
-    }
-
-    public void calculateResult(Participant dealer) {
+    public WinStatus decideWinStatus(Dealer dealer) {
         if (isBust()) {
-            winStatus = WinStatus.LOSS;
-            return;
+            return WinStatus.LOSS;
         }
 
-        if (dealer.isBust() || getScore() > dealer.getScore()) {
-            winStatus = WinStatus.WIN;
-            return;
+        if (isWinningCondition(dealer)) {
+            return WinStatus.WIN;
         }
 
-        if (getScore() == dealer.getScore()) {
-            winStatus = WinStatus.DRAW;
-            return;
+        if (isDrawCondition(dealer)) {
+            return WinStatus.DRAW;
         }
 
-        winStatus = WinStatus.LOSS;
+        return WinStatus.LOSS;
+    }
+
+    private boolean isWinningCondition(Dealer dealer) {
+        return (this.isBlackjack() && !dealer.isBlackjack())
+                || dealer.isBust()
+                || getScore() > dealer.getScore();
+    }
+
+    private boolean isDrawCondition(Dealer dealer) {
+        return getScore() == dealer.getScore();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Player player)) return false;
+        return Objects.equals(name, player.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

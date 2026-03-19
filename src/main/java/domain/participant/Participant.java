@@ -4,7 +4,7 @@ import domain.card.Card;
 
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
     protected static final int BLACKJACK_CONDITION = 21;
     protected HandCards handCards;
 
@@ -26,5 +26,17 @@ public class Participant {
 
     public int getScore() {
         return handCards.calculateCardsScore();
+    }
+
+    public boolean isBlackjack() {
+        return isInitialHand() && isBlackjackConditionScore();
+    }
+
+    private boolean isInitialHand() {
+        return handCards.getHandCardsSize() == 2;
+    }
+
+    private boolean isBlackjackConditionScore() {
+        return getScore() == BLACKJACK_CONDITION;
     }
 }

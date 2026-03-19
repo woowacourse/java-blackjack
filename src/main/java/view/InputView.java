@@ -26,4 +26,10 @@ public class InputView {
 
         throw new IllegalArgumentException("[ERROR] y와 n만 입력가능합니다.");
     }
+
+    public static String askBettingMoney(String playerName) {
+        System.out.println(playerName + "의 배팅 금액은?");
+        String input = sc.nextLine();
+        return input;
+    }
 }

@@ -13,12 +13,12 @@ class NameTest {
     void name_정상생성_테스트(String input) {
         Name name = new Name(input);
 
-        assertThat(name.getName()).isEqualTo(input);
+        assertThat(name.getValueOf()).isEqualTo(input);
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "!", "1000j"})
-    void 이름에_영어_한글_외_입력시_예외 (String input) {
+    void 이름에_영어_한글_외_입력시_예외(String input) {
         Assertions.assertThatThrownBy(() -> new Name(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("영어와 한글만 가능");
@@ -26,7 +26,7 @@ class NameTest {
 
 
     @Test
-    void 이름이_딜러일때_예외 (){
+    void 이름이_딜러일때_예외() {
         String input = "딜러";
 
         Assertions.assertThatThrownBy(() -> new Name(input))

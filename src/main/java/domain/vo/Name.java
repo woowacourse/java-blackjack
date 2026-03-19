@@ -1,18 +1,15 @@
 package domain.vo;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Name {
-    private String name;
     private static final String ALPHABET_AND_KOREAN_TEXT_REG = "^[a-zA-Z가-힣]+$";
+    private final String name;
 
     public Name(String name) {
         validateName(name);
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
     }
 
     private static void validateName(String name) {
@@ -32,5 +29,22 @@ public class Name {
         if (name.equals("딜러")) {
             throw new IllegalArgumentException("[ERROR] 딜러는 플레이어 이름으로 사용할 수 없습니다.");
         }
+    }
+
+    public String getValueOf() {
+        return name;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Name other = (Name) obj;
+        return Objects.equals(this.name, other.name);
     }
 }
