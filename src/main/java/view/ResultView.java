@@ -7,11 +7,11 @@ import dto.ParticipantDto;
 import dto.ParticipantScoreDto;
 import dto.PlayerOutcomeDto;
 import java.util.List;
-import message.IOMessage;
+import message.IoMessage;
 
 public class ResultView {
     public void printDealerMoreCard() {
-        System.out.println(IOMessage.DEALER_ONE_CARD.message());
+        System.out.println(IoMessage.DEALER_ONE_CARD.message());
     }
 
     public void printParticipantMoreCard(ParticipantDto participantDto) {
@@ -51,7 +51,7 @@ public class ResultView {
 
     public void printScore(MoneyDto moneyDTO) {
         System.out.println();
-        System.out.println(IOMessage.FINAL_MONEY_STATISTICS.message());
+        System.out.println(IoMessage.FINAL_MONEY_STATISTICS.message());
         printDealerOutcome(moneyDTO.dealerMoney());
         printPlayerOutcomes(moneyDTO.playerOutcomes());
     }
