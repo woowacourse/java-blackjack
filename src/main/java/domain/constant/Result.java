@@ -14,10 +14,18 @@ public enum Result {
         int playerScore = player.getScore();
         int dealerScore = dealer.getScore();
 
-        if (player.isBust()) return BUST;
-        if (player.isNaturalBlackJack()) return BLACKJACK;
-        if (playerScore > dealerScore) return WIN;
-        if (playerScore < dealerScore) return LOSE;
+        if (player.isBust()) {
+            return BUST;
+        }
+        if (player.isNaturalBlackJack()) {
+            return BLACKJACK;
+        }
+        if (playerScore > dealerScore) {
+            return WIN;
+        }
+        if (playerScore < dealerScore) {
+            return LOSE;
+        }
 
         return DRAW;
     }
