@@ -35,7 +35,7 @@ public abstract class Participant {
                 .toList();
     }
 
-    public String getFirstName() {
+    public String getFirstCardName() {
         return getCardNames().getFirst();
     }
 
