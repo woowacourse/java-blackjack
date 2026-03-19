@@ -82,23 +82,11 @@ public class MultiPlayers {
         );
     }
 
-//    public Optional<Player> findNotBetPlayer() {
-//        return players.values().stream()
-//                .filter(player -> !player.isBet())
-//                .findFirst();
-//    }
-
     public void executeBet(Player player, int value) {
         String playerName = player.getName();
         applyAction(playerName, p -> p.bet(value));
         notBettingPlayers.remove(playerName);
     }
-//
-//    public Optional<Player> findNotStayPlayer() {
-//        return players.values().stream()
-//                .filter(Player::isPlayable)
-//                .findFirst();
-//    }
 
     public Player executeHit(Player player, Supplier<Card> cardSupplier) {
         String playerName = player.getName();
