@@ -35,6 +35,7 @@ public class Deck {
 
     public List<Card> draw(int count) {
         //TODO: validate 카드 잔량 검증
+        validateCardsCount(count);
         List<Card> drawnCards = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
@@ -43,6 +44,12 @@ public class Deck {
         }
 
         return drawnCards;
+    }
+
+    private void validateCardsCount(int darwCount) {
+        if (cards.size() < darwCount) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public Deck shuffle(DeckShuffler shuffler) {
