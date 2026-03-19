@@ -20,7 +20,7 @@ public class BlackJackController {
     public BlackJackController(InputView inputView, ResultView resultView) {
         this.inputView = inputView;
         this.resultView = resultView;
-        this.resultViewMapper = new ResultViewMapper(resultView);
+        this.resultViewMapper = new ResultViewMapper();
     }
 
     public void run() {

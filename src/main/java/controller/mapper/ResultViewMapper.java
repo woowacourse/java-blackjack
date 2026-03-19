@@ -18,18 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import message.IOMessage;
-import view.ResultView;
 
 public class ResultViewMapper {
-    private final ResultView resultView;
-
-    public ResultViewMapper(ResultView resultView) {
-        this.resultView = resultView;
-    }
 
     public StartBlackJackDto toStartBlackJackDto(Players players, Dealer dealer) {
         return new StartBlackJackDto(
-                resultView.formatCardName(dealer.getCards().get(0)),
+                formatCardName(dealer.getCards().get(0)),
                 toPlayerCardsDtos(players)
         );
     }
@@ -37,13 +31,13 @@ public class ResultViewMapper {
     public ResultDto toResultDto(Players players, Dealer dealer) {
         final ParticipantResultDto dealerResult = new ParticipantResultDto(
                 IOMessage.DEALER_NAME.message(),
-                resultView.joinCardNames(dealer.getCards()),
+                joinCardNames(dealer.getCards()),
                 dealer.getScore()
         );
         final List<ParticipantResultDto> playerResults = new ArrayList<>();
         players.forEachPlayer(player -> playerResults.add(new ParticipantResultDto(
                 player.getName(),
-                resultView.joinCardNames(player.getCards()),
+                joinCardNames(player.getCards()),
                 player.getScore()
         )));
         return new ResultDto(dealerResult, playerResults);
@@ -96,7 +90,17 @@ public class ResultViewMapper {
 
     private List<String> toCardNames(List<Card> cards) {
         return cards.stream()
-                .map(resultView::formatCardName)
+                .map(this::formatCardName)
                 .collect(Collectors.toList());
+    }
+
+    private String formatCardName(final Card card) {
+        return card.getRank().symbol() + card.getSuit().suit();
+    }
+
+    private String joinCardNames(final List<Card> cards) {
+        return cards.stream()
+                .map(this::formatCardName)
+                .collect(Collectors.joining(", "));
     }
 }
