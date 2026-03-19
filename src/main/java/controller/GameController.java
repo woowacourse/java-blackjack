@@ -32,15 +32,21 @@ public class GameController {
     }
 
     private void registerPlayer() {
-        while (true) {
-            try {
-                List<String> rawPlayerNames = inputView.readPlayerName();
-                List<Name> playerNames = toNames(rawPlayerNames);
-                registerPlayersWithBettingMoney(playerNames);
-                return;
-            } catch (IllegalArgumentException e) {
-                outputView.printError(e.getMessage());
-            }
+        boolean isRegistered = false;
+        while (!isRegistered) {
+            isRegistered = tryRegisterPlayers();
+        }
+    }
+
+    private boolean tryRegisterPlayers() {
+        try {
+            List<String> rawPlayerNames = inputView.readPlayerName();
+            List<Name> playerNames = toNames(rawPlayerNames);
+            registerPlayersWithBettingMoney(playerNames);
+            return true;
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return false;
         }
     }
 
