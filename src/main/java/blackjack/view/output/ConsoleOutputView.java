@@ -1,4 +1,4 @@
-package blackjack.view;
+package blackjack.view.output;
 
 import blackjack.dto.CardResult;
 import blackjack.dto.ProfitResult;

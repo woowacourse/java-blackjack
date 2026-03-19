@@ -1,4 +1,4 @@
-package blackjack.view;
+package blackjack.view.input;
 
 import blackjack.util.Console;
 import java.util.List;

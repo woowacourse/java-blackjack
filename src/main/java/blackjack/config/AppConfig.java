@@ -1,10 +1,10 @@
 package blackjack.config;
 
 import blackjack.controller.BlackjackController;
-import blackjack.view.ConsoleInputView;
-import blackjack.view.ConsoleOutputView;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
+import blackjack.view.input.ConsoleInputView;
+import blackjack.view.input.InputView;
+import blackjack.view.output.ConsoleOutputView;
+import blackjack.view.output.OutputView;
 
 public class AppConfig {
 
