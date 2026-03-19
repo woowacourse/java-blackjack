@@ -23,7 +23,7 @@ public class Players {
         return List.copyOf(players);
     }
 
-    public List<Player> getNonNaturalBlackJackPlayers() {
+    public List<Player> getPlayersInTurn() {
         return players.stream()
                 .filter(player -> !player.isNaturalBlackJack())
                 .toList();

@@ -25,7 +25,7 @@ public class DtoFactory {
 
         results.add(toInitialInfo(dealer));
 
-        for (Player player : players.getNonNaturalBlackJackPlayers()) {
+        for (Player player : players.getPlayersInTurn()) {
             results.add(toInitialInfo(player));
         }
 
@@ -41,7 +41,7 @@ public class DtoFactory {
     }
 
     private static void addPlayerScoreResults(List<GameScoreResultDto> results, Players players) {
-        for (Player player : players.getNonNaturalBlackJackPlayers()) {
+        for (Player player : players.getPlayersInTurn()) {
             results.add(toScoreResult(player));
         }
     }

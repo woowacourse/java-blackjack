@@ -55,7 +55,7 @@ public class PlayersTest {
 
         Players players = Players.of(List.of(blackJackPlayer, normalPlayer));
 
-        List<Player> result = players.getNonNaturalBlackJackPlayers();
+        List<Player> result = players.getPlayersInTurn();
 
         assertThat(result).hasSize(1);
         assertThat(result.getFirst().getName()).isEqualTo("jason");

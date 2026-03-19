@@ -48,7 +48,7 @@ public class GameManager {
     }
 
     public List<Player> getPlayersToPlay() {
-        return players.getNonNaturalBlackJackPlayers();
+        return players.getPlayersInTurn();
     }
 
     public List<GameScoreResultDto> getScoreResults() {
