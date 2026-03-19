@@ -7,7 +7,6 @@ public class Money {
     private static final int MINIMUM_BET_AMOUNT = 1_000;
     private static final int MAXIMUM_BET_AMOUNT = 300_000;
     private static final int MONEY_DIVIDE_UNIT = 10;
-    private static final double MONEY_MULTIPLY_PERCENT = 1.5;
 
     private final int betAmount;
 
@@ -33,19 +32,7 @@ public class Money {
         }
     }
 
-    public int multiply() {
-        return (int) (betAmount * MONEY_MULTIPLY_PERCENT);
-    }
-
-    public int add() {
+    public int getBetAmount() {
         return betAmount;
-    }
-
-    public int subtract() {
-        return -betAmount;
-    }
-
-    public int getBack() {
-        return 0;
     }
 }
