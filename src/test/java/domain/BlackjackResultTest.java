@@ -9,13 +9,13 @@ import org.junit.jupiter.api.Test;
 
 class BlackjackResultTest {
 
-    private final List<Card> winCards = createCards(
-            Card.of(Rank.ACE, Suit.DIAMOND), Card.of(Rank.FOUR, Suit.CLOVER));
-    private final List<Card> dealerCards = createCards(
-            Card.of(Rank.FIVE, Suit.DIAMOND), Card.of(Rank.FOUR, Suit.CLOVER));
-    private final List<Card> loseCards = createCards(
-            Card.of(Rank.FOUR, Suit.SPADE), Card.of(Rank.THREE, Suit.CLOVER));
-    private final List<Card> bustCards = createCards(
+    private final List<Card> winCards = List.of(
+            Card.of(Rank.J, Suit.SPADE), Card.of(Rank.Q, Suit.HEART), Card.of(Rank.ACE, Suit.DIAMOND));
+    private final List<Card> drawCards = List.of(
+            Card.of(Rank.TEN, Suit.DIAMOND), Card.of(Rank.TEN, Suit.CLOVER));
+    private final List<Card> loseCards = List.of(
+            Card.of(Rank.TEN, Suit.HEART), Card.of(Rank.SEVEN, Suit.CLOVER));
+    private final List<Card> bustCards = List.of(
             Card.of(Rank.J, Suit.SPADE), Card.of(Rank.Q, Suit.CLOVER), Card.of(Rank.K, Suit.HEART));
 
     private final List<String> userNames = List.of("승리 플레이어", "무승부 플레이어", "패배 플레이어", "버스트 플레이어");
@@ -23,11 +23,10 @@ class BlackjackResultTest {
     @Test
     @DisplayName("BlackjackResult 객체 생성 시 플레이어들의 승패 저장 확인")
     void player_result_test() {
-        BlackjackResult blackjackResult = blackjackResultWith();
+        Dealer dealer = Dealer.of(drawCards);
+        List<List<Card>> playersCards = getPlayerCards();
+        BlackjackResult blackjackResult = blackjackResultWith(dealer, playersCards);
 
-        // 딜러 카드 합: 14
-        // 플레이어들의 카드 힙: 15, 14, 7, 30
-        // 결과: 승리, 무승부, 패배, 패배(버스트 -> 딜러의 값과 상관없음)
         assertThat(blackjackResult.getPlayersResult()).containsExactly(GameResult.WIN, GameResult.DRAW, GameResult.LOSE,
                 GameResult.LOSE);
     }
@@ -59,7 +58,10 @@ class BlackjackResultTest {
     @Test
     @DisplayName("딜러의 결과는 플레이어들 승/패 여부 횟수의 반대이다. -> 플레이어 승리 시 딜러는 패배")
     void dealer_result() {
-        BlackjackResult blackjackResult = blackjackResultWith();
+        Dealer dealer = Dealer.of(drawCards);
+        List<List<Card>> playersCards = getPlayerCards();
+        BlackjackResult blackjackResult = blackjackResultWith(dealer, playersCards);
+
         int dealerWinCount = blackjackResult.countDealerWinOrLoseReversePlayerResult(GameResult.LOSE);
         int dealerDrawCount = blackjackResult.countDealerWinOrLoseReversePlayerResult(GameResult.DRAW);
         int dealerLoseCount = blackjackResult.countDealerWinOrLoseReversePlayerResult(GameResult.WIN);
@@ -70,23 +72,17 @@ class BlackjackResultTest {
         assertThat(dealerLoseCount).isEqualTo(1);
     }
 
-    private List<Card> createCards(Card... cards) {
-        return List.of(cards);
-    }
-
     private List<List<Card>> getPlayerCards() {
         return new ArrayList<>(List.of(
                 winCards, // 카드 합: 15
-                dealerCards, // 카드 합: 14
+                drawCards, // 카드 합: 14
                 loseCards, // 카드 합: 7
                 bustCards// 카드 합: 30
         ));
     }
 
-    private BlackjackResult blackjackResultWith() {
-        Dealer dealer = Dealer.of(dealerCards);
+    private BlackjackResult blackjackResultWith(Dealer dealer, List<List<Card>> playersCards) {
         Players players = Players.of(userNames);
-        List<List<Card>> playersCards = getPlayerCards();
 
         for (int i = 0; i < playersCards.size(); i++) {
             players.getPlayers().get(i).addInitialCards(playersCards.get(i));
