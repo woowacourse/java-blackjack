@@ -5,11 +5,9 @@ import domain.state.GameState;
 import dto.ParticipantDto;
 import dto.PlayerResultDto;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Queue;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
@@ -17,13 +15,9 @@ public class MultiPlayers {
     private static final int MAX_PLAYER_NUMBER = 5;
 
     private final Map<String, Player> players;
-    private final Queue<String> notBettingPlayers;
-    private final Queue<String> playablePlayers;
 
-    private MultiPlayers(Map<String, Player> players, List<String> playerNames) {
+    private MultiPlayers(Map<String, Player> players) {
         this.players = players;
-        this.notBettingPlayers = new LinkedList<>(playerNames);
-        this.playablePlayers = new LinkedList<>(playerNames);
     }
 
     public static MultiPlayers of(List<String> playerNames, Deck totalDeck) {
@@ -35,7 +29,7 @@ public class MultiPlayers {
             newPlayers.put(name, createNewPlayer(totalDeck, name));
         }
 
-        return new MultiPlayers(newPlayers, playerNames);
+        return new MultiPlayers(newPlayers);
     }
 
     private static Player createNewPlayer(Deck totalDeck, String name) {
@@ -61,49 +55,31 @@ public class MultiPlayers {
     }
 
     public Optional<Player> getNextBetPlayer() {
-        if (notBettingPlayers.isEmpty()) {
-            return Optional.empty();
-        }
-        String notYetBetPlayerName = notBettingPlayers.peek();
-
-        return Optional.of(
-                players.get(notYetBetPlayerName)
-        );
+        return players.values().stream()
+                .filter(player -> !player.isBet())
+                .findFirst();
     }
 
     public Optional<Player> getNextPlayablePlayer() {
-        if (playablePlayers.isEmpty()) {
-            return Optional.empty();
-        }
-        String playablePlayerName = playablePlayers.peek();
-
-        return Optional.of(
-                players.get(playablePlayerName)
-        );
+        return players.values().stream()
+                .filter(Player::isPlayable)
+                .findFirst();
     }
 
     public void executeBet(Player player, BetAmount betAmount) {
         String playerName = player.getName();
         applyAction(playerName, p -> p.bet(betAmount));
-        notBettingPlayers.remove(playerName);
+//        notBettingPlayers.remove(playerName);
     }
 
     public Player executeHit(Player player, Supplier<Card> cardSupplier) {
         String playerName = player.getName();
-
-        Player newPlayer = applyAction(playerName, p -> p.hit(cardSupplier));
-        if (newPlayer.isFinished()) {
-            playablePlayers.remove(playerName);
-        }
-
-        return newPlayer;
+        return applyAction(playerName, p -> p.hit(cardSupplier));
     }
 
     public Player executeStand(Player player) {
         String playerName = player.getName();
-        Player newPlayer = applyAction(playerName, Player::stand);
-        playablePlayers.remove(playerName);
-        return newPlayer;
+        return applyAction(playerName, Player::stand);
     }
 
     public List<ParticipantDto> getInitialStates() {
