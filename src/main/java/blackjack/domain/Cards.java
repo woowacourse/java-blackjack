@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Cards {
-    private static final int BLACKJACK_SCORE = 21;
+    public static final int BLACKJACK_SCORE = 21;
     private static final int BLACKJACK_SIZE = 2;
     private static final int ACE_SCORE = 10;
 

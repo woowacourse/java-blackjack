@@ -1,5 +1,6 @@
 package blackjack.domain.state;
 
+import blackjack.domain.Cards;
 import blackjack.domain.ScoreCompareResult;
 
 public class Blackjack implements State{
@@ -13,6 +14,6 @@ public class Blackjack implements State{
 
     @Override
     public int getScore() {
-        return 21;
+        return Cards.BLACKJACK_SCORE;
     }
 }
