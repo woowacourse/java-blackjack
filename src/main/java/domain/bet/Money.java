@@ -2,6 +2,7 @@ package domain.bet;
 
 import constant.PolicyConstant;
 import exception.ErrorMessage;
+import java.math.BigDecimal;
 
 public record Money(
     int value
@@ -52,10 +53,10 @@ public record Money(
     }
 
     private static boolean isNumber(String input) {
-        for (char number : input.toCharArray()) {
-            if (!Character.isDigit(number)) {
-                return false;
-            }
+        try {
+            new BigDecimal(input);
+        } catch (NumberFormatException e) {
+            return false;
         }
         return true;
     }
