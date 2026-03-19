@@ -43,6 +43,10 @@ public abstract class Participant {
         return hand.getHandState();
     }
 
+    public boolean canDraw() {
+        return hand.canDraw();
+    }
+
     public void updateBalance(int betting){
         this.balance = new Balance(balance.getBalance() + betting);
     }

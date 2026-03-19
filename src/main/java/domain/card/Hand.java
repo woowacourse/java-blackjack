@@ -72,4 +72,8 @@ public class Hand {
     private boolean isInitialCards(){
         return cards.size() == INITIAL_CARD_COUNT;
     }
+
+    public boolean canDraw(){
+        return getScore() < BLACKJACK_SCORE;
+    }
 }

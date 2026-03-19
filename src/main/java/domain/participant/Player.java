@@ -17,7 +17,7 @@ public final class Player extends Participant {
     }
 
     public boolean canHit() {
-        return getHandState().isHit();
+        return getHandState().isHit() && canDraw();
     }
 
     public String getName() {
