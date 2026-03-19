@@ -32,11 +32,11 @@ public class PlayersTest {
         Player blackJackPlayer = new Player(new Name("pobi"), new BettingMoney(1000L));
         Player normalPlayer = new Player(new Name("jason"), new BettingMoney(1000L));
 
-        blackJackPlayer.receiveCard(new Card(Rank.ACE, Suit.SPADE));
-        blackJackPlayer.receiveCard(new Card(Rank.KING, Suit.HEART));
+        blackJackPlayer.addCard(new Card(Rank.ACE, Suit.SPADE));
+        blackJackPlayer.addCard(new Card(Rank.KING, Suit.HEART));
 
-        normalPlayer.receiveCard(new Card(Rank.TWO, Suit.CLUB));
-        normalPlayer.receiveCard(new Card(Rank.THREE, Suit.DIAMOND));
+        normalPlayer.addCard(new Card(Rank.TWO, Suit.CLUB));
+        normalPlayer.addCard(new Card(Rank.THREE, Suit.DIAMOND));
 
         assertThat(blackJackPlayer.isNaturalBlackJack()).isTrue();
         assertThat(normalPlayer.isNaturalBlackJack()).isFalse();
@@ -47,11 +47,11 @@ public class PlayersTest {
         Player blackJackPlayer = new Player(new Name("pobi"), new BettingMoney(1000L));
         Player normalPlayer = new Player(new Name("jason"), new BettingMoney(1000L));
 
-        blackJackPlayer.receiveCard(new Card(Rank.ACE, Suit.SPADE));
-        blackJackPlayer.receiveCard(new Card(Rank.KING, Suit.HEART));
+        blackJackPlayer.addCard(new Card(Rank.ACE, Suit.SPADE));
+        blackJackPlayer.addCard(new Card(Rank.KING, Suit.HEART));
 
-        normalPlayer.receiveCard(new Card(Rank.TWO, Suit.CLUB));
-        normalPlayer.receiveCard(new Card(Rank.THREE, Suit.DIAMOND));
+        normalPlayer.addCard(new Card(Rank.TWO, Suit.CLUB));
+        normalPlayer.addCard(new Card(Rank.THREE, Suit.DIAMOND));
 
         Players players = Players.of(List.of(blackJackPlayer, normalPlayer));
 

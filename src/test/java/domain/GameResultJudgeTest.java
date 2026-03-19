@@ -24,12 +24,12 @@ public class GameResultJudgeTest {
         Dealer dealer = new Dealer();
         Player player = new Player(new Name("pobi"), new BettingMoney(1000L));
 
-        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        dealer.receiveCard(new Card(Rank.SEVEN, Suit.HEART)); // 17
+        dealer.addCard(new Card(Rank.TEN, Suit.SPADE));
+        dealer.addCard(new Card(Rank.SEVEN, Suit.HEART)); // 17
 
-        player.receiveCard(new Card(Rank.KING, Suit.CLUB));
-        player.receiveCard(new Card(Rank.QUEEN, Suit.DIAMOND));
-        player.receiveCard(new Card(Rank.TWO, Suit.HEART)); // 22 bust
+        player.addCard(new Card(Rank.KING, Suit.CLUB));
+        player.addCard(new Card(Rank.QUEEN, Suit.DIAMOND));
+        player.addCard(new Card(Rank.TWO, Suit.HEART)); // 22 bust
 
         Players players = Players.of(List.of(player));
 
@@ -51,11 +51,11 @@ public class GameResultJudgeTest {
         Dealer dealer = new Dealer();
         Player player = new Player(new Name("pobi"), new BettingMoney(1000L));
 
-        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        dealer.receiveCard(new Card(Rank.SEVEN, Suit.HEART)); // 17
+        dealer.addCard(new Card(Rank.TEN, Suit.SPADE));
+        dealer.addCard(new Card(Rank.SEVEN, Suit.HEART)); // 17
 
-        player.receiveCard(new Card(Rank.TEN, Suit.CLUB));
-        player.receiveCard(new Card(Rank.EIGHT, Suit.DIAMOND)); // 18
+        player.addCard(new Card(Rank.TEN, Suit.CLUB));
+        player.addCard(new Card(Rank.EIGHT, Suit.DIAMOND)); // 18
 
         Players players = Players.of(List.of(player));
 
@@ -71,11 +71,11 @@ public class GameResultJudgeTest {
         Dealer dealer = new Dealer();
         Player player = new Player(new Name("pobi"), new BettingMoney(1000L));
 
-        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        dealer.receiveCard(new Card(Rank.NINE, Suit.HEART)); // 19
+        dealer.addCard(new Card(Rank.TEN, Suit.SPADE));
+        dealer.addCard(new Card(Rank.NINE, Suit.HEART)); // 19
 
-        player.receiveCard(new Card(Rank.TEN, Suit.CLUB));
-        player.receiveCard(new Card(Rank.EIGHT, Suit.DIAMOND)); // 18
+        player.addCard(new Card(Rank.TEN, Suit.CLUB));
+        player.addCard(new Card(Rank.EIGHT, Suit.DIAMOND)); // 18
 
         Players players = Players.of(List.of(player));
 
@@ -91,11 +91,11 @@ public class GameResultJudgeTest {
         Dealer dealer = new Dealer();
         Player player = new Player(new Name("pobi"), new BettingMoney(1000L));
 
-        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        dealer.receiveCard(new Card(Rank.EIGHT, Suit.HEART)); // 18
+        dealer.addCard(new Card(Rank.TEN, Suit.SPADE));
+        dealer.addCard(new Card(Rank.EIGHT, Suit.HEART)); // 18
 
-        player.receiveCard(new Card(Rank.NINE, Suit.CLUB));
-        player.receiveCard(new Card(Rank.NINE, Suit.DIAMOND)); // 18
+        player.addCard(new Card(Rank.NINE, Suit.CLUB));
+        player.addCard(new Card(Rank.NINE, Suit.DIAMOND)); // 18
 
         Players players = Players.of(List.of(player));
 
@@ -111,11 +111,11 @@ public class GameResultJudgeTest {
         Dealer dealer = new Dealer();
         Player player = new Player(new Name("pobi"), new BettingMoney(10000L));
 
-        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        dealer.receiveCard(new Card(Rank.NINE, Suit.HEART)); // 19
+        dealer.addCard(new Card(Rank.TEN, Suit.SPADE));
+        dealer.addCard(new Card(Rank.NINE, Suit.HEART)); // 19
 
-        player.receiveCard(new Card(Rank.ACE, Suit.CLUB));
-        player.receiveCard(new Card(Rank.KING, Suit.DIAMOND)); // natural blackjack
+        player.addCard(new Card(Rank.ACE, Suit.CLUB));
+        player.addCard(new Card(Rank.KING, Suit.DIAMOND)); // natural blackjack
 
         Players players = Players.of(List.of(player));
 
@@ -133,14 +133,14 @@ public class GameResultJudgeTest {
         Player winPlayer = new Player(new Name("pobi"), new BettingMoney(1000L));
         Player losePlayer = new Player(new Name("jason"), new BettingMoney(2000L));
 
-        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        dealer.receiveCard(new Card(Rank.EIGHT, Suit.HEART)); // 18
+        dealer.addCard(new Card(Rank.TEN, Suit.SPADE));
+        dealer.addCard(new Card(Rank.EIGHT, Suit.HEART)); // 18
 
-        winPlayer.receiveCard(new Card(Rank.TEN, Suit.CLUB));
-        winPlayer.receiveCard(new Card(Rank.NINE, Suit.DIAMOND)); // 19 -> WIN
+        winPlayer.addCard(new Card(Rank.TEN, Suit.CLUB));
+        winPlayer.addCard(new Card(Rank.NINE, Suit.DIAMOND)); // 19 -> WIN
 
-        losePlayer.receiveCard(new Card(Rank.TEN, Suit.HEART));
-        losePlayer.receiveCard(new Card(Rank.SEVEN, Suit.CLUB)); // 17 -> LOSE
+        losePlayer.addCard(new Card(Rank.TEN, Suit.HEART));
+        losePlayer.addCard(new Card(Rank.SEVEN, Suit.CLUB)); // 17 -> LOSE
 
         Players players = Players.of(List.of(winPlayer, losePlayer));
 

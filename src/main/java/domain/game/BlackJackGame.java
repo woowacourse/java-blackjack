@@ -27,13 +27,13 @@ public class BlackJackGame {
 
     public void dealInitialCards() {
         for (int i = 0; i < FIRST_DRAW_CARDS; i++) {
-            players.receiveOneCardFrom(deck);
-            dealer.receiveCard(deck.draw());
+            players.dealOneCardToPlayers(deck);
+            dealer.addCard(deck.draw());
         }
     }
 
     public List<String> hit(Player player) {
-        player.receiveCard(deck.draw());
+        player.addCard(deck.draw());
         return player.getHandToString();
     }
 
@@ -64,7 +64,7 @@ public class BlackJackGame {
             return false;
         }
 
-        dealer.receiveCard(deck.draw());
+        dealer.addCard(deck.draw());
         return true;
     }
 

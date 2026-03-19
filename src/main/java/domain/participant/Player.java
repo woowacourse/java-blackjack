@@ -16,8 +16,8 @@ public class Player extends Participant {
     }
 
     @Override
-    public void receiveCard(Card card) {
-        super.receiveCard(card);
+    public void addCard(Card card) {
+        super.addCard(card);
         updateNaturalBlackJackStatus();
     }
 

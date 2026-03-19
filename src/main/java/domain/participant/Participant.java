@@ -3,6 +3,7 @@ package domain.participant;
 import domain.Hand;
 import domain.Name;
 import domain.card.Card;
+import domain.game.BlackJackRule;
 import java.util.List;
 
 public abstract class Participant {
@@ -14,7 +15,7 @@ public abstract class Participant {
     }
 
     protected boolean hasTwoCards() {
-        return hand.size() == 2;
+        return hand.size() == BlackJackRule.INITIAL_HAND_SIZE;
     }
 
     public boolean isBust() {
@@ -25,7 +26,7 @@ public abstract class Participant {
         return hand.isBlackjack();
     }
 
-    public void receiveCard(Card card) {
+    public void addCard(Card card) {
         hand.add(card);
     }
 

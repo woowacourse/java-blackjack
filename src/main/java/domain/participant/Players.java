@@ -15,8 +15,8 @@ public class Players {
         return new Players(playersList);
     }
 
-    public void receiveOneCardFrom(Deck deck) {
-        players.forEach(player -> player.receiveCard(deck.draw()));
+    public void dealOneCardToPlayers(Deck deck) {
+        players.forEach(player -> player.addCard(deck.draw()));
     }
 
     public List<Player> getPlayers() {

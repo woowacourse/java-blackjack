@@ -13,8 +13,8 @@ class DealerTest {
     @Test
     void 딜러의_점수가_16점_이하면_카드를_더_뽑을_수_있다() {
         Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(Rank.ACE, Suit.SPADE));
-        dealer.receiveCard(new Card(Rank.FIVE, Suit.HEART));
+        dealer.addCard(new Card(Rank.ACE, Suit.SPADE));
+        dealer.addCard(new Card(Rank.FIVE, Suit.HEART));
 
         assertThat(dealer.canDraw()).isTrue();
     }
@@ -22,8 +22,8 @@ class DealerTest {
     @Test
     void 딜러의_점수가_17점_이상이면_카드를_더_뽑을_수_없다() {
         Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        dealer.receiveCard(new Card(Rank.SEVEN, Suit.HEART));
+        dealer.addCard(new Card(Rank.TEN, Suit.SPADE));
+        dealer.addCard(new Card(Rank.SEVEN, Suit.HEART));
 
         assertThat(dealer.canDraw()).isFalse();
     }
