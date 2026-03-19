@@ -1,6 +1,5 @@
 package view;
 
-import domain.Dealer;
 import dto.DealerCardDTO;
 import dto.DealerResultDTO;
 import dto.ProfitResultDTO;
