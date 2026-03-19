@@ -1,4 +1,4 @@
-package domain;
+package domain.enums;
 
 public enum CardRank {
     ACE("A", 1),
@@ -18,7 +18,6 @@ public enum CardRank {
     private final String name;
     private final int number;
 
-    // 생성자
     CardRank(String name, int number) {
         this.name = name;
         this.number = number;

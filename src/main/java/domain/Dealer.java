@@ -1,20 +1,21 @@
 package domain;
 
-import constant.GameConstant;
-
-public class Dealer extends Player {
+public class Dealer extends Participant {
     public static final String DEALER_NAME = "딜러";
     public static final int ADDITIONAL_THRESHOLD = 16;
 
-    public Dealer() {
-        super(DEALER_NAME);
-    }
+    public Dealer() {}
 
     public boolean needAdditionalCard() {
-        return this.calculateScore() <= ADDITIONAL_THRESHOLD;
+        return getCardsTotalSum() <= ADDITIONAL_THRESHOLD;
     }
 
-    public Card getFirstCard() {
-        return cards.getFirst();
+    public String getFirstCardDisplay() {
+        return cards.getFirstCard().getCardDisplay();
     }
+
+    public String getName() {
+        return DEALER_NAME;
+    }
+
 }

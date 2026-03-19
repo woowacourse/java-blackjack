@@ -8,12 +8,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import domain.enums.CardRank;
+import domain.enums.CardShape;
+import testutil.PlayerTestUtil;
+
 class PlayerTest {
     private Player player;
 
     @BeforeEach
     void setUp() {
-        Player player = new Player("요크");
+        Player player = new Player("요크", new Betting(1000));
         this.player = player;
     }
 
@@ -23,7 +27,7 @@ class PlayerTest {
         player.add(new Card(CardShape.SPADE, CardRank.THREE));
         player.add(new Card(CardShape.SPADE, CardRank.TWO));
 
-        int result = player.calculateScore();
+        int result = player.getCardsTotalSum();
 
         assertThat(result).isEqualTo(5);
     }
@@ -34,7 +38,7 @@ class PlayerTest {
         player.add(new Card(CardShape.SPADE, CardRank.ACE));
         player.add(new Card(CardShape.SPADE, CardRank.TWO));
 
-        int result = player.getFinalScore();
+        int result = player.getCardsTotalSum();
         assertThat(result).isEqualTo(13);
     }
 
@@ -45,7 +49,7 @@ class PlayerTest {
         player.add(new Card(CardShape.SPADE, CardRank.NINE));
         player.add(new Card(CardShape.SPADE, CardRank.TWO));
 
-        int result = player.getFinalScore();
+        int result = player.getCardsTotalSum();
         assertThat(result).isEqualTo(12);
     }
 
@@ -56,7 +60,7 @@ class PlayerTest {
         player.add(new Card(CardShape.SPADE, CardRank.ACE));
         player.add(new Card(CardShape.SPADE, CardRank.NINE));
 
-        int result = player.getFinalScore();
+        int result = player.getCardsTotalSum();
         assertThat(result).isEqualTo(21);
     }
 
@@ -67,7 +71,7 @@ class PlayerTest {
         player.add(new Card(CardShape.SPADE, CardRank.ACE));
         player.add(new Card(CardShape.SPADE, CardRank.TEN));
 
-        int result = player.getFinalScore();
+        int result = player.getCardsTotalSum();
         assertThat(result).isEqualTo(12);
     }
 
@@ -100,14 +104,24 @@ class PlayerTest {
                 new Card(CardShape.HEART, CardRank.QUEEN),
                 new Card(CardShape.HEART, CardRank.JACK)
         ));
-        assertThat(player1.getFinalScore()).isEqualTo(30);
+        assertThat(player1.getCardsTotalSum()).isEqualTo(30);
     }
 
     private Player createPlayerFromCards(List<Card> cards) {
-        Player player = new Player("aaaa");
         for (Card card : cards) {
             player.add(card);
         }
         return player;
+    }
+
+
+    @DisplayName("카드 처음 2장 배부")
+    @Test
+    void 카드_처음_2장_배부_테스트() {
+        player.addInitializedCard(PlayerTestUtil.createDeck());
+
+        int result = player.getCards().size();
+
+        assertThat(result).isEqualTo(2);
     }
 }

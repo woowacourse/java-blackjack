@@ -1,0 +1,110 @@
+package domain;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import domain.enums.MatchCase;
+
+public class Game {
+    public static final int BLACKJACK_VALUE = 21;
+
+    private final Deck deck;
+    private final Dealer dealer;
+    private final Players players;
+
+    public Game(Deck deck, Players players, Dealer dealer) {
+        this.deck = deck;
+        this.players = players;
+        this.dealer = dealer;
+    }
+
+    public Map<MatchCase, Integer> calculateDealerMatch(Map<String, MatchCase> playerResult) {
+        Map<MatchCase, Integer> dealerMatchResult = new LinkedHashMap<>();
+        for (MatchCase matchCase : playerResult.values()) {
+            dealerMatchResult.put(matchCase, dealerMatchResult.getOrDefault(matchCase, 0) + 1);
+        }
+        return dealerMatchResult;
+    }
+
+    public Map<String, MatchCase> calculateMatch() {
+        Map<String, MatchCase> matchResult = new LinkedHashMap<>();
+        if (players.isAllPlayerBurst()) {
+            return getPlayersAllBurstCase(matchResult);
+        }
+        if (dealer.isBust()) {
+            return getDealerBurstCase(matchResult);
+        }
+        return getGeneralCase(matchResult);
+    }
+
+    private Map<String, MatchCase> getGeneralCase(Map<String, MatchCase> matchResult) {
+        for (Player player : players) {
+            MatchCase matchCase = MatchCase.from(player.getCardsTotalSum(), dealer.getCardsTotalSum());
+            matchResult.put(player.getName(), matchCase);
+            player.calculateMoney(matchCase, dealer.isBlackjack());
+        }
+        return matchResult;
+    }
+
+    private Map<String, MatchCase> getDealerBurstCase(Map<String, MatchCase> matchResult) {
+        for (Player player : players) {
+            if (!player.isBust()) {
+                matchResult.put(player.getName(), MatchCase.WIN);
+                player.calculateMoney(MatchCase.WIN, dealer.isBlackjack());
+                continue;
+            }
+            matchResult.put(player.getName(), MatchCase.LOSE);
+            player.calculateMoney(MatchCase.LOSE, dealer.isBlackjack());
+        }
+        return matchResult;
+    }
+
+    private Map<String, MatchCase> getPlayersAllBurstCase(Map<String, MatchCase> matchResult) {
+        for (Player player : players) {
+            matchResult.put(player.getName(), MatchCase.LOSE);
+            player.calculateMoney(MatchCase.LOSE, dealer.isBlackjack());
+        }
+        return matchResult;
+    }
+
+    public Map<String, Integer> getBettingScore() {
+        Map<String, Integer> bettingResult = new LinkedHashMap<>();
+        for (Player player : players) {
+            bettingResult.put(player.getName(), player.getBettingScore());
+        }
+        return bettingResult;
+    }
+
+    public boolean needAdditionalCard() {
+        return dealer.needAdditionalCard();
+    }
+
+    public boolean isAllPlayerBurst() {
+        return players.isAllPlayerBurst();
+    }
+
+    public void addCard(Player player) {
+        player.add(deck.pop());
+    }
+
+    public void addDealerAdditionalCard() {
+        dealer.add(deck.pop());
+    }
+
+    public int getDealerBettingScore() {
+        return -players.getTotalBettingScore();
+    }
+
+    public String getDealerFirstCard() {
+        return dealer.getFirstCardDisplay();
+    }
+
+    public Players getPlayers() {
+        return players;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+}
