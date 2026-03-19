@@ -1,4 +1,4 @@
-package dto;
+package domain;
 
 import domain.gameplaying.Card;
 import java.util.List;

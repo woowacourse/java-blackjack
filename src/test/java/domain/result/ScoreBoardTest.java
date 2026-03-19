@@ -3,7 +3,7 @@ package domain.result;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import domain.Money;
-import dto.PlayedGameResult;
+import domain.PlayedGameResult;
 import domain.ProfitInfo;
 import domain.gameplaying.Card;
 import domain.gameplaying.CardMark;

@@ -1,7 +1,7 @@
 package domain.result;
 
 import domain.Money;
-import dto.PlayedGameResult;
+import domain.PlayedGameResult;
 import domain.ProfitInfo;
 import java.util.LinkedHashMap;
 import java.util.List;

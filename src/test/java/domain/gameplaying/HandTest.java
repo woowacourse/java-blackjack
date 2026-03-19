@@ -68,7 +68,11 @@ class HandTest {
                         18),
                 Arguments.arguments(
                         List.of(new Card(CardRank.QUEEN, CardMark.SPADE), new Card(CardRank.EIGHT, CardMark.HEART),
-                                new Card(CardRank.QUEEN, CardMark.CLOVER)), 28)
+                                new Card(CardRank.QUEEN, CardMark.CLOVER)), 28),
+
+                Arguments.arguments(
+                        List.of(new Card(CardRank.ACE, CardMark.CLOVER), new Card(CardRank.ACE, CardMark.CLOVER),
+                                new Card(CardRank.TWO, CardMark.CLOVER)), 14)
         );
     }
 }

@@ -33,9 +33,8 @@
 
 ## 피드백
 - [x] CardInfo 제거하거나 변경
-- [ ] 네이밍 
-  - [ ] InfiniteDeck
-  - [ ] BlackJackNumber -> Score
-- [ ] PlayedGameResult -> Participants 에서 직접
+- [x] 네이밍 
+  - [x] InfiniteDeck
+  - [x] BlackJackNumber -> Score
 - [x] 예외처리 NumberFormatException
  

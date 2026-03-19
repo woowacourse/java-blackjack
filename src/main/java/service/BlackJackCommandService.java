@@ -1,7 +1,7 @@
 package service;
 
 import domain.Money;
-import dto.PlayedGameResult;
+import domain.PlayedGameResult;
 import domain.gameplaying.Participants;
 import domain.result.ScoreBoard;
 import java.util.List;

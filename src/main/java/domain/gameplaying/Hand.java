@@ -38,9 +38,13 @@ class Hand {
 
     int scoreSum() {
         int total = rawScoreSum();
-        if (isExceededBustNumber(total)) {
-            total -= aceCount() * ACE_WEIGHT;
+        int aces = aceCount();
+
+        while (isExceededBustNumber(total) && aces > 0) {
+            total -= ACE_WEIGHT;
+            aces--;
         }
+
         return total;
     }
 

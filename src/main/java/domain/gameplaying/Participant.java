@@ -1,6 +1,6 @@
 package domain.gameplaying;
 
-import dto.PlayedGameResult;
+import domain.PlayedGameResult;
 import java.util.List;
 
 abstract class Participant {

@@ -1,6 +1,6 @@
 package dto.response;
 
-import dto.PlayedGameResult;
+import domain.PlayedGameResult;
 import domain.gameplaying.Card;
 import java.util.List;
 

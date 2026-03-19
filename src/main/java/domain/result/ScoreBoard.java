@@ -2,7 +2,7 @@ package domain.result;
 
 import domain.Money;
 import domain.ProfitInfo;
-import dto.PlayedGameResult;
+import domain.PlayedGameResult;
 import java.util.List;
 
 public class ScoreBoard {
