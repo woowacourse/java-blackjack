@@ -1,7 +1,7 @@
 package domain.result;
 
 import domain.Money;
-import domain.PlayedGameResult;
+import dto.PlayedGameResult;
 
 class PlayerState {
 

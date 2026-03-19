@@ -3,10 +3,10 @@ package domain.gameplaying.strategy;
 import domain.gameplaying.Card;
 import domain.gameplaying.CardMark;
 import domain.gameplaying.CardRank;
-import domain.gameplaying.BlackJackDeck;
+import domain.gameplaying.DrawStrategy;
 import java.util.Random;
 
-public class InfiniteDeck implements BlackJackDeck {
+public class InfiniteRandomDrawStrategy implements DrawStrategy {
 
     @Override
     public Card draw() {

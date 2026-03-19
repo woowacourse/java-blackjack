@@ -1,6 +1,6 @@
 package domain.gameplaying;
 
-import domain.PlayedGameResult;
+import dto.PlayedGameResult;
 import java.util.List;
 
 abstract class Participant {
@@ -30,7 +30,7 @@ abstract class Participant {
     }
 
     PlayedGameResult infos() {
-        return PlayedGameResult.from(name, this.cards(), this.scoreSum());
+        return PlayedGameResult.from(this.name(), this.cards(), this.scoreSum());
     }
 
     boolean isBusted() {

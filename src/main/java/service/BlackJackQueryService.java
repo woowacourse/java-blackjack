@@ -1,7 +1,7 @@
 package service;
 
 import domain.ProfitInfo;
-import domain.PlayedGameResult;
+import dto.PlayedGameResult;
 import domain.gameplaying.Participants;
 import domain.result.ScoreBoard;
 import dto.response.ProfitResponse;

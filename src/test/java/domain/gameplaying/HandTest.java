@@ -3,7 +3,7 @@ package domain.gameplaying;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import domain.gameplaying.strategy.InfiniteDeck;
+import domain.gameplaying.strategy.InfiniteRandomDrawStrategy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -18,7 +18,7 @@ class HandTest {
     @Test
     @DisplayName("카드가 한 장 손 패에 추가되어야 한다.")
     void 카드_한_장_뽑기() {
-        Hand hand = new Hand(new InfiniteDeck(), new ArrayList<>());
+        Hand hand = new Hand(new InfiniteRandomDrawStrategy(), new ArrayList<>());
         hand.drawCard();
 
         int expected = 1;
@@ -31,7 +31,7 @@ class HandTest {
     @MethodSource("randomCards")
     @DisplayName("손패 카드의 합을 반환해야 한다.")
     void 손패_합_반환(List<Card> cards, int sum) {
-        Hand hand = new Hand(new InfiniteDeck(), cards);
+        Hand hand = new Hand(new InfiniteRandomDrawStrategy(), cards);
 
         int actual = hand.scoreSum();
 
@@ -43,7 +43,7 @@ class HandTest {
     void 손패_카드들_정보_반환() {
         Card card = new Card(CardRank.QUEEN, CardMark.SPADE);
         List<Card> cards = List.of(card);
-        Hand hand = new Hand(new InfiniteDeck(), cards);
+        Hand hand = new Hand(new InfiniteRandomDrawStrategy(), cards);
 
 
         assertThat(hand.cards().getFirst().toString()).isEqualTo(card.toString());

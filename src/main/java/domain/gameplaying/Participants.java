@@ -1,6 +1,6 @@
 package domain.gameplaying;
 
-import domain.PlayedGameResult;
+import dto.PlayedGameResult;
 import java.util.List;
 
 public class Participants {
@@ -13,7 +13,7 @@ public class Participants {
         this.players = players;
     }
 
-    public static Participants onlyDealer(BlackJackDeck sharedDeck) {
+    public static Participants onlyDealer(DrawStrategy sharedDeck) {
         return new Participants(Dealer.of(sharedDeck), Players.noOne(sharedDeck));
     }
 

@@ -37,5 +37,5 @@
   - [ ] InfiniteDeck
   - [ ] BlackJackNumber -> Score
 - [ ] PlayedGameResult -> Participants 에서 직접
-- [ ] 예외처리 NumberFormatException
+- [x] 예외처리 NumberFormatException
  

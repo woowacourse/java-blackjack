@@ -1,6 +1,6 @@
 package domain.gameplaying.strategy;
 
-import domain.gameplaying.BlackJackDeck;
+import domain.gameplaying.DrawStrategy;
 import domain.gameplaying.CardMark;
 import domain.gameplaying.CardRank;
 import domain.gameplaying.Card;
@@ -11,16 +11,17 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
-public class OnlyOneDeck implements BlackJackDeck {
+public class OnlyOneDeckDrawStrategy implements DrawStrategy {
 
     private final Deque<Card> cards;
 
-    public OnlyOneDeck() {
+    public OnlyOneDeckDrawStrategy() {
         this.cards = mixedCards();
     }
 
     @Override
     public Card draw() {
+        requireCardsRemaining();
         return cards.poll();
     }
 
@@ -41,5 +42,11 @@ public class OnlyOneDeck implements BlackJackDeck {
         return Arrays.stream(CardRank.values())
                 .map(cardRank -> new Card(cardRank, mark))
                 .toList();
+    }
+
+    private void requireCardsRemaining() {
+        if(cards.isEmpty()) {
+            throw new IllegalStateException("[ERROR] 남아있는 카드가 없습니다.");
+        }
     }
 }
