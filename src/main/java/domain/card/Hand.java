@@ -9,7 +9,6 @@ public class Hand {
     private static final int ACE_ADJUST_SCORE = 10;
     private static final int INITIAL_CARD_COUNT = 2;
     private static final int BLACKJACK_SCORE = 21;
-    private static final int DEALER_DRAW_SCORE = 16;
 
     private final List<Card> cards;
 
@@ -27,10 +26,6 @@ public class Hand {
 
     public boolean checkBust() {
         return calculateScore() > BLACKJACK_SCORE;
-    }
-
-    public boolean isDealerDrawScore() {
-        return calculateScore() <= DEALER_DRAW_SCORE;
     }
 
     private int calculateScore() {

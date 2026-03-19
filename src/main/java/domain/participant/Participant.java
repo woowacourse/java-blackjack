@@ -35,10 +35,6 @@ public abstract class Participant {
         return hand.checkBust();
     }
 
-    public boolean isDealerDrawScore() {
-        return hand.isDealerDrawScore();
-    }
-
     public HandState getHandState(){
         return hand.getHandState();
     }
