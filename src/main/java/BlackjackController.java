@@ -45,6 +45,7 @@ public class BlackjackController {
     private void readBetAmount(List<Player> players) {
         for (Player player : players) {
             int betAmount = inputView.readBetAmount(player.getName());
+            player.setBetAmount(betAmount);
         }
     }
 
