@@ -5,11 +5,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class NameTest {
     @DisplayName("이름이 null이거나 비어있으면 예외가 발생한다.")
     @ParameterizedTest
     @NullAndEmptySource
+    @ValueSource(strings = {" ", "   "})
     void throwExceptionWhenNameIsNullOrEmpty(String invalidName) {
         assertThatThrownBy(() -> new Name(invalidName))
                 .isInstanceOf(IllegalArgumentException.class)
