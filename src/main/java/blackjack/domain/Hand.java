@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 public class Hand {
 
+    private static final int ACE_SCORE_ADJUSTMENT = 10;
+    private static final int BLACKJACK_CARD_SIZE = 2;
     private static final int BLACKJACK_SCORE = 21;
     private final List<Card> cards;
 
@@ -47,7 +49,7 @@ public class Hand {
 
     public boolean isBlackJack() {
         List<Card> allCards = getCards();
-        return allCards.size() == 2 && calculateTotalScore() == BLACKJACK_SCORE;
+        return allCards.size() == BLACKJACK_CARD_SIZE && calculateTotalScore() == BLACKJACK_SCORE;
     }
 
     public boolean isDrawable() {
@@ -84,7 +86,7 @@ public class Hand {
         if (aceCount == 0) {
             return scoreSum;
         }
-        int calculatedScore = scoreSum - 10;
+        int calculatedScore = scoreSum - ACE_SCORE_ADJUSTMENT;
         if (calculatedScore <= BLACKJACK_SCORE) {
             return calculatedScore;
         }
