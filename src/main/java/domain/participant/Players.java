@@ -9,9 +9,9 @@ public class Players {
 
     private final List<Player> players;
 
-    private Players(List<Player> players) {
+    public Players(List<Player> players) {
         validate(players);
-        this.players = List.copyOf(players);
+        this.players = List.copyOf(players).stream().toList();
     }
 
     private void validate(List<Player> players) {
@@ -23,13 +23,6 @@ public class Players {
             && playerCount <= PolicyConstant.PLAYER_MAX_COUNT)) {
             throw new IllegalArgumentException(ErrorMessage.PLAYER_COUNT_OUT_OF_RANGE.getMessage());
         }
-    }
-
-    public static Players from(Names names) {
-        List<Player> players = names.value().stream()
-            .map(Player::new)
-            .toList();
-        return new Players(players);
     }
 
     public void addCardPlayer(int playerIndex, Card card) {

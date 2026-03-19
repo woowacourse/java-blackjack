@@ -2,10 +2,13 @@ package controller;
 
 import constant.PlayerAction;
 import domain.bet.Money;
+import domain.participant.Name;
 import domain.participant.Names;
+import domain.participant.Player;
 import domain.participant.Players;
 import dto.BlackjackProfitDto;
 import dto.BlackjackResultDto;
+import java.util.ArrayList;
 import java.util.List;
 import service.BlackjackService;
 import view.InputView;
@@ -25,13 +28,12 @@ public class BlackjackController {
 
     private BlackjackService initializeService() {
         Names names = Names.from(inputView.inputPlayers());
-        Players players = Players.from(names);
-        return new BlackjackService(players);
+        List<Player> playerList = collectBets(names);
+        return new BlackjackService(new Players(playerList));
     }
 
     public void start() {
         blackjackService.dealInitialCards();
-        collectBets();
         printPlayerCards();
         inputAllPlayerActions();
         boolean dealerHit = blackjackService.drawDealerCard();
@@ -42,11 +44,13 @@ public class BlackjackController {
         printBlackjackStatistics();
     }
 
-    private void collectBets() {
-        for (int playerIndex = 0; playerIndex < blackjackService.getPlayerCount(); playerIndex++) {
-            String input = inputView.inputBetAmount(blackjackService.getPlayerName(playerIndex));
-            blackjackService.receivePlayerBets(playerIndex, Money.from(input));
+    private List<Player> collectBets(Names names) {
+        List<Player> players = new ArrayList<>();
+        for (Name name : names.value()) {
+            String input = inputView.inputBetAmount(name.value());
+            players.add(new Player(name, Money.from(input)));
         }
+        return players;
     }
 
     private void printPlayerCards() {

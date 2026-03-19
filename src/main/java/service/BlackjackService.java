@@ -3,7 +3,6 @@ package service;
 import constant.PlayerAction;
 import constant.PolicyConstant;
 import constant.Result;
-import domain.bet.Money;
 import domain.card.CardMachine;
 import domain.participant.Dealer;
 import domain.participant.Participant;
@@ -27,11 +26,6 @@ public class BlackjackService {
         this.cardMachine = new CardMachine();
         this.players = players;
         this.dealer = new Dealer();
-    }
-
-    public void receivePlayerBets(int playerIndex, Money money) {
-        Player player = players.getPlayerByIndex(playerIndex);
-        player.placeBet(money);
     }
 
     public List<String> getAllPlayerNames() {
