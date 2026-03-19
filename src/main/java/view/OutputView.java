@@ -35,7 +35,8 @@ public class OutputView {
     private static final Map<Result, String> RESULT_NAME = Map.of(
             Result.WIN, "승",
             Result.LOSE, "패",
-            Result.TIE, "무"
+            Result.TIE, "무",
+            Result.BLACKJACK, "블랙잭"
     );
 
     public void printInitialDeal(List<String> playerNames) {
