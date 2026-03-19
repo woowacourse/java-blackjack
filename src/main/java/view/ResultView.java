@@ -1,19 +1,17 @@
 package view;
 
-import domain.Outcome;
-import dto.AllOutcomeDto;
 import dto.FinalScoreDto;
 import dto.InitialDto;
+import dto.MoneyDto;
 import dto.ParticipantDto;
 import dto.ParticipantScoreDto;
 import dto.PlayerOutcomeDto;
 import java.util.List;
-import java.util.Map;
-import message.IOMessage;
+import message.IoMessage;
 
 public class ResultView {
     public void printDealerMoreCard() {
-        System.out.println(IOMessage.DEALER_ONE_CARD.message());
+        System.out.println(IoMessage.DEALER_ONE_CARD.message());
     }
 
     public void printParticipantMoreCard(ParticipantDto participantDto) {
@@ -24,19 +22,26 @@ public class ResultView {
 
     public void printGameStart(InitialDto initialDto) {
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", initialDto.joinedNames());
-        System.out.printf("딜러카드: %s%n", initialDto.dealer().cardNames().getFirst());
+        System.out.printf("딜러카드: %s%n", initialDto.firstCardName());
         for (ParticipantDto player : initialDto.players()) {
             System.out.printf("%s카드: %s%n", player.name(), String.join(", ", player.cardNames()));
         }
     }
 
     public void printResult(FinalScoreDto finalScoreDto) {
-        ParticipantScoreDto dealer = finalScoreDto.dealer();
+        printDealerScore(finalScoreDto.dealer());
+        printPlayerScores(finalScoreDto.players());
+    }
+
+    private void printDealerScore(ParticipantScoreDto dealer) {
         System.out.printf("%s카드: %s - 결과: %d%n",
                 dealer.name(),
                 String.join(", ", dealer.cardNames()),
                 dealer.score());
-        for (ParticipantScoreDto player : finalScoreDto.players()) {
+    }
+
+    private void printPlayerScores(List<ParticipantScoreDto> players) {
+        for (ParticipantScoreDto player : players) {
             System.out.printf("%s카드: %s - 결과: %d%n",
                     player.name(),
                     String.join(", ", player.cardNames()),
@@ -44,24 +49,21 @@ public class ResultView {
         }
     }
 
-    public void printWinner(AllOutcomeDto allOutcomeDto) {
+    public void printScore(MoneyDto moneyDTO) {
         System.out.println();
-        System.out.println(IOMessage.WINNING_STATISTICS.message());
-        printDealerOutcome(allOutcomeDto.dealerResult());
-        printPlayerOutcomes(allOutcomeDto.playerOutcomes());
+        System.out.println(IoMessage.FINAL_MONEY_STATISTICS.message());
+        printDealerOutcome(moneyDTO.dealerMoney());
+        printPlayerOutcomes(moneyDTO.playerOutcomes());
     }
 
-    private void printDealerOutcome(Map<Outcome, Integer> dealerOutcomes) {
-        System.out.print("딜러: ");
-        for (Outcome outcome : Outcome.values()) {
-            System.out.print(dealerOutcomes.get(outcome) + outcome.getName() + " ");
-        }
+    private void printDealerOutcome(String dealerOutcomes) {
+        System.out.print("딜러: " + dealerOutcomes);
         System.out.println();
     }
 
     private void printPlayerOutcomes(List<PlayerOutcomeDto> playerOutcomes) {
         for (PlayerOutcomeDto outcomeDto : playerOutcomes) {
-            System.out.println(outcomeDto.name() + ": " + outcomeDto.outcome());
+            System.out.println(outcomeDto.name() + ": " + outcomeDto.profit());
         }
     }
 }

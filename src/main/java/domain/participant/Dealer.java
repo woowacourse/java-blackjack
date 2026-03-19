@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 public class Dealer extends Participant {
     private static final int DEALER_DRAW_BOUND = 16;
@@ -10,6 +10,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canDraw() {
-        return getScore().getGameScore() <= DEALER_DRAW_BOUND;
+        return getScore().isLessThanOrEqual(DEALER_DRAW_BOUND);
     }
 }
