@@ -57,12 +57,12 @@ public class GameController {
     }
 
     private void registerPlayersWithBettingMoney(List<Name> playerNames) {
-        List<BettingMoney> bettingMoneyList = new ArrayList<>();
+        List<BettingMoney> bettingMoneys = new ArrayList<>();
         for (Name playerName : playerNames) {
             BettingMoney bettingMoney = inputView.readBettingMoney(playerName.getValue());
-            bettingMoneyList.add(bettingMoney);
+            bettingMoneys.add(bettingMoney);
         }
-        manager.registerPlayers(playerNames, bettingMoneyList);
+        manager.registerPlayers(playerNames, bettingMoneys);
     }
 
     private void initGame() {
