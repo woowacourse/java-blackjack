@@ -21,16 +21,17 @@ public class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final Deck deck;
 
-    public BlackjackController(InputView inputView, OutputView outputView) {
+    public BlackjackController(InputView inputView, OutputView outputView, Deck deck) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.deck = deck;
     }
 
     public void run() {
         Players players = readPlayers();
         Dealer dealer = new Dealer();
-        Deck deck = Deck.createWithShuffled();
 
         Bettings bettings = readBettingAmounts(players);
         setInitialCards(players, dealer, deck);
