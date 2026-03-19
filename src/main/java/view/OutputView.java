@@ -14,8 +14,8 @@ public class OutputView {
     private static final String PRINT_DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String PRINT_BLACKJACK_RESULT_MESSAGE = " - 결과: %d\n";
     private static final String PRINT_BLACKJACK_STATISTICS_HEADER_MESSAGE = "## 최종 수익";
-    private static final String PRINT_BLACKJACK_STATISTICS_DEALER_MESSAGE = "딜러: %.0f\n";
-    private static final String PRINT_BLACKJACK_STATISTICS_PLAYER_MESSAGE = "%s: %.0f\n";
+    private static final String PRINT_BLACKJACK_STATISTICS_DEALER_MESSAGE = "딜러: %d\n";
+    private static final String PRINT_BLACKJACK_STATISTICS_PLAYER_MESSAGE = "%s: %d\n";
 
     public void printPlayers(List<String> names) {
         System.out.printf(PRINT_PLAYERS_MESSAGE, String.join(PolicyConstant.DELIMITER + " ", names));

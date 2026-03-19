@@ -3,7 +3,7 @@ package dto;
 import java.util.List;
 
 public record BlackjackProfitDto(
-    double dealerProfit,
+    int dealerProfit,
     List<PlayerResultDto> playerResultDtoList
 ) {
 

@@ -227,9 +227,9 @@ class BlackjackServiceTest {
             assertThat(actual.playerResultDtoList())
                 .extracting("name", "profit")
                 .containsExactly(
-                    Tuple.tuple("aa", -1000.0),
-                    Tuple.tuple("bb", 2000.0),
-                    Tuple.tuple("cc", 4500.0)
+                    Tuple.tuple("aa", -1000),
+                    Tuple.tuple("bb", 2000),
+                    Tuple.tuple("cc", 4500)
                 );
         }
 
@@ -247,9 +247,9 @@ class BlackjackServiceTest {
             assertThat(actual.playerResultDtoList())
                 .extracting("name", "profit")
                 .containsExactly(
-                    Tuple.tuple("aa", 0.0),
-                    Tuple.tuple("bb", -2000.0),
-                    Tuple.tuple("cc", 0.0)
+                    Tuple.tuple("aa", 0),
+                    Tuple.tuple("bb", -2000),
+                    Tuple.tuple("cc", 0)
                 );
         }
     }
