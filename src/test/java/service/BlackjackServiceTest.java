@@ -8,18 +8,18 @@ import constant.Rank;
 import constant.Suit;
 import domain.bet.Money;
 import domain.card.Card;
-import domain.participant.Names;
+import domain.participant.Name;
 import domain.participant.Participant;
+import domain.participant.Player;
 import domain.participant.Players;
 import dto.BlackjackResultDto;
 import dto.ParticipantDto;
+import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 class BlackjackServiceTest {
 
@@ -28,7 +28,11 @@ class BlackjackServiceTest {
 
     @BeforeEach
     void init() {
-        players = Players.from(Names.from("aa,bb,cc"));
+        List<Player> playerList = new ArrayList<>();
+        playerList.add(new Player(new Name("aa"), Money.from("1000")));
+        playerList.add(new Player(new Name("bb"), Money.from("2000")));
+        playerList.add(new Player(new Name("cc"), Money.from("3000")));
+        players = new Players(playerList);
         blackjackService = new BlackjackService(players);
     }
 
@@ -211,10 +215,6 @@ class BlackjackServiceTest {
         void 플레이어_결과별_수익과_딜러_수익을_계산한다() {
 
             // given
-            blackjackService.receivePlayerBets(0, Money.from("1000"));
-            blackjackService.receivePlayerBets(1, Money.from("2000"));
-            blackjackService.receivePlayerBets(2, Money.from("3000"));
-
             addCards(players.getPlayerByIndex(0), Rank.TEN, Rank.TEN, Rank.TWO);
             addCards(players.getPlayerByIndex(1), Rank.TEN, Rank.NINE);
             addCards(players.getPlayerByIndex(2), Rank.ACE, Rank.K);
@@ -237,10 +237,6 @@ class BlackjackServiceTest {
         void 무승부는_0원_처리되고_딜러_수익에는_패배한_플레이어만_합산된다() {
 
             // given
-            blackjackService.receivePlayerBets(0, Money.from("1000"));
-            blackjackService.receivePlayerBets(1, Money.from("2000"));
-            blackjackService.receivePlayerBets(2, Money.from("3000"));
-
             addCards(players.getPlayerByIndex(1), Rank.K, Rank.Q, Rank.TWO);
 
             // when
@@ -255,29 +251,6 @@ class BlackjackServiceTest {
                     Tuple.tuple("bb", -2000.0),
                     Tuple.tuple("cc", 0.0)
                 );
-        }
-    }
-
-    @Nested
-    class ReceivePlayerBetsTest {
-
-        @Nested
-        class Success {
-
-            @ParameterizedTest
-            @ValueSource(ints = {0, 1, 2})
-            void 플레이어_인덱스에_맞게_베팅금액이_저장된다(int playerIndex) {
-
-                // given
-                Money money = Money.from("1000");
-
-                // when
-                blackjackService.receivePlayerBets(playerIndex, money);
-
-                // then
-                assertThat(players.getPlayerByIndex(playerIndex).getBetAmount()).isEqualTo(1000);
-            }
-
         }
     }
 

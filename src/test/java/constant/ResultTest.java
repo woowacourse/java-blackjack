@@ -2,6 +2,7 @@ package constant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.bet.Money;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Name;
@@ -24,7 +25,7 @@ class ResultTest {
 
                 // given
                 Dealer dealer = new Dealer();
-                Player player = new Player(new Name("pobi"));
+                Player player = new Player(new Name("pobi"), Money.from("1000"));
                 addCards(dealer, Rank.K, Rank.Q, Rank.TWO);
                 addCards(player, Rank.K, Rank.Q, Rank.THREE);
 
@@ -40,7 +41,7 @@ class ResultTest {
 
                 // given
                 Dealer dealer = new Dealer();
-                Player player = new Player(new Name("pobi"));
+                Player player = new Player(new Name("pobi"), Money.from("1000"));
                 addCards(dealer, Rank.K, Rank.Q, Rank.TWO);
                 addCards(player, Rank.TEN, Rank.NINE);
 
@@ -56,7 +57,7 @@ class ResultTest {
 
                 // given
                 Dealer dealer = new Dealer();
-                Player player = new Player(new Name("pobi"));
+                Player player = new Player(new Name("pobi"), Money.from("1000"));
                 addCards(dealer, Rank.ACE, Rank.K);
                 addCards(player, Rank.TEN, Rank.NINE);
 
@@ -72,7 +73,7 @@ class ResultTest {
 
                 // given
                 Dealer dealer = new Dealer();
-                Player player = new Player(new Name("pobi"));
+                Player player = new Player(new Name("pobi"), Money.from("1000"));
                 addCards(dealer, Rank.ACE, Rank.K);
                 addCards(player, Rank.ACE, Rank.Q);
 
@@ -88,7 +89,7 @@ class ResultTest {
 
                 // given
                 Dealer dealer = new Dealer();
-                Player player = new Player(new Name("pobi"));
+                Player player = new Player(new Name("pobi"), Money.from("1000"));
                 addCards(dealer, Rank.TEN, Rank.NINE);
                 addCards(player, Rank.ACE, Rank.K);
 
@@ -104,7 +105,7 @@ class ResultTest {
 
                 // given
                 Dealer dealer = new Dealer();
-                Player player = new Player(new Name("pobi"));
+                Player player = new Player(new Name("pobi"), Money.from("1000"));
                 addCards(dealer, Rank.TEN, Rank.SEVEN);
                 addCards(player, Rank.NINE, Rank.EIGHT);
 
@@ -120,7 +121,7 @@ class ResultTest {
 
                 // given
                 Dealer dealer = new Dealer();
-                Player player = new Player(new Name("pobi"));
+                Player player = new Player(new Name("pobi"), Money.from("1000"));
                 addCards(dealer, Rank.TEN, Rank.EIGHT);
                 addCards(player, Rank.TEN, Rank.SEVEN);
 
@@ -136,7 +137,7 @@ class ResultTest {
 
                 // given
                 Dealer dealer = new Dealer();
-                Player player = new Player(new Name("pobi"));
+                Player player = new Player(new Name("pobi"), Money.from("1000"));
                 addCards(dealer, Rank.TEN, Rank.SEVEN);
                 addCards(player, Rank.TEN, Rank.EIGHT);
 

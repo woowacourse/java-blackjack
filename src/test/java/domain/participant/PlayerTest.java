@@ -5,6 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import constant.Rank;
 import constant.Suit;
+import domain.bet.Money;
 import domain.card.Card;
 import exception.ErrorMessage;
 import java.util.List;
@@ -29,7 +30,7 @@ class PlayerTest {
                 String name = "jacob";
 
                 // when
-                Player player = new Player(new Name(name));
+                Player player = new Player(new Name(name), Money.from("1000"));
                 String actual = player.getName();
 
                 // then
@@ -47,7 +48,7 @@ class PlayerTest {
             void 게임_참가자_이름의_길이가_2_이상_5_이하가_아니라면_예외를_발생_시켜야_한다(String name) {
 
                 // when & then
-                assertThatThrownBy(() -> new Player(new Name(name)))
+                assertThatThrownBy(() -> new Player(new Name(name), Money.from("1000")))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining(ErrorMessage.PLAYER_NAME_LENGTH_OUT_OF_RANGE.getMessage());
             }
@@ -59,7 +60,7 @@ class PlayerTest {
                 String name = "  ";
 
                 // when & then
-                assertThatThrownBy(() -> new Player(new Name(name)))
+                assertThatThrownBy(() -> new Player(new Name(name), Money.from("1000")))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining(ErrorMessage.PLAYER_NAME_BLANK.getMessage());
             }
@@ -76,7 +77,7 @@ class PlayerTest {
             void 카드를_추가하면_손패에_카드가_저장되어야_한다() {
 
                 // given
-                Player player = new Player(new Name("jacob"));
+                Player player = new Player(new Name("jacob"), Money.from("1000"));
                 Card card = new Card(Rank.ACE, Suit.HEART);
 
                 // when
@@ -98,7 +99,7 @@ class PlayerTest {
             void 플레이어의_점수가_21_초과이면_버스트이다() {
 
                 // given
-                Player player = new Player(new Name("jacob"));
+                Player player = new Player(new Name("jacob"), Money.from("1000"));
                 Card card1 = new Card(Rank.TEN, Suit.HEART);
                 Card card2 = new Card(Rank.TEN, Suit.HEART);
                 Card card3 = new Card(Rank.TEN, Suit.HEART);
@@ -116,7 +117,7 @@ class PlayerTest {
             void 플레이어의_점수가_21_이하이면_버스트가_아니다() {
 
                 // given
-                Player player = new Player(new Name("jacob"));
+                Player player = new Player(new Name("jacob"), Money.from("1000"));
                 Card card1 = new Card(Rank.TEN, Suit.HEART);
                 Card card2 = new Card(Rank.ACE, Suit.HEART);
 
