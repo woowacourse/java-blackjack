@@ -39,8 +39,8 @@ public class BlackjackController {
     private void initParticipants() {
         List<String> participantsNames = readPlayersName();
         List<ParticipantsInitDTO> participantsInitDTOS = participantsNames.stream()
-                        .map(userName -> new ParticipantsInitDTO(userName, readBettingMoney(userName)))
-                        .toList();
+                .map(userName -> new ParticipantsInitDTO(userName, readBettingMoney(userName)))
+                .toList();
         blackjackService.initParticipant(participantsInitDTOS);
     }
 
@@ -106,17 +106,23 @@ public class BlackjackController {
     }
 
     private void processAllPlayersHitOrStand() {
-        List<String> getUsersRequestMessages = extraCardRequest();
-        for (int index = 0; index < getUsersRequestMessages.size(); index++) {
-            while (true) {
-                    if (blackjackService.isBust(index)) {
-                        break;
-                    }
-                    String answer = readHitOrStand(getUsersRequestMessages.get(index));
-                    processHitOrStand(answer, index);
-                    if (answer.equalsIgnoreCase("n")) {
-                        break;
-                    }
+        List<String> requestMessages = extraCardRequest();
+        for (int index = 0; index < requestMessages.size(); index++) {
+            processOnePlayerHitOrStand(index, requestMessages.get(index));
+        }
+    }
+
+    private List<String> extraCardRequest() {
+        return blackjackService.makeExtraCardRequests();
+    }
+
+    private void processOnePlayerHitOrStand(int index, String message) {
+        while (canKeepPlaying(index)) {
+            String answer = readHitOrStand(message);
+            processHitOrStand(answer, index);
+
+            if (isStopCommand(answer)) {
+                break;
             }
         }
     }
@@ -145,7 +151,11 @@ public class BlackjackController {
         outputView.printMessage(cardDrawMessage);
     }
 
-    private List<String> extraCardRequest() {
-        return blackjackService.makeExtraCardRequests();
+    private boolean canKeepPlaying(int index) {
+        return !blackjackService.isBust(index);
+    }
+
+    private boolean isStopCommand(String answer) {
+        return answer.equalsIgnoreCase("n");
     }
 }
