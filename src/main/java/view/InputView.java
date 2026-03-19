@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
+    private static final String NUMERIC_FORMAT_REGEX = "-?\\d+";
 
     public List<String> readNames() {
         String line = readLineAndTrim();
@@ -33,7 +34,7 @@ public class InputView {
     }
 
     private void validateIsNumeric(String input) {
-        if (input.matches("-?\\d+")) {
+        if (input.matches(NUMERIC_FORMAT_REGEX)) {
             return;
         }
         throw new IllegalArgumentException("숫자가 아닌 문자를 입력할 수 없습니다.");
