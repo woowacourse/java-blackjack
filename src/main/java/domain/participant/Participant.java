@@ -29,10 +29,6 @@ public abstract class Participant {
         return name.name();
     }
 
-    public Hand getHand() {
-        return new Hand(hand.cards());
-    }
-
     public List<String> getCardNames() {
         return hand.cards().stream()
                 .map(Card::getCardName)
