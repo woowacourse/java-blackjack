@@ -21,7 +21,7 @@ public class Players {
     private final List<Player> players;
 
     public Players(List<Player> players) {
-        validatePlayersNumber(players);
+        validatePlayers(players);
         this.players = new ArrayList<>(players);
     }
 
@@ -65,7 +65,7 @@ public class Players {
         return finalRevenues;
     }
 
-    public static void validatePlayersNumber(List<Player> players) {
+    public static void validatePlayers(List<Player> players) {
         validateMinimumPlayers(players);
         validateMaximumPlayers(players);
         validateDuplicateName(players);
