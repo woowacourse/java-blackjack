@@ -16,7 +16,7 @@ public class ResultView {
         printEmptyLine();
         System.out.println(dealer.getName() + "와 " + joinPlayersNameByDelimiter(players) + "에게 " + INITIAL_CARD_COUNT
                 + "장을 나누었습니다.");
-        System.out.println("딜러카드: " + dealer.getFirstCard());
+        System.out.println("딜러: " + dealer.getFirstCard());
         printParticipantsCard(players);
         printEmptyLine();
     }
