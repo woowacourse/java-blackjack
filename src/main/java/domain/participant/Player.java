@@ -1,15 +1,20 @@
 package domain.participant;
 
+import domain.card.Cards;
 import domain.state.Outcome;
 
 public final class Player extends Participant {
+    private static final int BLACKJACK_SCORE = 21;
+
     private final Name name;
     private final Betting betting;
+    private boolean stay;
 
     public Player(Name name, Betting betting) {
         super();
         this.name = name;
         this.betting = betting;
+        this.stay = false;
     }
 
     public Player(String name, int betting) {
@@ -17,7 +22,18 @@ public final class Player extends Participant {
     }
 
     public boolean canHit() {
-        return getHandState().isHit() && canDraw();
+        return !stay && canDraw();
+    }
+
+    public void stand() {
+        this.stay = true;
+    }
+
+    public void hit(Cards cards) {
+        drawCard(cards);
+        if (getScore() == BLACKJACK_SCORE) {
+            stand();
+        }
     }
 
     public String getName() {

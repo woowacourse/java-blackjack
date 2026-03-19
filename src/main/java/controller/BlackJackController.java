@@ -42,13 +42,17 @@ public class BlackJackController {
     }
 
     private void drawPlayerTurn(Player player, Cards cards) {
-        while (player.canHit() && inputView.askHitOrStand(player)) {
+        while (player.canHit()) {
+            if (!inputView.askHitOrStand(player)) {
+                player.stand();
+                return;
+            }
             hit(player, cards);
         }
     }
 
     private void hit(Player player, Cards cards) {
-        player.drawCard(cards);
+        player.hit(cards);
         resultView.printPlayerCards(player.getName(), resultView.joinCardNames(player.getCards()));
         printPlayerBustIfNeeded(player);
     }
@@ -74,7 +78,7 @@ public class BlackJackController {
         final GameResult gameResult = game.calculateResult();
         printGameResult(players, dealer);
         resultView.printWinner(resultViewMapper.toParticipantStatsDto(players, gameResult));
-        resultView.printFinalProfit(resultViewMapper.toParticipantProfitDto(players));
+        resultView.printFinalProfit(resultViewMapper.toParticipantProfitDto(players, game.getDealerProfit()));
     }
 
     private void printGameResult(Players players, Dealer dealer) {

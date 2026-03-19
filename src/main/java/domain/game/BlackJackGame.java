@@ -40,6 +40,10 @@ public class BlackJackGame {
         return resultCalculator.calculate(dealer, players);
     }
 
+    public int getDealerProfit() {
+        return -players.getTotalProfit();
+    }
+
     public static BlackJackGame startGame(List<PlayerNameAndBettingDto> playerInfos) {
         final Random random = new Random();
         final Players players = new Players(playerInfos.stream()

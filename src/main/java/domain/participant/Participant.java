@@ -23,10 +23,6 @@ public abstract class Participant {
         return hand.getCards();
     }
 
-    public void addCardForTest(final Card card) {
-        hand.addCard(card);
-    }
-
     public int getScore() {
         return hand.getScore();
     }

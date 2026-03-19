@@ -1,7 +1,7 @@
 package domain.state;
 
 public enum HandState {
-    HIT {
+    STAY {
         @Override
         public Outcome against(HandState dealerState, int playerScore, int dealerScore) {
             if(dealerState == BLACKJACK){
@@ -50,7 +50,7 @@ public enum HandState {
         return this == BLACKJACK;
     }
 
-    public boolean isHit() {
-        return this == HIT;
+    public boolean isStay() {
+        return this == STAY;
     }
 }

@@ -50,15 +50,12 @@ public class ResultViewMapper {
         );
     }
 
-    public ParticipantProfitDto toParticipantProfitDto(Players players) {
+    public ParticipantProfitDto toParticipantProfitDto(Players players, int dealerProfit) {
         final List<PlayerProfitDto> playerProfitDtos = new ArrayList<>();
         players.forEachPlayer(player -> playerProfitDtos.add(new PlayerProfitDto(
                 player.getName(),
                 player.getBalance()
         )));
-        final int dealerProfit = -playerProfitDtos.stream()
-                .mapToInt(PlayerProfitDto::profit)
-                .sum();
         return new ParticipantProfitDto(dealerProfit, playerProfitDtos);
     }
 
