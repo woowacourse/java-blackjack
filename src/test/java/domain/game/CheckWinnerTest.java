@@ -13,6 +13,7 @@ import domain.state.Outcome;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import support.ParticipantTestSupport;
 import util.NameParser;
 
 public class CheckWinnerTest {
@@ -112,9 +113,7 @@ public class CheckWinnerTest {
     }
 
     private void addCards(Participant participant, Card... cards) {
-        for (Card card : cards) {
-            participant.addCardForTest(card);
-        }
+        ParticipantTestSupport.addCards(participant, cards);
     }
 
     private Player getFirstPlayer(Players players) {

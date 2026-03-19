@@ -11,6 +11,7 @@ import domain.card.Suit;
 import java.util.Random;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import support.ParticipantTestSupport;
 
 public class PlayerTest {
     @Test
@@ -28,8 +29,11 @@ public class PlayerTest {
     @DisplayName("플레이어 점수가 21점이면 더 이상 HIT 할 수 없다")
     void cannotHitWhenScoreIsTwentyOne() {
         final Player player = new Player("pobi", 1000);
-        player.addCardForTest(new Card(Suit.SPADE, Rank.KING));
-        player.addCardForTest(new Card(Suit.HEART, Rank.ACE));
+        ParticipantTestSupport.addCards(
+                player,
+                new Card(Suit.SPADE, Rank.KING),
+                new Card(Suit.HEART, Rank.ACE)
+        );
 
         assertFalse(player.canHit());
     }
@@ -38,8 +42,11 @@ public class PlayerTest {
     @DisplayName("플레이어 점수가 21점 미만이면 HIT 할 수 있다")
     void canHitWhenScoreIsLessThanTwentyOne() {
         final Player player = new Player("pobi", 1000);
-        player.addCardForTest(new Card(Suit.SPADE, Rank.TEN));
-        player.addCardForTest(new Card(Suit.HEART, Rank.NINE));
+        ParticipantTestSupport.addCards(
+                player,
+                new Card(Suit.SPADE, Rank.TEN),
+                new Card(Suit.HEART, Rank.NINE)
+        );
 
         assertTrue(player.canHit());
     }
