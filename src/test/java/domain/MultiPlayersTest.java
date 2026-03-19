@@ -89,13 +89,14 @@ class MultiPlayersTest {
         void findNotStayPlayer_not_exist() {
             // given
             int commonBetAmountValue = 1_000;
+            BetAmount commonBetAmount = BetAmount.of(commonBetAmountValue);
             MultiPlayers testMultiPlayers = MultiPlayers.of(TEST_PLAYER_NAMES, totalDeck);
             while (true) {
                 Optional<Player> findResult = testMultiPlayers.getNextBetPlayer();
                 if (findResult.isEmpty()) {
                     break;
                 }
-                testMultiPlayers.executeBet(findResult.get(), commonBetAmountValue);
+                testMultiPlayers.executeBet(findResult.get(), commonBetAmount);
             }
 
             // when
@@ -177,12 +178,13 @@ class MultiPlayersTest {
         void executeBet_good() {
             // given
             int betMoney = 10_000;
+            BetAmount betAmount = BetAmount.of(betMoney);
             MultiPlayers testMultiPlayers = MultiPlayers.of(TEST_PLAYER_NAMES, totalDeck);
             Player testPlayer = testMultiPlayers.getNextPlayablePlayer().get();
 
             // when, then
             assertDoesNotThrow(
-                    () -> testMultiPlayers.executeBet(testPlayer, betMoney));
+                    () -> testMultiPlayers.executeBet(testPlayer, betAmount));
         }
     }
 

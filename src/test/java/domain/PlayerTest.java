@@ -159,9 +159,10 @@ class PlayerTest {
         );
 
         int gumpBetAmountValue = 1000;
+        BetAmount gumpBetAmount = BetAmount.of(gumpBetAmountValue);
 
         //when
-        Player bettedGump = gump.bet(gumpBetAmountValue);
+        Player bettedGump = gump.bet(gumpBetAmount);
 
         //then
         assertTrue(bettedGump.isBet());
@@ -169,7 +170,8 @@ class PlayerTest {
 
     @Nested
     class BetResultTest {
-        int betAmountValue = 10_000;
+        int gumpBetAmountValue = 10_000;
+        BetAmount gumpBetAmount = BetAmount.of(gumpBetAmountValue);
 
         Hand blackJackHand = Hand.of(
                 new Card(CardShape.스페이드, CardContents.A),
@@ -194,18 +196,19 @@ class PlayerTest {
         @Test
         @DisplayName("본인의 베팅에 따른 수익을 잘 구한다 - 블랙잭 승리")
         void player_win_blackjack() {
-            int betAmountValue = 10_000;
+            int gumpBetAmountValue = 1000;
+            BetAmount gumpBetAmount = BetAmount.of(gumpBetAmountValue);
             double blackJackAllocation = 1.5;
             Player gump = Player.from(
                     GUMP,
                     GameState.createPlayerInitialGameState(blackJackHand)
             );
-            gump = gump.bet(betAmountValue);
+            gump = gump.bet(gumpBetAmount);
             Dealer dealer = Dealer.from(
                     GameState.createDealerInitialGameState(normalHandTwenty)
             );
 
-            double expect = betAmountValue * blackJackAllocation;
+            double expect = gumpBetAmountValue * blackJackAllocation;
 
             double result = gump.calculateEarnMoney(dealer);
 
@@ -220,12 +223,12 @@ class PlayerTest {
                     GUMP,
                     GameState.createPlayerInitialGameState(normalHandTwenty)
             );
-            gump = gump.bet(betAmountValue);
+            gump = gump.bet(gumpBetAmount);
             Dealer dealer = Dealer.from(
                     GameState.createDealerInitialGameState(normalHandFive)
             );
 
-            double expect = betAmountValue * normalAllocation;
+            double expect = gumpBetAmountValue * normalAllocation;
 
             double result = gump.calculateEarnMoney(dealer);
 
@@ -239,7 +242,7 @@ class PlayerTest {
                     GUMP,
                     GameState.createPlayerInitialGameState(normalHandTwenty)
             );
-            gump = gump.bet(betAmountValue);
+            gump = gump.bet(gumpBetAmount);
             Dealer dealer = Dealer.from(
                     GameState.createDealerInitialGameState(normalHandAnotherTwenty)
             );

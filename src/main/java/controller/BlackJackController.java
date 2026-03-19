@@ -1,5 +1,6 @@
 package controller;
 
+import domain.BetAmount;
 import domain.BlackJackGame;
 import domain.CardCreationStrategy;
 import domain.Player;
@@ -43,8 +44,8 @@ public class BlackJackController {
             Player currentPlayer = player.get();
 
             outputView.printBetAmountPrompt(currentPlayer.getName());
-            int betAmountValue = retry(inputView::readBetAmountValue);
-            game.doBetProcess(currentPlayer, betAmountValue);
+            BetAmount userBetAmount = retry(inputView::readBetAmountValue);
+            game.doBetProcess(currentPlayer, userBetAmount);
         }
     }
 

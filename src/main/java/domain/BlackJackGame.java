@@ -46,8 +46,8 @@ public class BlackJackGame {
         return multiPlayers.getNextPlayablePlayer();
     }
 
-    public void doBetProcess(Player target, int value) {
-        multiPlayers.executeBet(target, value);
+    public void doBetProcess(Player target, BetAmount betAmount) {
+        multiPlayers.executeBet(target, betAmount);
     }
 
     public ParticipantDto doHitProcess(Player target) {

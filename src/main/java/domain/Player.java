@@ -17,11 +17,11 @@ public class Player extends Participant {
         return new Player(name, gameState, BetAmount.empty());
     }
 
-    public Player bet(int value) {
+    public Player bet(BetAmount betAmount) {
         return new Player(
                 this.participantName.name(),
                 this.gameState,
-                BetAmount.of(value)
+                betAmount
         );
     }
 

@@ -1,6 +1,7 @@
 package view;
 
 import common.ErrorMessage;
+import domain.BetAmount;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -18,10 +19,10 @@ public class InputViewImpl implements InputView {
         return Arrays.stream(line.split(DELIMITER)).toList();
     }
 
-    public int readBetAmountValue() {
+    public BetAmount readBetAmountValue() {
         int betValue = sc.nextInt();
         sc.nextLine();
-        return betValue;
+        return BetAmount.of(betValue);
     }
 
     public Boolean wantToHit() {

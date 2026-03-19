@@ -2,6 +2,7 @@ package controller;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import domain.BetAmount;
 import domain.Card;
 import domain.CardContents;
 import domain.CardCreationStrategy;
@@ -50,8 +51,8 @@ class BlackJackControllerTest {
         }
 
         @Override
-        public int readBetAmountValue() {
-            return 100_000;
+        public BetAmount readBetAmountValue() {
+            return BetAmount.of(100_000);
         }
 
         @Override

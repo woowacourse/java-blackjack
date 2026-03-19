@@ -55,13 +55,14 @@ class BlackJackGameTest {
     @DisplayName("bet을 시켜도 오류가 안난다")
     void doBetProcess_success() {
         int betAmountValue = 1_000;
+        BetAmount betAmount = BetAmount.of(betAmountValue);
         BlackJackGame testGame = BlackJackGame.ready(TEST_PLAYER_NAMES, this::createSampleCards);
 
         Player testPlayer = testGame.whoseBettingTurn().orElseThrow(
                 () -> new IllegalStateException(ErrorMessage.TEST_STATE_EROR.getMessage())
         );
         assertDoesNotThrow(
-                () -> testGame.doBetProcess(testPlayer, betAmountValue)
+                () -> testGame.doBetProcess(testPlayer, betAmount)
         );
     }
 
@@ -209,7 +210,8 @@ class BlackJackGameTest {
         );
 
         BlackJackGame testGame = BlackJackGame.ready(TEST_PLAYER_NAMES, () -> new ArrayDeque<>(playersCardsCandidates));
-        int commonBettingAmount = 10_000;
+        int commonBettingAmountValue = 10_000;
+        BetAmount commonBettingAmount = BetAmount.of(commonBettingAmountValue);
         while (true) {
             Optional<Player> player = testGame.whoseBettingTurn();
             if (player.isEmpty()) {
