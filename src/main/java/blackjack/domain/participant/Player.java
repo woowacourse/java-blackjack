@@ -8,6 +8,8 @@ import blackjack.dto.PlayerGameResult;
 
 public class Player extends Participant {
 
+    private static final double BLACKJACK_PAYOUT_RATE = 2.5;
+    private static final double WIN_PAYOUT_RATE = 2.0;
     private boolean stopDrawing;
     private final Amount amount;
 
@@ -43,9 +45,9 @@ public class Player extends Participant {
             return amount.getValue();
         }
         if (hand.isBlackJack()) {
-            return amount.getValue() * 2.5;
+            return amount.getValue() * BLACKJACK_PAYOUT_RATE;
         }
-        return amount.getValue() * 2;
+        return amount.getValue() * WIN_PAYOUT_RATE;
     }
 
     private MatchResult determineGameResult(Dealer dealer) {
