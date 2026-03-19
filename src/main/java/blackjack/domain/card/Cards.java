@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Cards {
 
+    public static final int SIZE_OF_INITIAL_CARD = 2;
     private static final int BLACKJACK_VALUE = 21;
     private static final int ACE_ADVANTAGE_VALUE = 10;
 
@@ -23,9 +24,9 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return calculateSumOfCards() == BLACKJACK_VALUE;
+        return cards.size() == 2 && calculateSumOfCards() == BLACKJACK_VALUE;
     }
-    
+
     public String getFirstCardName() {
         return cards.getFirst().getName();
     }

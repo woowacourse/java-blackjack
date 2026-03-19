@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import static blackjack.domain.card.Cards.SIZE_OF_INITIAL_CARD;
+
 import blackjack.domain.betting.BettingAmount;
 import blackjack.domain.betting.Bettings;
 import blackjack.domain.deck.Deck;
@@ -15,8 +17,6 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackjackController {
-
-    private static final int SIZE_OF_INITIAL_CARD = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
