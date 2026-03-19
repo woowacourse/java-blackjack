@@ -45,9 +45,11 @@ public class BettingTable {
     }
 
     private int calculateDealerProfit(List<PlayerProfit> playersProfitResult) {
-        return (-1) * playersProfitResult.stream()
+        int playersTotalProfit = playersProfitResult.stream()
                 .mapToInt(PlayerProfit::profit)
                 .sum();
+
+        return Math.negateExact(playersTotalProfit);
     }
 
     private PlayerBet findBetByName(Name targetName) {

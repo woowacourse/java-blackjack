@@ -34,7 +34,6 @@ public class Deck {
     }
 
     public List<Card> draw(int count) {
-        //TODO: validate 카드 잔량 검증
         validateCardsCount(count);
         List<Card> drawnCards = new ArrayList<>();
 
