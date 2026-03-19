@@ -47,6 +47,34 @@ class NamesTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining(ErrorMessage.NAME_DUPLICATED.getMessage());
             }
+
+            @Test
+            void 이름이_2개_미만이라면_예외를_발생시켜야_한다() {
+
+                // given
+                String input = "jacob";
+
+                // when & then
+                assertThatThrownBy(() -> {
+                    Names.from(input);
+                })
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining(ErrorMessage.PLAYER_COUNT_OUT_OF_RANGE.getMessage());
+            }
+
+            @Test
+            void 이름이_8개_초과라면_예외를_발생시켜야_한다() {
+
+                // given
+                String input = "ja0, ja1, ja2, ja3, ja4, ja5, ja6, ja7, ja8";
+
+                // when & then
+                assertThatThrownBy(() -> {
+                    Names.from(input);
+                })
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining(ErrorMessage.PLAYER_COUNT_OUT_OF_RANGE.getMessage());
+            }
         }
     }
 }
