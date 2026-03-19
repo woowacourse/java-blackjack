@@ -6,7 +6,7 @@ import java.util.List;
 public class Cards {
 
     public static final int SIZE_OF_INITIAL_CARD = 2;
-    private static final int BLACKJACK_VALUE = 21;
+    private static final int MAX_SCORE = 21;
     private static final int ACE_ADVANTAGE_VALUE = 10;
 
     private final List<Card> cards;
@@ -20,11 +20,15 @@ public class Cards {
     }
 
     public boolean isBurst() {
-        return calculateSumOfCards() > BLACKJACK_VALUE;
+        return calculateSumOfCards() > MAX_SCORE;
     }
 
     public boolean isBlackjack() {
-        return cards.size() == 2 && calculateSumOfCards() == BLACKJACK_VALUE;
+        return cards.size() == 2 && isMaxScore();
+    }
+
+    public boolean isMaxScore() {
+        return calculateSumOfCards() == MAX_SCORE;
     }
 
     public String getFirstCardName() {
@@ -45,7 +49,7 @@ public class Cards {
     }
 
     private int applyBestAceValue(int sum) {
-        if (hasAce() && (sum + ACE_ADVANTAGE_VALUE) <= BLACKJACK_VALUE) {
+        if (hasAce() && (sum + ACE_ADVANTAGE_VALUE) <= MAX_SCORE) {
             return sum + ACE_ADVANTAGE_VALUE;
         }
         return sum;

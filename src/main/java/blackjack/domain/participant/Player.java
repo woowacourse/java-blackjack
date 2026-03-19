@@ -18,7 +18,7 @@ public final class Player extends Participant {
 
     @Override
     public boolean canDraw() {
-        return !isBurst() && !isBlackjack();
+        return !isBurst() && !isBlackjack() && !isMaxScore();
     }
 
 }

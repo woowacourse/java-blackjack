@@ -30,6 +30,10 @@ public abstract class Participant {
         return cards.isBlackjack();
     }
 
+    public final boolean isMaxScore() {
+        return cards.isMaxScore();
+    }
+
     public final String getFirstCardName() {
         return cards.getFirstCardName();
     }
