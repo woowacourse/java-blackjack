@@ -12,7 +12,7 @@ class DealerTest {
     @Test
     @DisplayName("딜러 객체 생성 시 2장의 카드를 보유한지 테스트")
     void holding_two_card_success() {
-        Dealer dealer = dealerWithInitialCards();
+        Dealer dealer = dealerWithInitialCardsScoreFive();
 
         assertThat(dealer.getCards()).hasSize(2);
     }
@@ -20,7 +20,7 @@ class DealerTest {
     @Test
     @DisplayName("딜러 합계가 16이하이면 true")
     void calculateScore_isHit_true() {
-        Dealer dealer = dealerWithInitialCards();
+        Dealer dealer = dealerWithInitialCardsScoreFive();
 
         assertThat(dealer.isHit()).isTrue();
     }
@@ -28,7 +28,7 @@ class DealerTest {
     @Test
     @DisplayName("딜러 카드 1장 추가 정상 동작 테스트")
     void add_one_card_test() {
-        Dealer dealer = dealerWithInitialCards();
+        Dealer dealer = dealerWithInitialCardsScoreFive();
 
         dealer.addCard(Card.of(Rank.FOUR, Suit.CLOVER));
 
@@ -38,7 +38,7 @@ class DealerTest {
     @Test
     @DisplayName("딜러 카드 합이 16 이하이면 17 이상이 될 때까지 카드를 추가한다.")
     void addCard_isAce_isHit_more_addCard() {
-        Dealer dealer = dealerWithInitialCards(); // 초기 카드 (2, 3 -> 합: 5)
+        Dealer dealer = dealerWithInitialCardsScoreFive();
 
         List<Card> drawCards = new ArrayList<>(List.of(
                 Card.of(Rank.ACE, Suit.DIAMOND),
@@ -57,7 +57,7 @@ class DealerTest {
     @Test
     @DisplayName("딜러 생성 시 전달한 초기 카드를 보유한다")
     void create_dealer_with_initial_cards() {
-        Dealer dealer = dealerWithInitialCards();
+        Dealer dealer = dealerWithInitialCardsScoreFive();
 
         List<Card> expect = List.of(Card.of(Rank.TWO, Suit.DIAMOND),
                 Card.of(Rank.THREE, Suit.CLOVER));
@@ -99,7 +99,7 @@ class DealerTest {
         assertThat(dealer.isBlackjack()).isTrue();
     }
 
-    private Dealer dealerWithInitialCards() {
+    private Dealer dealerWithInitialCardsScoreFive() {
         return Dealer.of(new ArrayList<>(List.of(
                 Card.of(Rank.TWO, Suit.DIAMOND),
                 Card.of(Rank.THREE, Suit.CLOVER))));
