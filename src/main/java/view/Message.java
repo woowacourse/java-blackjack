@@ -10,7 +10,7 @@ public class Message {
     public final static String FINAL_PROFIT_ANNOUNCE = "\n## 최종 수익";
     public final static String USER_CARDS_FORMAT_MESSAGE = "%s카드: %s";
     public final static String USER_RESULT_FORMAT_MESSAGE = "%s카드: %s - 결과: %d";
-    public final static String DEALER_RESULT_FORMAT_MESSAGE = "딜러 카드: %s - 결과: %d";
+    public final static String DEALER_RESULT_FORMAT_MESSAGE = "\n딜러 카드: %s - 결과: %d";
     public final static String DEALER_PROFIT_FORMAT_MESSAGE = "딜러: %s";
     public final static String USER_PROFIT_FORMAT_MESSAGE = "%s: %s";
 }
