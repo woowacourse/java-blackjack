@@ -1,5 +1,6 @@
 package view;
 
+import domain.game.BlackJackRule;
 import dto.GameResultDto;
 import dto.GameInitialInfoDto;
 import dto.GameScoreResultDto;
@@ -16,7 +17,6 @@ public class OutputView {
     private static final String FINAL_PROCEEDS_MESSAGE = "{0}: {1}";
     private static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String ERROR_PREFIX = "[ERROR] ";
-    private static final int INITIAL_HAND_SIZE = 2;
 
     public void printInitialInfo(List<GameInitialInfoDto> initialInfo) {
         printHandOutNotice(initialInfo);
@@ -75,7 +75,7 @@ public class OutputView {
         System.out.println(MessageFormat.format(
                 DEAL_MESSAGE,
                 playerNames,
-                INITIAL_HAND_SIZE
+                BlackJackRule.INITIAL_HAND_SIZE
         ));
     }
 
