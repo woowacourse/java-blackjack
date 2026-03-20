@@ -53,7 +53,7 @@ public class BlackJackController {
 
     private void hit(Player player, Cards cards) {
         player.hit(cards);
-        resultView.printPlayerCards(player.getName(), resultView.joinCardNames(player.getCards()));
+        resultView.printPlayerCards(resultViewMapper.toPlayerCardsDto(player));
         printPlayerBustIfNeeded(player);
     }
 

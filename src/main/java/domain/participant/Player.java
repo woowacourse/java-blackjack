@@ -8,13 +8,13 @@ public final class Player extends Participant {
 
     private final Name name;
     private final Betting betting;
-    private boolean stay;
+    private boolean stand;
 
     public Player(Name name, Betting betting) {
         super();
         this.name = name;
         this.betting = betting;
-        this.stay = false;
+        this.stand = false;
     }
 
     public Player(String name, int betting) {
@@ -22,11 +22,11 @@ public final class Player extends Participant {
     }
 
     public boolean canHit() {
-        return !stay && canDraw();
+        return !stand && canDraw();
     }
 
     public void stand() {
-        this.stay = true;
+        this.stand = true;
     }
 
     public void hit(Cards cards) {

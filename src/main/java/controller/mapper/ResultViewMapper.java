@@ -3,6 +3,7 @@ package controller.mapper;
 import domain.card.Card;
 import domain.game.GameResult;
 import domain.participant.Dealer;
+import domain.participant.Player;
 import domain.participant.Players;
 import domain.state.Outcome;
 import dto.view.DealerStatDto;
@@ -57,6 +58,13 @@ public class ResultViewMapper {
                 player.getBalance()
         )));
         return new ParticipantProfitDto(dealerProfit, playerProfitDtos);
+    }
+
+    public PlayerCardsDto toPlayerCardsDto(final Player player) {
+        return new PlayerCardsDto(
+                player.getName(),
+                toCardNames(player.getCards())
+        );
     }
 
     private List<PlayerCardsDto> toPlayerCardsDtos(Players players) {

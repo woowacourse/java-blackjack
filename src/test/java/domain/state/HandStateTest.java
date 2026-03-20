@@ -24,15 +24,15 @@ public class HandStateTest {
     }
 
     @Test
-    @DisplayName("초기 2장이 아닌 21점은 STAY 상태다")
-    void stayWithNonInitialCards() {
+    @DisplayName("초기 2장이 아닌 21점은 STAND 상태다")
+    void standWithNonInitialCards() {
         Hand hand = new Hand();
         hand.addCard(new Card(Suit.SPADE, Rank.SEVEN));
         hand.addCard(new Card(Suit.HEART, Rank.SEVEN));
         hand.addCard(new Card(Suit.DIAMOND, Rank.SEVEN));
         HandState handState = hand.getHandState();
 
-        assertEquals(HandState.STAY, handState);
+        assertEquals(HandState.STAND, handState);
         assertFalse(handState == HandState.BLACKJACK);
     }
 
@@ -50,9 +50,9 @@ public class HandStateTest {
     }
 
     @Test
-    @DisplayName("STAY 상태에서 동점이면 무승부다")
-    void drawWhenSameScoreInStay() {
-        Outcome outcome = HandState.STAY.against(HandState.STAY, 20, 20);
+    @DisplayName("STAND 상태에서 동점이면 무승부다")
+    void drawWhenSameScoreInStand() {
+        Outcome outcome = HandState.STAND.against(HandState.STAND, 20, 20);
 
         assertEquals(Outcome.DRAW, outcome);
     }
@@ -60,7 +60,7 @@ public class HandStateTest {
     @Test
     @DisplayName("딜러가 BLACKJACK이면 플레이어 21(비-Blackjack)은 패배한다")
     void loseWhenDealerBlackjackAndPlayerTwentyOneButNotBlackjack() {
-        Outcome outcome = HandState.STAY.against(HandState.BLACKJACK, 21, 21);
+        Outcome outcome = HandState.STAND.against(HandState.BLACKJACK, 21, 21);
         assertEquals(Outcome.LOSE, outcome);
     }
 }

@@ -1,6 +1,5 @@
 package view;
 
-import domain.card.Card;
 import dto.view.ParticipantProfitDto;
 import dto.view.ParticipantStatsDto;
 import dto.view.PlayerCardsDto;
@@ -9,7 +8,6 @@ import dto.view.PlayerProfitDto;
 import dto.view.ResultDto;
 import dto.view.StartBlackJackDto;
 import java.util.List;
-import java.util.stream.Collectors;
 import message.IOMessage;
 
 public class ResultView {
@@ -17,8 +15,8 @@ public class ResultView {
         System.out.println();
     }
 
-    public void printPlayerCards(String playerName, String cardNames) {
-        System.out.println(playerName + "카드: " + cardNames);
+    public void printPlayerCards(final PlayerCardsDto playerCardsDto) {
+        System.out.println(playerCardsDto.name() + "카드: " + String.join(", ", playerCardsDto.cards()));
     }
 
     public void printPlayerBust(String playerName) {
@@ -82,16 +80,6 @@ public class ResultView {
             playerNames.append(player.name());
         });
         return playerNames.toString();
-    }
-
-    public String joinCardNames(final List<Card> cards) {
-        return cards.stream()
-                .map(this::formatCardName)
-                .collect(Collectors.joining(", "));
-    }
-
-    private String formatCardName(final Card card) {
-        return card.getRank().symbol() + card.getSuit().suit();
     }
 
     private void printDealerOutcome(ParticipantStatsDto participantStatsDto) {

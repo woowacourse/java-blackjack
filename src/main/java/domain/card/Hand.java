@@ -55,13 +55,13 @@ public class Hand {
         }
 
         if (score < BLACKJACK_SCORE) {
-            return HandState.STAY;
+            return HandState.STAND;
         }
 
         if (isInitialCards()) {
             return HandState.BLACKJACK;
         }
-        return HandState.STAY;
+        return HandState.STAND;
     }
 
     private boolean isInitialCards(){
