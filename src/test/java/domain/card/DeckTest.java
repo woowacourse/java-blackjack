@@ -1,8 +1,9 @@
 package domain.card;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.HashSet;
 import java.util.Set;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,7 @@ public class DeckTest {
         Deck deck = new Deck();
         Set<Card> cardSet = new HashSet<>(deck.getCards());
 
-        Assertions.assertThat(cardSet.size()).isEqualTo(52);
+        assertThat(cardSet.size()).isEqualTo(52);
     }
 
     @Test
@@ -22,8 +23,8 @@ public class DeckTest {
         Deck deck = new Deck();
         Card card = deck.draw();
 
-        Assertions.assertThat(deck.getCards().size()).isEqualTo(51);
-        Assertions.assertThat(card).isInstanceOf(Card.class);
-        Assertions.assertThat(card).isNotIn(deck.getCards());
+        assertThat(deck.getCards().size()).isEqualTo(51);
+        assertThat(card).isInstanceOf(Card.class);
+        assertThat(card).isNotIn(deck.getCards());
     }
 }

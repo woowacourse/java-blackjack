@@ -1,107 +1,43 @@
 package domain.participant;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import domain.Money;
 import domain.card.Card;
-import domain.card.CardSuit;
 import domain.card.CardScore;
-import domain.card.Deck;
-import java.util.ArrayList;
+import domain.card.CardSuit;
+import domain.card.Cards;
+import exception.ErrorMessage;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
     @Test
-    @DisplayName("숫자에 대한 카드 점수를 계산한다.")
-    void calculateNumberTotalScoreTest() {
-        List<Card> cards1 = List.of(new Card(CardScore.EIGHT, CardSuit.CLUB),
-                new Card(CardScore.FOUR, CardSuit.CLUB));
-        Player player1 = new Player(cards1, "pobi", new Money(1000));
+    @DisplayName("플레이어의 이름이 비어있는 경우, 예외가 발생한다.")
+    void playerNameIsEmptyTest() {
+        List<Card> cardsList = List.of(
+                new Card(CardScore.EIGHT, CardSuit.CLUB),
+                new Card(CardScore.FOUR, CardSuit.CLUB)
+        );
+        Cards cards = new Cards(cardsList);
 
-        int totalScore1 = player1.calculateScore();
-
-        List<Card> cards2 = List.of(new Card(CardScore.EIGHT, CardSuit.CLUB), new Card(CardScore.TWO, CardSuit.CLUB));
-        Player player2 = new Player(cards2, "woni", new Money(1000));
-
-        int totalScore2 = player2.calculateScore();
-
-        Assertions.assertThat(totalScore1).isEqualTo(12);
-        Assertions.assertThat(totalScore2).isEqualTo(10);
+        assertThatThrownBy(() -> new Player(cards, "", new Money(10000)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ErrorMessage.PLAYER_NAME_IS_EMPTY.getMessage());
     }
 
     @Test
-    @DisplayName("알파벳에 대한 카드 점수를 계산한다. (ex - J, Q, K)")
-    void calculateAlphabetTotalScoreTest() {
-        List<Card> cards = List.of(new Card(CardScore.JACK, CardSuit.CLUB), new Card(CardScore.FOUR, CardSuit.CLUB));
+    @DisplayName("플레이어가 버스트도 아니고, 블랙잭도 아니면 카드를 한 장 더 받을 수 있다.")
+    void canHitTest() {
+        List<Card> cardsList = List.of(
+                new Card(CardScore.EIGHT, CardSuit.CLUB),
+                new Card(CardScore.FOUR, CardSuit.CLUB)
+        );
+        Cards cards = new Cards(cardsList);
+        Player player = new Player(cards, "pobi", new Money(10000));
 
-        Player player = new Player(cards, "pobi", new Money(1000));
-
-        int totalScore = player.calculateScore();
-
-        Assertions.assertThat(totalScore).isEqualTo(14);
-    }
-
-    @Test
-    @DisplayName("Ace에 대한 점수를 처리한다.")
-    void judgeAceTest() {
-        List<Card> cards1 = new ArrayList(
-                List.of(new Card(CardScore.JACK, CardSuit.CLUB), new Card(CardScore.FOUR, CardSuit.CLUB)));
-        Player player1 = new Player(cards1, "pobi", new Money(1000));
-        player1.addCard(new Card(CardScore.ACE, CardSuit.CLUB));
-        int player1TotalScore = player1.calculateScore();
-
-        List<Card> cards2 = new ArrayList(
-                List.of(new Card(CardScore.FOUR, CardSuit.CLUB), new Card(CardScore.ACE, CardSuit.CLUB)));
-        Player player2 = new Player(cards2, "woni", new Money(1000));
-        int player2TotalScore = player2.calculateScore();
-
-        Assertions.assertThat(player1TotalScore).isEqualTo(15);
-        Assertions.assertThat(player2TotalScore).isEqualTo(15);
-    }
-
-    @Test
-    @DisplayName("여러 장의 Ace에 대한 점수를 처리한다.")
-    void judgeManyAceTest() {
-        List<Card> cards1 = new ArrayList<>(
-                List.of(new Card(CardScore.EIGHT, CardSuit.CLUB), new Card(CardScore.ACE, CardSuit.CLUB)));
-        Player player1 = new Player(cards1, "pobi", new Money(1000));
-        player1.addCard(new Card(CardScore.ACE, CardSuit.SPADE));
-        int player1TotalScore = player1.calculateScore();
-
-        List<Card> cards2 = new ArrayList<>(
-                List.of(new Card(CardScore.FOUR, CardSuit.CLUB), new Card(CardScore.ACE, CardSuit.CLUB)));
-        Player player2 = new Player(cards2, "woni", new Money(1000));
-        player2.addCard(new Card(CardScore.ACE, CardSuit.SPADE));
-        player2.addCard(new Card(CardScore.ACE, CardSuit.HEART));
-        int player2TotalScore = player2.calculateScore();
-
-        Assertions.assertThat(player1TotalScore).isEqualTo(20);
-        Assertions.assertThat(player2TotalScore).isEqualTo(17);
-    }
-
-    @Test
-    @DisplayName("21을 초과하면 버스트이다.")
-    void judgeBustTest() {
-        List<Card> cards = new ArrayList<>(
-                List.of(new Card(CardScore.JACK, CardSuit.CLUB), new Card(CardScore.FOUR, CardSuit.CLUB)));
-        Player player = new Player(cards, "pobi", new Money(1000));
-        player.addCard(new Card(CardScore.EIGHT, CardSuit.CLUB));
-        boolean isBust = player.isBust();
-
-        assertTrue(isBust);
-    }
-
-    @Test
-    @DisplayName("카드를 한 장 받는다.")
-    void receiveOneCardTest() {
-        Deck deck = new Deck();
-        Card card = deck.draw();
-
-        Assertions.assertThat(deck.getCards().size()).isEqualTo(51);
-        Assertions.assertThat(card).isInstanceOf(Card.class);
-        Assertions.assertThat(card).isNotIn(deck.getCards());
+        assertThat(player.canHit()).isTrue();
     }
 }

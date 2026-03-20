@@ -29,9 +29,9 @@ public class GameController {
 
     public void run() {
         Deck deck = new Deck();
-        Dealer dealer = new Dealer(new ArrayList<>(List.of(deck.draw(), deck.draw())));
         List<String> playerNames = getPlayerNames();
         Players players = getPlayers(playerNames, deck);
+        Dealer dealer = new Dealer(deck.drawInitialCards());
 
         printGameStart(playerNames, dealer, players);
 
@@ -50,7 +50,7 @@ public class GameController {
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
             Money money = getMoney(playerName);
-            Player player = new Player(new ArrayList<>(List.of(deck.draw(), deck.draw())), playerName, money);
+            Player player = new Player(deck.drawInitialCards(), playerName, money);
             players.add(player);
         }
         return new Players(players);

@@ -18,6 +18,10 @@ public class Deck {
         return cards.pop();
     }
 
+    public Cards drawInitialCards() {
+        return new Cards(List.of(cards.pop(), cards.pop()));
+    }
+
     private Deque<Card> initialize() {
         Deque<Card> results = new ArrayDeque<>();
         for (CardSuit cardSuit : CardSuit.values()) {
