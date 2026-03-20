@@ -96,7 +96,7 @@ public class DisplayFormatterTest {
         String actualResult = DisplayFormatter.formatDealerResultDisplay(dealerResultDTO);
 
         // then
-        assertThat(actualResult).isEqualTo("딜러 카드: K스페이드 - 결과: 10");
+        assertThat(actualResult).isEqualTo("\n딜러 카드: K스페이드 - 결과: 10");
     }
 
     @Test
@@ -113,7 +113,7 @@ public class DisplayFormatterTest {
         String actualResult = DisplayFormatter.formatDealerResultDisplay(dealerResultDTO);
 
         // then
-        assertThat(actualResult).isEqualTo("딜러 카드: K스페이드, 9하트 - 결과: 19");
+        assertThat(actualResult).isEqualTo("\n딜러 카드: K스페이드, 9하트 - 결과: 19");
     }
 
     @Test
