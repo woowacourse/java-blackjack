@@ -184,8 +184,8 @@ class BlackjackGameManagerTest {
 
             // then
             assertThat(profitOf(actual, "jacob")).isEqualTo(-1000);
-            assertThat(profitOf(actual, "seoye")).isEqualTo(-500);
-            assertThat(actual.dealerProfit()).isEqualTo(1500);
+            assertThat(profitOf(actual, "seoye")).isEqualTo(-1000);
+            assertThat(actual.dealerProfit()).isEqualTo(2000);
         }
 
         @Test
@@ -203,8 +203,8 @@ class BlackjackGameManagerTest {
 
             // then
             assertThat(profitOf(actual, "jacob")).isEqualTo(0);
-            assertThat(profitOf(actual, "seoye")).isEqualTo(-500);
-            assertThat(actual.dealerProfit()).isEqualTo(500);
+            assertThat(profitOf(actual, "seoye")).isEqualTo(-1000);
+            assertThat(actual.dealerProfit()).isEqualTo(1000);
         }
 
         @Test
@@ -222,8 +222,8 @@ class BlackjackGameManagerTest {
 
             // then
             assertThat(profitOf(actual, "jacob")).isEqualTo(1500);
-            assertThat(profitOf(actual, "seoye")).isEqualTo(-500);
-            assertThat(actual.dealerProfit()).isEqualTo(-1000);
+            assertThat(profitOf(actual, "seoye")).isEqualTo(-1000);
+            assertThat(actual.dealerProfit()).isEqualTo(-500);
         }
 
         @Test
@@ -243,8 +243,8 @@ class BlackjackGameManagerTest {
 
             // then
             assertThat(profitOf(actual, "jacob")).isEqualTo(1000);
-            assertThat(profitOf(actual, "seoye")).isEqualTo(500);
-            assertThat(actual.dealerProfit()).isEqualTo(-1500);
+            assertThat(profitOf(actual, "seoye")).isEqualTo(1000);
+            assertThat(actual.dealerProfit()).isEqualTo(-2000);
         }
 
         @Test
@@ -262,8 +262,8 @@ class BlackjackGameManagerTest {
 
             // then
             assertThat(profitOf(actual, "jacob")).isEqualTo(1000);
-            assertThat(profitOf(actual, "seoye")).isEqualTo(-500);
-            assertThat(actual.dealerProfit()).isEqualTo(-500);
+            assertThat(profitOf(actual, "seoye")).isEqualTo(-1000);
+            assertThat(actual.dealerProfit()).isEqualTo(0);
         }
 
         @Test
@@ -281,8 +281,8 @@ class BlackjackGameManagerTest {
 
             // then
             assertThat(profitOf(actual, "jacob")).isEqualTo(0);
-            assertThat(profitOf(actual, "seoye")).isEqualTo(-500);
-            assertThat(actual.dealerProfit()).isEqualTo(500);
+            assertThat(profitOf(actual, "seoye")).isEqualTo(-1000);
+            assertThat(actual.dealerProfit()).isEqualTo(1000);
         }
 
         @Test
@@ -300,12 +300,12 @@ class BlackjackGameManagerTest {
 
             // then
             assertThat(profitOf(actual, "jacob")).isEqualTo(-1000);
-            assertThat(profitOf(actual, "seoye")).isEqualTo(-500);
-            assertThat(actual.dealerProfit()).isEqualTo(1500);
+            assertThat(profitOf(actual, "seoye")).isEqualTo(-1000);
+            assertThat(actual.dealerProfit()).isEqualTo(2000);
         }
 
         @Test
-        void 플레이어가_블랙잭이고_딜러가_버스트여도_블랙잭_승리다() {
+        void 플레이어가_블랙잭이고_딜러가_버스트여도_승리다() {
             // given
             BlackjackGameManager blackjackGameManager = fixedDeckBlackjackGameManager(List.of(
                     card(Rank.TEN, Suit.HEART), card(Rank.SIX, Suit.SPADE),
@@ -320,8 +320,8 @@ class BlackjackGameManagerTest {
             BlackjackStatisticsDto actual = blackjackGameManager.getBlackjackStatistics();
 
             // then
-            assertThat(profitOf(actual, "jacob")).isEqualTo(1500);
-            assertThat(profitOf(actual, "seoye")).isEqualTo(500);
+            assertThat(profitOf(actual, "jacob")).isEqualTo(1000);
+            assertThat(profitOf(actual, "seoye")).isEqualTo(1000);
             assertThat(actual.dealerProfit()).isEqualTo(-2000);
         }
     }
@@ -361,7 +361,7 @@ class BlackjackGameManagerTest {
         return new BlackjackGameManager(
                 new FixedDeckCardMachine(cards),
                 new BlackjackJudge(),
-                Participants.of(playerNames(), betAmounts("1000", "500"))
+                Participants.of(playerNames(), betAmounts("1000", "1000"))
         );
     }
 
