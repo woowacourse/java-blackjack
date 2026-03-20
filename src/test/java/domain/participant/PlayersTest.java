@@ -24,7 +24,7 @@ class PlayersTest {
             // when
             Players actual = players(
                     List.of("jacob", "seoye"),
-                    List.of("1000", "500")
+                    List.of("1000", "1000")
             );
 
             // then
@@ -49,7 +49,7 @@ class PlayersTest {
             // when & then
             assertThatThrownBy(() -> players(
                     List.of("aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh", "ii"),
-                    List.of("100", "100", "100", "100", "100", "100", "100", "100", "100")
+                    List.of("1000", "1000", "1000", "1000", "1000", "1000", "1000", "1000", "1000")
             ))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining(BlackjackException.ERROR_PREFIX + Players.PLAYER_COUNT_OUT_OF_RANGE);
@@ -60,7 +60,7 @@ class PlayersTest {
             // when & then
             assertThatThrownBy(() -> players(
                     List.of("jacob", "jacob"),
-                    List.of("1000", "500")
+                    List.of("1000", "1000")
             ))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining(BlackjackException.ERROR_PREFIX + Players.PLAYER_DUPLICATED);
@@ -75,7 +75,7 @@ class PlayersTest {
             // given
             Players players = players(
                     List.of("jacob", "seoye"),
-                    List.of("1000", "500")
+                    List.of("1000", "1000")
             );
 
             // when
@@ -83,7 +83,7 @@ class PlayersTest {
 
             // then
             assertThat(actual.getName()).isEqualTo("seoye");
-            assertThat(actual.getBetAmount()).isEqualTo(500);
+            assertThat(actual.getBetAmount()).isEqualTo(1000);
         }
 
         @Test
@@ -91,7 +91,7 @@ class PlayersTest {
             // given
             Players players = players(
                     List.of("jacob", "seoye"),
-                    List.of("1000", "500")
+                    List.of("1000", "1000")
             );
 
             // when & then
@@ -109,7 +109,7 @@ class PlayersTest {
             // given
             Players players = players(
                     List.of("jacob", "seoye"),
-                    List.of("1000", "500")
+                    List.of("1000", "1000")
             );
 
             // when
@@ -126,11 +126,11 @@ class PlayersTest {
             // given
             Players players = players(
                     List.of("jacob", "seoye"),
-                    List.of("1000", "500")
+                    List.of("1000", "1000")
             );
 
             // when & then
-            assertThatThrownBy(() -> players.getPlayers().add(new Player(new PlayerName("brown"), new BetAmount("700"))))
+            assertThatThrownBy(() -> players.getPlayers().add(new Player(new PlayerName("brown"), new BetAmount("1000"))))
                     .isInstanceOf(UnsupportedOperationException.class);
         }
     }
@@ -143,7 +143,7 @@ class PlayersTest {
             // given
             Players players = players(
                     List.of("jacob", "seoye"),
-                    List.of("1000", "500")
+                    List.of("1000", "1000")
             );
             Supplier<Card> cardSupplier = fixedCardSupplier(List.of(
                     card(Rank.TEN, Suit.HEART),
@@ -171,7 +171,7 @@ class PlayersTest {
             // given
             Players players = players(
                     List.of("jacob", "seoye"),
-                    List.of("1000", "500")
+                    List.of("1000", "1000")
             );
             Card card = card(Rank.NINE, Suit.HEART);
 
@@ -187,7 +187,7 @@ class PlayersTest {
             // given
             Players players = players(
                     List.of("jacob", "seoye"),
-                    List.of("1000", "500")
+                    List.of("1000", "1000")
             );
 
             // when & then
@@ -205,7 +205,7 @@ class PlayersTest {
             // given
             Players players = players(
                     List.of("jacob", "seoye"),
-                    List.of("1000", "500")
+                    List.of("1000", "1000")
             );
             players.addCard("jacob", card(Rank.TEN, Suit.HEART));
             players.addCard("jacob", card(Rank.NINE, Suit.SPADE));
@@ -223,7 +223,7 @@ class PlayersTest {
             // given
             Players players = players(
                     List.of("jacob", "seoye"),
-                    List.of("1000", "500")
+                    List.of("1000", "1000")
             );
             players.addCard("jacob", card(Rank.TEN, Suit.HEART));
             players.addCard("jacob", card(Rank.SEVEN, Suit.SPADE));
