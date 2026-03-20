@@ -5,7 +5,7 @@ import domain.participant.Participant;
 import domain.participant.Participants;
 
 public class GameManager {
-    private static final int STARTING_CARD_COUNT = 2;
+    private static final int INITIAL_CARD_COUNT = 2;
     private final Deck deck;
 
     private GameManager(Deck deck) {
@@ -25,6 +25,6 @@ public class GameManager {
     }
 
     public void dealInitialCards(Participants participants) {
-        participants.distributeCardsToAll(deck, STARTING_CARD_COUNT);
+        participants.distributeCardsToAll(deck, INITIAL_CARD_COUNT);
     }
 }
