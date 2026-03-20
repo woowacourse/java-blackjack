@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import domain.state.HitStand;
 import dto.domain.PlayerNameAndBettingDto;
-import error.ErrorMessage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -17,6 +16,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class InputViewTest {
+    private static final String INVALID_HIT_OR_STAND = "y 또는 n만 입력해주세요.";
+    private static final String INVALID_BETTING_FORMAT = "숫자만 입력해주세요.";
+    private static final String INVALID_BETTING_AMOUNT = "배팅 금액은 10 이상이며 10원 단위여야 합니다.";
+    private static final String DUPLICATED_PLAYER_NAME = "중복된 플레이어 이름은 허용되지 않습니다.";
+
     private final InputStream originalIn = System.in;
     private final PrintStream originalOut = System.out;
 
@@ -36,7 +40,7 @@ public class InputViewTest {
         final List<String> playerNames = inputView.getPlayerNames();
 
         assertEquals(List.of("pobi", "jason"), playerNames);
-        assertTrue(readOutput(out).contains(ErrorMessage.DUPLICATED_PLAYER_NAME.message()));
+        assertTrue(readOutput(out).contains(DUPLICATED_PLAYER_NAME));
     }
 
     @Test
@@ -52,8 +56,8 @@ public class InputViewTest {
         assertEquals("pobi", bettingDtos.get(0).name());
         assertEquals(1000, bettingDtos.get(0).betting());
         final String output = readOutput(out);
-        assertTrue(output.contains(ErrorMessage.INVALID_BETTING_FORMAT.message()));
-        assertTrue(output.contains(ErrorMessage.INVALID_BETTING_AMOUNT.message()));
+        assertTrue(output.contains(INVALID_BETTING_FORMAT));
+        assertTrue(output.contains(INVALID_BETTING_AMOUNT));
     }
 
     @Test
@@ -66,7 +70,7 @@ public class InputViewTest {
         final HitStand result = inputView.askHitOrStand("pobi");
 
         assertEquals(HitStand.HIT, result);
-        assertTrue(readOutput(out).contains(ErrorMessage.INVALID_HIT_OR_STAND.message()));
+        assertTrue(readOutput(out).contains(INVALID_HIT_OR_STAND));
     }
 
     private ByteArrayOutputStream setInputOutput(String input) {
