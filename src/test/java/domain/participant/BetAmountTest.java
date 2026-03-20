@@ -31,9 +31,9 @@ class BetAmountTest {
 
             static Stream<Arguments> successCases() {
                 return Stream.of(
-                        Arguments.of("1", 1),
                         Arguments.of("1000", 1000),
-                        Arguments.of("50000", 50000)
+                        Arguments.of("50000", 50000),
+                        Arguments.of("300000000", 300000000)
                 );
             }
         }
