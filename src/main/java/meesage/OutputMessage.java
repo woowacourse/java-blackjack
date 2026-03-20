@@ -11,7 +11,8 @@ public enum OutputMessage {
     RESULT_TEXT("%s - 결과: %d"),
     FINAL_MESSAGE("## 최종 승패"),
     DEALER_RESULT_FORMAT("딜러: %d승 %d무 %d패"),
-    PLAYER_RESULT_FORMAT("%s : %s")
+    PLAYER_RESULT_FORMAT("%s : %s"),
+    DEALER_PROFIT_RESULT_FORMAT("딜러 : %s"),
     ;
 
     private final String message;

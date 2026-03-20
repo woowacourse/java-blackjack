@@ -43,7 +43,7 @@ class PlayersTest {
     @Test
     @DisplayName("플레이어들의 점수가 제대로 저장이 됐는지 테스트")
     void players_score_success() {
-        Cards deck = Cards.of(new FixedCardShuffler());
+        Deck deck = Deck.of(new FixedCardShuffler());
 
         for (Player player : players.getPlayers()) {
             player.addInitialCards(deck.drawInitialHand());

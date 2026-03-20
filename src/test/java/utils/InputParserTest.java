@@ -7,6 +7,8 @@ import meesage.ErrorMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class InputParserTest {
 
@@ -31,6 +33,16 @@ public class InputParserTest {
                     .isThrownBy(() -> InputParser.splitByDelimiter(input))
                     .withMessage(ErrorMessage.EMPTY_INPUT.getMessage());
         }
+
+        @ParameterizedTest(name = "[{index}] input=\"{0}\" → 예외 발생")
+        @ValueSource(strings = {" ", "!!", "blackjack", "001", "-1", "1 1"})
+        @DisplayName("입력 값이 공백, 문자, 0으로 시작하는 숫자, 음수인 경우 예외를 던진다")
+        void not_numeric_pattern_throw_exception(String input) {
+            assertThatIllegalArgumentException()
+                    .isThrownBy(() -> InputParser.parseIntStrict(input))
+                    .withMessageContaining(ErrorMessage.NOT_STRICT_NUMERIC.getMessage());
+        }
+
     }
 }
 

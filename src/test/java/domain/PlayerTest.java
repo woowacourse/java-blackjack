@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 class PlayerTest {
 
     private final String userName = "pobi";
-    private final Cards cards = Cards.of(new FixedCardShuffler());
+    private final Deck cards = Deck.of(new FixedCardShuffler());
 
     @Test
     @DisplayName("플레이어 초기 카드 추가 시 2장의 카드를 보유한지 테스트")
@@ -90,6 +90,17 @@ class PlayerTest {
         player.addCard(cards.draw());
 
         assertThat(player.getCards()).hasSize(3);
+    }
+
+    @Test
+    @DisplayName("플레이어 카드가 블랙잭(초기 2장의 카드가 21)인지 테스트")
+    void player_isBlackjack() {
+        Player player = Player.of(userName);
+        List<Card> blackjackCards = List.of(Card.of(Rank.ACE, Suit.SPADE), Card.of(Rank.J, Suit.HEART));
+
+        player.addInitialCards(blackjackCards);
+
+        assertThat(player.isBlackjack()).isTrue();
     }
 
 }

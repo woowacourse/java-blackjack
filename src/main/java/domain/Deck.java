@@ -6,17 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class Cards {
+public class Deck {
 
+    private static final int INITIAL_HAND_SIZE = 2;
 
     private final List<Card> cards;
 
-    private Cards(CardShuffler cardShuffler) {
+    private Deck(CardShuffler cardShuffler) {
         this.cards = cardShuffler.shuffle(generateCards());
     }
 
-    public static Cards of(CardShuffler cardShuffler) {
-        return new Cards(cardShuffler);
+    public static Deck of(CardShuffler cardShuffler) {
+        return new Deck(cardShuffler);
     }
 
     private List<Card> generateCards() {
@@ -28,7 +29,7 @@ public class Cards {
 
     public List<Card> drawInitialHand() {
         return new ArrayList<>(Stream.generate(this::draw)
-                .limit(BlackjackRule.INITIAL_HAND_SIZE)
+                .limit(INITIAL_HAND_SIZE)
                 .toList());
     }
 

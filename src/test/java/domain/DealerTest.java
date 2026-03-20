@@ -2,7 +2,6 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import infra.FixedCardShuffler;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -10,22 +9,18 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    private final Cards deck = Cards.of(new FixedCardShuffler());
-    private final Dealer dealer = Dealer.of(deck.drawInitialHand());
-
     @Test
     @DisplayName("딜러 객체 생성 시 2장의 카드를 보유한지 테스트")
     void holding_two_card_success() {
+        Dealer dealer = dealerWithInitialCardsScoreFive();
+
         assertThat(dealer.getCards()).hasSize(2);
     }
 
     @Test
     @DisplayName("딜러 합계가 16이하이면 true")
     void calculateScore_isHit_true() {
-        List<Card> initialCards = new ArrayList<>(List.of(
-                Card.of(Rank.ACE, Suit.DIAMOND),
-                Card.of(Rank.FOUR, Suit.CLOVER)));
-        Dealer dealer = Dealer.of(initialCards);
+        Dealer dealer = dealerWithInitialCardsScoreFive();
 
         assertThat(dealer.isHit()).isTrue();
     }
@@ -33,34 +28,39 @@ class DealerTest {
     @Test
     @DisplayName("딜러 카드 1장 추가 정상 동작 테스트")
     void add_one_card_test() {
+        Dealer dealer = dealerWithInitialCardsScoreFive();
+
         dealer.addCard(Card.of(Rank.FOUR, Suit.CLOVER));
 
         assertThat(dealer.getCards()).hasSize(3);
     }
 
     @Test
-    @DisplayName("딜러 카드 합이 16 이하가 아닐 때까지 카드를 추가한다.")
+    @DisplayName("딜러 카드 합이 16 이하이면 17 이상이 될 때까지 카드를 추가한다.")
     void addCard_isAce_isHit_more_addCard() {
-        List<Card> cards = new ArrayList<>(
-                List.of(Card.of(Rank.ACE, Suit.DIAMOND), Card.of(Rank.J, Suit.CLOVER), Card.of(Rank.K, Suit.HEART)));
+        Dealer dealer = dealerWithInitialCardsScoreFive();
+
+        List<Card> drawCards = new ArrayList<>(List.of(
+                Card.of(Rank.ACE, Suit.DIAMOND),
+                Card.of(Rank.J, Suit.CLOVER),
+                Card.of(Rank.K, Suit.HEART),
+                Card.of(Rank.Q, Suit.SPADE))); // Q 추가 X
 
         while (dealer.isHit()) {
-            dealer.addCard(cards.removeFirst());
+            dealer.addCard(drawCards.removeFirst());
         }
 
-        assertThat(dealer.getCards()).hasSize(5);
+        assertThat(dealer.calculateScore()).isGreaterThan(17);
+        assertThat(dealer.getCards()).doesNotContain(Card.of(Rank.Q, Suit.SPADE));
     }
 
     @Test
-    @DisplayName("딜러의 보유한 카드들의 종류가 올바르게 반환하는지 테스트")
-    void have_card_type_return_value_correct() {
-        List<Card> initialCards = new ArrayList<>(List.of(
-                Card.of(Rank.TEN, Suit.DIAMOND),
-                Card.of(Rank.FIVE, Suit.CLOVER)));
-        Dealer dealer = Dealer.of(initialCards);
+    @DisplayName("딜러 생성 시 전달한 초기 카드를 보유한다")
+    void create_dealer_with_initial_cards() {
+        Dealer dealer = dealerWithInitialCardsScoreFive();
 
-        List<Card> expect = List.of(Card.of(Rank.TEN, Suit.DIAMOND),
-                Card.of(Rank.FIVE, Suit.CLOVER));
+        List<Card> expect = List.of(Card.of(Rank.TWO, Suit.DIAMOND),
+                Card.of(Rank.THREE, Suit.CLOVER));
         assertThat(dealer.getCards()).isEqualTo(expect);
     }
 
@@ -79,7 +79,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러 ACE 판정 이후 점수가 21 초과이면 True")
+    @DisplayName("딜러 점수가 21 초과이면 True")
     void isBust_final_score_true() {
         List<Card> cards = List.of(
                 Card.of(Rank.FIVE, Suit.DIAMOND),
@@ -88,6 +88,21 @@ class DealerTest {
         Dealer dealer = Dealer.of(cards);
 
         assertThat(dealer.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러 카드가 블랙잭(초기 2장의 카드가 21)인지 테스트")
+    void player_isBlackjack() {
+        List<Card> blackjackCards = List.of(Card.of(Rank.ACE, Suit.SPADE), Card.of(Rank.J, Suit.HEART));
+        Dealer dealer = Dealer.of(blackjackCards);
+
+        assertThat(dealer.isBlackjack()).isTrue();
+    }
+
+    private Dealer dealerWithInitialCardsScoreFive() {
+        return Dealer.of(new ArrayList<>(List.of(
+                Card.of(Rank.TWO, Suit.DIAMOND),
+                Card.of(Rank.THREE, Suit.CLOVER))));
     }
 
 
