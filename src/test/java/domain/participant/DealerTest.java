@@ -23,8 +23,8 @@ class DealerTest {
                 Dealer dealer = new Dealer();
                 Card firstCard = new Card(Rank.TEN, Suit.HEART);
                 Card secondCard = new Card(Rank.ACE, Suit.SPADE);
-                dealer.addCard(firstCard);
-                dealer.addCard(secondCard);
+                dealer.drawCard(firstCard);
+                dealer.drawCard(secondCard);
 
                 // when
                 var actual = dealer.getOnlyFirstHand();
@@ -48,8 +48,8 @@ class DealerTest {
 
                 // given
                 Dealer dealer = new Dealer();
-                dealer.addCard(new Card(Rank.TEN, Suit.HEART));
-                dealer.addCard(new Card(Rank.SIX, Suit.SPADE));
+                dealer.drawCard(new Card(Rank.TEN, Suit.HEART));
+                dealer.drawCard(new Card(Rank.SIX, Suit.SPADE));
 
                 // when
                 boolean actual = dealer.shouldHit();
@@ -63,8 +63,8 @@ class DealerTest {
 
                 // given
                 Dealer dealer = new Dealer();
-                dealer.addCard(new Card(Rank.TEN, Suit.HEART));
-                dealer.addCard(new Card(Rank.SEVEN, Suit.SPADE));
+                dealer.drawCard(new Card(Rank.TEN, Suit.HEART));
+                dealer.drawCard(new Card(Rank.SEVEN, Suit.SPADE));
 
                 // when
                 boolean actual = dealer.shouldHit();
@@ -78,9 +78,9 @@ class DealerTest {
 
                 // given
                 Dealer dealer = new Dealer();
-                dealer.addCard(new Card(Rank.TEN, Suit.HEART));
-                dealer.addCard(new Card(Rank.NINE, Suit.SPADE));
-                dealer.addCard(new Card(Rank.THREE, Suit.CLOVER));
+                dealer.drawCard(new Card(Rank.TEN, Suit.HEART));
+                dealer.drawCard(new Card(Rank.NINE, Suit.SPADE));
+                dealer.drawCard(new Card(Rank.THREE, Suit.CLOVER));
 
                 // when
                 boolean actual = dealer.shouldHit();
