@@ -29,12 +29,10 @@ public class Amount {
     }
 
     private static long validateParse(String rawAmount) {
-        long amount;
         try {
-            amount = Long.parseLong(rawAmount);
+            return Long.parseLong(rawAmount);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("금액은 숫자가 입력되어야 합니다.");
         }
-        return amount;
     }
 }
