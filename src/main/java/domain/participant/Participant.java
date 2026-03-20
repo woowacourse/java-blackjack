@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.card.Hand;
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
 
     protected final Name name;
     protected final Hand hand;

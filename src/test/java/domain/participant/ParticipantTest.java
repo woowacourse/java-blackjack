@@ -21,7 +21,7 @@ class ParticipantTest {
             void 카드를_여러장_추가하면_손패에_순서대로_저장되어야_한다() {
 
                 // given
-                Participant participant = new Participant(new Name("jacob"));
+                Participant participant = new TestParticipant(new Name("jacob"));
                 Card firstCard = new Card(Rank.ACE, Suit.HEART);
                 Card secondCard = new Card(Rank.K, Suit.SPADE);
 
@@ -38,7 +38,7 @@ class ParticipantTest {
             void 빈_카드_목록을_추가하면_손패가_변하지_않아야_한다() {
 
                 // given
-                Participant participant = new Participant(new Name("jacob"));
+                Participant participant = new TestParticipant(new Name("jacob"));
                 participant.addCard(List.of(new Card(Rank.TEN, Suit.HEART)));
 
                 // when

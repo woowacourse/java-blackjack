@@ -30,7 +30,7 @@ public class BlackjackService {
 
     public List<String> getAllPlayerNames() {
         return players.getAllPlayers().stream()
-            .map(Participant::getName)
+            .map(Player::getName)
             .toList();
     }
 
