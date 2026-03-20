@@ -1,16 +1,19 @@
 package vo;
 
 public enum GameResult {
-    WIN("승"),
-    LOSE("패");
+    WIN(1.0),
+    LOSE(-1.0),
+    BLACKJACK(1.5),
+    LOSE_BY_BLACKJACK(-1.5),
+    DRAW(0.0);
 
-    private final String name;
+    private final double profitRate;
 
-    GameResult(String name) {
-        this.name = name;
+    GameResult(double profitRate) {
+        this.profitRate = profitRate;
     }
 
-    public String getName() {
-        return name;
+    public Money calculateProfit(Money bettingMoney) {
+        return bettingMoney.multiply(this.profitRate);
     }
 }

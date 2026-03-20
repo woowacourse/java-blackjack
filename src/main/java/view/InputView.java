@@ -9,11 +9,15 @@ public class InputView {
         this.scanner = new Scanner(System.in);
     }
 
-    public String readParticipantsName() {
+    public String readPlayersName() {
         return scanner.nextLine();
     }
 
     public String readYesOrNo() {
+        return scanner.nextLine();
+    }
+
+    public String readBettingMoney() {
         return scanner.nextLine();
     }
 }

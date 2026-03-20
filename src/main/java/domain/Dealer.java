@@ -1,9 +1,7 @@
 package domain;
 
-import vo.GameResult;
-
 public class Dealer {
-    private Hand hand;
+    private final Hand hand;
 
     public Dealer() {
         this.hand = new Hand();
@@ -11,6 +9,10 @@ public class Dealer {
 
     public void receiveCard(Card card) {
         hand.saveCard(card);
+    }
+
+    public Card getFirstCard() {
+        return hand.getFirstCard();
     }
 
     public String getCardsDisplay() {
@@ -25,43 +27,15 @@ public class Dealer {
         return hand.determineDealerDealMore();
     }
 
-    public String getDealerFinalDisplay() {
-        return hand.getFinalDisplay();
+    public int getTotalScore() {
+        return hand.getHandTotalScore();
     }
 
-    public GameResult judgeUserResult(int userTotalScore) {
-        if (hand.getHandTotalScore() > 21) {
-            return GameResult.LOSE;
-        }
-
-        if (hand.getHandTotalScore() == 21) {
-            return GameResult.WIN;
-        }
-
-        if (userTotalScore > hand.getHandTotalScore()) {
-            return GameResult.LOSE;
-        }
-
-        return GameResult.WIN;
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
     }
 
-    public GameResult judgeUserWin(int userScore) {
-        if (userScore > 21) {
-            return GameResult.LOSE;
-        }
-
-        if (userScore == 21) {
-            return GameResult.WIN;
-        }
-
-        if (hand.getHandTotalScore() > 21) {
-            return GameResult.WIN;
-        }
-
-        if (userScore > hand.getHandTotalScore() && (hand.getHandTotalScore() < 21)) {
-            return GameResult.WIN;
-        }
-
-        return GameResult.LOSE;
+    public boolean isBust() {
+        return hand.isBust();
     }
 }

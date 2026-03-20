@@ -1,75 +1,111 @@
 package service;
 
+import domain.Card;
+import domain.Dealer;
 import domain.Deck;
 import domain.Participants;
+import domain.User;
+import dto.DealerCardDTO;
+import dto.DealerResultDTO;
+import dto.ParticipantsInitDTO;
+import dto.ProfitResultDTO;
+import dto.UserCardsDTO;
+import dto.UserResultDTO;
 import java.util.List;
-import view.Message;
+import java.util.Map;
+import java.util.stream.Collectors;
+import util.RandomShuffleStrategy;
+import vo.Money;
 
 public class BlackjackService {
     private Participants participants;
     private Deck deck;
 
-    public void saveParticipants(List<String> parsedParticipantsName) {
-        participants = new Participants(parsedParticipantsName);
+    public void initParticipant(List<ParticipantsInitDTO> participantsInitDTOS) {
+        List<User> users = participantsInitDTOS.stream()
+                .map(dto -> new User(dto.getUserName(), dto.getBettingMoney()))
+                .toList();
+        participants = new Participants(users);
     }
 
     public void makeDeck() {
-        deck = new Deck();
+        deck = new Deck(new RandomShuffleStrategy());
     }
 
-    public void dealCards() {
-        for(int cardCount = 0; cardCount < 2; cardCount++) {
-            participants.dealCards(deck);
+    public void dealInitialCards() {
+        for (int cardCount = 0; cardCount < 2; cardCount++) {
+            participants.dealOneCardToAll(deck);
         }
     }
 
-    public String makeUserNameFormat() {
-        return String.format(Message.DEAL_CARDS_MESSAGE, participants.getUserNames());
+    public List<String> getParticipantsNames() {
+        return participants.getPlayerNames();
     }
 
-    public String makeDealerCardsDisplay() {
-        return String.format(Message.DEALER_CARDS_MESSAGE, participants.getDealerCardsDisplay());
+    public DealerCardDTO getDealerFirstCard() {
+        Card card = participants.getDealerFirstCard();
+        return new DealerCardDTO(card.getDisplayName());
     }
 
-    public List<String> makeExtraCardRequsts() {
-        return participants.askGetExtraCard();
+    public List<String> getPlayerNames() {
+        return participants.getPlayerNames();
     }
 
-    public List<String> getUserCardsDisplays() {
-        return participants.getUserCardsDisplays();
+    public List<UserCardsDTO> getUserCards() {
+        List<User> players = participants.getPlayers();
+        return players.stream()
+                .map(UserCardsDTO::fromUser)
+                .collect(Collectors.toList());
     }
 
-    public String processPlayerDecision(int index) {
+    public UserCardsDTO hit(int index) {
         participants.dealCard(deck, index);
-        participants.calculateScore(index);
-        return participants.makeOneUserCardDelegator(index);
+        participants.calculateUserScore(index);
+        User user = participants.getPlayer(index);
+        return UserCardsDTO.fromUser(user);
+    }
+
+    public UserCardsDTO stand(int index) {
+        calculateUserScore(index);
+        User user = participants.getPlayer(index);
+        return UserCardsDTO.fromUser(user);
     }
 
     public void calculateDealerScore() {
-        participants.caculateDealerscore();
+        participants.calculateDealerScore();
     }
 
-    public String determineDealToDealer() {
-        if (participants.determineDealerDealMore()) {
-            participants.dealCardToDealer(deck.dealCard());
-            return Message.DEALER_CARD_RECEIVE_ANNOUNCE;
+    public boolean dealExtraCardIfNeeded() {
+        if (participants.shouldDealerDraw()) {
+            participants.dealCardToDealer(deck.drawCard());
+            return true;
         }
-        return "";
+        return false;
     }
 
-    public String makeDealerFinalResultDisplay() {
-        return makeDealerCardsDisplay() + participants.getDealerFinalDisplay();
+    public DealerResultDTO makeDealerFinalResult() {
+        Dealer dealer = participants.getDealer();
+        return DealerResultDTO.fromDealer(dealer);
     }
 
-    public List<String> makeUserFinalResultDisplay() {
-        return participants.addScoreToUserHand();
+    public List<UserResultDTO> makeUserFinalResult() {
+        List<User> players = participants.getPlayers();
+        return players.stream()
+                .map(UserResultDTO::fromUser)
+                .collect(Collectors.toList());
     }
 
-    public void calculateScore(int index) {
-        participants.calculateScore(index);
+    private void calculateUserScore(int index) {
+        participants.calculateUserScore(index);
     }
 
-    public List<String> evaluateGame() {
-        return participants.judgeWinner();
+    public ProfitResultDTO evaluateGame() {
+        Map<String, Money> playersProfit = participants.calculatePlayersProfit();
+        Money dealerProfit = participants.calculateDealerProfit(playersProfit);
+        return new ProfitResultDTO(dealerProfit, playersProfit);
+    }
+
+    public boolean isBust(int index) {
+        return participants.isBust(index);
     }
 }

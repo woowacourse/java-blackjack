@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class ValidatorTest {
     public static final String ERROR_PREFIX = "[ERROR] ";
+    Validator validator = new Validator();
 
     @Test
     @DisplayName("참가자 이름이 비어있지 않은 경우, 정상 동작한다.")
@@ -18,7 +19,18 @@ public class ValidatorTest {
         String participantsName = "라이";
 
         // when & then
-        assertThatCode(() -> Validator.validateEmptyNameInput(participantsName))
+        assertThatCode(() -> validator.validatePlayersName(participantsName))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("참가자 이름에 공백이 포함되는 경우, 공백을 잘라 정상 동작한다.")
+    void 참가자_이름_공백_허용_테스트() {
+        // given
+        String participantsName = "라이, 영기";
+
+        // when
+        assertThatCode(() -> validator.validatePlayersName(participantsName))
                 .doesNotThrowAnyException();
     }
 
@@ -30,7 +42,7 @@ public class ValidatorTest {
 
         // when & then
         assertThatThrownBy(() ->
-                Validator.validateEmptyNameInput(participantsName))
+                validator.validatePlayersName(participantsName))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith(ERROR_PREFIX);
     }
@@ -42,7 +54,7 @@ public class ValidatorTest {
         String participantsName = "라이";
 
         // when & then
-        assertThatCode(() -> Validator.validateNonLiteralInput(participantsName))
+        assertThatCode(() -> validator.validatePlayersName(participantsName))
                 .doesNotThrowAnyException();
     }
 
@@ -54,7 +66,7 @@ public class ValidatorTest {
 
         // when & then
         assertThatThrownBy(() ->
-                Validator.validateNonLiteralInput(participantsName))
+                validator.validatePlayersName(participantsName))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith(ERROR_PREFIX);
     }
@@ -66,7 +78,7 @@ public class ValidatorTest {
         String participantsName = "라이,영기";
 
         // when & then
-        assertThatCode(() -> Validator.validateInvalidSymbolInput(participantsName))
+        assertThatCode(() -> validator.validatePlayersName(participantsName))
                 .doesNotThrowAnyException();
     }
 
@@ -78,7 +90,7 @@ public class ValidatorTest {
 
         // when & then
         assertThatThrownBy(() ->
-                Validator.validateInvalidSymbolInput(participantsName))
+                validator.validatePlayersName(participantsName))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith(ERROR_PREFIX);
     }
@@ -90,7 +102,7 @@ public class ValidatorTest {
         String answer = "y";
 
         //when & then
-        assertThatCode(() -> Validator.validateEmptyAnswerInput(answer))
+        assertThatCode(() -> validator.validateAnswer(answer))
                 .doesNotThrowAnyException();
     }
 
@@ -102,7 +114,7 @@ public class ValidatorTest {
 
         // when & then
         assertThatThrownBy(() ->
-                Validator.validateEmptyAnswerInput(answer))
+                validator.validateAnswer(answer))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith(ERROR_PREFIX);
     }
@@ -111,7 +123,7 @@ public class ValidatorTest {
     @ValueSource(strings = {"y", "Y", "n", "N"})
     @DisplayName("대소문자 상관없이 y/n을 입력하는 경우, 정상 동작한다.")
     void y_n_정상_입력_테스트(String answer) {
-        assertThatCode(() -> Validator.validateYesOrNo(answer))
+        assertThatCode(() -> validator.validateAnswer(answer))
                 .doesNotThrowAnyException();
     }
 
@@ -123,7 +135,7 @@ public class ValidatorTest {
 
         // when & then
         assertThatThrownBy(() ->
-                Validator.validateYesOrNo(answer))
+                validator.validateAnswer(answer))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith(ERROR_PREFIX);
     }

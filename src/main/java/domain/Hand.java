@@ -1,25 +1,29 @@
 package domain;
 
+import static domain.BlackjackRule.ACE_SCORE_DIFFERENCE;
+import static domain.BlackjackRule.BLACKJACK_CARD_COUNT;
+import static domain.BlackjackRule.BLACKJACK_TARGET_SCORE;
+import static domain.BlackjackRule.DEALER_MAX_HIT_SCORE;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Hand {
-    private List<Card> cards;
+    private final List<Card> cards;
     private int handTotalScore;
-    private boolean hasAce;
 
     public Hand() {
         cards = new ArrayList<>();
         handTotalScore = 0;
-        hasAce = false;
     }
 
     public void saveCard(Card card) {
         cards.add(card);
-        if (card.isAceCard()) {
-            hasAce = true;
-        }
+    }
+
+    public Card getFirstCard() {
+        return cards.getFirst();
     }
 
     public String getCardsDisplay() {
@@ -29,29 +33,46 @@ public class Hand {
     }
 
     public void calculateHandScore() {
-        this.handTotalScore = 0;
-        for (Card card : cards) {
-            handTotalScore += card.getCardScore();
-        }
+        int initialScore = calculateInitialScore();
+        int aceCount = countAces();
+        this.handTotalScore = applyAceRule(initialScore, aceCount);
+    }
 
-        if (hasAce && handTotalScore > 21) {
-            handTotalScore -= 10;
+    private int calculateInitialScore() {
+        return cards.stream()
+                .mapToInt(Card::getCardScore)
+                .sum();
+    }
+
+    private int countAces() {
+        long aceCount = cards.stream()
+                .filter(Card::isAceCard)
+                .count();
+
+        return (int) aceCount;
+    }
+
+    private int applyAceRule(int score, int aceCount) {
+        while ((score > BLACKJACK_TARGET_SCORE) && (aceCount > 0)) {
+            score -= ACE_SCORE_DIFFERENCE;
+            aceCount--;
         }
+        return score;
     }
 
     public Boolean determineDealerDealMore() {
-        if (handTotalScore <= 16) {
-            return true;
-        }
-        return false;
-    }
-
-    public String getFinalDisplay() {
-        String finalDisplay = " - 결과: " + handTotalScore;
-        return finalDisplay;
+        return handTotalScore <= DEALER_MAX_HIT_SCORE;
     }
 
     public int getHandTotalScore() {
         return handTotalScore;
+    }
+
+    public boolean isBlackjack() {
+        return (getHandTotalScore() == BLACKJACK_TARGET_SCORE) && (cards.size() == BLACKJACK_CARD_COUNT);
+    }
+
+    public boolean isBust() {
+        return this.handTotalScore > BLACKJACK_TARGET_SCORE;
     }
 }
