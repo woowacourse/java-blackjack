@@ -22,7 +22,7 @@ class ParticipantsTest {
         void 플레이어_이름과_배팅_금액으로_참가자를_생성한다() {
             // given
             List<PlayerName> playerNames = playerNames();
-            List<BetAmount> betAmounts = betAmounts("1000", "500");
+            List<BetAmount> betAmounts = betAmounts("1000", "1000");
 
             // when
             Participants actual = Participants.of(playerNames, betAmounts);
@@ -71,8 +71,8 @@ class ParticipantsTest {
         void 딜러에게_카드를_한_장_추가한다() {
             // given
             Participants participants = participants();
-            participants.dealer().addCard(card(Rank.TEN, Suit.HEART));
-            participants.dealer().addCard(card(Rank.SIX, Suit.SPADE));
+            participants.dealer().drawCard(card(Rank.TEN, Suit.HEART));
+            participants.dealer().drawCard(card(Rank.SIX, Suit.SPADE));
             Supplier<Card> cardSupplier = fixedCardSupplier(List.of(card(Rank.ACE, Suit.CLOVER)));
 
             // when
@@ -115,7 +115,7 @@ class ParticipantsTest {
     }
 
     private static Participants participants() {
-        return Participants.of(playerNames(), betAmounts("1000", "500"));
+        return Participants.of(playerNames(), betAmounts("1000", "1000"));
     }
 
     private static List<PlayerName> playerNames() {
