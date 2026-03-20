@@ -45,23 +45,14 @@ public class BlackJackGameController {
         GameResultManager gameResultManager =
                 new GameResultManager(calculateProfit, players, gameManager.getDealer());
         Map<Name, Revenue> profits = gameResultManager.getParticipantsProfit();
-        List<ParticipantRevenueDto> revenueDtos = toParticipantRevenueDtos(profits);
+        List<ParticipantRevenueDto> revenueDtos = ParticipantRevenueDto.from(profits);
         endGame(gameManager, players, revenueDtos);
-    }
-
-    private List<ParticipantRevenueDto> toParticipantRevenueDtos(Map<Name, Revenue> profits) {
-        List<ParticipantRevenueDto> revenueDtos = new ArrayList<>();
-        for (Map.Entry<Name, Revenue> entry : profits.entrySet()) {
-            revenueDtos.add(new ParticipantRevenueDto(
-                    entry.getKey().getName(),
-                    entry.getValue().getMoney()
-            ));
-        }
-        return revenueDtos;
     }
 
     private BettingAmounts initBettingManager(Players players) {
         Map<Name, BettingAmount> bettingAmounts = new HashMap<>();
+        // TODO: for문으로 players를 순회하는 것이랑 지금 forEach랑 어떤 차이가 있는가?
+        // TODO: player가 bettingAmount를 가지고 있지 않고, Controller 메서드 안의 지역변수로 관리되고 있는 게 좋은 방향인가?
         players.forEach(player -> {
             int amount = InputView.askBettingAmount(player.getName().getName());
             bettingAmounts.put(player.getName(), new BettingAmount(BigDecimal.valueOf(amount)));
@@ -69,18 +60,19 @@ public class BlackJackGameController {
         return new BettingAmounts(bettingAmounts);
     }
 
+    // TODO: player와 bettingAmount관계에서 도메인 설계를 다시 고려해보라. forEach로 바꾼게 어떤 장점이 있는가? 이 메서드로 view로직을 전달하면 잘 분리가 된걸까?
     private void playGame(Players players, GameManager gameManager) {
         players.forEach(player -> playGameWithPlayer(player, gameManager));
         playGameWithDealer(gameManager);
     }
 
     private void printParticipantCards(Dealer dealer, Players players) {
-        printCards(toParticipantCardsDto(dealer));
-        players.forEach(player -> printCards(toParticipantCardsDto(player)));
+        printCards(ParticipantCardsDto.from(dealer));
+        players.forEach(player -> printCards(ParticipantCardsDto.from(player)));
     }
 
     private void printFinalScores(Players players) {
-        players.forEach(player -> printFinalCards(toParticipantCardsDto(player)));
+        players.forEach(player -> printFinalCards(ParticipantCardsDto.from(player)));
     }
 
     public void playGameWithDealer(GameManager gameManager) {
@@ -99,21 +91,21 @@ public class BlackJackGameController {
                 break;
             }
             gameManager.drawCardTo(player);
-            printCards(toParticipantCardsDto(player));
+            printCards(ParticipantCardsDto.from(player));
         }
     }
 
     private boolean isStopGame(Player player) {
         String response = InputView.askContinue(player.getName().getName());
         if (response.equals("n")) {
-            printCards(toParticipantCardsDto(player));
+            printCards(ParticipantCardsDto.from(player));
             return true;
         }
         return false;
     }
 
     private void endGame(GameManager gameManager, Players players, List<ParticipantRevenueDto> participantRevenueDtos) {
-        printFinalCards(toParticipantCardsDto(gameManager.getDealer()));
+        printFinalCards(ParticipantCardsDto.from(gameManager.getDealer()));
         printFinalScores(players);
         printParticipantRevenues(participantRevenueDtos);
     }
@@ -131,13 +123,5 @@ public class BlackJackGameController {
 
     private List<String> getPlayerNames() {
         return InputView.askPlayerNames();
-    }
-
-    private ParticipantCardsDto toParticipantCardsDto(Participant participant) {
-        return new ParticipantCardsDto(
-                participant.getName().getName(),
-                participant.getCardsInfo(),
-                participant.getScore()
-        );
     }
 }

@@ -31,6 +31,7 @@ public class Players {
 
     public List<String> getPlayerNames() {
         List<String> playersName = new ArrayList<>();
+        // ToDo 스트림으로 쉽게 풀 수 있는 걸 고려해보라.
         players.forEach(player -> {
             playersName.add(player.getName().getName());
         });
