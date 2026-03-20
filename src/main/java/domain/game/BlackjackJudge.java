@@ -9,15 +9,24 @@ public final class BlackjackJudge {
         if (player.isBust()) {
             return Result.LOSE;
         }
-        if (player.isBlackjack()) {
-            if (dealer.isBlackjack()) {
-                return Result.DRAW;
-            }
-            return Result.BLACKJACK_WIN;
-        }
         if (dealer.isBust()) {
             return Result.WIN;
         }
+
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return Result.DRAW;
+        }
+        if (player.isBlackjack()) {
+            return Result.BLACKJACK_WIN;
+        }
+        if (dealer.isBlackjack()) {
+            return Result.LOSE;
+        }
+
+        return judgeScore(dealer, player);
+    }
+
+    private Result judgeScore(Dealer dealer, Player player) {
         if (player.calculateScore() > dealer.calculateScore()) {
             return Result.WIN;
         }
