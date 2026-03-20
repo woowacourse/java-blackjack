@@ -50,4 +50,8 @@ public class Nickname {
     public int hashCode() {
         return Objects.hash(value);
     }
+
+    public boolean hasNickname(String givenNickname) {
+        return value.equals(givenNickname);
+    }
 }

@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Nicknames {
 
@@ -31,12 +30,10 @@ public class Nicknames {
     }
 
     public Nickname findByNickname(String givenNickname) {
-        for (Nickname nickname : value) {
-            if (nickname.getValue().equals(givenNickname)) {
-                return nickname;
-            }
-        }
-        throw new IllegalArgumentException("일치하는 닉네임이 존재하지 않습니다.");
+        return value.stream()
+            .filter(nickname -> nickname.hasNickname(givenNickname))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("일치하는 닉네임이 존재하지 않습니다."));
     }
 
     private void validate(List<Nickname> nicknames) {
