@@ -20,7 +20,7 @@ public class Player extends Participant {
     }
 
     public BetMoney getProfit(Result result) {
-        return betMoney.multiply(result.getOdd());
+        return betMoney.multiply(result.getOdds());
     }
 
     public Name getName() {
