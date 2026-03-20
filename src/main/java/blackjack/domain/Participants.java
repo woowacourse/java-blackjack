@@ -3,7 +3,7 @@ package blackjack.domain;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.dto.DealerGameResult;
-import blackjack.dto.DrawResult;
+import blackjack.dto.DrawOutcome;
 import blackjack.dto.ParticipantResult;
 import blackjack.dto.PlayerGameResult;
 import blackjack.dto.TotalGameResult;
@@ -23,8 +23,8 @@ public class Participants {
     public Deck dealInitialCards(Deck deck) {
         List<Participant> participants = getParticipants();
         for (Participant participant : participants) {
-            DrawResult drawResult = participant.dealInitialCards(deck);
-            deck = drawResult.drewDeck();
+            DrawOutcome drawOutcome = participant.dealInitialCards(deck);
+            deck = drawOutcome.drewDeck();
         }
         return deck;
     }
@@ -63,14 +63,14 @@ public class Participants {
         return players.getDrawablePlayerNickname();
     }
 
-    public DrawResult hitPlayer(Deck deck) {
-        DrawResult drawResult = deck.draw();
-        List<Card> drawCard = drawResult.drewCard().getCards();
-        List<Card> drawDeck = drawResult.drewDeck().getCards();
+    public DrawOutcome hitPlayer(Deck deck) {
+        DrawOutcome drawOutcome = deck.draw();
+        List<Card> drawCard = drawOutcome.drewCard().getCards();
+        List<Card> drawDeck = drawOutcome.drewDeck().getCards();
 
         Hand playerHand = players.hitPlayer(drawCard);
 
-        return DrawResult.of(playerHand.getCards(), drawDeck);
+        return DrawOutcome.of(playerHand.getCards(), drawDeck);
     }
 
     public void dontWantDraw() {
@@ -82,10 +82,10 @@ public class Participants {
     }
 
     public Deck dealerDraw(Deck deck) {
-        DrawResult drawResult = deck.draw();
-        Hand drawCard = drawResult.drewCard();
+        DrawOutcome drawOutcome = deck.draw();
+        Hand drawCard = drawOutcome.drewCard();
         dealer.receiveCard(drawCard.getCards());
-        return drawResult.drewDeck();
+        return drawOutcome.drewDeck();
     }
 
     public List<String> getAllPlayerNickname() {

@@ -4,7 +4,7 @@ import blackjack.domain.Deck;
 import blackjack.domain.DrawCommand;
 import blackjack.domain.Hand;
 import blackjack.domain.Participants;
-import blackjack.dto.DrawResult;
+import blackjack.dto.DrawOutcome;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -51,10 +51,10 @@ public class BlackjackRunner {
         String drawablePlayerNickname = participants.getDrawablePlayerNickname();
         boolean isPlayerDraw = isDraw(drawablePlayerNickname);
         if (isPlayerDraw) {
-            DrawResult drawResult = participants.hitPlayer(deck);
-            Hand playerHand = drawResult.drewCard();
+            DrawOutcome drawOutcome = participants.hitPlayer(deck);
+            Hand playerHand = drawOutcome.drewCard();
             printDrewResult(drawablePlayerNickname, playerHand);
-            return drawResult.drewDeck();
+            return drawOutcome.drewDeck();
         }
         participants.dontWantDraw();
         return deck;

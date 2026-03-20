@@ -12,7 +12,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class DrawResultTest {
+class DrawOutcomeTest {
 
     @Test
     @DisplayName("카드를 뽑은 결과를 저장하는 dto 생성을 확인한다.")
@@ -28,12 +28,12 @@ class DrawResultTest {
         ));
 
         // when
-        DrawResult drawResult = DrawResult.of(drewCards.getCards(), drewDeck.getCards());
+        DrawOutcome drawOutcome = DrawOutcome.of(drewCards.getCards(), drewDeck.getCards());
 
         // then
         assertAll(
-            () -> assertThat(drawResult.drewDeck().getCards()).isEqualTo(drewDeck.getCards()),
-            () -> assertThat(drawResult.drewCard().getCards()).isEqualTo(drewCards.getCards())
+            () -> assertThat(drawOutcome.drewDeck().getCards()).isEqualTo(drewDeck.getCards()),
+            () -> assertThat(drawOutcome.drewCard().getCards()).isEqualTo(drewCards.getCards())
         );
     }
 }

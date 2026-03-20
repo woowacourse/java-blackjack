@@ -4,7 +4,7 @@ import blackjack.domain.Card;
 import blackjack.domain.Deck;
 import blackjack.domain.Hand;
 import blackjack.domain.Nickname;
-import blackjack.dto.DrawResult;
+import blackjack.dto.DrawOutcome;
 import java.util.List;
 
 public abstract class Participant {
@@ -37,10 +37,10 @@ public abstract class Participant {
         return hand.isBlackJack();
     }
 
-    public DrawResult dealInitialCards(Deck deck) {
-        DrawResult drawResult = deck.draw(FIRST_DRAW_COUNT);
-        receiveCard(drawResult.drewCard().getCards());
-        return drawResult;
+    public DrawOutcome dealInitialCards(Deck deck) {
+        DrawOutcome drawOutcome = deck.draw(FIRST_DRAW_COUNT);
+        receiveCard(drawOutcome.drewCard().getCards());
+        return drawOutcome;
     }
 
     public Hand receiveCard(List<Card> drewCards) {

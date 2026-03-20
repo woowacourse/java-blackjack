@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import blackjack.dto.DrawResult;
+import blackjack.dto.DrawOutcome;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -43,16 +43,16 @@ public class Deck {
         return from(copiedCards);
     }
 
-    public DrawResult draw(int count) {
+    public DrawOutcome draw(int count) {
         List<Card> drewCards = new ArrayList<>();
         List<Card> copiedCards = new ArrayList<>(cards);
         for (int i = 0; i < count; i++) {
             drewCards.add(draw(copiedCards));
         }
-        return DrawResult.of(drewCards, copiedCards);
+        return DrawOutcome.of(drewCards, copiedCards);
     }
 
-    public DrawResult draw() {
+    public DrawOutcome draw() {
         return draw(1);
     }
 

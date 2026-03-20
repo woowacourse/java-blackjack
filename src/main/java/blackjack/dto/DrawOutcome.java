@@ -5,12 +5,12 @@ import blackjack.domain.Deck;
 import blackjack.domain.Hand;
 import java.util.List;
 
-public record DrawResult(
+public record DrawOutcome(
     Hand drewCard,
     Deck drewDeck
 ) {
 
-    public static DrawResult of(List<Card> drewCard, List<Card> drewDeck) {
-        return new DrawResult(Hand.from(drewCard), Deck.from(drewDeck));
+    public static DrawOutcome of(List<Card> drewCard, List<Card> drewDeck) {
+        return new DrawOutcome(Hand.from(drewCard), Deck.from(drewDeck));
     }
 }
