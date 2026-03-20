@@ -7,6 +7,7 @@ import domain.betting.BettingTable;
 import domain.betting.PlayerBet;
 import domain.betting.PlayerMatchResult;
 import domain.participant.Dealer;
+import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -16,6 +17,7 @@ import view.InputView;
 import view.OutputView;
 import view.PlayerParser;
 import view.dto.InitialDealingResult;
+import view.dto.ParticipantCards;
 import view.dto.ParticipantsProfit;
 
 public class GameController {
@@ -105,7 +107,9 @@ public class GameController {
 
     private void playPlayerTurn(Player player) {
         while (shouldDrawCard(player)) {
-            drawAndPrint(player);
+            dealingTo(player);
+            ParticipantCards participantCards = ParticipantCards.fromPlayer(player);
+            outputView.printParticipantCards(participantCards);
         }
     }
 
@@ -121,10 +125,8 @@ public class GameController {
         return !command.isNo();
     }
 
-    private void drawAndPrint(Player player) {
-        gameManager.dealCard(player);
-        outputView.printParticipantCard(player.name(),
-                gameManager.getCardsResult(player).getFormattedCards());
+    private void dealingTo(Participant participant) {
+        gameManager.dealCard(participant);
     }
 
     private Players readPlayers() {

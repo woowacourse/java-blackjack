@@ -12,6 +12,10 @@ public class OutputView {
         System.out.printf("%s카드: %s%n", name, cards);
     }
 
+    public void printParticipantCards(ParticipantCards participantCards) {
+        printlnMessage(Formatter.participantCards(participantCards));
+    }
+
     public void printParticipantResult(String name, String cards, int score) {
         System.out.printf("%s카드: %s - 결과: %d%n", name, cards, score);
     }
@@ -29,7 +33,7 @@ public class OutputView {
         printlnMessage(Formatter.participantCards(dealer));
 
         List<ParticipantCards> allPlayerCardInHand = initialDealingResult.allPlayerCardInHand();
-        printlnMessage(Formatter.participantCards(allPlayerCardInHand));
+        printlnMessage(Formatter.allParticipantCards(allPlayerCardInHand));
 
         println();
     }

@@ -17,7 +17,7 @@ public class Formatter {
             Suit.SPADE, "스페이드"
     );
 
-    public static String participantCards(List<ParticipantCards> allParticipantCards) {
+    public static String allParticipantCards(List<ParticipantCards> allParticipantCards) {
         return allParticipantCards.stream()
                 .map(Formatter::participantCards)
                 .collect(Collectors.joining(System.lineSeparator()));
