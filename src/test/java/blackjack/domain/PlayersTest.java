@@ -64,7 +64,7 @@ class PlayersTest {
         ));
 
         // when
-        players.addCardToAvailablePlayer(bustedCards.getCards());
+        players.hitPlayer(bustedCards.getCards());
 
         // then
         assertThat(players.getDrawablePlayerNickname()).isEqualTo("sumin");
@@ -97,7 +97,7 @@ class PlayersTest {
             new Card(Rank.TEN, Suit.DIAMOND),
             new Card(Rank.EIGHT, Suit.HEART)
         ));
-        players.addCardToAvailablePlayer(playerCards.getCards());
+        players.hitPlayer(playerCards.getCards());
         dealer.receiveCard(dealerCards.getCards());
 
         // when
@@ -122,7 +122,7 @@ class PlayersTest {
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.TEN, Suit.HEART)
         ));
-        players.addCardToAvailablePlayer(playerCards.getCards());
+        players.hitPlayer(playerCards.getCards());
         dealer.receiveCard(dealerCards.getCards());
 
         // when

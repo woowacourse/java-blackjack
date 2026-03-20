@@ -51,7 +51,7 @@ public class BlackjackRunner {
         String drawablePlayerNickname = participants.getDrawablePlayerNickname();
         boolean isPlayerDraw = isDraw(drawablePlayerNickname);
         if (isPlayerDraw) {
-            DrawResult drawResult = participants.addCardToAvailablePlayer(deck);
+            DrawResult drawResult = participants.hitPlayer(deck);
             Hand playerHand = drawResult.drewCard();
             printDrewResult(drawablePlayerNickname, playerHand);
             return drawResult.drewDeck();

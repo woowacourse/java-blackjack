@@ -63,12 +63,12 @@ public class Participants {
         return players.getDrawablePlayerNickname();
     }
 
-    public DrawResult addCardToAvailablePlayer(Deck deck) {
+    public DrawResult hitPlayer(Deck deck) {
         DrawResult drawResult = deck.draw();
         List<Card> drawCard = drawResult.drewCard().getCards();
         List<Card> drawDeck = drawResult.drewDeck().getCards();
 
-        Hand playerHand = players.addCardToAvailablePlayer(drawCard);
+        Hand playerHand = players.hitPlayer(drawCard);
 
         return DrawResult.of(playerHand.getCards(), drawDeck);
     }

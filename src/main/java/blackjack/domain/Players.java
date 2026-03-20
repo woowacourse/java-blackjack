@@ -51,7 +51,7 @@ public class Players {
         return getDrawablePlayer().getNickname();
     }
 
-    public Hand addCardToAvailablePlayer(List<Card> cards) throws IllegalArgumentException {
+    public Hand hitPlayer(List<Card> cards) throws IllegalArgumentException {
         Player player = getDrawablePlayer();
         return player.receiveCard(cards);
     }
