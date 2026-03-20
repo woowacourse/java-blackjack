@@ -58,14 +58,13 @@ public class Players {
 
     public void drawInitialCards(Supplier<Card> cardSupplier) {
         for (Player player : players) {
-            player.addCard(cardSupplier.get());
-            player.addCard(cardSupplier.get());
+            player.drawInitialCards(cardSupplier);
         }
     }
 
     public void addCard(String name, Card card) {
         Player player = getPlayer(name);
-        player.addCard(card);
+        player.drawCard(card);
     }
 
     public boolean isPlayerBust(String name) {
