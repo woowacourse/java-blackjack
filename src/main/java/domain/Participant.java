@@ -6,8 +6,8 @@ public abstract class Participant {
     private final PlayerName playerName;
     private final CardBundle cardBundle;
 
-    protected Participant(String name) {
-        this.playerName = new PlayerName(name);
+    protected Participant(PlayerName playerName) {
+        this.playerName = playerName;
         this.cardBundle = new CardBundle();
     }
 
@@ -27,5 +27,9 @@ public abstract class Participant {
 
     public int getScore() {
         return cardBundle.calculateScore();
+    }
+
+    public boolean getBlackJack() {
+        return cardBundle.isBlackjack();
     }
 }

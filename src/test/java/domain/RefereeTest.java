@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 public class RefereeTest {
 
-    Referee referee;
+    private Referee referee;
 
     @BeforeEach
     void beforeEach() {
@@ -43,5 +43,11 @@ public class RefereeTest {
     @Test
     void 딜러가_버스트면_플레이어가_승리한다() {
         assertThat(referee.judge(7, 22)).isEqualTo(Result.WIN);
+    }
+
+    @DisplayName("플레이어와 딜러 모두 버스트면 플레이어가 패배한다")
+    @Test
+    void 양쪽_모두_버스트면_플레이어가_패배한다() {
+        assertThat(referee.judge(22, 22)).isEqualTo(Result.LOSE);
     }
 }

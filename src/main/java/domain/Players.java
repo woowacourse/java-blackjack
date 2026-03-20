@@ -1,24 +1,20 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Players {
     private final List<Player> playerList;
 
-    public Players(List<String> names) {
-        validateDuplicate(names);
-        playerList = new ArrayList<>();
-        for (String name : names) {
-            playerList.add(new Player(name));
-        }
+    public Players(List<Player> playerList) {
+        this.playerList = playerList;
     }
 
-    private void validateDuplicate(List<String> names) {
-        if (names.size() != new HashSet<>(names).size()) {
-            throw new IllegalArgumentException("중복된 이름이 존재합니다.");
-        }
+    public static Players from(List<PlayerDto> dtos) {
+        List<Player> players = dtos.stream()
+                .map(dto -> new Player(new PlayerName(dto.getName()), new BetAmount(dto.getBetAmount())))
+                .collect(Collectors.toList());
+        return new Players(players);
     }
 
     public List<Player> getGamePlayers() {
@@ -28,4 +24,5 @@ public class Players {
     public int getSize() {
         return playerList.size();
     }
+
 }
