@@ -8,7 +8,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class BettingAmountTest {
 
-    //TODO:value 조회 메서드 생성 시 테스트 구성 변경
     @ParameterizedTest
     @ValueSource(ints = {2, 1000})
     void 배팅금액이_양의정수이고_짝수인_경우_객체정상생성(int value) {

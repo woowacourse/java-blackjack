@@ -21,7 +21,6 @@ public record ParticipantCards(
                 player.cardsInHand());
     }
 
-    //TODO::InitialDealing으로 옮기기
     public static ParticipantCards fromDealerUpCard(Dealer dealer) {
         return new ParticipantCards(
                 dealer.name(),
