@@ -22,7 +22,7 @@ public class InputView {
 
     private void validateIsBlank(String input) {
         if (input.isBlank()) {
-            throw new IllegalArgumentException("공백은 허용되지 않습니다");
+            throw new IllegalArgumentException("공백은 허용되지 않습니다.");
         }
     }
 
