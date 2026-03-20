@@ -1,6 +1,5 @@
 package domain.participant;
 
-import exception.BlankNameException;
 import exception.NameOutOfRangeException;
 
 public class Name {
@@ -14,9 +13,6 @@ public class Name {
     }
 
     private void validate(String name) {
-        if (name.isBlank()) {
-            throw new BlankNameException();
-        }
         if (name.length() < NAME_MIN_LENGTH || name.length() > NAME_MAX_LENGTH) {
             throw new NameOutOfRangeException(NAME_MIN_LENGTH, NAME_MAX_LENGTH);
         }
