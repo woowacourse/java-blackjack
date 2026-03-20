@@ -24,6 +24,10 @@ public abstract class Participant {
         return this.name;
     }
 
+    public String getParticipantName() {
+        return name.getName();
+    }
+
     public int getScore() {
         return participantCards.calculateScore();
     }

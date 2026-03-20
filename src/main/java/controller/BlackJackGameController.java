@@ -51,7 +51,7 @@ public class BlackJackGameController {
     private BettingAmounts initBettingManager(Players players) {
         Map<Name, BettingAmount> bettingAmounts = new HashMap<>();
         for (Player player : players.getPlayers()) {
-            int amount = InputView.askBettingAmount(player.getName().getName());
+            int amount = InputView.askBettingAmount(player.getParticipantName());
             bettingAmounts.put(player.getName(), new BettingAmount(BigDecimal.valueOf(amount)));
         }
         return new BettingAmounts(bettingAmounts);

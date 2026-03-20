@@ -9,7 +9,7 @@ public record ParticipantCardsDto(
         int totalScore) {
     public static ParticipantCardsDto from(Participant participant) {
         return new ParticipantCardsDto(
-                participant.getName().getName(),
+                participant.getParticipantName(),
                 participant.getCardsInfo(),
                 participant.getScore()
         );
