@@ -69,13 +69,13 @@ class DealerTest {
     void calculateDealerProfitResult() {
         // given
         Dealer dealer = Dealer.from();
-        PlayerGameResult playerGameResultA = new PlayerGameResult("boye", MatchResult.WIN, 10000);
-        PlayerGameResult playerGameResultB = new PlayerGameResult("sumin", MatchResult.TIE, 0);
-        PlayerGameResult playerGameResultC = new PlayerGameResult("zzang", MatchResult.LOSE, -5000);
+        PlayerGameResult winningResult = new PlayerGameResult("boye", MatchResult.WIN, 10000);
+        PlayerGameResult tieResult = new PlayerGameResult("sumin", MatchResult.TIE, 0);
+        PlayerGameResult losingResult = new PlayerGameResult("zzang", MatchResult.LOSE, -5000);
         List<PlayerGameResult> playerGameResults = List.of(
-            playerGameResultA,
-            playerGameResultB,
-            playerGameResultC
+            winningResult,
+            tieResult,
+            losingResult
         );
 
         // when

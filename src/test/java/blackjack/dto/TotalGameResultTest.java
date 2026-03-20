@@ -15,20 +15,20 @@ class TotalGameResultTest {
     void makeTotalGameResult() {
         // given
         DealerGameResult dealerGameResult = DealerGameResult.from(10000);
-        PlayerGameResult playerGameResultA = PlayerGameResult.of("boye", MatchResult.LOSE, -10000);
-        PlayerGameResult playerGameResultB = PlayerGameResult.of("sumin", MatchResult.TIE, 0);
+        PlayerGameResult losingResult = PlayerGameResult.of("boye", MatchResult.LOSE, -10000);
+        PlayerGameResult tieResult = PlayerGameResult.of("sumin", MatchResult.TIE, 0);
 
         // when
         TotalGameResult totalGameResult = TotalGameResult.of(
             dealerGameResult,
-            List.of(playerGameResultA, playerGameResultB)
+            List.of(losingResult, tieResult)
         );
 
         // then
         assertAll(
             () -> assertThat(totalGameResult.dealerGameResult()).isEqualTo(dealerGameResult),
             () -> assertThat(totalGameResult.playerGameResult())
-                .containsExactly(playerGameResultA, playerGameResultB)
+                .containsExactly(losingResult, tieResult)
         );
     }
 }

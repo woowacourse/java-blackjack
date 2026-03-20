@@ -19,9 +19,9 @@ class PlayerNicknamesResultTest {
     @DisplayName("플레이어들의 닉네임 dto 생성읋 확인한다.")
     void makePlayerNicknameResult() {
         // given
-        Player playerA = new Player(Nickname.from("boye"), Role.PLAYER, Amount.from("1000"));
-        Player playerB = new Player(Nickname.from("sumin"), Role.PLAYER, Amount.from("2000"));
-        Players players = Players.from(List.of(playerA, playerB));
+        Player boye = new Player(Nickname.from("boye"), Role.PLAYER, Amount.from("1000"));
+        Player sumin = new Player(Nickname.from("sumin"), Role.PLAYER, Amount.from("2000"));
+        Players players = Players.from(List.of(boye, sumin));
         Dealer dealer = Dealer.from();
         Participants participants = new Participants(players, dealer);
 
