@@ -11,7 +11,7 @@ public class Players {
 
     public Players(List<Player> players) {
         validate(players);
-        this.players = List.copyOf(players).stream().toList();
+        this.players = List.copyOf(players);
     }
 
     private void validate(List<Player> players) {
@@ -34,6 +34,6 @@ public class Players {
     }
 
     public List<Player> getAllPlayers() {
-        return players.stream().toList();
+        return List.copyOf(players);
     }
 }
