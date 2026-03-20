@@ -19,7 +19,7 @@ public abstract class Participant {
     }
 
     public void drawCard(Card card) {
-        hand.drawCard(card);
+        hand.addCard(card);
     }
 
     public boolean isBust() {
