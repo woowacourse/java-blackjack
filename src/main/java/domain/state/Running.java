@@ -15,6 +15,6 @@ public abstract class Running extends Started {
 
     @Override
     public Result judge(State state) {
-        throw new IllegalArgumentException("[ERROR] 진행 중에는 결과를 판단할 수 없습니다.");
+        throw new UnsupportedOperationException("[ERROR] 진행 중에는 결과를 판단할 수 없습니다.");
     }
 }

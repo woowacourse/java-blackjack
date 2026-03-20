@@ -11,12 +11,12 @@ public abstract class Finished extends Started {
 
     @Override
     public State draw(Card card) {
-        throw new IllegalArgumentException("[ERROR] Finished 상태에서는 카드를 더 이상 뽑을 수 없습니다.");
+        throw new UnsupportedOperationException("[ERROR] Finished 상태에서는 카드를 더 이상 뽑을 수 없습니다.");
     }
 
     @Override
     public State stay() {
-        throw new IllegalArgumentException("[ERROR] Finished 상태에서는 stay를 할 수 없습니다.");
+        throw new UnsupportedOperationException("[ERROR] Finished 상태에서는 stay를 할 수 없습니다.");
     }
 
     @Override
