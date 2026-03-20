@@ -4,9 +4,10 @@ import domain.card.Card;
 
 public class Dealer extends Participant {
     private static final int HIT_THRESHOLD = 16;
+    private static final String DEFAULT_NAME = "딜러";
 
-    public Dealer(String name) {
-        super(name);
+    public Dealer() {
+        super(DEFAULT_NAME);
     }
 
     @Override

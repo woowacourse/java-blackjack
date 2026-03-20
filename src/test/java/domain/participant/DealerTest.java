@@ -15,7 +15,7 @@ public class DealerTest {
 
     @BeforeEach
     void beforeEach() {
-        dealer = new Dealer("딜러");
+        dealer = new Dealer();
     }
 
     @DisplayName("점수가 16 이하면 히트할 수 있다")
