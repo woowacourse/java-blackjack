@@ -7,6 +7,7 @@ public class Hand {
 
     private static final int BLACKJACK_SCORE = 21;
     private static final int REDUCED_SCORE_FROM_ACE = 10;
+    private static final int INITIAL_CARD_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -14,7 +15,7 @@ public class Hand {
         this.cards = new ArrayList<>();
     }
 
-    public void drawCard(Card card) {
+    public void addCard(Card card) {
         cards.add(card);
     }
 
@@ -60,6 +61,6 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return calculateTotalScore() == BLACKJACK_SCORE && cards.size() == 2;
+        return calculateTotalScore() == BLACKJACK_SCORE && cards.size() == INITIAL_CARD_COUNT;
     }
 }
