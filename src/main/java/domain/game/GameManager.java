@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.participant.Dealer;
 import domain.card.Deck;
 import domain.participant.Participant;
+import domain.participant.Player;
 import domain.participant.Players;
 
 public class GameManager {
@@ -28,7 +29,9 @@ public class GameManager {
     }
 
     private void distributeCardToPlayers(Players players) {
-        players.forEach(this::distributeInitialCards);
+        for (Player player : players.getPlayers()) {
+            distributeInitialCards(player);
+        }
     }
 
     private void distributeInitialCards(Participant participant) {

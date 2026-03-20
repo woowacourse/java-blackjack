@@ -8,7 +8,6 @@ import domain.game.GameManager;
 import domain.game.GameResultManager;
 import domain.participant.Dealer;
 import domain.participant.Name;
-import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import dto.ParticipantCardsDto;
@@ -51,28 +50,31 @@ public class BlackJackGameController {
 
     private BettingAmounts initBettingManager(Players players) {
         Map<Name, BettingAmount> bettingAmounts = new HashMap<>();
-        // TODO: for문으로 players를 순회하는 것이랑 지금 forEach랑 어떤 차이가 있는가?
-        // TODO: player가 bettingAmount를 가지고 있지 않고, Controller 메서드 안의 지역변수로 관리되고 있는 게 좋은 방향인가?
-        players.forEach(player -> {
+        for (Player player : players.getPlayers()) {
             int amount = InputView.askBettingAmount(player.getName().getName());
             bettingAmounts.put(player.getName(), new BettingAmount(BigDecimal.valueOf(amount)));
-        });
+        }
         return new BettingAmounts(bettingAmounts);
     }
 
-    // TODO: player와 bettingAmount관계에서 도메인 설계를 다시 고려해보라. forEach로 바꾼게 어떤 장점이 있는가? 이 메서드로 view로직을 전달하면 잘 분리가 된걸까?
     private void playGame(Players players, GameManager gameManager) {
-        players.forEach(player -> playGameWithPlayer(player, gameManager));
+        for (Player player : players.getPlayers()) {
+            playGameWithPlayer(player, gameManager);
+        }
         playGameWithDealer(gameManager);
     }
 
     private void printParticipantCards(Dealer dealer, Players players) {
         printCards(ParticipantCardsDto.from(dealer));
-        players.forEach(player -> printCards(ParticipantCardsDto.from(player)));
+        for (Player player : players.getPlayers()) {
+            printCards(ParticipantCardsDto.from(player));
+        }
     }
 
     private void printFinalScores(Players players) {
-        players.forEach(player -> printFinalCards(ParticipantCardsDto.from(player)));
+        for (Player player : players.getPlayers()) {
+            printFinalCards(ParticipantCardsDto.from(player));
+        }
     }
 
     public void playGameWithDealer(GameManager gameManager) {

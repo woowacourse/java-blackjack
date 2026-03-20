@@ -13,7 +13,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Consumer;
 
 public class Players {
     private static final int MAX_PLAYER = 8;
@@ -25,17 +24,14 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public void forEach(Consumer<Player> action) {
-        players.forEach(action);
+    public List<Player> getPlayers() {
+        return players;
     }
 
     public List<String> getPlayerNames() {
-        List<String> playersName = new ArrayList<>();
-        // ToDo 스트림으로 쉽게 풀 수 있는 걸 고려해보라.
-        players.forEach(player -> {
-            playersName.add(player.getName().getName());
-        });
-        return playersName;
+        return players.stream()
+                .map(player -> player.getName().getName())
+                .toList();
     }
 
     public BettingAmounts createBettingAmounts(BigDecimal amount) {
