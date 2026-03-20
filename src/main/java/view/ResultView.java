@@ -56,9 +56,9 @@ public class ResultView {
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    public void printDealerHitStand(boolean value) {
+    public void printDealerHitStand(boolean hit) {
         printEmptyLine();
-        if (value) {
+        if (hit) {
             System.out.println("딜러는 " + Score.DEALER_HIT_STAND_BOUNDARY.value() + "이하라 한장의 카드를 더 받았습니다.");
             return;
         }
