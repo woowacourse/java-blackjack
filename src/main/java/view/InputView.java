@@ -1,7 +1,6 @@
 package view;
 
 import domain.state.HitStand;
-import domain.participant.Player;
 import dto.domain.PlayerNameAndBettingDto;
 import error.ErrorMessage;
 import java.util.List;
@@ -10,6 +9,8 @@ import message.IOMessage;
 import util.NameParser;
 
 public class InputView {
+    private static final int MIN_BETTING_AMOUNT = 10;
+
     private final Scanner scanner = new Scanner(System.in);
 
     public List<String> getPlayerNames() {
@@ -21,14 +22,15 @@ public class InputView {
         return getPlayerNames();
     }
 
-    public boolean askHitOrStand(Player player) {
-        System.out.println(player.getName() + IOMessage.ASK_HIT_OR_STAND.message());
-        final String input = scanner.nextLine().trim().toLowerCase();
-        if (HitStand.validate(input)) {
-            return HitStand.isHit(input);
+    public HitStand askHitOrStand(final String playerName) {
+        while (true) {
+            System.out.println(playerName + IOMessage.ASK_HIT_OR_STAND.message());
+            final String input = scanner.nextLine().trim().toLowerCase();
+            if (HitStand.validate(input)) {
+                return HitStand.from(input);
+            }
+            System.out.println(ErrorMessage.INVALID_HIT_OR_STAND.message());
         }
-        System.out.println(ErrorMessage.INVALID_HIT_OR_STAND.message());
-        return askHitOrStand(player);
     }
 
     public List<PlayerNameAndBettingDto> getPlayerBetting(List<String> playerNames){
@@ -45,7 +47,7 @@ public class InputView {
             System.out.println(ErrorMessage.INVALID_BETTING_FORMAT.message());
             return readPlayerBetting(name);
         }
-        if (betting < 1) {
+        if (betting < MIN_BETTING_AMOUNT || betting % MIN_BETTING_AMOUNT != 0) {
             System.out.println(ErrorMessage.INVALID_BETTING_AMOUNT.message());
             return readPlayerBetting(name);
         }

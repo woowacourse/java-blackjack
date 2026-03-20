@@ -1,5 +1,6 @@
 package domain.state;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -18,7 +19,7 @@ public class HitStandTest {
     @Test
     @DisplayName("y 입력은 HIT으로 판정한다")
     void hitDecision() {
-        assertTrue(HitStand.isHit("y"));
-        assertFalse(HitStand.isHit("n"));
+        assertEquals(HitStand.HIT, HitStand.from("y"));
+        assertEquals(HitStand.STAND, HitStand.from("n"));
     }
 }

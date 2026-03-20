@@ -3,7 +3,7 @@ package view;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import domain.participant.Player;
+import domain.state.HitStand;
 import dto.domain.PlayerNameAndBettingDto;
 import error.ErrorMessage;
 import java.io.ByteArrayInputStream;
@@ -40,9 +40,9 @@ public class InputViewTest {
     }
 
     @Test
-    @DisplayName("배팅 금액이 숫자가 아니거나 1 미만이면 재입력 받는다")
+    @DisplayName("배팅 금액이 숫자가 아니거나 10원 단위가 아니면 재입력 받는다")
     void retryWhenInvalidBettingInput() {
-        final String input = "abc\n0\n1000\n";
+        final String input = "abc\n0\n15\n1000\n";
         final ByteArrayOutputStream out = setInputOutput(input);
         final InputView inputView = new InputView();
 
@@ -62,11 +62,10 @@ public class InputViewTest {
         final String input = "x\ny\n";
         final ByteArrayOutputStream out = setInputOutput(input);
         final InputView inputView = new InputView();
-        final Player player = new Player("pobi", 1000);
 
-        final boolean result = inputView.askHitOrStand(player);
+        final HitStand result = inputView.askHitOrStand("pobi");
 
-        assertTrue(result);
+        assertEquals(HitStand.HIT, result);
         assertTrue(readOutput(out).contains(ErrorMessage.INVALID_HIT_OR_STAND.message()));
     }
 

@@ -7,6 +7,7 @@ import domain.participant.Dealer;
 import domain.game.GameResult;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.state.HitStand;
 import dto.domain.PlayerNameAndBettingDto;
 import java.util.List;
 import view.InputView;
@@ -43,7 +44,8 @@ public class BlackJackController {
 
     private void drawPlayerTurn(Player player, Cards cards) {
         while (player.canHit()) {
-            if (!inputView.askHitOrStand(player)) {
+            final HitStand decision = inputView.askHitOrStand(player.getName());
+            if (decision == HitStand.STAND) {
                 player.stand();
                 return;
             }

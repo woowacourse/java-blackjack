@@ -16,7 +16,10 @@ public enum HitStand {
                 .anyMatch(value -> value.answer.equals(input));
     }
 
-    public static boolean isHit(String input){
-        return HIT.answer.equals(input);
+    public static HitStand from(final String input) {
+        return Arrays.stream(values())
+                .filter(value -> value.answer.equals(input))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Invalid hit/stand input: " + input));
     }
 }
