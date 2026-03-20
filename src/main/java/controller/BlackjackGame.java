@@ -1,66 +1,66 @@
 package controller;
 
-import domain.*;
+import domain.game.BlackjackRule;
+import domain.card.Deck;
+import domain.game.GameResult;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.strategy.RandomShuffleStrategy;
 import java.util.ArrayList;
-
-import domain.strategy.ShuffleStrategy;
-import dto.DealerResultInfo;
-import dto.PlayerResultInfo;
-import util.InputParser;
+import java.util.List;
 import view.InputView;
 import view.OutputView;
 
-import java.util.List;
-import java.util.Map;
-
 public class BlackjackGame {
-    public static final String NO = "n";
-    public static final int INITIAL_CARDS_COUNT = 2;
     private final InputView inputView;
-    private final InputParser inputParser;
     private final OutputView outputView;
-    private final ShuffleStrategy shuffleStrategy;
 
-    public BlackjackGame(InputView inputView, InputParser inputParser, OutputView outputView, ShuffleStrategy shuffleStrategy) {
+    public BlackjackGame(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
-        this.inputParser = inputParser;
         this.outputView = outputView;
-        this.shuffleStrategy = shuffleStrategy;
     }
 
     public void run() {
-        String names = inputView.getNames();
-        List<String> parsedName = inputParser.parseName(names);
-
-        Players players = new Players(parsedName);
+        List<String> parsedNames = inputView.getParsedNames();
+        Players players = new Players(parsedNames);
         Dealer dealer = new Dealer();
+        Deck deck = Deck.createDeck(new RandomShuffleStrategy());
 
-        Deck deck = Deck.createDeck(shuffleStrategy);
-
-        playGame(players, dealer, deck);
-    }
-
-    private void playGame(Players players, Dealer dealer, Deck deck) {
-        initParticipantsHand(players, dealer, deck);
-
-        for (Player player : players.getPlayers()) {
-            playerTurn(player, deck);
-        }
-
-        dealerTurn(dealer, deck);
-
+        initializeBetting(players);
+        initializeParticipantsHand(players, dealer, deck);
+        proceedEachTurnWith(players, dealer, deck);
         showGameResult(players, dealer);
     }
 
-    private void initParticipantsHand(Players players, Dealer dealer, Deck deck) {
+    private void initializeBetting(Players players) {
+        outputView.printBlankLine();
+
+        for (Player player : players.getPlayers()) {
+            int amount = inputView.askForBettingAmount(player.name());
+            player.bet(amount);
+            outputView.printBlankLine();
+        }
+    }
+
+    private void proceedEachTurnWith(Players players, Dealer dealer, Deck deck) {
+        for (Player player : players.getPlayers()) {
+            playerTurn(player, deck);
+        }
+        outputView.printBlankLine();
+        dealerTurn(dealer, deck);
+        outputView.printBlankLine();
+    }
+
+    private void initializeParticipantsHand(Players players, Dealer dealer, Deck deck) {
+        outputView.printBlankLine();
         List<Participant> participants = new ArrayList<>(players.getPlayers());
         participants.add(dealer);
-        participants.forEach(participant ->
-                participant.receiveInitialCards(deck.drawInitialCards(INITIAL_CARDS_COUNT))
+        participants.forEach(
+                participant -> participant.receiveInitialCards(
+                        deck.drawInitialCards(BlackjackRule.INITIAL_CARD_COUNT)
+                )
         );
 
         outputView.printInitialDistribution(players, dealer);
@@ -75,10 +75,7 @@ public class BlackjackGame {
 
     private void playerTurn(Player player, Deck deck) {
         while (player.canDraw()) {
-            String choice = inputView.getUserChoice(player.name());
-            String userChoice = inputParser.parseUserChoice(choice);
-
-            if (userChoice.equals(NO)) {
+            if (!inputView.askForOneMoreCard(player.name())) {
                 break;
             }
 
@@ -91,29 +88,9 @@ public class BlackjackGame {
         List<Participant> participants = new ArrayList<>(players.getPlayers());
         participants.add(dealer);
         participants.forEach(outputView::printFinalResult);
+        outputView.printBlankLine();
 
-        GameResult gameResult = new GameResult(players, dealer);
-
-        DealerResultInfo dealerResultInfo = new DealerResultInfo(
-                gameResult.dealerWinCount(),
-                gameResult.dealerTieCount(),
-                gameResult.dealerLoseCount()
-        );
-
-        List<PlayerResultInfo> playerResultInfos = createPlayerResultInfos(gameResult);
-        outputView.printGameResult(dealerResultInfo, playerResultInfos);
-    }
-
-    private List<PlayerResultInfo> createPlayerResultInfos(GameResult gameResult) {
-        List<PlayerResultInfo> resultInfos = new ArrayList<>();
-
-        for (Map.Entry<String, WinningStatus> entry : gameResult.getPlayerWinningStatus().entrySet()) {
-            String name = entry.getKey();
-            WinningStatus status = entry.getValue();
-
-            resultInfos.add(new PlayerResultInfo(name, status));
-        }
-
-        return resultInfos;
+        GameResult gameResult = GameResult.from(players, dealer);
+        outputView.printGameResult(gameResult);
     }
 }

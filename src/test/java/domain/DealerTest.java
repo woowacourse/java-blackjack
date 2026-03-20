@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {
     @Test
-    void 딜러는_카드의_합이_16_이하인_경우_카드를_한_장_받는다(){
+    void 딜러는_카드의_합이_16_이하인_경우_카드를_한_장_받는다() {
         Dealer dealer = createDealer(Rank.JACK, Rank.TWO);
 
         boolean canDraw = dealer.canDraw();

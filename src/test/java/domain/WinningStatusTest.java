@@ -3,6 +3,7 @@ package domain;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.game.WinningStatus;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import org.junit.jupiter.api.Test;
@@ -54,6 +55,16 @@ class WinningStatusTest {
     void 딜러의_카드의_합이_참가자의_카드의_합보다_작을_경우_승리한다() {
         Player player = createPlayer(Rank.TEN, Rank.THREE);
         Dealer dealer = createDealer(Rank.TEN, Rank.TWO);
+
+        WinningStatus status = WinningStatus.of(player, dealer);
+
+        assertThat(status).isEqualTo(WinningStatus.WIN);
+    }
+
+    @Test
+    void 처음_두_장이_아닌_21점은_블랙잭_승리가_아니다() {
+        Player player = createPlayer(Rank.ACE, Rank.NINE, Rank.ACE);
+        Dealer dealer = createDealer(Rank.TEN, Rank.EIGHT);
 
         WinningStatus status = WinningStatus.of(player, dealer);
 

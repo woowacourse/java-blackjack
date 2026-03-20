@@ -1,16 +1,21 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.strategy.DealerDrawStrategy;
 
 public class Dealer extends Participant {
     private static final String DEALER_NAME = "딜러";
+    private static final int DEALER_DRAW_LIMIT = 16;
 
     public Dealer() {
-        super(DEALER_NAME, new DealerDrawStrategy());
+        super(DEALER_NAME);
     }
 
     public Card getFirstCard() {
-        return getAllCards().getFirst();
+        return hand.firstCard();
+    }
+
+    @Override
+    public boolean canDraw() {
+        return score() <= DEALER_DRAW_LIMIT;
     }
 }

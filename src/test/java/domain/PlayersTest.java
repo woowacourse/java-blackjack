@@ -1,12 +1,11 @@
 package domain;
 
-import domain.participant.Players;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.participant.Players;
+import java.util.List;
+import org.junit.jupiter.api.Test;
 
 class PlayersTest {
     @Test
@@ -23,5 +22,12 @@ class PlayersTest {
 
         assertThatThrownBy(() -> new Players(names))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 참가자들의_이름을_반환한다() {
+        Players players = new Players(List.of("pobi", "jason"));
+
+        assertThat(players.getPlayerNames()).contains("pobi", "jason");
     }
 }
