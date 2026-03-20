@@ -78,7 +78,7 @@ class BlackjackJudgeTest {
         }
 
         @Test
-        void 플레이어가_블랙잭이고_딜러가_버스트여도_블랙잭_승리를_반환한다() {
+        void 플레이어가_블랙잭이고_딜러가_버스트여도_승리를_반환한다() {
             // given
             Dealer dealer = dealer(
                     card(Rank.K, Suit.HEART),
@@ -94,7 +94,7 @@ class BlackjackJudgeTest {
             Result actual = blackjackJudge.judgePlayerResult(dealer, player);
 
             // then
-            assertThat(actual).isEqualTo(Result.BLACKJACK_WIN);
+            assertThat(actual).isEqualTo(Result.WIN);
         }
 
         @Test
@@ -178,7 +178,7 @@ class BlackjackJudgeTest {
     private static Dealer dealer(Card... cards) {
         Dealer dealer = new Dealer();
         for (Card card : cards) {
-            dealer.addCard(card);
+            dealer.drawCard(card);
         }
         return dealer;
     }
@@ -186,7 +186,7 @@ class BlackjackJudgeTest {
     private static Player player(Card... cards) {
         Player player = new Player(new PlayerName("jacob"), new BetAmount("1000"));
         for (Card card : cards) {
-            player.addCard(card);
+            player.drawCard(card);
         }
         return player;
     }
