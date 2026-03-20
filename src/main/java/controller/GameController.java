@@ -48,7 +48,7 @@ public class GameController {
             BettingAmount bettingAmount = readBettingAmountFor(player);
 
             PlayerBet playerBet = PlayerBet.from(player, bettingAmount);
-            bettingTable.register(playerBet);
+            bettingTable.place(playerBet);
         }
 
         return bettingTable;

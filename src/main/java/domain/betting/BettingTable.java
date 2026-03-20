@@ -18,7 +18,7 @@ public class BettingTable {
         return new BettingTable(bettingTable);
     }
 
-    public void register(PlayerBet playerBet) {
+    public void place(PlayerBet playerBet) {
         playerBets.add(playerBet);
     }
 
