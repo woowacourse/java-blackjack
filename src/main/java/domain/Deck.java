@@ -43,7 +43,7 @@ public class Deck {
             cards.removeLast();
         }
 
-        return drawnCards;
+        return List.copyOf(drawnCards);
     }
 
     private void validateCardsCount(int drawCount) {
