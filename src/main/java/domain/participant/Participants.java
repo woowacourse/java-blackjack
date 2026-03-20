@@ -17,13 +17,12 @@ public record Participants(Dealer dealer, Players players) {
     }
 
     public void drawInitialCards(Supplier<Card> cardSupplier) {
-        dealer.addCard(cardSupplier.get());
-        dealer.addCard(cardSupplier.get());
+        dealer.drawInitialCards(cardSupplier);
         players.drawInitialCards(cardSupplier);
     }
 
     public void drawCardsByDealer(Supplier<Card> cardSupplier) {
-        dealer.addCard(cardSupplier.get());
+        dealer.drawCard(cardSupplier.get());
     }
 
     public Player drawCardsByPlayer(String name, Supplier<Card> cardSupplier) {
