@@ -58,9 +58,8 @@ public class Deck {
         }
     }
 
-
     public Deck shuffle(DeckShuffler shuffler) {
-        List<Card> shuffledCards = shuffler.shuffle(List.copyOf(this.cards));
+        List<Card> shuffledCards = shuffler.shuffle(new ArrayList<>(this.cards));
         return new Deck(shuffledCards);
     }
 
