@@ -6,8 +6,8 @@ import static exception.ErrorMessage.PLAYER_NAME_IS_DUPLICATE;
 import java.util.List;
 
 public class Players {
-    private static final int MINIMUM_PLAYER_COUNT = 1;
-    private static final int MAXIMUM_PLAYER_COUNT = 8;
+    public static final int MINIMUM_PLAYER_COUNT = 1;
+    public static final int MAXIMUM_PLAYER_COUNT = 8;
 
     private final List<Player> players;
 
