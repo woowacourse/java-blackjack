@@ -29,43 +29,12 @@
 - [x] 참가자 상태 관리
 
 5. ScoreBoard
-- [x] 승패 집계
-
+- [x] 참가자 별 베팅 금액 저장 
 
 ## 피드백
-- [x] 불필요한 주석 제거
-- [x] 메서드 네이밍
-  - [x] firstPlayerProcess
-  - [x] ScoreBoard 내부
-- [x] 사용하지 않는 import문
-- [x] 패키지 네이밍
-- [x] ScoreBoard 리팩토링
-- [x] ParticiapntTest 람다
-
-
-## 리팩토링
-- [x] GameTable 분해 및 책임 분리
-  - [x] Repository, Service 정리
-- [x] service, repository 레이어 도입
-- [x] Constants를 각 도메인에 맞는 enum으로 분리
-- [x] 애그리거트 내 접근 제어자 정리
-- [x] 의존성 관리
-- [x] 게임 진행 루프 리팩토링
-- [x] ScoreBoard 책임 분리 고려
-- [x] View 정리
-- [x] 예외 처리
-- [ ] ScoreBoard 인스턴스에 딜러용 인스턴스 추가 고려
-
-## 테스트
-- [ ] TestFixture 또는 테스트용 팩토리 클래스 도입
-- [ ] 누락된 테스트들 작성
-  - [ ] ScoreBoard
-- [ ] 테스트 케이스 보강 및 `parameterizedTest` 도입
-
-### HotFix
-- [x] 손패 결과는 딜러가 플레이어보다 먼저 나와야 한다. 
-- [x] 플레이어 뽑기 시 딜러 뽑기가 나오는 문제
-- [x] 처음 받은 딜러 카드 1장만 공개하게 변경
-- [x] 카드를 더 이상 못받을 경우 루프 종료
-  - 딜러
-  - 플레이어
+- [x] CardInfo 제거하거나 변경
+- [x] 네이밍 
+  - [x] InfiniteDeck
+  - [x] BlackJackNumber -> Score
+- [x] 예외처리 NumberFormatException
+ 

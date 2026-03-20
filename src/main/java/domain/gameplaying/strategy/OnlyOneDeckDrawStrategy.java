@@ -11,16 +11,17 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
-public class OneDeckStrategy implements DrawStrategy {
+public class OnlyOneDeckDrawStrategy implements DrawStrategy {
 
     private final Deque<Card> cards;
 
-    public OneDeckStrategy() {
+    public OnlyOneDeckDrawStrategy() {
         this.cards = mixedCards();
     }
 
     @Override
     public Card draw() {
+        requireCardsRemaining();
         return cards.poll();
     }
 
@@ -41,5 +42,11 @@ public class OneDeckStrategy implements DrawStrategy {
         return Arrays.stream(CardRank.values())
                 .map(cardRank -> new Card(cardRank, mark))
                 .toList();
+    }
+
+    private void requireCardsRemaining() {
+        if(cards.isEmpty()) {
+            throw new IllegalStateException("[ERROR] 남아있는 카드가 없습니다.");
+        }
     }
 }

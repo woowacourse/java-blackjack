@@ -1,11 +1,12 @@
 package domain.gameplaying;
 
-import domain.common.BlackJackRule;
-import domain.common.CardInfo;
 import java.util.ArrayList;
 import java.util.List;
 
 class Hand {
+
+    private static final int BUST_THRESHOLD = 21;
+    private static final int ACE_WEIGHT = 10;
 
     private final DrawStrategy drawStrategy;
     private final List<Card> cards;
@@ -15,33 +16,35 @@ class Hand {
         this.cards = new ArrayList<>(cards);
     }
 
-    static Hand based(DrawStrategy drawStrategy) {
-        return new Hand(drawStrategy, new ArrayList<>());
+    static Hand using(DrawStrategy deck) {
+        return new Hand(deck, new ArrayList<>());
     }
 
     void drawCard() {
         cards.add(drawStrategy.draw());
     }
 
-    List<CardInfo> cardInfos() {
-        return cards.stream()
-                .map(Card::info)
-                .toList();
+    List<Card> cards() {
+        return List.copyOf(cards);
     }
 
     boolean isBusted() {
         int score = rawScoreSum();
         if (aceCount() > 0) {
-            score -= aceCount() * BlackJackRule.ACE_WEIGHT.value();
+            score -= aceCount() * ACE_WEIGHT;
         }
-        return score > BlackJackRule.BUST_NUMBER.value();
+        return score > BUST_THRESHOLD;
     }
 
     int scoreSum() {
         int total = rawScoreSum();
-        if (isExceededBustNumber(total)) {
-            total -= aceCount() * BlackJackRule.ACE_WEIGHT.value();
+        int aces = aceCount();
+
+        while (isExceededBustNumber(total) && aces > 0) {
+            total -= ACE_WEIGHT;
+            aces--;
         }
+
         return total;
     }
 
@@ -58,6 +61,6 @@ class Hand {
     }
 
     private boolean isExceededBustNumber(int total) {
-        return total > BlackJackRule.BUST_NUMBER.value();
+        return total > BUST_THRESHOLD;
     }
 }

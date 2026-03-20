@@ -1,19 +1,16 @@
 package view;
 
-import dto.response.AllPlayerWinningInfoResponse;
 import dto.response.AllPlayersNameAndCardsResponse;
-import dto.response.DealerWinningStatisticsResponse;
 import dto.response.NameAndCardsResponse;
+import dto.response.ProfitResponse;
 import dto.response.PlayedGameResultResponse;
 import dto.response.PlayerGameResultsResponse;
-import dto.request.PlayerNamesResponse;
-import dto.response.PlayerWinningInfoResponse;
+import dto.response.PlayerNamesResponse;
 import java.util.List;
 
 public final class OutputView {
 
     private static final String JOINER = ", ";
-    private static final String CONDITION_JOINER = " ";
 
     private OutputView() {
 
@@ -48,7 +45,7 @@ public final class OutputView {
     }
 
     public static void participantResult(PlayedGameResultResponse response) {
-        String nameAndCards = nameAndAllCards(response.name(), response.cardInfos());
+        String nameAndCards = nameAndAllCards(response.name(), response.cardsInfo());
         int score = response.scoreSum();
 
         System.out.println(OutputMessage.PARTICIPANTS_RESULT.description(nameAndCards, score));
@@ -59,48 +56,17 @@ public final class OutputView {
                 .forEach(OutputView::participantResult);
     }
 
-    public static void winningConditionsHeader() {
-        winningConditionHeader();
-    }
-
-    public static void dealerWinningStatistics(DealerWinningStatisticsResponse response) {
-        StringBuilder buffer = new StringBuilder();
-
-        appendWin(response.winCount(), buffer);
-        appendDraw(response.drawCount(), buffer);
-        appendLose(response.loseCount(), buffer);
-
-        System.out.println(OutputMessage.DEALER_WINNING_CONDITION.description(buffer));
-    }
-
-    private static void appendWin(int winCount, StringBuilder statistics) {
-        if (winCount > 0) {
-            statistics.append(OutputMessage.WIN.description(winCount)).append(CONDITION_JOINER);
-        }
-    }
-
-    private static void appendDraw(int drawCount, StringBuilder statistics) {
-        if (drawCount > 0) {
-            statistics.append(OutputMessage.DRAW.description(drawCount)).append(CONDITION_JOINER);
-        }
-    }
-
-    private static void appendLose(int loseCount, StringBuilder statistics) {
-        if (loseCount > 0) {
-            statistics.append(OutputMessage.LOSE.description(loseCount));
-        }
-    }
-
-    public static void playerWinningConditions(AllPlayerWinningInfoResponse response) {
-        List<PlayerWinningInfoResponse> winningInfos = response.playerWinningInfoResponses();
-
-        winningInfos.forEach(info -> {
-            System.out.println(OutputMessage.PLAYER_WINNING_CONDITION.description(info.name(), info.winningCondition()));
-        });
-    }
-
-    private static void winningConditionHeader() {
+    public static void resultHeader() {
         System.out.println(OutputMessage.RESULT_HEADER.description());
+    }
+
+
+    public static void allProfits(List<ProfitResponse> response) {
+        response.forEach(OutputView::printPayout);
+    }
+
+    private static void printPayout(ProfitResponse info) {
+        System.out.println(OutputMessage.PROFIT.description(info.name(), info.amount()));
     }
 
     public static void printTaskDivider() {

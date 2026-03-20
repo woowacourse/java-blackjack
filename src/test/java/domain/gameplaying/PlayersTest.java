@@ -2,7 +2,7 @@ package domain.gameplaying;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import domain.gameplaying.strategy.RandomStrategy;
+import domain.gameplaying.strategy.InfiniteRandomDrawStrategy;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,14 +16,14 @@ class PlayersTest {
 
     @BeforeEach
     void setUp() {
-        this.players = Players.noOne(new RandomStrategy());
+        this.players = Players.noOne(new InfiniteRandomDrawStrategy());
     }
 
     @ParameterizedTest
     @MethodSource("playerNames")
     @DisplayName("플레이어들 중 현재(peek) 플레이어의 이름을 반환할 수 있어야한다.")
     void 현재_플레이어_이름_확인(List<String> names) {
-        Players players = this.players.join(names);
+        players.join(names);
 
         String expected = names.getFirst();
         String actual = players.currentPlayerName();

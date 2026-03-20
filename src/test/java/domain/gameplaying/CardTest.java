@@ -1,8 +1,8 @@
 package domain.gameplaying;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import domain.common.CardInfo;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,25 +27,16 @@ class CardTest {
     @DisplayName("카드 정보는 라벨과 문양을 가져야 한다.")
     void 카드_정보_반환(Card provided) {
         String cardLabel = provided.rank().label();
-        String cardMark = provided.mark().description();
+        String cardMark = provided.cardMark().description();
 
-        CardInfo expected = new CardInfo(cardLabel, cardMark);
-        CardInfo actual = provided.info();
-
-        assertEquals(expected, actual);
+        assertThat(cardLabel + cardMark).isEqualTo(provided.toString());
     }
 
     @ParameterizedTest
     @MethodSource("aceCards")
     @DisplayName("A 카드인 지 반환할 수 있어야 한다.")
     void A카드_확인 (Card provided) {
-        String cardLabel = provided.rank().label();
-        String cardMark = provided.mark().description();
-
-        CardInfo expected = new CardInfo(cardLabel, cardMark);
-        CardInfo actual = provided.info();
-
-        assertEquals(expected, actual);
+        assertThat(provided.isAce()).isTrue();
     }
 
     private static Stream<CardRank> cardRanks() {

@@ -6,7 +6,7 @@ import domain.gameplaying.CardRank;
 import domain.gameplaying.DrawStrategy;
 import java.util.Random;
 
-public class RandomStrategy implements DrawStrategy {
+public class InfiniteRandomDrawStrategy implements DrawStrategy {
 
     @Override
     public Card draw() {

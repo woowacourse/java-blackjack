@@ -2,30 +2,23 @@ package config;
 
 import controller.BlackJackController;
 import domain.gameplaying.DrawStrategy;
-import domain.gameplaying.strategy.OneDeckStrategy;
-import repository.ParticipantRepository;
-import repository.ScoreRepository;
+import domain.gameplaying.Participants;
+import domain.gameplaying.strategy.OnlyOneDeckDrawStrategy;
+import domain.result.ScoreBoard;
 import service.BlackJackCommandService;
 import service.BlackJackQueryService;
 
 public class AppConfig {
 
-    public BlackJackController blackJackController() {
-        ParticipantRepository participantRepository = new ParticipantRepository();
-        ScoreRepository scoreRepository = new ScoreRepository();
+    private static final DrawStrategy sharedDeck = new OnlyOneDeckDrawStrategy();
 
-        BlackJackCommandService commandService = setupCommandService(participantRepository, scoreRepository);
-        BlackJackQueryService queryService = new BlackJackQueryService(participantRepository, scoreRepository);
+    public BlackJackController blackJackController() {
+        Participants participants = Participants.onlyDealer(sharedDeck);
+        ScoreBoard scoreBoard = new ScoreBoard();
+
+        BlackJackCommandService commandService = new BlackJackCommandService(participants, scoreBoard);
+        BlackJackQueryService queryService = new BlackJackQueryService(participants, scoreBoard);
 
         return new BlackJackController(commandService, queryService);
-    }
-
-    private BlackJackCommandService setupCommandService(ParticipantRepository participantRepository,
-                                                        ScoreRepository scoreRepository) {
-        return new BlackJackCommandService(participantRepository, scoreRepository, drawStrategy());
-    }
-
-    private DrawStrategy drawStrategy() {
-        return new OneDeckStrategy();
     }
 }

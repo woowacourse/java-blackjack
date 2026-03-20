@@ -1,11 +1,12 @@
 package controller;
 
-import dto.response.AllPlayerWinningInfoResponse;
-import dto.response.DealerWinningStatisticsResponse;
+import dto.request.BettingMoneyRequest;
+import dto.response.ProfitResponse;
 import dto.response.PlayedGameResultResponse;
 import dto.response.PlayerGameResultsResponse;
 import dto.request.PlayerNamesRequest;
 import dto.request.SelectRequest;
+import java.util.List;
 import service.BlackJackCommandService;
 import service.BlackJackQueryService;
 import view.InputView;
@@ -29,18 +30,31 @@ public class BlackJackController {
     }
 
     private void setupPhase() {
-        setupGameTable();
+        PlayerNamesRequest request = InputView.readPlayers();
+        setupGameTable(request.names());
         OutputView.printTaskDivider();
+
+        setupPlayerBets(request.names());
 
         distributeInitialCards();
         displayInitialCards();
         OutputView.printTaskDivider();
     }
 
-    private void setupGameTable() {
-        PlayerNamesRequest request = InputView.readPlayers();
-        commandService.setupPlayers(request.names());
+    private void setupGameTable(List<String> playerNames) {
+        commandService.setupPlayers(playerNames);
     }
+
+    private void setupPlayerBets(List<String> playerNames) {
+        playerNames.forEach(this::setupPlayerBet);
+    }
+
+    private void setupPlayerBet(String name) {
+        BettingMoneyRequest request = InputView.readBettingMoney(name);
+        commandService.setupBettingMoney(name, request.money());
+        OutputView.printTaskDivider();
+    }
+
 
     private void distributeInitialCards() {
         OutputView.distributeCards(queryService.allPlayerNames());
@@ -74,7 +88,7 @@ public class BlackJackController {
     }
 
     private void runPlayerInitGameProcess(SelectRequest select) {
-        if (select.isPositive()) {
+        if (select.isPositive() && queryService.isCurrentPlayerPlayable()) {
             commandService.currentPlayerDrawsCard();
         }
         OutputView.playerCardInfos(queryService.currentPlayerCards());
@@ -98,10 +112,8 @@ public class BlackJackController {
     private void dealerGamePhase() {
         if (queryService.isDealerPlayable()) {
             runDealerGameLoop();
-            commandService.recordDealerGameResult();
             OutputView.printTaskDivider();
         }
-        commandService.recordDealerGameResult();
     }
 
     private void runDealerGameLoop() {
@@ -123,8 +135,7 @@ public class BlackJackController {
 
         OutputView.printTaskDivider();
 
-        displayDealerWinningStatistics();
-        displayPlayerWinningConditions();
+        displayProfitResults();
     }
 
     private void displayDealersResult() {
@@ -137,14 +148,10 @@ public class BlackJackController {
         OutputView.playerResults(playerGameResultsResponse);
     }
 
-    private void displayDealerWinningStatistics() {
-        OutputView.winningConditionsHeader();
-        DealerWinningStatisticsResponse response = queryService.dealerWinningStatistics();
-        OutputView.dealerWinningStatistics(response);
-    }
+    private void displayProfitResults() {
+        OutputView.resultHeader();
+        List<ProfitResponse> responses = queryService.allProfits();
 
-    private void displayPlayerWinningConditions() {
-        AllPlayerWinningInfoResponse response = queryService.playerWinningInfos();
-        OutputView.playerWinningConditions(response);
+        OutputView.allProfits(responses);
     }
 }

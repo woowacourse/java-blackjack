@@ -1,9 +1,9 @@
 package domain.gameplaying;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import domain.gameplaying.strategy.RandomStrategy;
-import domain.common.CardInfo;
+import domain.gameplaying.strategy.InfiniteRandomDrawStrategy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -18,11 +18,11 @@ class HandTest {
     @Test
     @DisplayName("카드가 한 장 손 패에 추가되어야 한다.")
     void 카드_한_장_뽑기() {
-        Hand hand = new Hand(new RandomStrategy(), new ArrayList<>());
+        Hand hand = new Hand(new InfiniteRandomDrawStrategy(), new ArrayList<>());
         hand.drawCard();
 
         int expected = 1;
-        int actual = hand.cardInfos().size();
+        int actual = hand.cards().size();
 
         assertEquals(expected, actual);
     }
@@ -31,7 +31,7 @@ class HandTest {
     @MethodSource("randomCards")
     @DisplayName("손패 카드의 합을 반환해야 한다.")
     void 손패_합_반환(List<Card> cards, int sum) {
-        Hand hand = new Hand(new RandomStrategy(), cards);
+        Hand hand = new Hand(new InfiniteRandomDrawStrategy(), cards);
 
         int actual = hand.scoreSum();
 
@@ -41,13 +41,23 @@ class HandTest {
     @Test
     @DisplayName("손패의 카드 정보들을 반환해야 한다.")
     void 손패_카드들_정보_반환() {
-        List<Card> cards = List.of(new Card(CardRank.QUEEN, CardMark.SPADE), new Card(CardRank.EIGHT, CardMark.HEART));
-        Hand hand = new Hand(new RandomStrategy(), cards);
+        Card card = new Card(CardRank.QUEEN, CardMark.SPADE);
+        List<Card> cards = List.of(card);
+        Hand hand = new Hand(new InfiniteRandomDrawStrategy(), cards);
 
-        List<CardInfo> expected = List.of(new CardInfo("Q", "스페이드"), new CardInfo("8", "하트"));
-        List<CardInfo> actual = hand.cardInfos();
 
-        assertEquals(expected, actual);
+        assertThat(hand.cards().getFirst().toString()).isEqualTo(card.toString());
+    }
+
+    @ParameterizedTest
+    @MethodSource("bustedHands")
+    @DisplayName("버스트 상태를 확인할 수 있어야 한다.")
+    void 버스트_상태_확인(Hand bustedHand) {
+        assertThat(bustedHand.isBusted()).isTrue();
+    }
+
+    private static Stream<Hand> bustedHands() {
+        return TestFixtures.bustedHands();
     }
 
     private static Stream<Arguments> randomCards() {
@@ -58,7 +68,11 @@ class HandTest {
                         18),
                 Arguments.arguments(
                         List.of(new Card(CardRank.QUEEN, CardMark.SPADE), new Card(CardRank.EIGHT, CardMark.HEART),
-                                new Card(CardRank.QUEEN, CardMark.CLOVER)), 28)
+                                new Card(CardRank.QUEEN, CardMark.CLOVER)), 28),
+
+                Arguments.arguments(
+                        List.of(new Card(CardRank.ACE, CardMark.CLOVER), new Card(CardRank.ACE, CardMark.CLOVER),
+                                new Card(CardRank.TWO, CardMark.CLOVER)), 14)
         );
     }
 }

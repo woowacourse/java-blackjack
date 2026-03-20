@@ -1,15 +1,15 @@
 package dto.response;
 
-import domain.common.NameAndCardInfos;
+import domain.PlayedGameResult;
 import java.util.List;
 
 public record AllPlayersNameAndCardsResponse(List<NameAndCardsResponse> allInfos) {
 
-    public static AllPlayersNameAndCardsResponse from(List<NameAndCardInfos> players) {
+    public static AllPlayersNameAndCardsResponse from(List<PlayedGameResult> players) {
         return new AllPlayersNameAndCardsResponse(responses(players));
     }
 
-    private static List<NameAndCardsResponse> responses(List<NameAndCardInfos> players) {
+    private static List<NameAndCardsResponse> responses(List<PlayedGameResult> players) {
         return players.stream()
                 .map(NameAndCardsResponse::from)
                 .toList();

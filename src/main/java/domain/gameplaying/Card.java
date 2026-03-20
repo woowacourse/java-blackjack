@@ -1,18 +1,17 @@
 package domain.gameplaying;
 
-import domain.common.CardInfo;
-
-public record Card(CardRank rank, CardMark mark) {
+public record Card(CardRank rank, CardMark cardMark) {
 
     boolean isAce() {
         return rank == CardRank.ACE;
     }
 
-    CardInfo info () {
-        return new CardInfo(rank.label(), mark.description());
-    }
-
     int score() {
         return rank.score();
+    }
+
+    @Override
+    public String toString() {
+        return rank().label() + cardMark().description();
     }
 }

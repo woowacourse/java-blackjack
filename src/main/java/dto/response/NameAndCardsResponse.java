@@ -1,22 +1,18 @@
 package dto.response;
 
-import domain.common.CardInfo;
-import domain.common.NameAndCardInfos;
+import domain.PlayedGameResult;
+import domain.gameplaying.Card;
 import java.util.List;
 
 public record NameAndCardsResponse(String name, List<String> cardInfos) {
 
-    public static NameAndCardsResponse from(NameAndCardInfos infos) {
-        return new NameAndCardsResponse(infos.name(), parse(infos.cardInfos()));
+    public static NameAndCardsResponse from(PlayedGameResult result) {
+        return new NameAndCardsResponse(result.name(), parse(result.cards()));
     }
 
-    private static List<String> parse(List<CardInfo> infos) {
-        return infos.stream()
-                .map(NameAndCardsResponse::parseCardInfo)
+    private static List<String> parse(List<Card> cards) {
+        return cards.stream()
+                .map(Card::toString)
                 .toList();
-    }
-
-    private static String parseCardInfo(CardInfo info) {
-        return info.cardLabel() + info.cardMark();
     }
 }

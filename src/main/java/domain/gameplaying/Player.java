@@ -10,7 +10,7 @@ class Player extends Participant {
     }
 
     static Player of(String name, DrawStrategy drawStrategy) {
-        return new Player(name, Hand.based(drawStrategy));
+        return new Player(name, Hand.using(drawStrategy));
     }
 
     @Override
