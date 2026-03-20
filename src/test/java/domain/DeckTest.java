@@ -3,7 +3,9 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.HashSet;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +25,22 @@ class DeckTest {
         // then
         assertThatThrownBy(totalDeck::drawCard)
                 .isInstanceOf(NoSuchElementException.class);
+    }
+
+    @Test
+    @DisplayName("덱에 들어있는 52장의 카드 중 중복되는 카드는 단 한 장도 존재하지 않는다.")
+    void shouldDrawUniqueCardsOnly() {
+        // given
+        Deck totalDeck = Deck.createTotalDeckAndShuffle(FIXED_CARD_SHUFFLE_STRATEGY);
+        Set<Card> drawnCards = new HashSet<>();
+
+        // when
+        for (int i = 0; i < 52; i++) {
+            drawnCards.add(totalDeck.drawCard());
+        }
+
+        // then
+        assertThat(drawnCards).hasSize(52);
     }
 
     @Test

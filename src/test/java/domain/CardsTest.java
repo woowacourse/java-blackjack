@@ -1,7 +1,6 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -32,21 +31,6 @@ class CardsTest {
 
             // then
             assertThat(cards.getCards()).hasSize(2);
-        }
-
-        @Test
-        @DisplayName("카드 목록에 이미 존재하는 카드를 중복으로 추가하면 예외가 발생한다.")
-        void shouldThrowExceptionForDuplicatedCard() {
-            // given
-            Cards cards = createCardsWithCards(
-                    new Card(CardShape.DIAMOND, CardContents.TWO)
-            );
-
-            Card duplicatedCard = new Card(CardShape.DIAMOND, CardContents.TWO);
-
-            // when & then
-            assertThatThrownBy(() -> cards.addCard(duplicatedCard))
-                    .isInstanceOf(IllegalArgumentException.class);
         }
     }
 

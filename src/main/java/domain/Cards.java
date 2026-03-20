@@ -15,14 +15,7 @@ public class Cards {
     }
 
     public void addCard(Card card) {
-        validateAddable(card);
         cards.add(card);
-    }
-
-    private void validateAddable(Card card) {
-        if (cards.contains(card)) {
-            throw new IllegalArgumentException("이미 보유하고 있는 카드입니다. 중복 추가할 수 없습니다.");
-        }
     }
 
     public int calculateCardScoreSum() {
