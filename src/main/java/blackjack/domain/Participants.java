@@ -20,10 +20,10 @@ public class Participants {
         this.dealer = dealer;
     }
 
-    public Deck distributeCards(Deck deck) {
+    public Deck dealInitialCards(Deck deck) {
         List<Participant> participants = getParticipants();
         for (Participant participant : participants) {
-            DrawResult drawResult = participant.distributeCards(deck);
+            DrawResult drawResult = participant.dealInitialCards(deck);
             deck = drawResult.drewDeck();
         }
         return deck;

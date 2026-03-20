@@ -37,7 +37,7 @@ public abstract class Participant {
         return hand.isBlackJack();
     }
 
-    public DrawResult distributeCards(Deck deck) {
+    public DrawResult dealInitialCards(Deck deck) {
         DrawResult drawResult = deck.draw(FIRST_DRAW_COUNT);
         receiveCard(drawResult.drewCard().getCards());
         return drawResult;

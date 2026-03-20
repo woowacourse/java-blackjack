@@ -25,7 +25,7 @@ public class BlackjackRunner {
     public void execute() {
         Participants participants = participantsCreator.create();
         Deck deck = Deck.createShuffledDeck();
-        deck = participants.distributeCards(deck);
+        deck = participants.dealInitialCards(deck);
 
         blackjackGameView.printInitialState(participants);
         deck = playerTurn(participants, deck);
