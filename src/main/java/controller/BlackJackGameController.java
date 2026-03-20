@@ -98,7 +98,7 @@ public class BlackJackGameController {
     }
 
     private boolean isStopGame(Player player) {
-        String response = InputView.askContinue(player.getName().getName());
+        String response = InputView.askContinue(player.getParticipantName());
         if (response.equals("n")) {
             printCards(ParticipantCardsDto.from(player));
             return true;
