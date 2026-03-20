@@ -17,7 +17,7 @@ public class GameManager {
     }
 
     public void dealCard(Participant participant) {
-        participant.add(deck.pop());
+        participant.receiveCard(deck.draw());
     }
 
     public CardsSnapshot getCardsResult(Participant participant) {

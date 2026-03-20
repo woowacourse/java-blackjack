@@ -26,7 +26,8 @@ public class Deck {
         return new Deck(cards);
     }
 
-    public Card pop() {
+    public Card draw() {
+        validateCardsCount();
         Card card = cards.getLast();
         cards.removeLast();
 
@@ -45,11 +46,18 @@ public class Deck {
         return drawnCards;
     }
 
-    private void validateCardsCount(int darwCount) {
-        if (cards.size() < darwCount) {
+    private void validateCardsCount(int drawCount) {
+        if (cards.size() < drawCount) {
             throw new IllegalArgumentException();
         }
     }
+
+    private void validateCardsCount() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+    }
+
 
     public Deck shuffle(DeckShuffler shuffler) {
         List<Card> shuffledCards = shuffler.shuffle(List.copyOf(this.cards));

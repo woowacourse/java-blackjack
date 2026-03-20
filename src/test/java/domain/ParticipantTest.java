@@ -15,9 +15,9 @@ class ParticipantTest {
     @Test
     void 플레이어의_핸드_점수가_21을_초과하면_카드를_더_받을_수_없다() {
         Player player = new Player(Name.from("고래"));
-        player.add(new Card(Rank.TWO, Suit.SPADE));
-        player.add(new Card(Rank.KING, Suit.SPADE));
-        player.add(new Card(Rank.KING, Suit.DIAMOND));
+        player.receiveCard(new Card(Rank.TWO, Suit.SPADE));
+        player.receiveCard(new Card(Rank.KING, Suit.SPADE));
+        player.receiveCard(new Card(Rank.KING, Suit.DIAMOND));
 
         Assertions.assertThat(player.canReceive()).isFalse();
     }
@@ -25,8 +25,8 @@ class ParticipantTest {
     @Test
     void 플레이어의_핸드_점수가_21_이하면_카드를_더_받을_수_있다() {
         Player player = new Player(Name.from("나무"));
-        player.add(new Card(Rank.ACE, Suit.SPADE));
-        player.add(new Card(Rank.KING, Suit.SPADE));
+        player.receiveCard(new Card(Rank.ACE, Suit.SPADE));
+        player.receiveCard(new Card(Rank.KING, Suit.SPADE));
 
         Assertions.assertThat(player.canReceive()).isTrue();
     }
@@ -34,8 +34,8 @@ class ParticipantTest {
     @Test
     void 딜러의_핸드_점수가_16_이하면_카드를_더_받을_수_있다() {
         Dealer dealer = new Dealer();
-        dealer.add(new Card(Rank.TEN, Suit.SPADE));
-        dealer.add(new Card(Rank.SIX, Suit.SPADE));
+        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
+        dealer.receiveCard(new Card(Rank.SIX, Suit.SPADE));
 
         Assertions.assertThat(dealer.canReceive()).isTrue();
     }
@@ -43,8 +43,8 @@ class ParticipantTest {
     @Test
     void 딜러의_핸드_점수가_17_이상이면_카드를_더_받을_수_없다() {
         Dealer dealer = new Dealer();
-        dealer.add(new Card(Rank.TEN, Suit.SPADE));
-        dealer.add(new Card(Rank.SEVEN, Suit.SPADE));
+        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
+        dealer.receiveCard(new Card(Rank.SEVEN, Suit.SPADE));
 
         Assertions.assertThat(dealer.canReceive()).isFalse();
     }

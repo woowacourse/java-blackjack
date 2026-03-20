@@ -27,7 +27,7 @@ public class Participants {
     }
 
     public void distributeCardsToAll(Deck deck, int cardCount) {
-        dealer.addAll(deck.draw(cardCount));
+        dealer.receiveCards(deck.draw(cardCount));
         players.distributeCardsToAll(deck, cardCount);
     }
 

@@ -56,7 +56,7 @@ public class Players implements Iterable<Player> {
 
     public void distributeCardsToAll(Deck deck, int cardCount) {
         for (Player player : players) {
-            player.addAll(deck.draw(cardCount));
+            player.receiveCards(deck.draw(cardCount));
         }
     }
 }

@@ -18,12 +18,11 @@ public abstract class Participant {
         this.name = name;
     }
 
-    public void add(Card card) {
+    public void receiveCard(Card card) {
         hand.add(card);
     }
 
-    //TODO distributeCards로 수정
-    public void addAll(List<Card> cards) {
+    public void receiveCards(List<Card> cards) {
         hand.addAll(cards);
     }
 
