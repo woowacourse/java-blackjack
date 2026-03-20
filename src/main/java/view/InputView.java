@@ -10,15 +10,18 @@ public class InputView {
     public List<String> inputPlayers() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String rawPlayers = sc.nextLine();
-        List<String> playerName = Arrays.stream(rawPlayers.split(","))
+        return Arrays.stream(rawPlayers.split(","))
                 .map(String::trim)
                 .toList();
-        return playerName;
     }
 
     public int inputBettingAmount(String playerName) {
         System.out.println(playerName + "의 배팅 금액은?");
-        return Integer.parseInt(sc.nextLine());
+        try {
+            return Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("배팅 금액은 숫자여야 합니다.");
+        }
     }
 
     public boolean askHit(String playerName) {
