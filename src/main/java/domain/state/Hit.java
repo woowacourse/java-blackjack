@@ -17,11 +17,12 @@ public class Hit extends Running {
 
     @Override
     public State draw(Card card) {
-        hand.add(card);
-        if (hand.isBust()) {
-            return new Bust(Hand.mutableCopyOf(hand));
+        final Hand copied = Hand.mutableCopyOf(hand);
+        copied.add(card);
+        if (copied.isBust()) {
+            return new Bust(Hand.mutableCopyOf(copied));
         }
-        return new Hit(Hand.mutableCopyOf(hand));
+        return new Hit(Hand.mutableCopyOf(copied));
     }
 
     @Override
