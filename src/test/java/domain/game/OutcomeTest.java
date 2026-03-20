@@ -5,7 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class OutcomeTest {
+class OutcomeTest {
 
     @DisplayName("승리하면 베팅 금액만큼 수익이다")
     @Test

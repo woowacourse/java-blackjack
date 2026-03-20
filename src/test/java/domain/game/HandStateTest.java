@@ -9,7 +9,7 @@ import domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class HandStateTest {
+class HandStateTest {
 
     @DisplayName("블랙잭 vs 블랙잭이면 무승부다")
     @Test

@@ -6,7 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BettingMoneyTest {
+class BettingMoneyTest {
 
     @Test
     void 베팅_금액을_생성한다() {

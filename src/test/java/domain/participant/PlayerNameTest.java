@@ -6,7 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PlayerNameTest {
+class PlayerNameTest {
 
     @DisplayName("null이 들어오면 예외가 발생한다")
     @Test

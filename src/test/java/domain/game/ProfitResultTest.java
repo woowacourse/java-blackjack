@@ -8,7 +8,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class ProfitResultTest {
+class ProfitResultTest {
 
     @DisplayName("딜러 수익은 플레이어 수익 합산의 부호 반전이다")
     @Test
