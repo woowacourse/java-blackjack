@@ -45,12 +45,4 @@ public enum HandState {
     public boolean isBust() {
         return this == BUST;
     }
-
-    public boolean isBlackjack() {
-        return this == BLACKJACK;
-    }
-
-    public boolean isStay() {
-        return this == STAY;
-    }
 }

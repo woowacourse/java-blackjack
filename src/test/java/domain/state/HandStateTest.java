@@ -21,7 +21,6 @@ public class HandStateTest {
         HandState handState = hand.getHandState();
 
         assertEquals(HandState.BLACKJACK, handState);
-        assertTrue(handState.isBlackjack());
     }
 
     @Test
@@ -34,8 +33,7 @@ public class HandStateTest {
         HandState handState = hand.getHandState();
 
         assertEquals(HandState.STAY, handState);
-        assertTrue(handState.isStay());
-        assertFalse(handState.isBlackjack());
+        assertFalse(handState == HandState.BLACKJACK);
     }
 
     @Test
