@@ -37,7 +37,7 @@ public record Score(
 
     private Score decideAceValue(int leftAce) {
         if (this.add(ACE_MAX).isLessThanOrEqualTo(BLACKJACK)
-                && BLACKJACK.sub(this.add(ACE_MAX)).isGreaterThanOrEqualTo(leftAce)) {
+                && BLACKJACK.subtract(this.add(ACE_MAX)).isGreaterThanOrEqualTo(leftAce)) {
             return ACE_MAX;
         }
         return ACE_MIN;
@@ -47,7 +47,7 @@ public record Score(
         return new Score(target.value + this.value);
     }
 
-    public Score sub(Score target) {
+    public Score subtract(Score target) {
         return new Score(value - target.value);
     }
 

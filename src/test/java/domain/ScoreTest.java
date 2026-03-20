@@ -60,12 +60,12 @@ public class ScoreTest {
 
     @Test
     void 뺼셈은_정상적으로_수행되어야_한다_성공() {
-        Assertions.assertThat(SEVEN.sub(FOUR)).isEqualTo(THREE);
+        Assertions.assertThat(SEVEN.subtract(FOUR)).isEqualTo(THREE);
     }
 
     @Test
     void 뺼셈은_정상적으로_수행되어야_한다_실패() {
-        Assertions.assertThat(SEVEN.sub(TWO)).isNotEqualTo(FOUR);
+        Assertions.assertThat(SEVEN.subtract(TWO)).isNotEqualTo(FOUR);
     }
 
     @Test
