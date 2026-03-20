@@ -11,7 +11,7 @@ public class ProfitResult {
     }
 
     public Map<Player, Integer> getPlayerProfits() {
-        return playerProfits;
+        return Map.copyOf(playerProfits);
     }
 
     public int getDealerProfit() {

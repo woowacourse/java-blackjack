@@ -15,7 +15,7 @@ public class Players {
     }
 
     public List<Player> getGamePlayers() {
-        return playerList;
+        return List.copyOf(playerList);
     }
 
     public int getSize() {
