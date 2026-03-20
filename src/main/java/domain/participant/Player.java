@@ -2,13 +2,14 @@ package domain.participant;
 
 import domain.game.Betting;
 import domain.game.WinningStatus;
-import domain.strategy.PlayerDrawStrategy;
+
+import static domain.game.BlackjackRule.BLACKJACK_SCORE;
 
 public class Player extends Participant {
     private Betting betting;
 
     public Player(String name) {
-        super(name, new PlayerDrawStrategy());
+        super(name);
         this.betting = Betting.none();
     }
 
@@ -18,5 +19,10 @@ public class Player extends Participant {
 
     public int profit(WinningStatus status) {
         return betting.profit(status);
+    }
+
+    @Override
+    public boolean canDraw() {
+        return score() < BLACKJACK_SCORE;
     }
 }
