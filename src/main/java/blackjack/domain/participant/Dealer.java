@@ -41,7 +41,7 @@ public class Dealer extends Participant {
     public ParticipantResult getInitialResult() {
         return ParticipantResult.of(
             getNickname(),
-            getFirstCard(),
+            List.of(getFirstCard()),
             getTotalScore()
         );
     }

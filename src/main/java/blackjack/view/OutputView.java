@@ -26,7 +26,7 @@ public class OutputView {
 
     public void printInitialResult(List<ParticipantResult> participantsInitialResult) {
         for (ParticipantResult result : participantsInitialResult) {
-            printLine(result.toString());
+            printLine(makeParticipantCardResult(result));
         }
         printNewLine();
     }
@@ -35,14 +35,15 @@ public class OutputView {
         printLine(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", nickname));
     }
 
-    public void printPlayerStatus(String drawablePlayerNickname, String statusByDisplayName) {
-        printLine(String.format("%s카드: %s", drawablePlayerNickname, statusByDisplayName));
+    public void printPlayerStatus(String drawablePlayerNickname, List<String> cardDisplayNames) {
+        String joinedDisplayName = joinCardDisplayName(cardDisplayNames);
+        printLine(String.format("%s카드: %s", drawablePlayerNickname, joinedDisplayName));
     }
 
     public void printGameResult(List<ParticipantResult> participantResult) {
         printNewLine();
         for (ParticipantResult result : participantResult) {
-            printLine(result.toFullString());
+            printLine(makeParticipantGameResult(result));
         }
     }
 
@@ -75,5 +76,23 @@ public class OutputView {
 
     private void printDealerProfitResult(DealerGameResult dealerGameResult) {
         printLine(String.format("딜러: %s", dealerGameResult.profit()));
+    }
+
+    private String joinCardDisplayName(List<String> cardDisplayNames) {
+        return String.join(", ", cardDisplayNames);
+    }
+
+    private String makeParticipantGameResult(ParticipantResult participantResult) {
+        String joinedDisplayName = joinCardDisplayName(participantResult.cardStatus());
+        return String.format("%s카드: %s - 결과: %d",
+            participantResult.nickname(),
+            joinedDisplayName,
+            participantResult.totalScore()
+        );
+    }
+
+    private String makeParticipantCardResult(ParticipantResult participantResult) {
+        String joinedDisplayName = joinCardDisplayName(participantResult.cardStatus());
+        return String.format("%s카드: %s", participantResult.nickname(), joinedDisplayName);
     }
 }

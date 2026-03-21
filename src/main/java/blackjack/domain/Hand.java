@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Hand {
 
@@ -39,8 +38,10 @@ public class Hand {
         return scoreSum;
     }
 
-    public String getStatusByDisplayName() {
-        return cards.stream().map(Card::getDisplayName).collect(Collectors.joining(", "));
+    public List<String> getStatusByDisplayName() {
+        return cards.stream()
+            .map(Card::getDisplayName)
+            .toList();
     }
 
     public Card getFirstCard() {

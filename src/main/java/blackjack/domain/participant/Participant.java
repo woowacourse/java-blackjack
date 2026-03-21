@@ -25,7 +25,7 @@ public abstract class Participant {
         return role == Role.DEALER;
     }
 
-    public String getCardStatus() {
+    public List<String> getCardStatus() {
         return hand.getStatusByDisplayName();
     }
 
