@@ -23,7 +23,7 @@ class NameTest {
     @ParameterizedTest
     @DisplayName("이름이 공백이거나 공백이나 특수문자가 포함된 경우 오류가 발생한다.")
     @NullAndEmptySource
-    @ValueSource(strings = {" ", "공 백문자포함", "특수문자포함!"})
+    @ValueSource(strings = {"", " ", "공 백문자포함", "특수문자포함!", "\n"})
     void shouldThrowExceptionForInvalidName(String name) {
         // when & then
         assertThatThrownBy(

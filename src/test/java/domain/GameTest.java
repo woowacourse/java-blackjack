@@ -1,8 +1,8 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,9 +14,24 @@ class GameTest {
     };
     private Game game;
 
+    private Players createDummyPlayer() {
+        List<Player> players = new ArrayList<>();
+        for (String playerName : PLAYER_NAMES) {
+            Player player = new Player(new Name(playerName), new BetMoney(1000));
+            players.add(player);
+        }
+        return Players.of(players);
+    }
+
+    private void addCardsToParticipantDeck(Participant participant, Card... cards) {
+        for (Card card : cards) {
+            participant.addCard(card);
+        }
+    }
+
     @BeforeEach
     void setUp() {
-        game = Game.registerParticipantsAndPrepareTotalDeck(PLAYER_NAMES, FIXED_SHUFFLE_STRATEGY);
+        game = Game.registerParticipantsAndPrepareTotalDeck(createDummyPlayer(), FIXED_SHUFFLE_STRATEGY);
     }
 
     @Test
@@ -45,13 +60,13 @@ class GameTest {
     void shouldReturnTrueWhenParticipantsCanDrawCardUnderCondition() {
         // given
         Dealer dealer = game.getDealer();
-        addCardsToPlayerDeck(dealer,
+        addCardsToParticipantDeck(dealer,
                 new Card(CardShape.SPADE, CardContents.TWO),
                 new Card(CardShape.CLOVER, CardContents.THREE)
         );
 
         Player player = game.getPlayers().iterator().next();
-        addCardsToPlayerDeck(player,
+        addCardsToParticipantDeck(player,
                 new Card(CardShape.HEART, CardContents.TWO),
                 new Card(CardShape.HEART, CardContents.THREE)
         );
@@ -61,13 +76,7 @@ class GameTest {
         boolean playerResult = game.drawCardUnderCondition(player);
 
         // then
-        assertTrue(dealerResult);
-        assertTrue(playerResult);
-    }
-
-    private void addCardsToPlayerDeck(Participant participant, Card... cards) {
-        for (Card card : cards) {
-            participant.addCard(card);
-        }
+        assertThat(dealerResult).isTrue();
+        assertThat(playerResult).isTrue();
     }
 }

@@ -14,11 +14,10 @@ public class Game {
         this.players = players;
     }
 
-    public static Game registerParticipantsAndPrepareTotalDeck(List<String> playerNames,
+    public static Game registerParticipantsAndPrepareTotalDeck(Players players,
                                                                CardShuffleStrategy strategy) {
         Deck totalDeck = Deck.createTotalDeckAndShuffle(strategy);
         Dealer dealer = new Dealer();
-        Players players = Players.of(playerNames);
         return new Game(totalDeck, dealer, players);
     }
 
