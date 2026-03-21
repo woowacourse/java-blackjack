@@ -19,4 +19,8 @@ public record BetMoney(int betAmount) {
             throw new IllegalArgumentException("배팅 금액은 10원 단위로만 입력하실 수 있습니다.");
         }
     }
+
+    public long calculateBettingProfit(double returnRate) {
+        return (long) (betAmount * returnRate);
+    }
 }

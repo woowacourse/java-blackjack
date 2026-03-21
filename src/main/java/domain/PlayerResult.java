@@ -38,7 +38,7 @@ public enum PlayerResult {
         return PlayerResult.WIN;
     }
 
-    public double getReturnRate() {
-        return returnRate;
+    public Long multiplyReturnRate(BetMoney betMoney) {
+        return betMoney.calculateBettingProfit(returnRate);
     }
 }

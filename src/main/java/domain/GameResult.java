@@ -30,8 +30,7 @@ public class GameResult {
         Map<Player, Profit> playerWinTieLossResults = new LinkedHashMap<>();
         for (Player player : players) {
             PlayerResult playerResult = PlayerResult.determinePlayerResult(dealer, player);
-            double rate = playerResult.getReturnRate();
-            long profit = player.calculateBettingProfit(rate);
+            long profit = player.calculateBettingProfit(playerResult);
             playerWinTieLossResults.put(player, new Profit(profit));
         }
         return playerWinTieLossResults;

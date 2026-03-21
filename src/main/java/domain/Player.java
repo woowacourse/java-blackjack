@@ -20,7 +20,7 @@ public class Player extends Participant {
         return super.isLessThanMaxScore();
     }
 
-    public Long calculateBettingProfit(double returnRate) {
-        return (long) (betMoney.betAmount() * returnRate);
+    public Long calculateBettingProfit(PlayerResult playerResult) {
+        return playerResult.multiplyReturnRate(betMoney);
     }
 }
