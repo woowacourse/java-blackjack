@@ -27,13 +27,13 @@ public class GameResult {
     }
 
     private static Map<Player, Profit> calculatePlayerResults(Dealer dealer, Players players) {
-        Map<Player, Profit> playerWinTieLossResults = new LinkedHashMap<>();
+        Map<Player, Profit> playerFinalGameProfitResults = new LinkedHashMap<>();
         for (Player player : players) {
             PlayerResult playerResult = PlayerResult.determinePlayerResult(dealer, player);
             long profit = player.calculateBettingProfit(playerResult);
-            playerWinTieLossResults.put(player, new Profit(profit));
+            playerFinalGameProfitResults.put(player, new Profit(profit));
         }
-        return playerWinTieLossResults;
+        return playerFinalGameProfitResults;
     }
 
     private static Profit calculateDealerResult(Map<Player, Profit> playerProfits) {

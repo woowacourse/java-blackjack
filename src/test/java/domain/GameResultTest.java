@@ -30,8 +30,8 @@ class GameResultTest {
     }
 
     @Test
-    @DisplayName("최종 승패 결과 계산이 정확하게 수행된다.")
-    void shouldReturnWinTieLossResult() {
+    @DisplayName("최종 승패 결과 계산(플레이어 블랙잭 승리 1.5배 수익, 일반 승리 1배 수익, 패배 -1배 수익, 무승부 수익 0원)이 정확하게 수행된다.")
+    void shouldReturnFinalGameProfitResult() {
         // given
         Dealer dealer = new Dealer();
         addCardsToParticipantDeck(dealer,
@@ -51,26 +51,27 @@ class GameResultTest {
         Player player2 = playerIterator.next();
         addCardsToParticipantDeck(player2,
                 new Card(CardShape.SPADE, CardContents.J),
-                new Card(CardShape.SPADE, CardContents.THREE)
+                new Card(CardShape.SPADE, CardContents.NINE),
+                new Card(CardShape.SPADE, CardContents.TWO)
         );
         Player player3 = playerIterator.next();
         addCardsToParticipantDeck(player3,
                 new Card(CardShape.CLOVER, CardContents.J),
-                new Card(CardShape.CLOVER, CardContents.NINE)
+                new Card(CardShape.CLOVER, CardContents.THREE)
         );
         Player player4 = playerIterator.next();
         addCardsToParticipantDeck(player4,
                 new Card(CardShape.HEART, CardContents.K),
-                new Card(CardShape.HEART, CardContents.NINE)
+                new Card(CardShape.HEART, CardContents.EIGHT)
         );
 
-        Map<Player, Profit> expectPlayerWinLossResults = new LinkedHashMap<>();
-        expectPlayerWinLossResults.put(player1, new Profit(1500L));
-        expectPlayerWinLossResults.put(player2, new Profit(-1000L));
-        expectPlayerWinLossResults.put(player3, new Profit(1000L));
-        expectPlayerWinLossResults.put(player4, new Profit(1000L));
+        Map<Player, Profit> expectPlayerFinalGameProfitResults = new LinkedHashMap<>();
+        expectPlayerFinalGameProfitResults.put(player1, new Profit(1500L));
+        expectPlayerFinalGameProfitResults.put(player2, new Profit(1000L));
+        expectPlayerFinalGameProfitResults.put(player3, new Profit(-1000L));
+        expectPlayerFinalGameProfitResults.put(player4, new Profit(0L));
 
-        long expectDealerWinLossResults = -2500L;
+        long expectDealerFinalGameProfitResults = -1500L;
 
         // when
         GameResult gameResult = GameResult.calculate(dealer, players);
@@ -78,8 +79,44 @@ class GameResultTest {
         long dealerResults = gameResult.getDealerProfit();
 
         // then
-        assertThat(playerResults).isEqualTo(expectPlayerWinLossResults);
-        assertThat(dealerResults).isEqualTo(expectDealerWinLossResults);
+        assertThat(playerResults).isEqualTo(expectPlayerFinalGameProfitResults);
+        assertThat(dealerResults).isEqualTo(expectDealerFinalGameProfitResults);
+    }
+
+    @Test
+    @DisplayName("딜러만 블랙잭일 때 최종 승패 결과 계산이 정확하게 수행된다.")
+    void shouldReturnFinalGameProfitResultWhenDealerIsBlackJackAndPlayerIsNot() {
+        // given
+        Dealer dealer = new Dealer();
+        addCardsToParticipantDeck(dealer,
+                new Card(CardShape.HEART, CardContents.J),
+                new Card(CardShape.HEART, CardContents.A)
+        );
+
+        List<String> playerNames = List.of("pobi");
+        Players players = createDummyPlayer(playerNames);
+        Iterator<Player> playerIterator = players.iterator();
+
+        Player player1 = playerIterator.next();
+        addCardsToParticipantDeck(player1,
+                new Card(CardShape.DIAMOND, CardContents.J),
+                new Card(CardShape.DIAMOND, CardContents.FIVE),
+                new Card(CardShape.DIAMOND, CardContents.SIX)
+        );
+
+        Map<Player, Profit> expectPlayerFinalGameProfitResults = new LinkedHashMap<>();
+        expectPlayerFinalGameProfitResults.put(player1, new Profit(-1000L));
+
+        long expectDealerFinalGameProfitResults = 1000L;
+
+        // when
+        GameResult gameResult = GameResult.calculate(dealer, players);
+        Map<Player, Profit> playerResults = gameResult.getPlayerProfits();
+        long dealerResults = gameResult.getDealerProfit();
+
+        // then
+        assertThat(playerResults).isEqualTo(expectPlayerFinalGameProfitResults);
+        assertThat(dealerResults).isEqualTo(expectDealerFinalGameProfitResults);
     }
 
     @Nested
