@@ -1,8 +1,8 @@
 package view;
 
 import domain.card.Card;
-import domain.game.BlackjackStatistics;
-import domain.game.PlayerProfit;
+import domain.game.result.BlackjackStatistics;
+import domain.game.result.PlayerProfit;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.List;
