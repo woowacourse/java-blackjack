@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.Deck;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -10,6 +11,10 @@ public class Players implements Iterable<Player> {
     private static final String ERROR_PLAYER_COUNT = "참가할 플레이어의 수는 최대 7명입니다.";
     private static final int MAX_PLAYER_COUNT = 7;
     private final List<Player> players;
+
+    public List<Player> getPlayers() {
+        return List.copyOf(players);
+    }
 
     private Players(List<Player> players) {
         this.players = List.copyOf(players);
@@ -22,7 +27,7 @@ public class Players implements Iterable<Player> {
 
     @Override
     public Iterator<Player> iterator() {
-         return players.iterator();
+        return players.iterator();
     }
 
     private static void validate(List<Player> players) {
@@ -47,5 +52,11 @@ public class Players implements Iterable<Player> {
         Set<Player> uniquePlayers = new HashSet<>(players);
 
         return players.size() != uniquePlayers.size();
+    }
+
+    public void distributeCardsToAll(Deck deck, int cardCount) {
+        for (Player player : players) {
+            player.receiveCards(deck.draw(cardCount));
+        }
     }
 }

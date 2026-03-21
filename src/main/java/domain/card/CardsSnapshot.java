@@ -14,7 +14,7 @@ public record CardsSnapshot(List<Card> cards) {
 
     public String getFormattedCards() {
         return cards.stream()
-                .map(card -> card.symbol() + formatSuit(card.suit()))
+                .map(card -> card.rankSymbol() + formatSuit(card.suit()))
                 .collect(Collectors.joining(", "));
     }
 

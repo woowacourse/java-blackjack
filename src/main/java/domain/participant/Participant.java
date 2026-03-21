@@ -2,9 +2,14 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.CardsSnapshot;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
+    public static final int BUST_THRESHOLD = 21;
+    public static final int BLACKJACK_SCORE = 21;
+    private static final int NATURAL_CARDS_COUNT = 2;
+
     private final Name name;
     private final Hand hand;
 
@@ -13,8 +18,12 @@ public abstract class Participant {
         this.name = name;
     }
 
-    public void addCard(Card card) {
+    public void receiveCard(Card card) {
         hand.add(card);
+    }
+
+    public void receiveCards(List<Card> cards) {
+        hand.addAll(cards);
     }
 
     public CardsSnapshot handInfo() {
@@ -25,12 +34,40 @@ public abstract class Participant {
         return hand.firstCardSnapshot();
     }
 
-    public String getName() {
-        return name.value();
+    public List<Card> cardsInHand() {
+        return hand.cards();
+    }
+
+    public Card firstCardInHand() {
+        return hand.firstCard();
+    }
+
+    public int cardsCount() {
+        return hand.cardsCount();
     }
 
     public int getScore() {
         return hand.calculateScore();
+    }
+
+    public boolean hasScoreHigherThan(Participant otherParticipant) {
+        return this.getScore() > otherParticipant.getScore();
+    }
+
+    public boolean hasScoreSameAs(Participant otherParticipant) {
+        return this.getScore() == otherParticipant.getScore();
+    }
+
+    public boolean isBust() {
+        return getScore() > BUST_THRESHOLD;
+    }
+
+    public boolean isNatural() {
+        return (getScore() == BLACKJACK_SCORE) && (cardsCount() == NATURAL_CARDS_COUNT);
+    }
+
+    public Name getName() {
+        return this.name;
     }
 
     @Override

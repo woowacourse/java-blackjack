@@ -18,15 +18,15 @@ public class HandTest {
     void 카드숫자_2에서_10은_그대로_계산한다() {
         Hand hand = new Hand();
         List<Card> cards = List.of(
-                new Card(Suit.SPADE, Rank.TWO),
-                new Card(Suit.SPADE, Rank.THREE),
-                new Card(Suit.SPADE, Rank.FOUR),
-                new Card(Suit.SPADE, Rank.FIVE),
-                new Card(Suit.SPADE, Rank.SIX),
-                new Card(Suit.SPADE, Rank.SEVEN),
-                new Card(Suit.SPADE, Rank.EIGHT),
-                new Card(Suit.SPADE, Rank.NINE),
-                new Card(Suit.SPADE, Rank.TEN));
+                new Card(Rank.TWO, Suit.SPADE),
+                new Card(Rank.THREE, Suit.SPADE),
+                new Card(Rank.FOUR, Suit.SPADE),
+                new Card(Rank.FIVE, Suit.SPADE),
+                new Card(Rank.SIX, Suit.SPADE),
+                new Card(Rank.SEVEN, Suit.SPADE),
+                new Card(Rank.EIGHT, Suit.SPADE),
+                new Card(Rank.NINE, Suit.SPADE),
+                new Card(Rank.TEN, Suit.SPADE));
         for (Card card : cards) {
             hand.add(card);
         }
@@ -52,27 +52,27 @@ public class HandTest {
     private static Stream<Arguments> provideAceCases() {
         return Stream.of(
                 Arguments.of(List.of(
-                        new Card(Suit.SPADE, Rank.ACE)
+                        new Card(Rank.ACE, Suit.SPADE)
                 ), 11),
 
                 Arguments.of(List.of(
-                        new Card(Suit.SPADE, Rank.ACE),
-                        new Card(Suit.CLOVER, Rank.ACE),
-                        new Card(Suit.SPADE, Rank.TWO),
-                        new Card(Suit.SPADE, Rank.THREE)
+                        new Card(Rank.ACE, Suit.SPADE),
+                        new Card(Rank.ACE, Suit.CLOVER),
+                        new Card(Rank.TWO, Suit.SPADE),
+                        new Card(Rank.THREE, Suit.SPADE)
                 ), 17),
 
                 Arguments.of(List.of(
-                        new Card(Suit.SPADE, Rank.TEN),
-                        new Card(Suit.CLOVER, Rank.TEN),
-                        new Card(Suit.HEART, Rank.TEN),
-                        new Card(Suit.SPADE, Rank.ACE)
+                        new Card(Rank.TEN, Suit.SPADE),
+                        new Card(Rank.TEN, Suit.CLOVER),
+                        new Card(Rank.TEN, Suit.HEART),
+                        new Card(Rank.ACE, Suit.SPADE)
                 ), 31),
 
                 Arguments.of(List.of(
-                        new Card(Suit.SPADE, Rank.TEN),
-                        new Card(Suit.CLOVER, Rank.TEN),
-                        new Card(Suit.SPADE, Rank.ACE)
+                        new Card(Rank.TEN, Suit.SPADE),
+                        new Card(Rank.TEN, Suit.CLOVER),
+                        new Card(Rank.ACE, Suit.SPADE)
                 ), 21)
         );
     }
@@ -93,21 +93,21 @@ public class HandTest {
     private static Stream<Arguments> provideFaceCardCases() {
         return Stream.of(
                 Arguments.of(List.of(
-                        new Card(Suit.SPADE, Rank.JACK)
+                        new Card(Rank.JACK, Suit.SPADE)
                 ), 10),
                 Arguments.of(List.of(
-                        new Card(Suit.SPADE, Rank.QUEEN)
+                        new Card(Rank.QUEEN, Suit.SPADE)
                 ), 10),
                 Arguments.of(List.of(
-                        new Card(Suit.SPADE, Rank.KING)
+                        new Card(Rank.KING, Suit.SPADE)
                 ), 10),
 
                 Arguments.of(List.of(
-                        new Card(Suit.SPADE, Rank.ACE),
-                        new Card(Suit.SPADE, Rank.TEN),
-                        new Card(Suit.SPADE, Rank.JACK),
-                        new Card(Suit.SPADE, Rank.QUEEN),
-                        new Card(Suit.SPADE, Rank.KING)
+                        new Card(Rank.ACE, Suit.SPADE),
+                        new Card(Rank.TEN, Suit.SPADE),
+                        new Card(Rank.JACK, Suit.SPADE),
+                        new Card(Rank.QUEEN, Suit.SPADE),
+                        new Card(Rank.KING, Suit.SPADE)
                 ), 41)
         );
     }

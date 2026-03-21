@@ -4,8 +4,7 @@ import java.util.Arrays;
 
 public enum Command {
     YES("y"),
-    NO("n")
-    ;
+    NO("n");
 
     private final String input;
 
@@ -16,7 +15,7 @@ public enum Command {
     public static Command from(String input) {
         return Arrays.stream(Command.values())
                 .filter(c -> c.input.equalsIgnoreCase(input))
-                .findFirst()
+                .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 입력입니다."));
     }
 

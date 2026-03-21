@@ -1,13 +1,11 @@
 package domain;
 
 import domain.card.CardsSnapshot;
-import domain.participant.Dealer;
 import domain.participant.Participant;
-import domain.participant.Player;
-import domain.participant.Players;
+import domain.participant.Participants;
 
 public class GameManager {
-    private static final int STARTING_CARD_COUNT = 2;
+    private static final int INITIAL_CARD_COUNT = 2;
     private final Deck deck;
 
     private GameManager(Deck deck) {
@@ -19,28 +17,14 @@ public class GameManager {
     }
 
     public void dealCard(Participant participant) {
-        participant.addCard(deck.pop());
-    }
-
-    public void dealCardTo(Players players, int count) {
-        for (int i = 0; i < count; i++) {
-            for (Player player : players) {
-                dealCard(player);
-            }
-        }
-    }
-
-    public CardsSnapshot getStartingCard(Dealer dealer) {
-        return dealer.startingHandInfo();
+        participant.receiveCard(deck.draw());
     }
 
     public CardsSnapshot getCardsResult(Participant participant) {
         return participant.handInfo();
     }
 
-    public void dealStartingCards(Participant participant) {
-        for (int i = 0; i < STARTING_CARD_COUNT; i++) {
-            participant.addCard(deck.pop());
-        }
+    public void dealInitialCards(Participants participants) {
+        participants.distributeCardsToAll(deck, INITIAL_CARD_COUNT);
     }
 }

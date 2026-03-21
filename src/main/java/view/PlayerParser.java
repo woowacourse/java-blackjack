@@ -1,5 +1,8 @@
-package domain.participant;
+package view;
 
+import domain.participant.Name;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,10 +11,11 @@ public class PlayerParser {
     private static final String DELIMITER = ",";
 
     public static Players parseToPlayers(String rawPlayerNames) {
+
         validateRawPlayerNames(rawPlayerNames);
 
         List<Player> players = splitByDelimiter(rawPlayerNames).stream()
-                .map(Name::from)
+                .map(Name::new)
                 .map(Player::new)
                 .toList();
 
