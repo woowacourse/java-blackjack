@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
+    private static final String ERROR_DRAW_CARD_COUNT = "Deck 카드 Draw 오류. 남은 카드수: %d, Draw 카드 수: %d";
     private final List<Card> cards;
 
     private Deck(List<Card> cards) {
@@ -39,8 +40,7 @@ public class Deck {
         List<Card> drawnCards = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
-            drawnCards.add(cards.getLast());
-            cards.removeLast();
+            drawnCards.add(draw());
         }
 
         return List.copyOf(drawnCards);
@@ -48,13 +48,15 @@ public class Deck {
 
     private void validateCardsCount(int drawCount) {
         if (cards.size() < drawCount) {
-            throw new IllegalArgumentException();
+            String message = String.format(ERROR_DRAW_CARD_COUNT, cards.size(), drawCount);
+            throw new IllegalArgumentException(message);
         }
     }
 
     private void validateCardsCount() {
         if (cards.isEmpty()) {
-            throw new IllegalArgumentException();
+            String message = String.format(ERROR_DRAW_CARD_COUNT, 0, 1);
+            throw new IllegalArgumentException(message);
         }
     }
 
