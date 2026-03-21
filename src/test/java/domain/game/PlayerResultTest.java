@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class ResultTest {
+class PlayerResultTest {
 
     @Nested
     class GetProfitTest {
@@ -16,7 +16,7 @@ class ResultTest {
             int betAmount = 1000;
 
             // when
-            int actual = Result.BLACKJACK_WIN.getProfit(betAmount);
+            int actual = PlayerResult.BLACKJACK_WIN.getProfit(betAmount);
 
             // then
             assertThat(actual).isEqualTo(1500);
@@ -28,7 +28,7 @@ class ResultTest {
             int betAmount = 1000;
 
             // when
-            int actual = Result.WIN.getProfit(betAmount);
+            int actual = PlayerResult.WIN.getProfit(betAmount);
 
             // then
             assertThat(actual).isEqualTo(1000);
@@ -40,7 +40,7 @@ class ResultTest {
             int betAmount = 1000;
 
             // when
-            int actual = Result.DRAW.getProfit(betAmount);
+            int actual = PlayerResult.DRAW.getProfit(betAmount);
 
             // then
             assertThat(actual).isEqualTo(0);
@@ -52,7 +52,7 @@ class ResultTest {
             int betAmount = 1000;
 
             // when
-            int actual = Result.LOSE.getProfit(betAmount);
+            int actual = PlayerResult.LOSE.getProfit(betAmount);
 
             // then
             assertThat(actual).isEqualTo(-1000);
