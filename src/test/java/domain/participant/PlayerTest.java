@@ -35,7 +35,7 @@ public class PlayerTest {
                 new Card(Suit.HEART, Rank.ACE)
         );
 
-        assertFalse(player.canHit());
+        assertFalse(player.shouldDrawCard());
     }
 
     @Test
@@ -48,6 +48,6 @@ public class PlayerTest {
                 new Card(Suit.HEART, Rank.NINE)
         );
 
-        assertTrue(player.canHit());
+        assertTrue(player.shouldDrawCard());
     }
 }

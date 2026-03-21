@@ -21,7 +21,8 @@ public final class Player extends Participant {
         this(new Name(name), new Betting(betting));
     }
 
-    public boolean canHit() {
+    @Override
+    public boolean shouldDrawCard() {
         return !stand && canDraw();
     }
 

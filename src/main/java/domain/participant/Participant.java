@@ -39,6 +39,8 @@ public abstract class Participant {
         return hand.canDraw();
     }
 
+    public abstract boolean shouldDrawCard();
+
     protected void addBalance(int amount){
         this.balance = new Balance(balance.getBalance() + amount);
     }

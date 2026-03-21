@@ -43,7 +43,7 @@ public class BlackJackController {
     }
 
     private void drawPlayerTurn(Player player, Cards cards) {
-        while (player.canHit()) {
+        while (player.shouldDrawCard()) {
             final HitStand decision = inputView.askHitOrStand(player.getName());
             if (decision == HitStand.STAND) {
                 player.stand();
