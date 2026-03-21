@@ -16,24 +16,24 @@ public class CardMachine {
 
     public CardMachine() {
         List<Card> decks = new ArrayList<>();
-        setDecks(decks);
+        makeShoe(decks);
         Collections.shuffle(decks);
         this.decks = new ArrayDeque<>(decks);
     }
 
-    private void setDecks(List<Card> decks) {
+    private void makeShoe(List<Card> decks) {
         for (int i = 0; i < DECK_COUNT; i++) {
-            setRanksAndSuits(decks);
+            makeSingleDeck(decks);
         }
     }
 
-    private void setRanksAndSuits(List<Card> decks) {
+    private void makeSingleDeck(List<Card> decks) {
         for (Rank rank : Rank.values()) {
-            setSuits(decks, rank);
+            makeCardsForRank(decks, rank);
         }
     }
 
-    private void setSuits(List<Card> decks, Rank rank) {
+    private void makeCardsForRank(List<Card> decks, Rank rank) {
         for (Suit suit : Suit.values()) {
             decks.add(new Card(rank, suit));
         }
