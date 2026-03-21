@@ -1,4 +1,4 @@
-package domain.game;
+package domain.game.result;
 
 public record PlayerProfit(
         String name,
