@@ -11,13 +11,13 @@ import dto.PlayerStatisticDto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlackjackGameManager {
+public class BlackjackGame {
 
     private final CardMachine cardMachine;
     private final BlackjackJudge blackjackJudge;
     private final Participants participants;
 
-    public BlackjackGameManager(CardMachine cardMachine, BlackjackJudge blackjackJudge, Participants participants) {
+    public BlackjackGame(CardMachine cardMachine, BlackjackJudge blackjackJudge, Participants participants) {
         this.cardMachine = cardMachine;
         this.blackjackJudge = blackjackJudge;
         this.participants = participants;
