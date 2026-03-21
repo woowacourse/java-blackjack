@@ -1,28 +1,46 @@
 package blackjack.config;
 
 import blackjack.controller.BlackjackController;
-import blackjack.view.InputView;
+import blackjack.domain.deck.CollectionsShuffle;
+import blackjack.domain.deck.Deck;
+import blackjack.view.input.ConsoleInputView;
+import blackjack.view.input.InputView;
+import blackjack.view.output.ConsoleOutputView;
+import blackjack.view.output.OutputView;
 
 public class AppConfig {
 
     private BlackjackController controller;
     private InputView inputView;
-
-    public AppConfig() {
-    }
+    private OutputView outputView;
+    private Deck deck;
 
     public BlackjackController controller() {
         if (controller == null) {
-            this.controller = new BlackjackController(inputView());
+            controller = new BlackjackController(inputView(), outputView(), deck());
         }
         return controller;
     }
 
     private InputView inputView() {
         if (inputView == null) {
-            this.inputView = new InputView();
+            inputView = new ConsoleInputView();
         }
         return inputView;
+    }
+
+    private OutputView outputView() {
+        if (outputView == null) {
+            outputView = new ConsoleOutputView();
+        }
+        return outputView;
+    }
+
+    private Deck deck() {
+        if (deck == null) {
+            deck = Deck.createWithShuffled(new CollectionsShuffle());
+        }
+        return deck;
     }
 
 }

@@ -1,0 +1,62 @@
+package blackjack.domain.card;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Cards {
+
+    public static final int SIZE_OF_INITIAL_CARD = 2;
+    private static final int MAX_SCORE = 21;
+    private static final int ACE_ADVANTAGE_VALUE = 10;
+
+    private final List<Card> cards;
+
+    public Cards() {
+        this.cards = new ArrayList<>();
+    }
+
+    public void add(Card card) {
+        cards.add(card);
+    }
+
+    public boolean isBurst() {
+        return calculateSumOfCards() > MAX_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == 2 && isMaxScore();
+    }
+
+    public boolean isMaxScore() {
+        return calculateSumOfCards() == MAX_SCORE;
+    }
+
+    public String getFirstCardName() {
+        return cards.getFirst().getName();
+    }
+
+    public List<String> getCardsName() {
+        return cards.stream()
+                .map(Card::getName)
+                .toList();
+    }
+
+    public int calculateSumOfCards() {
+        int sum = cards.stream()
+                .mapToInt(Card::getCardValue)
+                .sum();
+        return applyBestAceValue(sum);
+    }
+
+    private int applyBestAceValue(int sum) {
+        if (hasAce() && (sum + ACE_ADVANTAGE_VALUE) <= MAX_SCORE) {
+            return sum + ACE_ADVANTAGE_VALUE;
+        }
+        return sum;
+    }
+
+    private boolean hasAce() {
+        return cards.stream().anyMatch(Card::isAce);
+    }
+
+}
