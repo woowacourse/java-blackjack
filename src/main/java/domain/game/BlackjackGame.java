@@ -2,6 +2,8 @@ package domain.game;
 
 import domain.card.Card;
 import domain.card.CardMachine;
+import domain.game.result.BlackjackStatistics;
+import domain.game.result.PlayerProfit;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
@@ -37,7 +39,7 @@ public class BlackjackGame {
         return cardMachine.drawCard();
     }
 
-    public Player updatePlayer(String name) {
+    public Player hitPlayer(String name) {
         return participants.drawCardsByPlayer(name, this::drawCard);
     }
 
