@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,16 +12,15 @@ public class Deck {
     private final List<Card> cards;
 
     private Deck(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public static Deck create() {
         List<Card> cards = new ArrayList<>();
 
         for (Suit suit : Suit.values()) {
-            for (Rank cardNumber : Rank.values()) {
-                cards.add(new Card(cardNumber, suit));
-            }
+            Arrays.stream(Rank.values())
+                    .forEach(rank -> cards.add(new Card(rank, suit)));
         }
 
         return new Deck(cards);
@@ -59,7 +59,8 @@ public class Deck {
     }
 
     public Deck shuffle(DeckShuffler shuffler) {
-        List<Card> shuffledCards = shuffler.shuffle(new ArrayList<>(this.cards));
+        List<Card> shuffledCards = shuffler.shuffle(Collections.unmodifiableList(cards));
+
         return new Deck(shuffledCards);
     }
 
