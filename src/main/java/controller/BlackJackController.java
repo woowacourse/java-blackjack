@@ -175,6 +175,6 @@ public class BlackJackController {
         outputView.printCardInfosWithSum(participantDtos);
 
         GameResultDto gameResultDto = GameResultDto.from(game.generateGameResult());
-        outputView.printWinTieLossResult(gameResultDto);
+        outputView.printFinalGameProfitResult(gameResultDto);
     }
 }

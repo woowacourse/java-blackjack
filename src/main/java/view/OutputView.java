@@ -85,32 +85,32 @@ public class OutputView {
         return cardInfos;
     }
 
-    public void printWinTieLossResult(GameResultDto gameResultDto) {
+    public void printFinalGameProfitResult(GameResultDto gameResultDto) {
         System.out.println();
         System.out.println("## 최종 수익");
 
-        String dealerWinTieLossResult = consistDealerWinTieLossResult(gameResultDto.dealerWinTieLossResult());
-        System.out.println(dealerWinTieLossResult);
+        String dealerFinalGameProfitResult = consistDealerFinalGameProfitResult(gameResultDto.dealerWinTieLossResult());
+        System.out.println(dealerFinalGameProfitResult);
 
-        List<String> playerWinTieLossResults = consistPlayerWinTieLossResults(gameResultDto);
-        for (String playerWinTieLossResult : playerWinTieLossResults) {
-            System.out.println(playerWinTieLossResult);
+        List<String> playerFinalGameProfitResults = consistPlayerFinalGameProfitResults(gameResultDto);
+        for (String playerFinalGameProfitResult : playerFinalGameProfitResults) {
+            System.out.println(playerFinalGameProfitResult);
         }
     }
 
-    private String consistDealerWinTieLossResult(Long dealerWinTieLossResult) {
-        return String.format("딜러: %d", dealerWinTieLossResult);
+    private String consistDealerFinalGameProfitResult(Long dealerFinalGameProfitResult) {
+        return String.format("딜러: %d", dealerFinalGameProfitResult);
     }
 
-    private List<String> consistPlayerWinTieLossResults(GameResultDto gameResultDto) {
-        List<String> playerResult = new ArrayList<>();
-        Map<String, Long> playerWinLossResults = gameResultDto.playerWinTieLossResults();
-        for (Entry<String, Long> result : playerWinLossResults.entrySet()) {
+    private List<String> consistPlayerFinalGameProfitResults(GameResultDto gameResultDto) {
+        List<String> playerFinalGameProfitResult = new ArrayList<>();
+        Map<String, Long> playerFinalGameProfitResults = gameResultDto.playerWinTieLossResults();
+        for (Entry<String, Long> result : playerFinalGameProfitResults.entrySet()) {
             String name = result.getKey();
-            Long winTieLoss = result.getValue();
-            String resultInFormat = String.format("%s: %d", name, winTieLoss);
-            playerResult.add(resultInFormat);
+            Long finalGameProfit = result.getValue();
+            String resultInFormat = String.format("%s: %d", name, finalGameProfit);
+            playerFinalGameProfitResult.add(resultInFormat);
         }
-        return playerResult;
+        return playerFinalGameProfitResult;
     }
 }
