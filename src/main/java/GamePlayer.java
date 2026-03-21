@@ -1,5 +1,3 @@
-package controller;
-
 import domain.Command;
 import domain.GameManager;
 import domain.betting.BettingAmount;
@@ -20,12 +18,12 @@ import view.dto.InitialDealingResult;
 import view.dto.ParticipantCards;
 import view.dto.ParticipantsProfit;
 
-public class GameController {
+public class GamePlayer {
     private final InputView inputView;
     private final OutputView outputView;
     private final GameManager gameManager;
 
-    public GameController(InputView inputView, OutputView outputView, GameManager manager) {
+    public GamePlayer(InputView inputView, OutputView outputView, GameManager manager) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.gameManager = manager;

@@ -1,4 +1,3 @@
-import controller.GameController;
 import domain.Deck;
 import domain.GameManager;
 import domain.RandomDeckShuffler;
@@ -16,8 +15,8 @@ public class Application {
         deck = deck.shuffle(new RandomDeckShuffler());
         GameManager gameManager = GameManager.createWith(deck);
 
-        GameController gameController = new GameController(inputView, outputView, gameManager);
+        GamePlayer gamePlayer = new GamePlayer(inputView, outputView, gameManager);
 
-        gameController.run();
+        gamePlayer.run();
     }
 }
