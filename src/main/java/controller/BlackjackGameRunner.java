@@ -2,7 +2,7 @@ package controller;
 
 import domain.card.CardMachine;
 import domain.game.BlackjackGame;
-import domain.game.BlackjackStatistics;
+import domain.game.result.BlackjackStatistics;
 import domain.game.BlackjackJudge;
 import domain.game.HitOrStand;
 import domain.participant.BetAmount;
@@ -28,11 +28,8 @@ public class BlackjackGameRunner {
     public void start() {
         List<PlayerName> playerNames = inputPlayerNames();
         List<BetAmount> betAmounts = inputBetAmounts(playerNames);
-        BlackjackGame blackjackGame = new BlackjackGame(
-                new CardMachine(),
-                new BlackjackJudge(),
-                Participants.of(playerNames, betAmounts)
-        );
+        BlackjackGame blackjackGame = new BlackjackGame(new CardMachine(), new BlackjackJudge(),
+                Participants.of(playerNames, betAmounts));
 
         initializeGame(blackjackGame);
         inputHitOrStandOnPlayer(blackjackGame);
@@ -89,7 +86,7 @@ public class BlackjackGameRunner {
 
     private void drawCardOnPlayer(String name, BlackjackGame blackjackGame) {
         do {
-            Player player = blackjackGame.updatePlayer(name);
+            Player player = blackjackGame.hitPlayer(name);
             outputView.printlnHand(name, player.getHand());
         } while (canDrawContinue(name, blackjackGame));
     }
