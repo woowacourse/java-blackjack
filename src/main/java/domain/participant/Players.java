@@ -13,6 +13,7 @@ public class Players {
     private static final int PLAYER_MIN_COUNT = 2;
     private static final int PLAYER_MAX_COUNT = 8;
     public static final String PLAYER_DUPLICATED = "게임 참가자의 이름은 중복 되어선 안됩니다.";
+    public static final String DIFFERENT_SIZE_PLAYER_BET_AMOUNT = "플레이어 목록과 베팅금액 목록의 크기가 다릅니다.";
     public static final String PLAYER_COUNT_OUT_OF_RANGE =
             String.format("게임 참가자의 수는 %d~%d명 사이여야 합니다.", PLAYER_MIN_COUNT, PLAYER_MAX_COUNT);
     public static final String NOT_FOUND_PLAYER = "플레이어를 찾을 수 없습니다.";
@@ -20,12 +21,19 @@ public class Players {
     private final List<Player> players;
 
     public Players(List<PlayerName> names, List<BetAmount> betAmounts) {
+        validatePlayerAndBetAmountSize(names, betAmounts);
         validatePlayerNames(names);
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < names.size(); i++) {
             players.add(new Player(names.get(i), betAmounts.get(i)));
         }
         this.players = players;
+    }
+
+    private void validatePlayerAndBetAmountSize(List<PlayerName> names, List<BetAmount> betAmounts) {
+        if (names.size() != betAmounts.size()) {
+            throw new BlackjackException(DIFFERENT_SIZE_PLAYER_BET_AMOUNT);
+        }
     }
 
     private void validatePlayerNames(List<PlayerName> names) {

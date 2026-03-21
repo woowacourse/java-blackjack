@@ -9,7 +9,6 @@ import domain.card.Suit;
 import domain.game.result.BlackjackStatistics;
 import domain.participant.BetAmount;
 import domain.participant.Dealer;
-import domain.participant.Participants;
 import domain.participant.Player;
 import domain.participant.PlayerName;
 import java.util.ArrayDeque;
@@ -371,7 +370,8 @@ class BlackjackGameTest {
         return new BlackjackGame(
                 new FixedDeckCardMachine(cards),
                 new BlackjackJudge(),
-                Participants.of(playerNames(), betAmounts("1000", "1000"))
+                playerNames(),
+                betAmounts("1000", "1000")
         );
     }
 

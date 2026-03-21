@@ -65,6 +65,17 @@ class PlayersTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining(BlackjackException.ERROR_PREFIX + Players.PLAYER_DUPLICATED);
         }
+
+        @Test
+        void 플레이어_이름_개수와_배팅_금액_개수가_다르면_예외가_발생한다() {
+            // when & then
+            assertThatThrownBy(() -> players(
+                    List.of("jacob", "seoye"),
+                    List.of("1000")
+            ))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining(BlackjackException.ERROR_PREFIX + Players.DIFFERENT_SIZE_PLAYER_BET_AMOUNT);
+        }
     }
 
     @Nested

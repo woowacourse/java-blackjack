@@ -6,7 +6,6 @@ import domain.game.result.BlackjackStatistics;
 import domain.game.BlackjackJudge;
 import domain.game.HitOrStand;
 import domain.participant.BetAmount;
-import domain.participant.Participants;
 import domain.participant.Player;
 import domain.participant.PlayerName;
 import java.util.ArrayList;
@@ -29,7 +28,7 @@ public class BlackjackGameRunner {
         List<PlayerName> playerNames = inputPlayerNames();
         List<BetAmount> betAmounts = inputBetAmounts(playerNames);
         BlackjackGame blackjackGame = new BlackjackGame(new CardMachine(), new BlackjackJudge(),
-                Participants.of(playerNames, betAmounts));
+                playerNames, betAmounts);
 
         initializeGame(blackjackGame);
         inputHitOrStandOnPlayer(blackjackGame);
