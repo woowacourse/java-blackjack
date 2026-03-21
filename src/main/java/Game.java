@@ -4,6 +4,7 @@ import domain.betting.BettingAmount;
 import domain.betting.BettingTable;
 import domain.betting.PlayerBet;
 import domain.betting.PlayerShowdownResult;
+import domain.betting.Settlement;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
@@ -90,10 +91,14 @@ public class Game {
         outputView.printNewLine();
     }
 
+    
     private void resultPhase(BettingTable bettingTable, Participants participants) {
         List<PlayerShowdownResult> playerShowdownResults = participants.playersShowdownResult();
-        ParticipantsProfit participantsProfit = bettingTable.calculateAllParticipantsProfit(
-                playerShowdownResults);
+
+        Settlement settlement = bettingTable.settle(playerShowdownResults);
+
+        ParticipantsProfit participantsProfit = ParticipantsProfit.from(settlement);
+
         outputView.printParticipantsProfit(participantsProfit);
     }
 
