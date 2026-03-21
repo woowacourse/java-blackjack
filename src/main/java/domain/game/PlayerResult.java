@@ -1,6 +1,6 @@
 package domain.game;
 
-public enum Result {
+public enum PlayerResult {
     BLACKJACK_WIN(1.5),
     WIN(1),
     DRAW(0),
@@ -9,7 +9,7 @@ public enum Result {
 
     private final double multiple;
 
-    Result(double multiple) {
+    PlayerResult(double multiple) {
         this.multiple = multiple;
     }
 
