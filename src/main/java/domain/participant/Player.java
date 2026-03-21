@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.game.HandState;
 import domain.game.Outcome;
 
 public class Player extends Participant {
@@ -11,11 +10,8 @@ public class Player extends Participant {
         this.bettingMoney = new BettingMoney(amount);
     }
 
-    public Outcome compete(HandState dealerState) {
-        return getState().versus(dealerState);
-    }
-
-    public int calculateProfit(Outcome outcome) {
+    public int calculateProfit(Dealer dealer) {
+        Outcome outcome = calculateOutcomeAgainst(dealer);
         return outcome.calculateProfit(bettingMoney.getAmount());
     }
 }

@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.card.Hand;
 import domain.game.HandState;
 import domain.game.Hit;
+import domain.game.Outcome;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,7 +18,7 @@ public abstract class Participant {
     }
 
     public boolean canHit() {
-        return state.canHit();
+        return !state.isFinished();
     }
 
     public void addCard(Card card) {
@@ -25,7 +26,9 @@ public abstract class Participant {
     }
 
     public void stay() {
-        this.state = state.stay();
+        if (!state.isFinished()) {
+            this.state = state.stay();
+        }
     }
 
     public List<Card> getCards() {
@@ -40,8 +43,8 @@ public abstract class Participant {
         return state.score();
     }
 
-    public HandState getState() {
-        return state;
+    protected Outcome calculateOutcomeAgainst(Participant other) {
+        return this.state.calculateOutcome(other.state);
     }
 
     @Override

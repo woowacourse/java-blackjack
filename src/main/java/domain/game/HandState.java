@@ -5,15 +5,19 @@ import java.util.List;
 
 public interface HandState {
 
-    Outcome versus(HandState other);
-
-    boolean canHit();
-
     HandState draw(Card card);
 
     HandState stay();
 
+    boolean isFinished();
+
     List<Card> cards();
 
     int score();
+
+    Outcome calculateOutcome(HandState dealerState);
+
+    Outcome outcomeForBlackjack();
+
+    Outcome outcomeForStay(int playerScore);
 }

@@ -1,7 +1,6 @@
 package controller;
 
 import domain.card.Deck;
-import domain.game.Outcome;
 import domain.game.ProfitResult;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -92,17 +91,8 @@ public class BlackjackController {
         }
     }
 
-    private ProfitResult calculateProfits(Dealer dealer, Players players) {
-        Map<Player, Integer> playerProfits = new LinkedHashMap<>();
-        for (Player player : players.getGamePlayers()) {
-            Outcome outcome = player.compete(dealer.getState());
-            playerProfits.put(player, player.calculateProfit(outcome));
-        }
-        return new ProfitResult(playerProfits);
-    }
-
     private void printProfitResult(Dealer dealer, Players players) {
-        ProfitResult profitResult = calculateProfits(dealer, players);
+        ProfitResult profitResult = players.calculateProfits(dealer);
         outputView.printProfitResult(dealer.getName(), profitResult);
     }
 }
