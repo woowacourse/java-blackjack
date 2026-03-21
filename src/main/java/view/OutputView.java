@@ -89,7 +89,8 @@ public class OutputView {
         System.out.println();
         System.out.println("## 최종 수익");
 
-        String dealerFinalGameProfitResult = consistDealerFinalGameProfitResult(gameResultDto.dealerWinTieLossResult());
+        String dealerFinalGameProfitResult = consistDealerFinalGameProfitResult(
+                gameResultDto.dealerFinalGameProfitResult());
         System.out.println(dealerFinalGameProfitResult);
 
         List<String> playerFinalGameProfitResults = consistPlayerFinalGameProfitResults(gameResultDto);
@@ -104,7 +105,7 @@ public class OutputView {
 
     private List<String> consistPlayerFinalGameProfitResults(GameResultDto gameResultDto) {
         List<String> playerFinalGameProfitResult = new ArrayList<>();
-        Map<String, Long> playerFinalGameProfitResults = gameResultDto.playerWinTieLossResults();
+        Map<String, Long> playerFinalGameProfitResults = gameResultDto.playerFinalGameProfitResults();
         for (Entry<String, Long> result : playerFinalGameProfitResults.entrySet()) {
             String name = result.getKey();
             Long finalGameProfit = result.getValue();
