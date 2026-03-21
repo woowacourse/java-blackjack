@@ -6,6 +6,7 @@ import domain.card.Card;
 import domain.card.CardMachine;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.game.result.BlackjackStatistics;
 import domain.participant.BetAmount;
 import domain.participant.Dealer;
 import domain.participant.Participants;
@@ -101,7 +102,7 @@ class BlackjackGameTest {
             blackjackGame.drawInitialCards();
 
             // when
-            Player actual = blackjackGame.updatePlayer("jacob");
+            Player actual = blackjackGame.hitPlayer("jacob");
 
             // then
             assertThat(actual.getName()).isEqualTo("jacob");
@@ -146,7 +147,7 @@ class BlackjackGameTest {
                     card(Rank.ACE, Suit.CLOVER)
             ));
             blackjackGame.drawInitialCards();
-            blackjackGame.updatePlayer("jacob");
+            blackjackGame.hitPlayer("jacob");
 
             // when
             Dealer dealer = blackjackGame.getDealer();
@@ -173,7 +174,7 @@ class BlackjackGameTest {
                     card(Rank.K, Suit.HEART)
             ));
             blackjackGame.drawInitialCards();
-            blackjackGame.updatePlayer("seoye");
+            blackjackGame.hitPlayer("seoye");
 
             // when
             BlackjackStatistics actual = blackjackGame.calculateStatistics();
@@ -335,7 +336,7 @@ class BlackjackGameTest {
                     card(Rank.K, Suit.HEART)
             ));
             blackjackGame.drawInitialCards();
-            blackjackGame.updatePlayer("jacob");
+            blackjackGame.hitPlayer("jacob");
 
             // when
             boolean actual = blackjackGame.isPlayerBust("jacob");
