@@ -18,12 +18,12 @@ import view.dto.InitialDealingResult;
 import view.dto.ParticipantCards;
 import view.dto.ParticipantsProfit;
 
-public class GamePlayer {
+public class Game {
     private final InputView inputView;
     private final OutputView outputView;
     private final GameManager gameManager;
 
-    public GamePlayer(InputView inputView, OutputView outputView, GameManager manager) {
+    public Game(InputView inputView, OutputView outputView, GameManager manager) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.gameManager = manager;

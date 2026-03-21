@@ -15,8 +15,8 @@ public class Application {
         deck = deck.shuffle(new RandomDeckShuffler());
         GameManager gameManager = GameManager.createWith(deck);
 
-        GamePlayer gamePlayer = new GamePlayer(inputView, outputView, gameManager);
+        Game game = new Game(inputView, outputView, gameManager);
 
-        gamePlayer.run();
+        game.run();
     }
 }
