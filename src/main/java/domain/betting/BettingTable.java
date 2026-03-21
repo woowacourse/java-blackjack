@@ -22,22 +22,22 @@ public class BettingTable {
         playerBets.add(playerBet);
     }
 
-    public ParticipantsProfit calculateAllParticipantsProfit(List<PlayerMatchResult> playersBettingResult) {
+    public ParticipantsProfit calculateAllParticipantsProfit(List<PlayerShowdownResult> playersBettingResult) {
         List<PlayerProfit> playersProfitResult = calculatePlayersProfit(playersBettingResult);
         int dealerProfit = calculateDealerProfit(playersProfitResult);
 
         return new ParticipantsProfit(dealerProfit, playersProfitResult);
     }
 
-    private List<PlayerProfit> calculatePlayersProfit(List<PlayerMatchResult> playersBettingResult) {
+    private List<PlayerProfit> calculatePlayersProfit(List<PlayerShowdownResult> playersBettingResult) {
         return playersBettingResult.stream()
                 .map(this::calculatePlayerProfit)
                 .toList();
     }
 
-    private PlayerProfit calculatePlayerProfit(PlayerMatchResult playerMatchResult) {
-        Name name = playerMatchResult.playerName();
-        MatchResult matchResult = playerMatchResult.matchResult();
+    private PlayerProfit calculatePlayerProfit(PlayerShowdownResult playerShowdownResult) {
+        Name name = playerShowdownResult.playerName();
+        MatchResult matchResult = playerShowdownResult.matchResult();
         BettingAmount bettingAmount = findBetByName(name).bettingAmount();
 
         int playerProfit = matchResult.calculateProfit(bettingAmount);

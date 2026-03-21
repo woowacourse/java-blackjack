@@ -43,7 +43,7 @@ class MatchResultTest {
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.JACK, Suit.SPADE));
 
-        MatchResult rule = MatchResult.determine(dealer, player);
+        MatchResult rule = MatchResult.resolve(dealer, player);
 
         assertThat(rule).isEqualTo(MatchResult.PLAYER_BUST);
     }
@@ -58,7 +58,7 @@ class MatchResultTest {
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.JACK, Suit.SPADE));
 
-        MatchResult rule = MatchResult.determine(dealer, player);
+        MatchResult rule = MatchResult.resolve(dealer, player);
 
         assertThat(rule).isEqualTo(MatchResult.PLAYER_WIN);
     }
@@ -72,7 +72,7 @@ class MatchResultTest {
         dealer.receiveCard(new Card(Rank.ACE, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
 
-        MatchResult rule = MatchResult.determine(dealer, player);
+        MatchResult rule = MatchResult.resolve(dealer, player);
 
         assertThat(rule).isEqualTo(MatchResult.BOTH_NATURAL_BLACKJACK);
     }
@@ -86,7 +86,7 @@ class MatchResultTest {
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.JACK, Suit.SPADE));
 
-        MatchResult rule = MatchResult.determine(dealer, player);
+        MatchResult rule = MatchResult.resolve(dealer, player);
 
         assertThat(rule).isEqualTo(MatchResult.PLAYER_NATURAL);
     }
@@ -100,7 +100,7 @@ class MatchResultTest {
         dealer.receiveCard(new Card(Rank.ACE, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
 
-        MatchResult rule = MatchResult.determine(dealer, player);
+        MatchResult rule = MatchResult.resolve(dealer, player);
 
         assertThat(rule).isEqualTo(MatchResult.DEALER_NATURAL);
     }
@@ -114,7 +114,7 @@ class MatchResultTest {
         dealer.receiveCard(new Card(Rank.NINE, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
 
-        MatchResult rule = MatchResult.determine(dealer, player);
+        MatchResult rule = MatchResult.resolve(dealer, player);
 
         assertThat(rule).isEqualTo(MatchResult.PLAYER_WIN);
     }
@@ -128,7 +128,7 @@ class MatchResultTest {
         dealer.receiveCard(new Card(Rank.NINE, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
 
-        MatchResult rule = MatchResult.determine(dealer, player);
+        MatchResult rule = MatchResult.resolve(dealer, player);
 
         assertThat(rule).isEqualTo(MatchResult.DRAW);
     }
@@ -142,7 +142,7 @@ class MatchResultTest {
         dealer.receiveCard(new Card(Rank.NINE, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
 
-        MatchResult rule = MatchResult.determine(dealer, player);
+        MatchResult rule = MatchResult.resolve(dealer, player);
 
         assertThat(rule).isEqualTo(MatchResult.PLAYER_LOSE);
     }

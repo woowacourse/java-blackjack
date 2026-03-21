@@ -22,7 +22,7 @@ public enum MatchResult {
         return (this.profitRate * bettingAmount.getValue()) / 10;
     }
 
-    public static MatchResult determine(Dealer dealer, Player player) {
+    public static MatchResult resolve(Dealer dealer, Player player) {
         if (player.isBust()) {
             return PLAYER_BUST;
         }
