@@ -33,8 +33,4 @@ public class Player extends Participant {
     public String getName() {
         return name;
     }
-
-    public Money getMoney() {
-        return money;
-    }
 }
