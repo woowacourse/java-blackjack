@@ -120,11 +120,6 @@ public class BlackJackController {
         }
     }
 
-    private void showPlayerCards(Player player) {
-        ParticipantDto updatedPlayerDto = ParticipantDto.from(player);
-        outputView.printCardShareDetail(updatedPlayerDto);
-    }
-
     private boolean drawCardIfDrawableAndWantToHit(Game game, Player player) {
         boolean wantToHit = wantToHit(player);
         boolean isDrawable = wantToHit;
@@ -153,11 +148,18 @@ public class BlackJackController {
         return inputView.readHitOrStand();
     }
 
+    private void showPlayerCards(Player player) {
+        ParticipantDto updatedPlayerDto = ParticipantDto.from(player);
+        outputView.printCardShareDetail(updatedPlayerDto);
+    }
+
     private void checkAndAdjustDealerCards(Game game) {
         Dealer dealer = game.getDealer();
-        while (dealer.isDrawable()) {
+        boolean isDealerDrawingCard = dealer.isDrawable();
+        while (isDealerDrawingCard) {
             boolean hasDealerDrawnMoreCard = game.drawCardUnderCondition(dealer);
             printDescriptionIfDealerDrewCard(hasDealerDrawnMoreCard);
+            isDealerDrawingCard = dealer.isDrawable() && hasDealerDrawnMoreCard;
         }
     }
 
