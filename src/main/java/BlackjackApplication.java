@@ -1,11 +1,11 @@
 import controller.BlackjackController;
-import controller.factory.BlackjackControllerFactory;
+import view.InputView;
+import view.OutputView;
 
 public class BlackjackApplication {
 
     public static void main(String[] args) {
-        BlackjackControllerFactory blackjackControllerFactory = new BlackjackControllerFactory();
-        BlackjackController blackjackController = blackjackControllerFactory.blackjackController();
+        BlackjackController blackjackController = new BlackjackController(new InputView(), new OutputView());
         blackjackController.start();
     }
 }
