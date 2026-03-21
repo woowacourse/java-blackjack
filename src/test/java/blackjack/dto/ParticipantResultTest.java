@@ -33,44 +33,8 @@ class ParticipantResultTest {
         // then
         assertAll(
             () -> assertThat(participantResult.nickname()).isEqualTo("boye"),
-            () -> assertThat(participantResult.cardStatus()).isEqualTo("10스페이드"),
+            () -> assertThat(participantResult.cardStatus()).containsExactly("10스페이드"),
             () -> assertThat(participantResult.totalScore()).isEqualTo(10)
         );
-    }
-
-    @Test
-    @DisplayName("카드 결과 string 생성을 확인한다.")
-    void makeParticipantResultToString() {
-        // given
-        Player player = new Player(Nickname.from("boye"), Role.PLAYER, Amount.from("100000"));
-        Hand hand = Hand.from(List.of(
-            new Card(Rank.TEN, Suit.SPADE)
-        ));
-        player.receiveCard(hand.getCards());
-        ParticipantResult participantResult = ParticipantResult.from(player);
-
-        // when
-        String participantResultString = participantResult.toString();
-
-        // then
-        assertThat(participantResultString).isEqualTo("boye카드: 10스페이드");
-    }
-
-    @Test
-    @DisplayName("결과값을 포함한 카드 결과 string 생성을 확인한다.")
-    void participantResultFullString() {
-        // given
-        Player player = new Player(Nickname.from("boye"), Role.PLAYER, Amount.from("100000"));
-        Hand hand = Hand.from(List.of(
-            new Card(Rank.TEN, Suit.SPADE)
-        ));
-        player.receiveCard(hand.getCards());
-        ParticipantResult participantResult = ParticipantResult.from(player);
-
-        // when
-        String participantResultString = participantResult.toFullString();
-
-        // then
-        assertThat(participantResultString).isEqualTo("boye카드: 10스페이드 - 결과: 10");
     }
 }

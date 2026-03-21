@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.fixture.PlayersFixture;
-import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,10 +24,9 @@ class ParticipantsTest {
         // when
         participants.dealInitialCards(deck);
         Player firstPlayer = players.getAllPlayers().getFirst();
-        List<String> playerCards = Arrays.stream(firstPlayer.getCardStatus().split(",")).toList();
 
         // then
-        assertThat(playerCards).hasSize(2);
+        assertThat(firstPlayer.getCardStatus()).hasSize(2);
     }
 
     @Test
