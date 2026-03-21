@@ -27,7 +27,7 @@ public class InputView {
     }
 
     public String askBettingAmount(Player player) {
-        System.out.println(player.name() + "의 배팅 금액은?");
+        System.out.println(player.getName().value() + "의 배팅 금액은?");
         return readLine();
     }
 }

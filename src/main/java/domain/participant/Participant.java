@@ -66,10 +66,6 @@ public abstract class Participant {
         return (getScore() == BLACKJACK_SCORE) && (cardsCount() == NATURAL_CARDS_COUNT);
     }
 
-    public String name() {
-        return name.value();
-    }
-
     public Name getName() {
         return this.name;
     }

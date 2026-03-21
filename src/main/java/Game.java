@@ -82,16 +82,18 @@ public class Game {
     }
 
     private void printPlayResult(Players players, Dealer dealer) {
-        outputView.printParticipantResult(dealer.name(), gameManager.getCardsResult(dealer).getFormattedCards(),
+        outputView.printParticipantResult(dealer.getName().value(),
+                gameManager.getCardsResult(dealer).getFormattedCards(),
                 dealer.getScore());
         for (Player player : players) {
-            outputView.printParticipantResult(player.name(), gameManager.getCardsResult(player).getFormattedCards(),
+            outputView.printParticipantResult(player.getName().value(),
+                    gameManager.getCardsResult(player).getFormattedCards(),
                     player.getScore());
         }
         outputView.printNewLine();
     }
 
-    
+
     private void resultPhase(BettingTable bettingTable, Participants participants) {
         List<PlayerShowdownResult> playerShowdownResults = participants.playersShowdownResult();
 
@@ -124,7 +126,7 @@ public class Game {
     }
 
     private boolean isUserWantHit(Player player) {
-        Command command = Command.from(inputView.askPlayHit(player.name()));
+        Command command = Command.from(inputView.askPlayHit(player.getName().value()));
         return !command.isNo();
     }
 

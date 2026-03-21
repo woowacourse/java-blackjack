@@ -17,13 +17,13 @@ public record ParticipantCards(
 
     public static ParticipantCards fromPlayer(Player player) {
         return new ParticipantCards(
-                player.name(),
+                player.getName().value(),
                 player.cardsInHand());
     }
 
     public static ParticipantCards fromDealerUpCard(Dealer dealer) {
         return new ParticipantCards(
-                dealer.name(),
+                dealer.getName().value(),
                 List.of(dealer.upCard())
         );
     }
