@@ -1,9 +1,11 @@
 package controller;
 
-import domain.factory.BlackjackGameManagerFactory;
+import domain.card.CardMachine;
 import domain.game.BlackjackGameManager;
+import domain.game.BlackjackJudge;
 import domain.game.HitOrStand;
 import domain.participant.BetAmount;
+import domain.participant.Participants;
 import domain.participant.PlayerName;
 import dto.BlackjackResultDto;
 import dto.BlackjackStatisticsDto;
@@ -27,9 +29,7 @@ public class BlackjackController {
     public void start() {
         List<PlayerName> playerNames = inputPlayerNames();
         List<BetAmount> betAmounts = inputBetAmounts(playerNames);
-        BlackjackGameManagerFactory blackjackGameManagerFactory = new BlackjackGameManagerFactory();
-        BlackjackGameManager blackjackGameManager = blackjackGameManagerFactory
-                .blackjackGameManager(playerNames, betAmounts);
+        BlackjackGameManager blackjackGameManager = new BlackjackGameManager(new CardMachine(), new BlackjackJudge(), Participants.of(playerNames, betAmounts));
 
         initializeGame(blackjackGameManager);
         inputHitOrStandOnPlayer(blackjackGameManager);
