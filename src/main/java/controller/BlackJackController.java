@@ -114,18 +114,24 @@ public class BlackJackController {
     private void drawCardUntilBustOrStand(Game game, Player player) {
         boolean isPlayerDrawingCard = player.isDrawable();
         while (isPlayerDrawingCard) {
-            boolean wantToHit = wantToHit(player);
-            drawCardIfDrawableAndWantToHit(game, player, wantToHit);
-            isPlayerDrawingCard = player.isDrawable() && wantToHit;
-            ParticipantDto updatedPlayerDto = ParticipantDto.from(player);
-            showPlayerCards(updatedPlayerDto);
+            boolean hasSuccessfullyDrawn = drawCardIfDrawableAndWantToHit(game, player);
+            isPlayerDrawingCard = player.isDrawable() && hasSuccessfullyDrawn;
+            showPlayerCards(player);
         }
     }
 
-    private void drawCardIfDrawableAndWantToHit(Game game, Player player, boolean wantToHit) {
+    private void showPlayerCards(Player player) {
+        ParticipantDto updatedPlayerDto = ParticipantDto.from(player);
+        outputView.printCardShareDetail(updatedPlayerDto);
+    }
+
+    private boolean drawCardIfDrawableAndWantToHit(Game game, Player player) {
+        boolean wantToHit = wantToHit(player);
+        boolean isDrawable = wantToHit;
         if (wantToHit) {
-            game.drawCardUnderCondition(player);
+            isDrawable = game.drawCardUnderCondition(player);
         }
+        return isDrawable;
     }
 
     private boolean wantToHit(Player player) {
@@ -145,10 +151,6 @@ public class BlackJackController {
     private boolean askDrawCard(ParticipantDto participantDto) {
         outputView.printHitOrStandPrompt(participantDto);
         return inputView.readHitOrStand();
-    }
-
-    private void showPlayerCards(ParticipantDto participantDto) {
-        outputView.printCardShareDetail(participantDto);
     }
 
     private void checkAndAdjustDealerCards(Game game) {
