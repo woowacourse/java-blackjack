@@ -1,8 +1,6 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +29,7 @@ class PlayerTest {
         );
 
         // when & then
-        assertTrue(testPlayer.isDrawable());
+        assertThat(testPlayer.isDrawable()).isTrue();
     }
 
     @Test
@@ -45,7 +43,7 @@ class PlayerTest {
         );
 
         // when & then
-        assertFalse(testPlayer.isDrawable());
+        assertThat(testPlayer.isDrawable()).isFalse();
     }
 
     private Player createPlayerWithCards(Card... cards) {

@@ -1,8 +1,6 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -104,7 +102,7 @@ class CardsTest {
             );
 
             // when & then
-            assertTrue(cards.isLessThanMaxScore());
+            assertThat(cards.isLessThanMaxScore()).isTrue();
         }
 
         @Test
@@ -118,7 +116,7 @@ class CardsTest {
             );
 
             // when & then
-            assertFalse(cards.isLessThanMaxScore());
+            assertThat(cards.isLessThanMaxScore()).isFalse();
         }
 
         @Test
@@ -132,7 +130,7 @@ class CardsTest {
             );
 
             // when & then
-            assertFalse(cards.isLessThanMaxScore());
+            assertThat(cards.isLessThanMaxScore()).isFalse();
         }
     }
 
@@ -149,7 +147,7 @@ class CardsTest {
             );
 
             // when & then
-            assertTrue(cards.isBust());
+            assertThat(cards.isBust()).isTrue();
         }
 
         @Test
@@ -163,7 +161,7 @@ class CardsTest {
             );
 
             // when & then
-            assertFalse(cards.isBust());
+            assertThat(cards.isBust()).isFalse();
         }
     }
 
@@ -179,7 +177,7 @@ class CardsTest {
             );
 
             // when & then
-            assertTrue(cards.isBlackJack());
+            assertThat(cards.isBlackJack()).isTrue();
         }
 
         @Test
@@ -193,7 +191,7 @@ class CardsTest {
             );
 
             // when & then
-            assertFalse(cards.isBlackJack());
+            assertThat(cards.isBlackJack()).isFalse();
         }
     }
 }

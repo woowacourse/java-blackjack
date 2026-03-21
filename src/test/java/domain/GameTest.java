@@ -1,7 +1,6 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +76,7 @@ class GameTest {
         boolean playerResult = game.drawCardUnderCondition(player);
 
         // then
-        assertTrue(dealerResult);
-        assertTrue(playerResult);
+        assertThat(dealerResult).isTrue();
+        assertThat(playerResult).isTrue();
     }
 }

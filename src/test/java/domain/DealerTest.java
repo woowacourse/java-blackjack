@@ -2,8 +2,6 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -44,7 +42,7 @@ public class DealerTest {
             );
 
             // when & then
-            assertTrue(testDealer.isDrawable());
+            assertThat(testDealer.isDrawable()).isTrue();
         }
 
         @Test
@@ -57,7 +55,7 @@ public class DealerTest {
             );
 
             // when & then
-            assertTrue(testDealer.isDrawable());
+            assertThat(testDealer.isDrawable()).isTrue();
         }
 
         @Test
@@ -71,7 +69,7 @@ public class DealerTest {
             );
 
             // when & then
-            assertFalse(testDealer.isDrawable());
+            assertThat(testDealer.isDrawable()).isFalse();
         }
     }
 
