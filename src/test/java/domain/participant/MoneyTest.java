@@ -1,8 +1,8 @@
-package domain;
+package domain.participant;
 
-import static domain.Money.MAXIMUM_BET_AMOUNT;
-import static domain.Money.MINIMUM_BET_AMOUNT;
-import static domain.Money.MONEY_DIVIDE_UNIT;
+import static domain.participant.Money.MAXIMUM_BET_AMOUNT;
+import static domain.participant.Money.MINIMUM_BET_AMOUNT;
+import static domain.participant.Money.MONEY_DIVIDE_UNIT;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import exception.ErrorMessage;

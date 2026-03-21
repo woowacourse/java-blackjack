@@ -1,10 +1,9 @@
 package controller;
 
-import domain.Money;
-import domain.ProfitCalculator;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.participant.Dealer;
+import domain.participant.Money;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -70,9 +69,10 @@ public class GameController {
         }
 
         while (dealer.canReceiveCard()) {
-            dealer.addCard(deck.draw());
+            dealer.draw(deck.draw());
             outputView.printDealerReceiveCard();
         }
+        dealer.stay();
     }
 
     private void printFinalScore(Players players, Participant dealer) {
@@ -99,9 +99,10 @@ public class GameController {
             String hitOption = inputView.readHitOption(player.getName());
             InputValidator.validateHitOption(hitOption);
             if (hitOption.equals("n")) {
-                break;
+                player.stay();
+                return;
             }
-            player.addCard(deck.draw());
+            player.draw(deck.draw());
             outputView.printCurrentHoldCard(player);
         }
     }
@@ -113,10 +114,9 @@ public class GameController {
     }
 
     private List<PlayerProfitDto> getPlayerProfitDtos(Players players, Dealer dealer) {
-        ProfitCalculator profitCalculator = new ProfitCalculator();
         List<PlayerProfitDto> playerProfitDtos = new ArrayList<>();
         for (Player player : players.getPlayers()) {
-            int finalProfit = profitCalculator.calculate(player, dealer, player.getMoney());
+            int finalProfit = (int) player.profit(dealer.getState());
             playerProfitDtos.add(PlayerProfitDto.of(player.getName(), finalProfit));
         }
         return playerProfitDtos;

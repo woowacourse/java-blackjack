@@ -2,32 +2,38 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Cards;
+import domain.rule.Hit;
+import domain.rule.State;
 import java.util.List;
 
 public abstract class Participant {
-    private final Cards cards;
+    protected State state;
 
     public Participant(Cards cards) {
-        this.cards = cards;
+        this.state = Hit.of(cards);
     }
 
-    public void addCard(Card card) {
-        cards.addCard(card);
+    public void draw(Card card) {
+        state = state.draw(card);
     }
 
-    public int calculateScore() {
-        return cards.calculateScore();
-    }
-
-    public boolean isBlackjack() {
-        return cards.isBlackjack();
+    public void stay() {
+        state = state.stay();
     }
 
     public boolean isBust() {
-        return cards.isBust();
+        return state.isBust();
+    }
+
+    public int calculateScore() {
+        return state.cards().calculateScore();
     }
 
     public List<Card> getHand() {
-        return cards.getHand();
+        return state.cards().getHand();
+    }
+
+    public State getState() {
+        return state;
     }
 }

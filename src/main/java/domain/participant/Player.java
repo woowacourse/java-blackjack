@@ -2,8 +2,8 @@ package domain.participant;
 
 import static exception.ErrorMessage.PLAYER_NAME_IS_EMPTY;
 
-import domain.Money;
 import domain.card.Cards;
+import domain.rule.State;
 
 public class Player extends Participant {
     private final String name;
@@ -23,7 +23,11 @@ public class Player extends Participant {
     }
 
     public boolean canHit() {
-        return !isBust() && !isBlackjack();
+        return !state.isFinished();
+    }
+
+    public double profit(State dealerState) {
+        return state.profit(money.getBetAmount(), dealerState);
     }
 
     public String getName() {

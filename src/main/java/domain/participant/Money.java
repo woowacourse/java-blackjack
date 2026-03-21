@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static exception.ErrorMessage.MONEY_INVALID_RANGE;
 import static exception.ErrorMessage.MONEY_INVALID_UNIT;

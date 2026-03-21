@@ -4,7 +4,6 @@ import static domain.participant.Players.MAXIMUM_PLAYER_COUNT;
 import static domain.participant.Players.MINIMUM_PLAYER_COUNT;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import domain.Money;
 import domain.card.Card;
 import domain.card.CardScore;
 import domain.card.CardSuit;
