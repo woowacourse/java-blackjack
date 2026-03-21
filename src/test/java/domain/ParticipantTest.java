@@ -14,7 +14,7 @@ class ParticipantTest {
 
     @Test
     void 플레이어의_핸드_점수가_21을_초과하면_카드를_더_받을_수_없다() {
-        Player player = new Player(Name.from("고래"));
+        Player player = new Player(new Name("고래"));
         player.receiveCard(new Card(Rank.TWO, Suit.SPADE));
         player.receiveCard(new Card(Rank.KING, Suit.SPADE));
         player.receiveCard(new Card(Rank.KING, Suit.DIAMOND));
@@ -24,7 +24,7 @@ class ParticipantTest {
 
     @Test
     void 플레이어의_핸드_점수가_21_이하면_카드를_더_받을_수_있다() {
-        Player player = new Player(Name.from("나무"));
+        Player player = new Player(new Name("나무"));
         player.receiveCard(new Card(Rank.ACE, Suit.SPADE));
         player.receiveCard(new Card(Rank.KING, Suit.SPADE));
 
@@ -51,16 +51,16 @@ class ParticipantTest {
 
     @Test
     void 이름이_같으면_동일한_참가자로_판단한다() {
-        Participant participant1 = new Player(Name.from("나무"));
-        Participant participant2 = new Player(Name.from("나무"));
+        Participant participant1 = new Player(new Name("나무"));
+        Participant participant2 = new Player(new Name("나무"));
 
         Assertions.assertThat(participant1).isEqualTo(participant2);
     }
 
     @Test
     void 이름이_다르면_다른_참가자로_판단한다() {
-        Participant participant1 = new Player(Name.from("나무"));
-        Participant participant2 = new Player(Name.from("고래"));
+        Participant participant1 = new Player(new Name("나무"));
+        Participant participant2 = new Player(new Name("고래"));
 
         Assertions.assertThat(participant1).isNotEqualTo(participant2);
     }

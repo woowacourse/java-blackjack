@@ -15,7 +15,7 @@ public class PlayerParser {
         validateRawPlayerNames(rawPlayerNames);
 
         List<Player> players = splitByDelimiter(rawPlayerNames).stream()
-                .map(Name::from)
+                .map(Name::new)
                 .map(Player::new)
                 .toList();
 

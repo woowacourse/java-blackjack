@@ -10,7 +10,7 @@ public class NameTest {
     @ParameterizedTest
     @ValueSource(strings = {" ", ""})
     void 이름이_공백이면_예외처리(String input) {
-        Assertions.assertThatThrownBy(() -> Name.from(input))
+        Assertions.assertThatThrownBy(() -> new Name(input))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -19,7 +19,7 @@ public class NameTest {
     void 이름이_10글자_이상이면_예외처리() {
         String input = "1234567890!";
 
-        Assertions.assertThatThrownBy(() -> Name.from(input))
+        Assertions.assertThatThrownBy(() -> new Name(input))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

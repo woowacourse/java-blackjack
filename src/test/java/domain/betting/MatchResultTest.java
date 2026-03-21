@@ -34,7 +34,7 @@ class MatchResultTest {
 
     @Test
     void 플레이어가_버스트면_딜러와_무관하게_플레이어버스트_판정() {
-        Player player = new Player(Name.from("나무"));
+        Player player = new Player(new Name("나무"));
         player.receiveCard(new Card(Rank.TWO, Suit.SPADE));
         player.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         player.receiveCard(new Card(Rank.JACK, Suit.SPADE));
@@ -50,7 +50,7 @@ class MatchResultTest {
 
     @Test
     void 플레이어가_버스트가_아니고_딜러가_버스트인_경우_플레이어승리_판정() {
-        Player player = new Player(Name.from("나무"));
+        Player player = new Player(new Name("나무"));
         player.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         player.receiveCard(new Card(Rank.JACK, Suit.SPADE));
         Dealer dealer = new Dealer();
@@ -65,7 +65,7 @@ class MatchResultTest {
 
     @Test
     void 플레이어와_딜러_둘다_내추럴인_경우_정상판정() {
-        Player player = new Player(Name.from("나무"));
+        Player player = new Player(new Name("나무"));
         player.receiveCard(new Card(Rank.ACE, Suit.SPADE));
         player.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         Dealer dealer = new Dealer();
@@ -79,7 +79,7 @@ class MatchResultTest {
 
     @Test
     void 플레이어만_내추럴인_경우_정상판정() {
-        Player player = new Player(Name.from("나무"));
+        Player player = new Player(new Name("나무"));
         player.receiveCard(new Card(Rank.ACE, Suit.SPADE));
         player.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         Dealer dealer = new Dealer();
@@ -93,7 +93,7 @@ class MatchResultTest {
 
     @Test
     void 딜러만_내추럴인_경우_정상판정() {
-        Player player = new Player(Name.from("나무"));
+        Player player = new Player(new Name("나무"));
         player.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         player.receiveCard(new Card(Rank.JACK, Suit.SPADE));
         Dealer dealer = new Dealer();
@@ -107,7 +107,7 @@ class MatchResultTest {
 
     @Test
     void 버스트나_내추럴이_없을경우_플레이어점수가_높으면_플레이어승리_판정() {
-        Player player = new Player(Name.from("나무"));
+        Player player = new Player(new Name("나무"));
         player.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         player.receiveCard(new Card(Rank.JACK, Suit.SPADE));
         Dealer dealer = new Dealer();
@@ -121,7 +121,7 @@ class MatchResultTest {
 
     @Test
     void 버스트나_내추럴이_없을경우_플레이어와_딜러_점수가_같으면_무승부_판정() {
-        Player player = new Player(Name.from("나무"));
+        Player player = new Player(new Name("나무"));
         player.receiveCard(new Card(Rank.NINE, Suit.SPADE));
         player.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         Dealer dealer = new Dealer();
@@ -135,7 +135,7 @@ class MatchResultTest {
 
     @Test
     void 버스트나_내추럴이_없을경우_플레이어점수가_낮으면_플레이어패배_판정() {
-        Player player = new Player(Name.from("나무"));
+        Player player = new Player(new Name("나무"));
         player.receiveCard(new Card(Rank.EIGHT, Suit.SPADE));
         player.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         Dealer dealer = new Dealer();

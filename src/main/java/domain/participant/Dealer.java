@@ -8,7 +8,7 @@ public class Dealer extends Participant {
     private static final int HIT_THRESHOLD = 16;
 
     public Dealer() {
-        super(Name.from(DEFAULT_NAME));
+        super(new Name(DEFAULT_NAME));
     }
 
     public CardsSnapshot startingHandInfo() {

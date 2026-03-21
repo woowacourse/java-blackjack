@@ -16,8 +16,8 @@ public class GameManagerTest {
     void 딜러를_포함한_전체_참가자에게_초기_카드를_지급한다() {
         GameManager manager = GameManager.createWith(Deck.create());
         Dealer dealer = new Dealer();
-        Player player1 = new Player(Name.from("나무"));
-        Player player2 = new Player(Name.from("고래"));
+        Player player1 = new Player(new Name("나무"));
+        Player player2 = new Player(new Name("고래"));
         Players players = Players.of(List.of(player1, player2));
         Participants participants = Participants.of(dealer, players);
 
@@ -31,7 +31,7 @@ public class GameManagerTest {
     @Test
     void 참가자에게_카드를_지급한다() {
         GameManager manager = GameManager.createWith(Deck.create());
-        Player player = new Player(Name.from("나무"));
+        Player player = new Player(new Name("나무"));
 
         manager.dealCard(player);
 
