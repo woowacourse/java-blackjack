@@ -10,7 +10,10 @@ public enum ErrorMessage {
     MONEY_INVALID_UNIT("베팅 금액은 %d원 단위이어야 합니다."),
 
     CARD_SUIT_NOT_EXIST("존재하지 않는 카드 문양입니다."),
-    CARD_VALUE_NOT_EXIST("존재하지 않는 카드 점수입니다.")
+    CARD_VALUE_NOT_EXIST("존재하지 않는 카드 점수입니다."),
+
+    GAME_IS_STILL_RUNNING("아직 게임이 진행 중입니다."),
+    GAME_IS_FINISHED("게임이 이미 종료되었습니다."),
     ;
 
     private static final String PREFIX = "[ERROR] ";
