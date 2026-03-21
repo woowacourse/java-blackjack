@@ -2,14 +2,13 @@ package controller;
 
 import domain.card.CardMachine;
 import domain.game.BlackjackGame;
+import domain.game.BlackjackStatistics;
 import domain.game.BlackjackJudge;
 import domain.game.HitOrStand;
 import domain.participant.BetAmount;
 import domain.participant.Participants;
+import domain.participant.Player;
 import domain.participant.PlayerName;
-import dto.BlackjackResultDto;
-import dto.BlackjackStatisticsDto;
-import dto.ParticipantDto;
 import java.util.ArrayList;
 import java.util.List;
 import util.Parser;
@@ -29,7 +28,11 @@ public class BlackjackGameRunner {
     public void start() {
         List<PlayerName> playerNames = inputPlayerNames();
         List<BetAmount> betAmounts = inputBetAmounts(playerNames);
-        BlackjackGame blackjackGame = new BlackjackGame(new CardMachine(), new BlackjackJudge(), Participants.of(playerNames, betAmounts));
+        BlackjackGame blackjackGame = new BlackjackGame(
+                new CardMachine(),
+                new BlackjackJudge(),
+                Participants.of(playerNames, betAmounts)
+        );
 
         initializeGame(blackjackGame);
         inputHitOrStandOnPlayer(blackjackGame);
@@ -44,11 +47,9 @@ public class BlackjackGameRunner {
     private void initializeGame(BlackjackGame blackjackGame) {
         blackjackGame.drawInitialCards();
 
-        List<ParticipantDto> playerDtoList = blackjackGame.generatePlayerDtoList();
-        outputView.printPlayers(playerDtoList);
-
-        ParticipantDto dealerDto = blackjackGame.generateInitialDealerDto();
-        outputView.printHandList(dealerDto, playerDtoList);
+        List<Player> players = blackjackGame.getPlayers();
+        outputView.printPlayers(players);
+        outputView.printHandList(blackjackGame.getDealer(), players);
     }
 
     private List<PlayerName> inputPlayerNames() {
@@ -70,16 +71,16 @@ public class BlackjackGameRunner {
     }
 
     private void inputHitOrStandOnPlayer(BlackjackGame blackjackGame) {
-        List<ParticipantDto> playersDtoList = blackjackGame.generatePlayerDtoList();
-        for (ParticipantDto playerDto : playersDtoList) {
-            inputHitOrStand(playerDto.name(), playerDto.hand(), blackjackGame);
+        for (Player player : blackjackGame.getPlayers()) {
+            inputHitOrStand(player, blackjackGame);
         }
     }
 
-    private void inputHitOrStand(String name, List<String> hand, BlackjackGame blackjackGame) {
+    private void inputHitOrStand(Player player, BlackjackGame blackjackGame) {
+        String name = player.getName();
         HitOrStand hitOrStand = HitOrStand.from(inputView.inputHitOrStand(name));
         if (hitOrStand.isStand()) {
-            outputView.printlnHand(name, hand);
+            outputView.printlnHand(name, player.getHand());
             return;
         }
 
@@ -88,8 +89,8 @@ public class BlackjackGameRunner {
 
     private void drawCardOnPlayer(String name, BlackjackGame blackjackGame) {
         do {
-            ParticipantDto playerDto = blackjackGame.updatePlayer(name);
-            outputView.printlnHand(name, playerDto.hand());
+            Player player = blackjackGame.updatePlayer(name);
+            outputView.printlnHand(name, player.getHand());
         } while (canDrawContinue(name, blackjackGame));
     }
 
@@ -98,12 +99,11 @@ public class BlackjackGameRunner {
     }
 
     private void printBlackjackResult(BlackjackGame blackjackGame) {
-        BlackjackResultDto blackjackResultDto = blackjackGame.getBlackjackResult();
-        outputView.printBlackjackResult(blackjackResultDto);
+        outputView.printBlackjackResult(blackjackGame.getDealer(), blackjackGame.getPlayers());
     }
 
     private void printBlackjackStatistics(BlackjackGame blackjackGame) {
-        BlackjackStatisticsDto blackjackStatistics = blackjackGame.getBlackjackStatistics();
+        BlackjackStatistics blackjackStatistics = blackjackGame.calculateStatistics();
         outputView.printBlackjackStatistics(blackjackStatistics);
     }
 }
