@@ -5,34 +5,34 @@ import domain.participant.Player;
 
 public final class BlackjackJudge {
 
-    public Result judgePlayerResult(Dealer dealer, Player player) {
+    public PlayerResult judgePlayerResult(Dealer dealer, Player player) {
         if (player.isBust()) {
-            return Result.LOSE;
+            return PlayerResult.LOSE;
         }
         if (dealer.isBust()) {
-            return Result.WIN;
+            return PlayerResult.WIN;
         }
 
         if (player.isBlackjack() && dealer.isBlackjack()) {
-            return Result.DRAW;
+            return PlayerResult.DRAW;
         }
         if (player.isBlackjack()) {
-            return Result.BLACKJACK_WIN;
+            return PlayerResult.BLACKJACK_WIN;
         }
         if (dealer.isBlackjack()) {
-            return Result.LOSE;
+            return PlayerResult.LOSE;
         }
 
         return judgeScore(dealer, player);
     }
 
-    private Result judgeScore(Dealer dealer, Player player) {
+    private PlayerResult judgeScore(Dealer dealer, Player player) {
         if (player.calculateScore() > dealer.calculateScore()) {
-            return Result.WIN;
+            return PlayerResult.WIN;
         }
         if (player.calculateScore() == dealer.calculateScore()) {
-            return Result.DRAW;
+            return PlayerResult.DRAW;
         }
-        return Result.LOSE;
+        return PlayerResult.LOSE;
     }
 }
