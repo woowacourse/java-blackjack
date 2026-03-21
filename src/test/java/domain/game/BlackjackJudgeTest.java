@@ -33,10 +33,10 @@ class BlackjackJudgeTest {
             );
 
             // when
-            Result actual = blackjackJudge.judgePlayerResult(dealer, player);
+            PlayerResult actual = blackjackJudge.judgePlayerResult(dealer, player);
 
             // then
-            assertThat(actual).isEqualTo(Result.LOSE);
+            assertThat(actual).isEqualTo(PlayerResult.LOSE);
         }
 
         @Test
@@ -52,10 +52,10 @@ class BlackjackJudgeTest {
             );
 
             // when
-            Result actual = blackjackJudge.judgePlayerResult(dealer, player);
+            PlayerResult actual = blackjackJudge.judgePlayerResult(dealer, player);
 
             // then
-            assertThat(actual).isEqualTo(Result.DRAW);
+            assertThat(actual).isEqualTo(PlayerResult.DRAW);
         }
 
         @Test
@@ -71,10 +71,10 @@ class BlackjackJudgeTest {
             );
 
             // when
-            Result actual = blackjackJudge.judgePlayerResult(dealer, player);
+            PlayerResult actual = blackjackJudge.judgePlayerResult(dealer, player);
 
             // then
-            assertThat(actual).isEqualTo(Result.BLACKJACK_WIN);
+            assertThat(actual).isEqualTo(PlayerResult.BLACKJACK_WIN);
         }
 
         @Test
@@ -91,10 +91,10 @@ class BlackjackJudgeTest {
             );
 
             // when
-            Result actual = blackjackJudge.judgePlayerResult(dealer, player);
+            PlayerResult actual = blackjackJudge.judgePlayerResult(dealer, player);
 
             // then
-            assertThat(actual).isEqualTo(Result.WIN);
+            assertThat(actual).isEqualTo(PlayerResult.WIN);
         }
 
         @Test
@@ -111,10 +111,10 @@ class BlackjackJudgeTest {
             );
 
             // when
-            Result actual = blackjackJudge.judgePlayerResult(dealer, player);
+            PlayerResult actual = blackjackJudge.judgePlayerResult(dealer, player);
 
             // then
-            assertThat(actual).isEqualTo(Result.WIN);
+            assertThat(actual).isEqualTo(PlayerResult.WIN);
         }
 
         @Test
@@ -130,10 +130,10 @@ class BlackjackJudgeTest {
             );
 
             // when
-            Result actual = blackjackJudge.judgePlayerResult(dealer, player);
+            PlayerResult actual = blackjackJudge.judgePlayerResult(dealer, player);
 
             // then
-            assertThat(actual).isEqualTo(Result.WIN);
+            assertThat(actual).isEqualTo(PlayerResult.WIN);
         }
 
         @Test
@@ -149,10 +149,10 @@ class BlackjackJudgeTest {
             );
 
             // when
-            Result actual = blackjackJudge.judgePlayerResult(dealer, player);
+            PlayerResult actual = blackjackJudge.judgePlayerResult(dealer, player);
 
             // then
-            assertThat(actual).isEqualTo(Result.DRAW);
+            assertThat(actual).isEqualTo(PlayerResult.DRAW);
         }
 
         @Test
@@ -168,10 +168,10 @@ class BlackjackJudgeTest {
             );
 
             // when
-            Result actual = blackjackJudge.judgePlayerResult(dealer, player);
+            PlayerResult actual = blackjackJudge.judgePlayerResult(dealer, player);
 
             // then
-            assertThat(actual).isEqualTo(Result.LOSE);
+            assertThat(actual).isEqualTo(PlayerResult.LOSE);
         }
     }
 
