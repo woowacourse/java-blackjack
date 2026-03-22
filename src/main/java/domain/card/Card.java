@@ -33,7 +33,7 @@ public class Card {
     }
 
     private static String toKey(Suit suit, Rank rank) {
-        return suit.getValue() + rank.getDisplayValue();
+        return suit.name() + rank.name();
     }
 
     public static Card of(Suit suit, Rank rank) {

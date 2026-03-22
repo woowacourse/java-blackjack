@@ -1,4 +1,4 @@
-package view;
+package ui.view;
 
 import domain.participant.Player;
 import java.util.Arrays;

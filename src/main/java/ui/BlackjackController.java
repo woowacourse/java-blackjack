@@ -1,3 +1,5 @@
+package ui;
+
 import domain.card.Deck;
 import domain.dto.PlayerResult;
 import domain.dto.Profit;
@@ -7,8 +9,12 @@ import domain.participant.Player;
 import domain.participant.Players;
 import java.util.ArrayList;
 import java.util.List;
-import view.InputView;
-import view.ResultView;
+import ui.dto.ParticipantCardsDto;
+import ui.dto.ParticipantResultDto;
+import ui.dto.PlayerDto;
+import ui.dto.ProfitsDto;
+import ui.view.InputView;
+import ui.view.ResultView;
 
 public class BlackjackController {
     private final InputView inputView;
@@ -24,7 +30,7 @@ public class BlackjackController {
         Players players = readPlayerInfo(deck);
         Dealer dealer = Dealer.createReady(deck.drawInitialCards());
 
-        resultView.printParticipantsCards(players.getPlayers(), dealer);
+        resultView.printParticipantsCards(ParticipantCardsDto.from(players, dealer));
 
         hitStandPlayers(players, deck);
         hitStandDealer(dealer, deck);
@@ -35,8 +41,8 @@ public class BlackjackController {
 
         BetMoney dealerProfit = calculateDealerResult(profits);
 
-        resultView.printCardsWithResult(players.getPlayers(), dealer);
-        resultView.printProfits(profits, dealerProfit);
+        resultView.printCardsWithResult(ParticipantResultDto.toDto(players, dealer));
+        resultView.printProfits(ProfitsDto.toDto(profits, dealerProfit));
     }
 
     private Players readPlayerInfo(Deck deck) {
@@ -60,7 +66,7 @@ public class BlackjackController {
     private void hitStandPlayer(Deck deck, Player player) {
         while (!player.isFinished()) {
             hitByDecision(deck, player);
-            resultView.printCards(player);
+            resultView.printCards(PlayerDto.toDto(player));
         }
     }
 
