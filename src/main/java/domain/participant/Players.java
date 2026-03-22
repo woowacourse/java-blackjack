@@ -13,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Players {
     private static final int MAX_PLAYER = 8;
@@ -36,29 +37,27 @@ public class Players {
 
     public BettingAmounts createBettingAmounts(BigDecimal amount) {
         Map<Name, BettingAmount> bettingAmounts = new HashMap<>();
-        players.forEach(player -> {
+        for (Player player : players) {
             bettingAmounts.put(player.getName(), new BettingAmount(amount));
-        });
+        }
         return new BettingAmounts(bettingAmounts);
     }
 
     public Map<String, GameResult> judgeResultsAgainst(Dealer dealer) {
-        Map<String, GameResult> gameResult = new HashMap<>();
-        players.forEach(player -> {
-            GameResult result = player.judgeResult(dealer);
-            gameResult.put(player.getName().getName(), result);
-        });
-        return gameResult;
+        return players.stream()
+                .collect(Collectors.toMap(
+                        player -> player.getParticipantName(),
+                        player -> player.judgeResult(dealer)
+                ));
     }
 
     public LinkedHashMap<Name, Revenue> calculateProfitsAgainst(Dealer dealer, CalculateProfit calculateProfit) {
         LinkedHashMap<Name, Revenue> finalRevenues = new LinkedHashMap<>();
-
-        players.forEach(player -> {
+        for (Player player : players) {
             GameResult result = player.judgeResult(dealer);
             Revenue revenue = calculateProfit.calculate(player.getName(), result);
             finalRevenues.put(player.getName(), revenue);
-        });
+        }
         return finalRevenues;
     }
 
