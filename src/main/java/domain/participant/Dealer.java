@@ -5,7 +5,7 @@ import domain.card.Card;
 public class Dealer extends Participant {
     public static int DEALER_HIT_STAND_BOUNDARY = 16;
 
-    public Dealer(String name) {
+    public Dealer(Name name) {
         super(name);
     }
 

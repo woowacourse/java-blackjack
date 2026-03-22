@@ -3,6 +3,7 @@ package domain;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.participant.Dealer;
+import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Player;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class BlackjackGame {
 
     public BlackjackGame() {
         this.players = new ArrayList<>();
-        this.dealer = new Dealer("딜러");
+        this.dealer = new Dealer(new Name("딜러"));
         this.deck = new Deck();
     }
 
@@ -29,9 +30,13 @@ public class BlackjackGame {
         return dealer;
     }
 
-    public void registPlayers(List<String> names) {
-        for (String name : names) {
-            players.add(new Player(name));
+    public void registPlayers(List<String> names, List<Integer> betAmounts) {
+        for (int i = 0; i< names.size(); i++) {
+            String name = names.getFirst();
+            int money = betAmounts.getFirst();
+
+            players.add(new Player(new Name(name), new Money(money)));
+
         }
     }
 

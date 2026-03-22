@@ -1,6 +1,7 @@
 package view;
 
 import exception.EmptyInputException;
+import exception.InvalidBettingAmountFormatException;
 import exception.InvalidHitStandInputException;
 import java.util.List;
 import java.util.Scanner;
@@ -25,7 +26,8 @@ public class InputView {
         System.out.println(name + "의 배팅 금액은?");
         String input = readLine();
         validateHasInput(input);
-        return Integer.parseInt(input);
+        validateIsNumeric(input);
+        return Integer.parseInt(input.trim());
     }
 
     public String readHitStand(String name) {
@@ -41,6 +43,12 @@ public class InputView {
     private static void validateHasInput(String input) {
         if (input == null || input.isBlank()) {
             throw new EmptyInputException();
+        }
+    }
+
+    public static void validateIsNumeric(String input) {
+        if (!input.matches("-?\\d+")) {
+            throw new InvalidBettingAmountFormatException();
         }
     }
 

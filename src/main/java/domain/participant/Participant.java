@@ -8,8 +8,8 @@ public abstract class Participant {
     protected final Name name;
     protected final Cards cards;
 
-    public Participant(String name) {
-        this.name = new Name(name);
+    public Participant(Name name) {
+        this.name = name;
         this.cards = new Cards();
     }
 
