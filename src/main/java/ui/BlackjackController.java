@@ -9,10 +9,10 @@ import domain.participant.BetMoney;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
-import java.util.ArrayList;
 import java.util.List;
 import ui.dto.ParticipantCardsDto;
 import ui.dto.ParticipantResultDto;
+import ui.dto.PlayerCreateDto;
 import ui.dto.PlayerDto;
 import ui.dto.ProfitsDto;
 import ui.view.InputView;
@@ -52,15 +52,9 @@ public class BlackjackController {
     }
 
     private List<PlayerCreateInfo> readPlayerInfo() {
-        List<String> names = inputView.readPlayerNames();
-        List<String> betMoneys = inputView.readBetMoney(names);
-
-        List<PlayerCreateInfo> playerList = new ArrayList<>();
-        for (int i = 0; i < names.size(); i++) {
-            playerList.add(new PlayerCreateInfo(names.get(i), betMoneys.get(i)));
-        }
-
-        return playerList;
+        return inputView.readPlayersInfo().stream()
+                .map(PlayerCreateDto::toDomain)
+                .toList();
     }
 
     private void hitStandPlayers(Players players, Deck deck) {

@@ -2,6 +2,8 @@ package ui.view;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
+import ui.dto.PlayerCreateDto;
 import util.Console;
 
 public class InputView {
@@ -14,7 +16,16 @@ public class InputView {
     private static final String INVALID_HIT_STAND_RESPONSE = "[ERROR] 입력은 y 또는 n으로만 입력해야 합니다.";
     private static final String DUPLICATE_NAME_NOT_ALLOWED = "[ERROR] 닉네임은 중복될 수 없습니다.";
 
-    public List<String> readPlayerNames() {
+    public List<PlayerCreateDto> readPlayersInfo() {
+        List<String> names = readPlayerNames();
+        List<String> betMoney = readBetMoney(names);
+
+        return IntStream.range(0, names.size())
+                .mapToObj(i -> new PlayerCreateDto(names.get(i), betMoney.get(i)))
+                .toList();
+    }
+
+    private List<String> readPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = Console.readLine();
         List<String> names = Arrays.stream(input.split(","))
@@ -26,26 +37,7 @@ public class InputView {
         return names;
     }
 
-    private void validate(String name) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException(BLANK_NAME_NOT_ALLOWED);
-        }
-        if (name.length() < NAME_MIN_LENGTH || name.length() > NAME_MAX_LENGTH) {
-            throw new IllegalArgumentException(NAME_OUT_OF_RANGE);
-        }
-    }
-
-    private void validateIsUnique(List<String> names) {
-        long uniqueNames = names.stream()
-                .distinct()
-                .count();
-
-        if (uniqueNames != names.size()) {
-            throw new IllegalArgumentException(DUPLICATE_NAME_NOT_ALLOWED);
-        }
-    }
-
-    public List<String> readBetMoney(List<String> names) {
+    private List<String> readBetMoney(List<String> names) {
         printEmptyLine();
         return names.stream()
                 .map(this::readBetMoney)
@@ -69,6 +61,26 @@ public class InputView {
     private static void validateIsDigit(char c) {
         if (!Character.isDigit(c)) {
             throw new IllegalArgumentException(INVALID_NUMBER_FORMAT);
+        }
+    }
+
+
+    private void validate(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException(BLANK_NAME_NOT_ALLOWED);
+        }
+        if (name.length() < NAME_MIN_LENGTH || name.length() > NAME_MAX_LENGTH) {
+            throw new IllegalArgumentException(NAME_OUT_OF_RANGE);
+        }
+    }
+
+    private void validateIsUnique(List<String> names) {
+        long uniqueNames = names.stream()
+                .distinct()
+                .count();
+
+        if (uniqueNames != names.size()) {
+            throw new IllegalArgumentException(DUPLICATE_NAME_NOT_ALLOWED);
         }
     }
 
