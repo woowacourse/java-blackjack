@@ -1,4 +1,4 @@
-package constant;
+package domain.bet;
 
 import domain.participant.Dealer;
 import domain.participant.Player;

@@ -3,6 +3,7 @@ package constant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.bet.Money;
+import domain.bet.Result;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Name;

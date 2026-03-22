@@ -2,7 +2,7 @@ package service;
 
 import constant.PlayerAction;
 import constant.PolicyConstant;
-import constant.Result;
+import domain.bet.Result;
 import domain.card.CardMachine;
 import domain.participant.Dealer;
 import domain.participant.Participant;
