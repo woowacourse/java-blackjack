@@ -6,8 +6,8 @@ import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Players;
 import java.math.BigDecimal;
-import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.LinkedHashMap;
 
 public class GameResultManager {
     private final CalculateProfit calculateProfit;
@@ -24,9 +24,11 @@ public class GameResultManager {
         return players.judgeResultsAgainst(dealer);
     }
 
-    public LinkedHashMap<Name, Revenue> getParticipantsProfit() {
-        LinkedHashMap<Name, Revenue> finalRevenues = players.calculateProfitsAgainst(dealer, calculateProfit);
-        finalRevenues.put(dealer.getName(), calculateDealerRevenue(finalRevenues));
+    public Map<Name, Revenue> getParticipantsProfit() {
+        Map<Name, Revenue> playerRevenues = players.calculateProfitsAgainst(dealer, calculateProfit);
+        Map<Name, Revenue> finalRevenues = new LinkedHashMap<>();
+        finalRevenues.put(dealer.getName(), calculateDealerRevenue(playerRevenues));
+        finalRevenues.putAll(playerRevenues);
         return finalRevenues;
     }
 

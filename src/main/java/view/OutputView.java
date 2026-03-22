@@ -32,27 +32,6 @@ public class OutputView {
         System.out.println(DEALER + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printGameResult(Map<String, GameResult> gameResult) {
-        StringBuilder resultMessage = new StringBuilder();
-        int winCount = 0;
-        int loseCount = 0;
-
-        for (Map.Entry<String, GameResult> entry : gameResult.entrySet()) {
-            if (entry.getValue().equals(GameResult.WIN)) {
-                resultMessage.append(entry.getKey()).append(": ").append("승%n");
-                winCount += 1;
-                continue;
-            }
-
-            resultMessage.append(entry.getKey()).append(": ").append("패%n");
-            loseCount += 1;
-        }
-        System.out.println();
-        System.out.println("## 최종 승패");
-        System.out.println(DEALER + ": " + loseCount + "승" + " " + winCount + "패");
-        System.out.printf(resultMessage.toString());
-    }
-
     public static void printParticipantRevenues(List<ParticipantRevenueDto> participantRevenueDtos) {
         System.out.println();
         System.out.println("## 최종 수익");

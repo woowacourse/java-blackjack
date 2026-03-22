@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SequencedMap;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -51,8 +52,8 @@ public class Players {
                 ));
     }
 
-    public LinkedHashMap<Name, Revenue> calculateProfitsAgainst(Dealer dealer, CalculateProfit calculateProfit) {
-        LinkedHashMap<Name, Revenue> finalRevenues = new LinkedHashMap<>();
+    public Map<Name, Revenue> calculateProfitsAgainst(Dealer dealer, CalculateProfit calculateProfit) {
+        Map<Name, Revenue> finalRevenues = new LinkedHashMap<>();
         for (Player player : players) {
             GameResult result = player.judgeResult(dealer);
             Revenue revenue = calculateProfit.calculate(player.getName(), result);
