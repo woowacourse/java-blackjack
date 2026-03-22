@@ -9,6 +9,12 @@ import java.util.Map;
 
 public class ResultCalculator {
     public GameResult calculate(Dealer dealer, Players players) {
+        final GameResult gameResult = calculateOutcome(dealer, players);
+        settleBalance(dealer, players, gameResult);
+        return gameResult;
+    }
+
+    private GameResult calculateOutcome(Dealer dealer, Players players) {
         final int dealerScore = dealer.getScore();
         final HandState dealerState = dealer.getHandState();
         final Map<String, Outcome> playerOutcomes = new HashMap<>();
@@ -19,13 +25,19 @@ public class ResultCalculator {
             final HandState playerState = player.getHandState();
             final Outcome playerOutcome = playerState.against(dealerState, playerScore, dealerScore);
             final Outcome dealerOutcome = reverse(playerOutcome);
-            final int playerProfit = player.applyOutcome(playerOutcome);
-            dealer.applyAgainstPlayerProfit(playerProfit);
             playerOutcomes.put(player.getName(), playerOutcome);
             dealerOutcomeCounts.put(dealerOutcome, dealerOutcomeCounts.get(dealerOutcome) + 1);
         });
 
         return new GameResult(playerOutcomes, dealerOutcomeCounts);
+    }
+
+    private void settleBalance(Dealer dealer, Players players, GameResult gameResult) {
+        players.forEachPlayer(player -> {
+            final Outcome outcome = gameResult.getPlayerOutcome(player.getName());
+            final int playerProfit = player.applyOutcome(outcome);
+            dealer.applyAgainstPlayerProfit(playerProfit);
+        });
     }
 
     private Map<Outcome, Integer> initOutcomeCounts() {
