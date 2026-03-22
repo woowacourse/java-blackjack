@@ -1,6 +1,5 @@
 package ui.view;
 
-import domain.participant.Player;
 import java.util.Arrays;
 import java.util.List;
 import util.Console;
@@ -77,8 +76,8 @@ public class InputView {
         System.out.println();
     }
 
-    public boolean readHitStand(Player player) {
-        System.out.println(player.getName().getValue() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    public boolean readHitStand(String name) {
+        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = Console.readLine();
         if (input.equals("y")) {
             return true;

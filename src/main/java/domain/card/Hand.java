@@ -41,6 +41,10 @@ public class Hand {
         return getSumWithoutAce().sumWithAce(getAceAmount());
     }
 
+    public boolean isScoreLessThanOrEqualTo(Score target) {
+        return totalSum().isLessThanOrEqualTo(target);
+    }
+
     private int getAceAmount() {
         return (int) cards.stream()
                 .filter(Card::isAce)

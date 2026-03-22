@@ -1,8 +1,10 @@
 package domain.participant;
 
 import domain.Result;
+import domain.Score;
 import domain.card.Card;
 import domain.state.State;
+import java.util.List;
 
 public abstract class Participant {
     protected State state;
@@ -29,5 +31,13 @@ public abstract class Participant {
 
     public State getState() {
         return state;
+    }
+
+    public Score totalSum() {
+        return state.totalSum();
+    }
+
+    public List<Card> getCards() {
+        return state.hand().getCards();
     }
 }

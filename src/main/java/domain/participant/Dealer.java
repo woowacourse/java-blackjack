@@ -20,6 +20,6 @@ public class Dealer extends Participant {
     }
 
     public boolean isHittable() {
-        return state.hand().totalSum().isLessThanOrEqualTo(Score.DEALER_HIT_STAND_BOUNDARY);
+        return state.isScoreLessThanOrEqualTo(Score.DEALER_HIT_STAND_BOUNDARY);
     }
 }

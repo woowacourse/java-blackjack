@@ -77,7 +77,7 @@ public class BlackjackController {
     }
 
     private void hitByDecision(Deck deck, Player player) {
-        if (inputView.readHitStand(player)) {
+        if (inputView.readHitStand(player.getName().getValue())) {
             player.draw(deck.draw());
             return;
         }

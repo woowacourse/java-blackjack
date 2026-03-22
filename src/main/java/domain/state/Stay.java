@@ -21,8 +21,8 @@ public class Stay extends Finished {
     }
 
     private Result judgeByScore(State state) {
-        Score sum = hand.totalSum();
-        Score targetSum = state.hand().totalSum();
+        Score sum = totalSum();
+        Score targetSum = state.totalSum();
 
         if (sum.isEqualTo(targetSum)) {
             return Result.DRAW;
