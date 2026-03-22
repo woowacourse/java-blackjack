@@ -1,11 +1,12 @@
 package domain.card;
 
+import static domain.BlackjackGame.INITIAL_CARD_COUNT;
+
 import domain.Score;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-    private static final int BLACKJACK_CARD_COUNT = 2;
     private final List<Card> cards;
 
     private Hand(List<Card> cards) {
@@ -29,7 +30,7 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_CARD_COUNT && totalSum().isBlackjack();
+        return cards.size() == INITIAL_CARD_COUNT && totalSum().isBlackjack();
     }
 
     public boolean isBust() {

@@ -11,6 +11,7 @@ import domain.participant.Players;
 import java.util.List;
 
 public class BlackjackGame {
+    public static final int INITIAL_CARD_COUNT = 2;
     private final Players players;
     private final Dealer dealer;
     private final Deck deck;
