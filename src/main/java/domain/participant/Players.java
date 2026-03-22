@@ -17,4 +17,10 @@ public class Players {
     public void forEachPlayer(final Consumer<Player> action) {
         players.forEach(action);
     }
+
+    public int getTotalProfit() {
+        return players.stream()
+                .mapToInt(Player::getBalance)
+                .sum();
+    }
 }

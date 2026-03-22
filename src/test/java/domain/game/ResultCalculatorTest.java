@@ -11,6 +11,7 @@ import domain.participant.Players;
 import domain.state.Outcome;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import support.ParticipantTestSupport;
 
 public class ResultCalculatorTest {
     @Test
@@ -18,18 +19,26 @@ public class ResultCalculatorTest {
     void playerBustLose() {
         ResultCalculator calculator = new ResultCalculator();
         Dealer dealer = new Dealer();
-        Players players = new Players(java.util.List.of(new Player("pobi")));
+        Players players = new Players(java.util.List.of(new Player("pobi", 1000)));
         final Player[] playerRef = new Player[1];
         players.forEachPlayer(player -> playerRef[0] = player);
 
-        dealer.addCardForTest(new Card(Suit.SPADE, Rank.TEN));
-        dealer.addCardForTest(new Card(Suit.HEART, Rank.EIGHT));
-        playerRef[0].addCardForTest(new Card(Suit.CLUB, Rank.KING));
-        playerRef[0].addCardForTest(new Card(Suit.DIAMOND, Rank.QUEEN));
-        playerRef[0].addCardForTest(new Card(Suit.HEART, Rank.TWO));
+        ParticipantTestSupport.addCards(
+                dealer,
+                new Card(Suit.SPADE, Rank.TEN),
+                new Card(Suit.HEART, Rank.EIGHT)
+        );
+        ParticipantTestSupport.addCards(
+                playerRef[0],
+                new Card(Suit.CLUB, Rank.KING),
+                new Card(Suit.DIAMOND, Rank.QUEEN),
+                new Card(Suit.HEART, Rank.TWO)
+        );
 
         GameResult result = calculator.calculate(dealer, players);
 
         assertEquals(Outcome.LOSE, result.getPlayerOutcome(playerRef[0].getName()));
+        assertEquals(-1000, playerRef[0].getBalance());
+        assertEquals(1000, dealer.getBalance());
     }
 }

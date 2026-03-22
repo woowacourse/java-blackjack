@@ -5,39 +5,48 @@ import domain.card.Cards;
 import domain.card.Hand;
 import java.util.List;
 import domain.state.HandState;
+import domain.state.TurnState;
 
 public abstract class Participant {
     private final Hand hand;
+    private Balance balance;
 
     protected Participant() {
         this.hand = new Hand();
+        this.balance = Balance.ZERO;
     }
 
     public void drawCard(Cards cards) {
         hand.addCard(cards.draw());
     }
 
-    public List<Card> getCardList() {
+    public List<Card> getCards() {
         return hand.getCards();
     }
 
-    public void addCardForTest(final Card card) {
-        hand.addCard(card);
-    }
-
-    public int getResult() {
-        return hand.getResult();
+    public int getScore() {
+        return hand.getScore();
     }
 
     public boolean checkBust() {
         return hand.checkBust();
     }
 
-    public boolean isDealerDrawScore() {
-        return hand.isDealerDrawScore();
-    }
-
     public HandState getHandState(){
         return hand.getHandState();
+    }
+
+    public abstract TurnState getTurnState();
+
+    public final boolean shouldDrawCard() {
+        return getTurnState() == TurnState.HITTING && getHandState() == HandState.STAND;
+    }
+
+    protected void addBalance(int amount){
+        this.balance = new Balance(balance.getBalance() + amount);
+    }
+
+    public int getBalance() {
+        return balance.getBalance();
     }
 }

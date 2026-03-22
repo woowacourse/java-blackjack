@@ -1,23 +1,26 @@
 package view;
 
-import domain.card.Card;
-import domain.card.Hand;
-import domain.participant.Dealer;
-import domain.game.GameResult;
-import domain.state.Outcome;
-import domain.participant.Player;
-import domain.participant.Players;
+import dto.view.ParticipantProfitDto;
+import dto.view.ParticipantStatsDto;
+import dto.view.PlayerCardsDto;
+import dto.view.PlayerOutcomeDto;
+import dto.view.PlayerProfitDto;
+import dto.view.ResultDto;
+import dto.view.StartBlackJackDto;
 import java.util.List;
-import java.util.stream.Collectors;
-import message.IOMessage;
 
 public class ResultView {
+    private static final String DEALER_HIT_ONE_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String WINNING_STATISTICS = "## 최종 승패";
+    private static final String FINAL_PROFIT = "## 최종 수익";
+    private static final String DEALER_NAME = "딜러";
+
     public void printLineBreak() {
         System.out.println();
     }
 
-    public void printPlayerCards(String playerName, String cardNames) {
-        System.out.println(playerName + "카드: " + cardNames);
+    public void printPlayerCards(final PlayerCardsDto playerCardsDto) {
+        System.out.println(playerCardsDto.name() + "카드: " + String.join(", ", playerCardsDto.cards()));
     }
 
     public void printPlayerBust(String playerName) {
@@ -25,80 +28,82 @@ public class ResultView {
     }
 
     public void printDealerDrawMessage() {
-        System.out.println(IOMessage.DEALER_HIT_ONE_CARD.message());
+        System.out.println(DEALER_HIT_ONE_CARD);
     }
 
     public void printDealerBust() {
         System.out.println("딜러는 버스트!");
     }
 
-    public void printGameStartMessage(Players players, Dealer dealer) {
+    public void printGameStartMessage(StartBlackJackDto startBlackJackDto) {
         System.out.println();
-        printGameStart(players, dealer);
+        printGameStart(startBlackJackDto);
         System.out.println();
     }
 
-    public void printGameStart(Players players, Dealer dealer) {
-        System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", joinPlayerNames(players));
-        System.out.printf("딜러카드: %s%n", formatCardName(dealer.getCardList().get(0)));
-        players.forEachPlayer(player -> System.out.printf(
+    public void printGameStart(StartBlackJackDto startBlackJackDto) {
+        System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", joinPlayerNames(startBlackJackDto.playerCards()));
+        System.out.printf("딜러카드: %s%n", startBlackJackDto.dealerCard());
+        startBlackJackDto.playerCards().forEach(player -> System.out.printf(
                 "%s카드: %s%n",
-                player.getName(),
-                joinCardNames(player.getCardList())
+                player.name(),
+                String.join(", ", player.cards())
         ));
     }
 
-    private String formatCardName(final Card card) {
-        return card.getRank().symbol() + card.getSuit().suit();
-    }
-
-    public void printResult(Players players, Dealer dealer) {
-        System.out.println("딜러카드: " + joinCardNames(dealer.getCardList()) + " - 결과: " + dealer.getResult());
-        players.forEachPlayer(player -> System.out.printf(
+    public void printResult(ResultDto resultDto) {
+        System.out.println("딜러카드: " + resultDto.dealer().cards() + " - 결과: " + resultDto.dealer().score());
+        resultDto.players().forEach(player -> System.out.printf(
                 "%s카드: %s - 결과: %s%n",
-                player.getName(),
-                joinCardNames(player.getCardList()),
-                player.getResult()
+                player.name(),
+                player.cards(),
+                player.score()
         ));
     }
 
-    public void printWinner(Players players, GameResult gameResult) {
+    public void printWinner(ParticipantStatsDto participantStatsDto) {
         System.out.println();
-        System.out.println(IOMessage.WINNING_STATISTICS.message());
-        printDealerOutcome(gameResult);
-        printPlayerOutcomes(players, gameResult);
+        System.out.println(WINNING_STATISTICS);
+        printDealerOutcome(participantStatsDto);
+        printPlayerOutcomes(participantStatsDto);
     }
 
-    private String joinPlayerNames(Players players) {
+    public void printFinalProfit(ParticipantProfitDto participantProfitDto) {
+        System.out.println();
+        System.out.println(FINAL_PROFIT);
+        System.out.printf("%s: %d%n", DEALER_NAME, participantProfitDto.dealerProfit());
+        participantProfitDto.playerProfits().forEach(this::printPlayerProfit);
+    }
+
+    private String joinPlayerNames(List<PlayerCardsDto> playerCardsDtos) {
         final StringBuilder playerNames = new StringBuilder();
-        players.forEachPlayer(player -> {
+        playerCardsDtos.forEach(player -> {
             if (playerNames.length() > 0) {
                 playerNames.append(", ");
             }
-            playerNames.append(player.getName());
+            playerNames.append(player.name());
         });
         return playerNames.toString();
     }
 
-    public String joinCardNames(List<Card> cardList) {
-        return cardList.stream()
-                .map(this::formatCardName)
-                .collect(Collectors.joining(", "));
+    private void printDealerOutcome(ParticipantStatsDto participantStatsDto) {
+        System.out.printf(
+                "딜러: %d승 %d패 %d무%n",
+                participantStatsDto.dealerStat().win(),
+                participantStatsDto.dealerStat().lose(),
+                participantStatsDto.dealerStat().draw()
+        );
     }
 
-    private void printDealerOutcome(GameResult gameResult) {
-        System.out.print("딜러: ");
-        for (Outcome outcome : Outcome.values()) {
-            System.out.print(gameResult.getDealerCount(outcome) + outcome.result() + " ");
-        }
-        System.out.println();
+    private void printPlayerOutcomes(ParticipantStatsDto participantStatsDto) {
+        participantStatsDto.playerStats().forEach(this::printPlayerOutcome);
     }
 
-    private void printPlayerOutcomes(Players players, GameResult gameResult) {
-        players.forEachPlayer(player -> printPlayerOutcome(player, gameResult));
+    private void printPlayerOutcome(PlayerOutcomeDto playerOutcomeDto) {
+        System.out.println(playerOutcomeDto.name() + ": " + playerOutcomeDto.outcome());
     }
 
-    private void printPlayerOutcome(Player player, GameResult gameResult) {
-        System.out.println(player.getName() + ": " + gameResult.getPlayerOutcome(player.getName()).result());
+    private void printPlayerProfit(PlayerProfitDto playerProfitDto) {
+        System.out.printf("%s: %d%n", playerProfitDto.name(), playerProfitDto.profit());
     }
 }

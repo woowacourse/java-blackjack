@@ -1,31 +1,38 @@
 package controller;
 
+import controller.mapper.ResultViewMapper;
 import domain.game.BlackJackGame;
 import domain.card.Cards;
 import domain.participant.Dealer;
 import domain.game.GameResult;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.state.HitStand;
+import dto.domain.PlayerNameAndBettingDto;
+import java.util.List;
 import view.InputView;
 import view.ResultView;
 
 public class BlackJackController {
     private final InputView inputView;
     private final ResultView resultView;
+    private final ResultViewMapper resultViewMapper;
 
     public BlackJackController(InputView inputView, ResultView resultView) {
         this.inputView = inputView;
         this.resultView = resultView;
+        this.resultViewMapper = new ResultViewMapper();
     }
 
     public void run() {
-        final String participant = inputView.getPlayerNames();
-        final BlackJackGame game = BlackJackGame.startGame(participant);
+        final List<String> participantNames = inputView.getPlayerNames();
+        final List<PlayerNameAndBettingDto> playersInfo = inputView.getPlayerBetting(participantNames);
+        final BlackJackGame game = BlackJackGame.startGame(playersInfo);
         final Players players = game.players();
         final Dealer dealer = game.dealer();
         final Cards cards = game.cards();
 
-        resultView.printGameStartMessage(players, dealer);
+        resultView.printGameStartMessage(resultViewMapper.toStartBlackJackDto(players, dealer));
         drawPlayersTurn(players, cards);
         drawDealerTurn(dealer, cards);
         printResult(game);
@@ -36,10 +43,11 @@ public class BlackJackController {
     }
 
     private void drawPlayerTurn(Player player, Cards cards) {
-        while (player.canHit()) {
-            final boolean hit = inputView.askHitOrStand(player);
-            if (!hit) {
-                break;
+        while (player.shouldDrawCard()) {
+            final HitStand decision = inputView.askHitOrStand(player.getName());
+            if (decision == HitStand.STAND) {
+                player.stand();
+                return;
             }
             hit(player, cards);
         }
@@ -47,7 +55,7 @@ public class BlackJackController {
 
     private void hit(Player player, Cards cards) {
         player.hit(cards);
-        resultView.printPlayerCards(player.getName(), resultView.joinCardNames(player.getCardList()));
+        resultView.printPlayerCards(resultViewMapper.toPlayerCardsDto(player));
         printPlayerBustIfNeeded(player);
     }
 
@@ -69,19 +77,16 @@ public class BlackJackController {
     private void printResult(BlackJackGame game) {
         final Players players = game.players();
         final Dealer dealer = game.dealer();
+        final GameResult gameResult = game.calculateResult();
         printGameResult(players, dealer);
-        printWinnerResult(game);
+        resultView.printWinner(resultViewMapper.toParticipantStatsDto(players, gameResult));
+        resultView.printFinalProfit(resultViewMapper.toParticipantProfitDto(players, game.getDealerProfit()));
     }
 
     private void printGameResult(Players players, Dealer dealer) {
-        resultView.printResult(players, dealer);
+        resultView.printResult(resultViewMapper.toResultDto(players, dealer));
         if (dealer.checkBust()) {
             resultView.printDealerBust();
         }
-    }
-
-    private void printWinnerResult(BlackJackGame game) {
-        final GameResult gameResult = game.calculateResult();
-        resultView.printWinner(game.players(), gameResult);
     }
 }

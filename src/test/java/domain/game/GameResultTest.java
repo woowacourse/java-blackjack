@@ -12,11 +12,11 @@ public class GameResultTest {
     @DisplayName("플레이어 결과와 딜러 집계 결과를 조회할 수 있다")
     void readResult() {
         GameResult gameResult = new GameResult(
-                Map.of("pobi", Outcome.WIN),
-                Map.of(Outcome.WIN, 0, Outcome.LOSE, 1)
+                Map.of("pobi", Outcome.DEFAULT_WIN),
+                Map.of(Outcome.DEFAULT_WIN, 0, Outcome.LOSE, 1)
         );
 
-        assertEquals(Outcome.WIN, gameResult.getPlayerOutcome("pobi"));
+        assertEquals(Outcome.DEFAULT_WIN, gameResult.getPlayerOutcome("pobi"));
         assertEquals(1, gameResult.getDealerCount(Outcome.LOSE));
     }
 }
