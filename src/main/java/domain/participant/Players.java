@@ -3,9 +3,6 @@ package domain.participant;
 import java.util.List;
 
 public class Players {
-    public static final int MINIMUM_PLAYER_COUNT = 1;
-    public static final int MAXIMUM_PLAYER_COUNT = 8;
-
     private final List<Player> players;
 
     public Players(List<Player> players) {
