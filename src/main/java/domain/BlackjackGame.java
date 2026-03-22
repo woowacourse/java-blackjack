@@ -56,6 +56,6 @@ public class BlackjackGame {
     public BetMoney calculateDealerResult(List<Profit> profits) {
         return profits.stream()
                 .map(Profit::betMoney)
-                .reduce(BetMoney.ZERO, BetMoney::sub);
+                .reduce(BetMoney.ZERO, BetMoney::subtract);
     }
 }
