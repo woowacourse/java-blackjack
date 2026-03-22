@@ -3,17 +3,14 @@ package domain.game;
 import static org.junit.jupiter.api.Assertions.*;
 
 import domain.betting.BettingAmount;
-import domain.betting.BettingAmounts;
-import domain.betting.CalculateProfit;
+import domain.betting.Revenue;
 import domain.card.Card;
 import domain.card.Number;
 import domain.card.Shape;
-import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -22,36 +19,41 @@ class GameResultManagerTest {
     @Test
     void 플레이어들의_점수를_딜러와_비교해_승패를_반환한다() {
         TestFixture fixture = createFixture();
-        dealCards(fixture.dealer(), fixture.pobi(), fixture.crong());
+        dealCards(fixture.gameManager(), fixture.pobi(), fixture.crong());
 
-        GameResultManager gameResultManager = createGameResultManager(fixture);
-
-        Map<String, GameResult> result = gameResultManager.getGameResult();
+        Map<String, GameResult> result = fixture.gameManager().getGameResult();
 
         assertEquals(GameResult.WIN, result.get("pobi"));
         assertEquals(GameResult.LOSE, result.get("crong"));
     }
 
-    private GameResultManager createGameResultManager(TestFixture fixture) {
-        BettingAmounts bettingBook = fixture.players().createBettingAmounts(BigDecimal.valueOf(1000));
-        CalculateProfit calculateProfit = new CalculateProfit(bettingBook);
-        return new GameResultManager(calculateProfit, fixture.players(), fixture.dealer());
+    @Test
+    void 참가자별_수익은_딜러를_먼저_포함해_반환한다() {
+        TestFixture fixture = createFixture();
+        dealCards(fixture.gameManager(), fixture.pobi(), fixture.crong());
+
+        Map<Name, Revenue> profits = fixture.gameManager().getParticipantsProfit();
+
+        assertEquals(List.of("딜러", "pobi", "crong"),
+                profits.keySet().stream().map(Name::getName).toList());
+        assertEquals(0, BigDecimal.valueOf(1000).compareTo(profits.get(new Name("딜러")).getMoney()));
+        assertEquals(0, BigDecimal.valueOf(1000).compareTo(profits.get(new Name("pobi")).getMoney()));
+        assertEquals(0, BigDecimal.valueOf(-2000).compareTo(profits.get(new Name("crong")).getMoney()));
     }
 
     private TestFixture createFixture() {
-        Player pobi = new Player(new Name("pobi"));
-        Player crong = new Player(new Name("crong"));
+        Player pobi = new Player(new Name("pobi"), new BettingAmount(BigDecimal.valueOf(1000)));
+        Player crong = new Player(new Name("crong"), new BettingAmount(BigDecimal.valueOf(2000)));
         Players players = new Players(List.of(pobi, crong));
-        Dealer dealer = new Dealer();
-        return new TestFixture(pobi, crong, players, dealer);
+        return new TestFixture(new GameManager(players), pobi, crong);
     }
 
-    private record TestFixture(Player pobi, Player crong, Players players, Dealer dealer) {
+    private record TestFixture(GameManager gameManager, Player pobi, Player crong) {
     }
 
-    private static void dealCards(Dealer dealer, Player pobi, Player crong) {
-        dealer.receiveCard(new Card(Shape.SPADE, Number.TEN));
-        dealer.receiveCard(new Card(Shape.HEART, Number.EIGHT));
+    private static void dealCards(GameManager gameManager, Player pobi, Player crong) {
+        gameManager.getDealer().receiveCard(new Card(Shape.SPADE, Number.TEN));
+        gameManager.getDealer().receiveCard(new Card(Shape.HEART, Number.EIGHT));
 
         pobi.receiveCard(new Card(Shape.DIAMOND, Number.TEN));
         pobi.receiveCard(new Card(Shape.CLUB, Number.TEN));

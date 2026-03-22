@@ -1,18 +1,12 @@
 package domain.participant;
 
-import domain.betting.BettingAmount;
-import domain.betting.BettingAmounts;
-import domain.betting.CalculateProfit;
 import domain.betting.Revenue;
 import domain.game.GameResult;
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SequencedMap;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -36,14 +30,6 @@ public class Players {
                 .toList();
     }
 
-    public BettingAmounts createBettingAmounts(BigDecimal amount) {
-        Map<Name, BettingAmount> bettingAmounts = new HashMap<>();
-        for (Player player : players) {
-            bettingAmounts.put(player.getName(), new BettingAmount(amount));
-        }
-        return new BettingAmounts(bettingAmounts);
-    }
-
     public Map<String, GameResult> judgeResultsAgainst(Dealer dealer) {
         return players.stream()
                 .collect(Collectors.toMap(
@@ -52,12 +38,10 @@ public class Players {
                 ));
     }
 
-    public Map<Name, Revenue> calculateProfitsAgainst(Dealer dealer, CalculateProfit calculateProfit) {
+    public Map<Name, Revenue> calculateProfitsAgainst(Dealer dealer) {
         Map<Name, Revenue> finalRevenues = new LinkedHashMap<>();
         for (Player player : players) {
-            GameResult result = player.judgeResult(dealer);
-            Revenue revenue = calculateProfit.calculate(player.getName(), result);
-            finalRevenues.put(player.getName(), revenue);
+            finalRevenues.put(player.getName(), player.calculateRevenueAgainst(dealer));
         }
         return finalRevenues;
     }

@@ -1,11 +1,8 @@
 package controller;
 
 import domain.betting.BettingAmount;
-import domain.betting.BettingAmounts;
-import domain.betting.CalculateProfit;
 import domain.betting.Revenue;
 import domain.game.GameManager;
-import domain.game.GameResultManager;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
@@ -13,7 +10,6 @@ import domain.participant.Players;
 import dto.ParticipantCardsDto;
 import dto.ParticipantRevenueDto;
 import java.math.BigDecimal;
-import java.util.HashMap;
 import view.InputView;
 
 import java.util.ArrayList;
@@ -35,26 +31,13 @@ public class BlackJackGameController {
         Players players = initPlayer();
         GameManager gameManager = new GameManager(players);
         List<String> playerNames = players.getPlayerNames();
-        BettingAmounts bettingAmounts = initBettingManager(players);
         printGameInitialMessage(playerNames);
         gameManager.distributeInitialCards();
         printParticipantCards(gameManager.getDealer(), players);
         playGame(players, gameManager);
-        CalculateProfit calculateProfit = new CalculateProfit(bettingAmounts);
-        GameResultManager gameResultManager =
-                new GameResultManager(calculateProfit, players, gameManager.getDealer());
-        Map<Name, Revenue> profits = gameResultManager.getParticipantsProfit();
+        Map<Name, Revenue> profits = gameManager.getParticipantsProfit();
         List<ParticipantRevenueDto> revenueDtos = ParticipantRevenueDto.from(profits);
         endGame(gameManager, players, revenueDtos);
-    }
-
-    private BettingAmounts initBettingManager(Players players) {
-        Map<Name, BettingAmount> bettingAmounts = new HashMap<>();
-        for (Player player : players.getPlayers()) {
-            int amount = InputView.askBettingAmount(player.getParticipantName());
-            bettingAmounts.put(player.getName(), new BettingAmount(BigDecimal.valueOf(amount)));
-        }
-        return new BettingAmounts(bettingAmounts);
     }
 
     private void playGame(Players players, GameManager gameManager) {
@@ -118,7 +101,8 @@ public class BlackJackGameController {
 
         for (String name : playerNames) {
             Name playerName = new Name(name);
-            players.add(new Player(playerName));
+            int amount = InputView.askBettingAmount(playerName.getName());
+            players.add(new Player(playerName, new BettingAmount(BigDecimal.valueOf(amount))));
         }
         return new Players(players);
     }

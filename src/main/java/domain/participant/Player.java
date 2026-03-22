@@ -1,12 +1,17 @@
 package domain.participant;
 
+import domain.betting.BettingAmount;
+import domain.betting.Revenue;
 import domain.game.GameResult;
 
 public class Player extends Participant {
     private static final int CAN_RECEIVE_CARD_THRESHOLD = 21;
 
-    public Player(Name name) {
+    private final BettingAmount bettingAmount;
+
+    public Player(Name name, BettingAmount bettingAmount) {
         super(name);
+        this.bettingAmount = bettingAmount;
     }
 
     public boolean isContinueGame() {
@@ -36,5 +41,10 @@ public class Player extends Participant {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
+    }
+
+    public Revenue calculateRevenueAgainst(Dealer dealer) {
+        GameResult result = judgeResult(dealer);
+        return new Revenue(bettingAmount.getMoney().multiply(result.getProfitRate()));
     }
 }
