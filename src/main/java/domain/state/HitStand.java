@@ -20,6 +20,6 @@ public enum HitStand {
         return Arrays.stream(values())
                 .filter(value -> value.answer.equals(input))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Invalid hit/stand input: " + input));
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 입력입니다: " + input));
     }
 }
