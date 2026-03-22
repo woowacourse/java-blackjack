@@ -52,6 +52,7 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return calculateScore() == PolicyConstant.BLACKJACK_SCORE && this.cards.size() == 2;
+        return calculateScore() == PolicyConstant.BLACKJACK_SCORE
+            && cards.size() == PolicyConstant.BLACKJACK_CARD_COUNT;
     }
 }

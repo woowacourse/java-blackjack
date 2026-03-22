@@ -18,4 +18,6 @@ public class PolicyConstant {
     public static final int MONEY_MIN_VALUE = 10;
     public static final int MONEY_MAX_VALUE = 100_000_000;
     public static final int MONEY_UNIT = 10;
+
+    public static final int BLACKJACK_CARD_COUNT = 2;
 }
