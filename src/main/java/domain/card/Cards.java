@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
+    private static final int INITIAL_CARD_COUNT = 2;
     private static final int BLACKJACK_SCORE = 21;
     private static final int ACE_ADDITIONAL_SCORE = 10;
 
@@ -27,7 +28,7 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return hand.size() == 2 && calculateScore() == BLACKJACK_SCORE;
+        return hand.size() == INITIAL_CARD_COUNT && calculateScore() == BLACKJACK_SCORE;
     }
 
     public boolean isBust() {
