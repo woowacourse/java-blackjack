@@ -24,7 +24,7 @@ public class BetMoney {
         return BetMoney.valueOf(value.multiply(BigDecimal.valueOf(target)));
     }
 
-    public BetMoney sub(BetMoney target) {
+    public BetMoney subtract(BetMoney target) {
         return BetMoney.valueOf(value.subtract(target.value));
     }
 
