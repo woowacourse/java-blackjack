@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import constant.PolicyConstant;
 import java.util.ArrayList;
@@ -45,5 +45,14 @@ public class Hand {
 
     public Card getFirstCard() {
         return cards.getFirst();
+    }
+
+    public boolean isBust() {
+        return calculateScore() > PolicyConstant.BLACKJACK_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return calculateScore() == PolicyConstant.BLACKJACK_SCORE
+            && cards.size() == PolicyConstant.BLACKJACK_CARD_COUNT;
     }
 }

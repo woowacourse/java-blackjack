@@ -1,11 +1,10 @@
 package domain.participant;
 
-import constant.PolicyConstant;
-import domain.Card;
-import domain.Hand;
+import domain.card.Card;
+import domain.card.Hand;
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
 
     protected final Name name;
     protected final Hand hand;
@@ -15,7 +14,11 @@ public class Participant {
         this.hand = new Hand();
     }
 
-    public String getName() {
+    public Name getName() {
+        return name;
+    }
+
+    public String getNameValue() {
         return name.value();
     }
 
@@ -29,11 +32,19 @@ public class Participant {
         }
     }
 
-    public boolean isBust() {
-        return hand.calculateScore() > PolicyConstant.BLACKJACK_SCORE;
-    }
-
     public int calculateScore() {
         return hand.calculateScore();
+    }
+
+    public boolean isBust() {
+        return hand.isBust();
+    }
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
+    public List<String> getCardNames() {
+        return hand.getCardNames();
     }
 }

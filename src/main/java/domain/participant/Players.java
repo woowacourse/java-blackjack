@@ -1,45 +1,46 @@
 package domain.participant;
 
 import constant.PolicyConstant;
-import domain.Card;
+import domain.card.Card;
 import exception.ErrorMessage;
 import java.util.List;
 
-public record Players(
-    List<Player> value
-) {
+public class Players {
 
-    public Players {
-        validate(value);
+    private final List<Player> players;
+
+    public Players(List<Player> players) {
+        validate(players);
+        this.players = List.copyOf(players);
     }
 
-    private static void validate(List<Player> players) {
+    private void validate(List<Player> players) {
         validatePlayerCountOutOfRange(players.size());
     }
 
-    private static void validatePlayerCountOutOfRange(int playerCount) {
+    private void validatePlayerCountOutOfRange(int playerCount) {
         if (!(PolicyConstant.PLAYER_MIN_COUNT <= playerCount
             && playerCount <= PolicyConstant.PLAYER_MAX_COUNT)) {
             throw new IllegalArgumentException(ErrorMessage.PLAYER_COUNT_OUT_OF_RANGE.getMessage());
         }
     }
 
-    public static Players from(Names names) {
-        List<Player> players = names.value().stream()
-            .map(Player::new)
-            .toList();
-        return new Players(players);
+    public void addCardPlayer(Name name, Card card) {
+        getPlayerByName(name).addCard(List.of(card));
     }
 
-    public void addCardPlayer(int playerIndex, Card card) {
-        value.get(playerIndex).addCard(List.of(card));
+    public int calculateScore(Name name) {
+        return getPlayerByName(name).calculateScore();
     }
 
-    public Player getPlayerByIndex(int playerIndex) {
-        return value.get(playerIndex);
+    public Player getPlayerByName(Name name) {
+        return players.stream()
+            .filter(player -> player.getName().equals(name))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.PLAYER_NOT_FOUND.getMessage()));
     }
 
     public List<Player> getAllPlayers() {
-        return value.stream().toList();
+        return List.copyOf(players);
     }
 }

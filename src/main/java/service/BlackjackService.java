@@ -2,14 +2,15 @@ package service;
 
 import constant.PlayerAction;
 import constant.PolicyConstant;
-import constant.Result;
-import domain.CardMachine;
+import domain.bet.Result;
+import domain.card.CardMachine;
 import domain.participant.Dealer;
+import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
+import dto.BlackjackProfitDto;
 import dto.BlackjackResultDto;
-import dto.DealerResultDto;
 import dto.ParticipantDto;
 import dto.PlayerResultDto;
 import java.util.ArrayList;
@@ -28,26 +29,32 @@ public class BlackjackService {
         this.dealer = new Dealer();
     }
 
-    public List<String> getAllPlayerNames() {
+    public List<Name> getPlayerNames() {
         return players.getAllPlayers().stream()
-            .map(Participant::getName)
+            .map(Player::getName)
+            .toList();
+    }
+
+    public List<String> getPlayerNameValues() {
+        return getPlayerNames().stream()
+            .map(Name::value)
             .toList();
     }
 
     public int getPlayerCount() {
-        return players.value().size();
+        return players.getAllPlayers().size();
     }
 
-    public String getPlayerName(int playerIndex) {
-        return players.getPlayerByIndex(playerIndex).getName();
+    public void addCard(Name name) {
+        players.addCardPlayer(name, cardMachine.drawCard());
     }
 
-    public void updatePlayer(int playerIndex) {
-        players.addCardPlayer(playerIndex, cardMachine.drawCard());
+    public int getPlayerScore(Name name) {
+        return players.calculateScore(name);
     }
 
     public void dealInitialCards() {
-        for (Player player : players.value()) {
+        for (Player player : players.getAllPlayers()) {
             player.addCard(List.of(cardMachine.drawCard(), cardMachine.drawCard()));
         }
         dealer.addCard(List.of(cardMachine.drawCard(), cardMachine.drawCard()));
@@ -61,79 +68,63 @@ public class BlackjackService {
         return false;
     }
 
-    public List<PlayerResultDto> calculatePlayerResults() {
+    public BlackjackProfitDto calculateBlackjackResult() {
+        int dealerProfit = 0;
         List<PlayerResultDto> playerResultDtoList = new ArrayList<>();
-        for (Player player : players.value()) {
-            Result result = Result.from(dealer, player);
-            playerResultDtoList.add(new PlayerResultDto(player.getName(), result));
+        for (Player player : players.getAllPlayers()) {
+            int profit = (int) (player.getBetAmount() * Result.from(dealer, player).getResult());
+            dealerProfit += calculateDealerProfit(profit);
+            playerResultDtoList.add(new PlayerResultDto(player.getNameValue(), profit));
         }
-        return playerResultDtoList;
+        return new BlackjackProfitDto(dealerProfit, playerResultDtoList);
     }
 
-    public DealerResultDto calculateDealerResult() {
-        List<PlayerResultDto> playerResultDtoList = calculatePlayerResults();
-        int win = 0, draw = 0, lose = 0;
-        for (PlayerResultDto playerResultDto : playerResultDtoList) {
-            Result result = playerResultDto.result();
-            win += judgeResult(result, Result.LOSE);
-            draw += judgeResult(result, Result.DRAW);
-            lose += judgeResult(result, Result.WIN);
-        }
-        return new DealerResultDto(win, draw, lose);
-    }
-
-    private int judgeResult(Result result, Result playerResult) {
-        if (result.equals(playerResult)) {
-            return 1;
+    private int calculateDealerProfit(int profit) {
+        if (profit < 0) {
+            return profit * (-1);
         }
         return 0;
     }
 
-    public ParticipantDto createPlayerDto(int playerIndex) {
-        Player player = players.getPlayerByIndex(playerIndex);
-        return new ParticipantDto(player.getName(), player.getHand().getCardNames());
+    public ParticipantDto createPlayerDto(Name name) {
+        Player player = players.getPlayerByName(name);
+        return new ParticipantDto(player.getNameValue(), player.getCardNames());
     }
 
-    private int calculateScore(Participant participant) {
-        return participant.calculateScore();
-    }
-
-    public List<BlackjackResultDto> generateBlackjackResultDto() {
+    public List<BlackjackResultDto> createBlackjackResultDto() {
         List<BlackjackResultDto> blackjackResultDtoList = new ArrayList<>();
         addResult(dealer, blackjackResultDtoList);
-        for (Player player : players.value()) {
+        for (Player player : players.getAllPlayers()) {
             addResult(player, blackjackResultDtoList);
         }
         return Collections.unmodifiableList(blackjackResultDtoList);
     }
 
     private void addResult(Participant participant, List<BlackjackResultDto> blackjackResultDtoList) {
-        int score = calculateScore(participant);
+        int score = participant.calculateScore();
         BlackjackResultDto resultDto = new BlackjackResultDto(
-            participant.getName(),
-            participant.getHand().getCardNames(),
+            participant.getNameValue(),
+            participant.getCardNames(),
             score
         );
         blackjackResultDtoList.add(resultDto);
     }
 
-    public boolean shouldRepeat(int playerIndex, PlayerAction playerAction) {
-        return playerAction == PlayerAction.HIT && !players.getPlayerByIndex(playerIndex).isBust();
+    public boolean shouldRepeat(Name name, PlayerAction playerAction) {
+        return playerAction == PlayerAction.HIT && !players.getPlayerByName(name).isBust();
     }
 
     public List<ParticipantDto> getAllPlayerDto() {
         List<ParticipantDto> participantDtoList = new ArrayList<>();
         for (Player player : players.getAllPlayers()) {
-            participantDtoList.add(
-                new ParticipantDto(player.getName(), player.getHand().getCardNames())
-            );
+            participantDtoList.add(new ParticipantDto(player.getNameValue(), player.getCardNames()));
         }
         return participantDtoList;
     }
 
     public ParticipantDto getDealerPlayerDto() {
         return new ParticipantDto(
-            dealer.getName(),
+            dealer.getNameValue(),
             dealer.getOnlyFirstHand().getCardNames()
         );
     }

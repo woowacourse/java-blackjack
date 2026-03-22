@@ -1,11 +1,15 @@
 package controller;
 
 import constant.PlayerAction;
+import constant.PolicyConstant;
+import domain.bet.Money;
+import domain.participant.Name;
 import domain.participant.Names;
+import domain.participant.Player;
 import domain.participant.Players;
+import dto.BlackjackProfitDto;
 import dto.BlackjackResultDto;
-import dto.DealerResultDto;
-import dto.PlayerResultDto;
+import java.util.ArrayList;
 import java.util.List;
 import service.BlackjackService;
 import view.InputView;
@@ -25,14 +29,14 @@ public class BlackjackController {
 
     private BlackjackService initializeService() {
         Names names = Names.from(inputView.inputPlayers());
-        Players players = Players.from(names);
-        return new BlackjackService(players);
+        List<Player> playerList = collectBets(names);
+        return new BlackjackService(new Players(playerList));
     }
 
     public void start() {
         blackjackService.dealInitialCards();
         printPlayerCards();
-        readHitOrStand();
+        inputAllPlayerActions();
         boolean dealerHit = blackjackService.drawDealerCard();
         if (dealerHit) {
             outputView.printDealerHit();
@@ -41,48 +45,52 @@ public class BlackjackController {
         printBlackjackStatistics();
     }
 
+    private List<Player> collectBets(Names names) {
+        List<Player> players = new ArrayList<>();
+        for (Name name : names.value()) {
+            String input = inputView.inputBetAmount(name.value());
+            players.add(new Player(name, Money.from(input)));
+        }
+        return players;
+    }
+
     private void printPlayerCards() {
-        outputView.printPlayers(blackjackService.getAllPlayerNames());
+        outputView.printPlayers(blackjackService.getPlayerNameValues());
         outputView.printlnPlayer(blackjackService.getDealerPlayerDto());
         outputView.printPlayerList(blackjackService.getAllPlayerDto());
     }
 
     private void printBlackjackStatistics() {
-        DealerResultDto dealerResultDto = blackjackService.calculateDealerResult();
-        List<PlayerResultDto> playerResultDtoList = blackjackService.calculatePlayerResults();
-        outputView.printBlackjackStatistics(dealerResultDto, playerResultDtoList);
+        BlackjackProfitDto blackjackProfitDto = blackjackService.calculateBlackjackResult();
+        outputView.printBlackjackStatistics(blackjackProfitDto);
     }
 
     private void printBlackjackResult() {
-        List<BlackjackResultDto> blackjackResult = blackjackService.generateBlackjackResultDto();
+        List<BlackjackResultDto> blackjackResult = blackjackService.createBlackjackResultDto();
         outputView.printBlackjackResult(blackjackResult);
     }
 
-    private void readHitOrStand() {
-        for (int playerIndex = 0; playerIndex < blackjackService.getPlayerCount(); playerIndex++) {
-            inputHitOrStand(playerIndex);
+    private void inputAllPlayerActions() {
+        for (Name playerName : blackjackService.getPlayerNames()) {
+            inputPlayerAction(playerName);
         }
     }
 
-    private void inputHitOrStand(int playerIndex) {
-        String name = blackjackService.getPlayerName(playerIndex);
-        String input = inputView.inputHitOrStand(name);
-        PlayerAction playerAction = PlayerAction.from(input);
-        if (playerAction.isHit()) {
-            outputView.printlnPlayer(blackjackService.createPlayerDto(playerIndex));
-            return;
+    private void inputPlayerAction(Name playerName) {
+        boolean isStandSelected = true;
+        while (isStandSelected) {
+            isStandSelected = processPlayerAction(playerName);
         }
-
-        drawCardOnPlayer(playerIndex);
     }
 
-    private void drawCardOnPlayer(int playerIndex) {
-        PlayerAction playerAction = PlayerAction.HIT;
-        while (blackjackService.shouldRepeat(playerIndex, playerAction)) {
-            blackjackService.updatePlayer(playerIndex);
-            outputView.printlnPlayer(blackjackService.createPlayerDto(playerIndex));
-            String input = inputView.inputHitOrStand(blackjackService.getPlayerName(playerIndex));
-            playerAction = PlayerAction.from(input);
+    private boolean processPlayerAction(Name playerName) {
+        String input = inputView.inputHitOrStand(playerName.value());
+        if (PlayerAction.from(input).isStand()) {
+            outputView.printlnPlayer(blackjackService.createPlayerDto(playerName));
+            return false;
         }
+        blackjackService.addCard(playerName);
+        outputView.printlnPlayer(blackjackService.createPlayerDto(playerName));
+        return blackjackService.getPlayerScore(playerName) <= PolicyConstant.BLACKJACK_SCORE;
     }
 }
