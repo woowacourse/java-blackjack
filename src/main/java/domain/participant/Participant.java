@@ -5,6 +5,7 @@ import domain.card.Cards;
 import domain.card.Hand;
 import java.util.List;
 import domain.state.HandState;
+import domain.state.TurnState;
 
 public abstract class Participant {
     private final Hand hand;
@@ -35,11 +36,11 @@ public abstract class Participant {
         return hand.getHandState();
     }
 
-    public boolean canDraw() {
-        return hand.canDraw();
-    }
+    public abstract TurnState getTurnState();
 
-    public abstract boolean shouldDrawCard();
+    public final boolean shouldDrawCard() {
+        return getTurnState() == TurnState.HITTING && getHandState() == HandState.STAND;
+    }
 
     protected void addBalance(int amount){
         this.balance = new Balance(balance.getBalance() + amount);

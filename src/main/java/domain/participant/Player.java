@@ -2,39 +2,42 @@ package domain.participant;
 
 import domain.card.Cards;
 import domain.state.Outcome;
+import domain.state.HandState;
+import domain.state.TurnState;
 
 public final class Player extends Participant {
-    private static final int BLACKJACK_SCORE = 21;
-
     private final Name name;
     private final Betting betting;
-    private boolean stand;
+    private TurnState turnState;
 
     public Player(Name name, Betting betting) {
         super();
         this.name = name;
         this.betting = betting;
-        this.stand = false;
+        this.turnState = TurnState.HITTING;
     }
 
     public Player(String name, int betting) {
         this(new Name(name), new Betting(betting));
     }
 
-    @Override
-    public boolean shouldDrawCard() {
-        return !stand && canDraw();
-    }
-
     public void stand() {
-        this.stand = true;
+        this.turnState = TurnState.FINISHED;
     }
 
     public void hit(Cards cards) {
         drawCard(cards);
-        if (getScore() == BLACKJACK_SCORE) {
+        if (getHandState() != HandState.STAND) {
             stand();
         }
+    }
+
+    @Override
+    public TurnState getTurnState() {
+        if (getHandState() != HandState.STAND) {
+            return TurnState.FINISHED;
+        }
+        return turnState;
     }
 
     public String getName() {
