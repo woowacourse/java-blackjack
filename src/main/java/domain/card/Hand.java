@@ -35,16 +35,17 @@ public class Hand {
         return calculateScore() > BLACKJACK_SCORE;
     }
 
-    public boolean isSoftHand(boolean isAceExist, int results) {
-        return isAceExist && (results + ACE_ADDITIONAL_SCORE) <= BLACKJACK_SCORE;
-    }
-
     private int applyAce(int results) {
-        boolean isAceExist = cards.stream().anyMatch(Card::isAce);
-        if (isSoftHand(isAceExist, results)) {
+
+        if (isSoftHand(results)) {
             return results + ACE_ADDITIONAL_SCORE;
         }
         return results;
+    }
+
+    public boolean isSoftHand(int results) {
+        boolean isAceExist = cards.stream().anyMatch(Card::isAce);
+        return isAceExist && (results + ACE_ADDITIONAL_SCORE) <= BLACKJACK_SCORE;
     }
 
     public List<Card> getCards() {
