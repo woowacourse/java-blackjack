@@ -10,9 +10,9 @@ import java.util.Map;
 public record ParticipantRevenueDto(
         String name,
         BigDecimal revenue) {
-    public static List<ParticipantRevenueDto> from(Map<Name, Revenue> profits) {
+    public static List<ParticipantRevenueDto> from(Map<Name, Revenue> revenues) {
         List<ParticipantRevenueDto> revenueDtos = new ArrayList<>();
-        for (Map.Entry<Name, Revenue> entry : profits.entrySet()) {
+        for (Map.Entry<Name, Revenue> entry : revenues.entrySet()) {
             revenueDtos.add(new ParticipantRevenueDto(
                     entry.getKey().getName(),
                     entry.getValue().getMoney()

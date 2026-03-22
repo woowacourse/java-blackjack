@@ -35,7 +35,7 @@ public class InputView {
                 System.out.println();
                 System.out.println(player + "의 배팅 금액은?");
                 Integer input = SCANNER.nextInt();
-                SCANNER.nextLine();
+                SCANNER.nextLine(); // nextInt 뒤에 남은 개행 제거용
                 return input;
             } catch (InputMismatchException e) {
                 SCANNER.nextLine();
