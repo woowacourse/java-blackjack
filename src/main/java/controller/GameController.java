@@ -1,5 +1,6 @@
 package controller;
 
+import domain.HitOption;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.participant.Dealer;
@@ -12,7 +13,6 @@ import dto.PlayerProfitDto;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputParser;
-import view.InputValidator;
 import view.InputView;
 import view.OutputView;
 
@@ -96,9 +96,9 @@ public class GameController {
 
     private void processRound(Player player, Deck deck) {
         while (player.canHit()) {
-            String hitOption = inputView.readHitOption(player.getName());
-            InputValidator.validateHitOption(hitOption);
-            if (hitOption.equals("n")) {
+            String input = inputView.readHitOption(player.getName());
+            HitOption hitOption = HitOption.from(input);
+            if (hitOption.isStay()) {
                 player.stay();
                 return;
             }
