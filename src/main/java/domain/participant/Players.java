@@ -25,20 +25,19 @@ public class Players {
         }
     }
 
-    public void addCardPlayer(int playerIndex, Card card) {
-        players.get(playerIndex).addCard(List.of(card));
+    public void addCardPlayer(Name name, Card card) {
+        getPlayerByName(name).addCard(List.of(card));
     }
 
-    public int calculateScore(int playerIndex) {
-        return players.get(playerIndex).calculateScore();
+    public int calculateScore(Name name) {
+        return getPlayerByName(name).calculateScore();
     }
 
-    public Player getPlayerByIndex(int playerIndex) {
-        return players.get(playerIndex);
-    }
-
-    public String getPlayerNameByIndex(int playerIndex) {
-        return players.get(playerIndex).getName();
+    public Player getPlayerByName(Name name) {
+        return players.stream()
+            .filter(player -> player.getName().equals(name))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.PLAYER_NOT_FOUND.getMessage()));
     }
 
     public List<Player> getAllPlayers() {

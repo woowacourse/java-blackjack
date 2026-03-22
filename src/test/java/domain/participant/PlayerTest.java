@@ -31,7 +31,7 @@ class PlayerTest {
 
                 // when
                 Player player = new Player(new Name(name), Money.from("1000"));
-                String actual = player.getName();
+                String actual = player.getNameValue();
 
                 // then
                 String expected = "jacob";

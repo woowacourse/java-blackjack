@@ -25,13 +25,20 @@ class BlackjackServiceTest {
 
     private BlackjackService blackjackService;
     private Players players;
+    private Name firstPlayerName;
+    private Name secondPlayerName;
+    private Name thirdPlayerName;
 
     @BeforeEach
     void init() {
+        firstPlayerName = new Name("aa");
+        secondPlayerName = new Name("bb");
+        thirdPlayerName = new Name("cc");
+
         List<Player> playerList = new ArrayList<>();
-        playerList.add(new Player(new Name("aa"), Money.from("1000")));
-        playerList.add(new Player(new Name("bb"), Money.from("2000")));
-        playerList.add(new Player(new Name("cc"), Money.from("3000")));
+        playerList.add(new Player(firstPlayerName, Money.from("1000")));
+        playerList.add(new Player(secondPlayerName, Money.from("2000")));
+        playerList.add(new Player(thirdPlayerName, Money.from("3000")));
         players = new Players(playerList);
         blackjackService = new BlackjackService(players);
     }
@@ -43,12 +50,13 @@ class BlackjackServiceTest {
         void 참가자_정보를_정확히_조회할_수_있다() {
 
             // when
-            List<String> names = blackjackService.getAllPlayerNames();
+            List<Name> names = blackjackService.getPlayerNames();
+            List<String> nameValues = blackjackService.getPlayerNameValues();
             int playerCount = blackjackService.getPlayerCount();
-            String secondPlayerName = blackjackService.getPlayerName(1);
+            String secondPlayerName = names.get(1).value();
 
             // then
-            assertThat(names).containsExactly("aa", "bb", "cc");
+            assertThat(nameValues).containsExactly("aa", "bb", "cc");
             assertThat(playerCount).isEqualTo(3);
             assertThat(secondPlayerName).isEqualTo("bb");
         }
@@ -61,11 +69,11 @@ class BlackjackServiceTest {
         void 플레이어에게_카드를_한장_추가한다() {
 
             // given
-            int beforeSize = blackjackService.createPlayerDto(0).hand().size();
+            int beforeSize = blackjackService.createPlayerDto(firstPlayerName).hand().size();
 
             // when
-            blackjackService.addCardByIndex(0);
-            int afterSize = blackjackService.createPlayerDto(0).hand().size();
+            blackjackService.addCard(firstPlayerName);
+            int afterSize = blackjackService.createPlayerDto(firstPlayerName).hand().size();
 
             // then
             assertThat(afterSize).isEqualTo(beforeSize + 1);
@@ -123,11 +131,11 @@ class BlackjackServiceTest {
             // given
             Card first = new Card(Rank.TEN, Suit.HEART);
             Card second = new Card(Rank.ACE, Suit.SPADE);
-            players.getPlayerByIndex(0).addCard(List.of(first));
-            players.getPlayerByIndex(0).addCard(List.of(second));
+            players.getPlayerByName(firstPlayerName).addCard(List.of(first));
+            players.getPlayerByName(firstPlayerName).addCard(List.of(second));
 
             // when
-            ParticipantDto actual = blackjackService.createPlayerDto(0);
+            ParticipantDto actual = blackjackService.createPlayerDto(firstPlayerName);
 
             // then
             assertThat(actual.name()).isEqualTo("aa");
@@ -148,11 +156,12 @@ class BlackjackServiceTest {
             List<BlackjackResultDto> actual = blackjackService.createBlackjackResultDto();
 
             // then
+            List<String> playerNames = blackjackService.getPlayerNameValues();
             List<String> expectedNames = List.of(
                 PolicyConstant.DEALER_NAME,
-                blackjackService.getAllPlayerNames().get(0),
-                blackjackService.getAllPlayerNames().get(1),
-                blackjackService.getAllPlayerNames().get(2)
+                playerNames.get(0),
+                playerNames.get(1),
+                playerNames.get(2)
             );
 
             assertThat(actual).hasSize(blackjackService.getPlayerCount() + 1);
@@ -172,10 +181,10 @@ class BlackjackServiceTest {
         void HIT이고_버스트가_아니면_한번_더_진행한다() {
 
             // given
-            addCards(players.getPlayerByIndex(0), Rank.TEN, Rank.SIX);
+            addCards(players.getPlayerByName(firstPlayerName), Rank.TEN, Rank.SIX);
 
             // when
-            boolean actual = blackjackService.shouldRepeat(0, PlayerAction.HIT);
+            boolean actual = blackjackService.shouldRepeat(firstPlayerName, PlayerAction.HIT);
 
             // then
             assertThat(actual).isTrue();
@@ -185,10 +194,10 @@ class BlackjackServiceTest {
         void HIT이어도_버스트면_진행하지_않는다() {
 
             // given
-            addCards(players.getPlayerByIndex(1), Rank.TEN, Rank.TEN, Rank.TWO);
+            addCards(players.getPlayerByName(secondPlayerName), Rank.TEN, Rank.TEN, Rank.TWO);
 
             // when
-            boolean actual = blackjackService.shouldRepeat(1, PlayerAction.HIT);
+            boolean actual = blackjackService.shouldRepeat(secondPlayerName, PlayerAction.HIT);
 
             // then
             assertThat(actual).isFalse();
@@ -198,10 +207,10 @@ class BlackjackServiceTest {
         void STAND이면_버스트_여부와_무관하게_진행하지_않는다() {
 
             // given
-            addCards(players.getPlayerByIndex(2), Rank.TEN, Rank.SIX);
+            addCards(players.getPlayerByName(thirdPlayerName), Rank.TEN, Rank.SIX);
 
             // when
-            boolean actual = blackjackService.shouldRepeat(2, PlayerAction.STAND);
+            boolean actual = blackjackService.shouldRepeat(thirdPlayerName, PlayerAction.STAND);
 
             // then
             assertThat(actual).isFalse();
@@ -215,9 +224,9 @@ class BlackjackServiceTest {
         void 플레이어_결과별_수익과_딜러_수익을_계산한다() {
 
             // given
-            addCards(players.getPlayerByIndex(0), Rank.TEN, Rank.TEN, Rank.TWO);
-            addCards(players.getPlayerByIndex(1), Rank.TEN, Rank.NINE);
-            addCards(players.getPlayerByIndex(2), Rank.ACE, Rank.K);
+            addCards(players.getPlayerByName(firstPlayerName), Rank.TEN, Rank.TEN, Rank.TWO);
+            addCards(players.getPlayerByName(secondPlayerName), Rank.TEN, Rank.NINE);
+            addCards(players.getPlayerByName(thirdPlayerName), Rank.ACE, Rank.K);
 
             // when
             var actual = blackjackService.calculateBlackjackResult();
@@ -237,7 +246,7 @@ class BlackjackServiceTest {
         void 무승부는_0원_처리되고_딜러_수익에는_패배한_플레이어만_합산된다() {
 
             // given
-            addCards(players.getPlayerByIndex(1), Rank.K, Rank.Q, Rank.TWO);
+            addCards(players.getPlayerByName(secondPlayerName), Rank.K, Rank.Q, Rank.TWO);
 
             // when
             var actual = blackjackService.calculateBlackjackResult();

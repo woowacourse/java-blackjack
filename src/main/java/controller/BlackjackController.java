@@ -55,7 +55,7 @@ public class BlackjackController {
     }
 
     private void printPlayerCards() {
-        outputView.printPlayers(blackjackService.getAllPlayerNames());
+        outputView.printPlayers(blackjackService.getPlayerNameValues());
         outputView.printlnPlayer(blackjackService.getDealerPlayerDto());
         outputView.printPlayerList(blackjackService.getAllPlayerDto());
     }
@@ -71,28 +71,26 @@ public class BlackjackController {
     }
 
     private void inputAllPlayerActions() {
-        int playerCount = blackjackService.getPlayerCount();
-        for (int playerIndex = 0; playerIndex < playerCount; playerIndex++) {
-            inputPlayerAction(playerIndex);
+        for (Name playerName : blackjackService.getPlayerNames()) {
+            inputPlayerAction(playerName);
         }
     }
 
-    private void inputPlayerAction(int playerIndex) {
+    private void inputPlayerAction(Name playerName) {
         boolean isStandSelected = true;
         while (isStandSelected) {
-            isStandSelected = processPlayerAction(playerIndex);
+            isStandSelected = processPlayerAction(playerName);
         }
     }
 
-    private boolean processPlayerAction(int playerIndex) {
-        String name = blackjackService.getPlayerName(playerIndex);
-        String input = inputView.inputHitOrStand(name);
+    private boolean processPlayerAction(Name playerName) {
+        String input = inputView.inputHitOrStand(playerName.value());
         if (PlayerAction.from(input).isStand()) {
-            outputView.printlnPlayer(blackjackService.createPlayerDto(playerIndex));
+            outputView.printlnPlayer(blackjackService.createPlayerDto(playerName));
             return false;
         }
-        blackjackService.addCardByIndex(playerIndex);
-        outputView.printlnPlayer(blackjackService.createPlayerDto(playerIndex));
-        return blackjackService.getPlayerScore(playerIndex) <= PolicyConstant.BLACKJACK_SCORE;
+        blackjackService.addCard(playerName);
+        outputView.printlnPlayer(blackjackService.createPlayerDto(playerName));
+        return blackjackService.getPlayerScore(playerName) <= PolicyConstant.BLACKJACK_SCORE;
     }
 }

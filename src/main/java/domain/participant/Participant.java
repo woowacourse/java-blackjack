@@ -14,7 +14,11 @@ public abstract class Participant {
         this.hand = new Hand();
     }
 
-    public String getName() {
+    public Name getName() {
+        return name;
+    }
+
+    public String getNameValue() {
         return name.value();
     }
 

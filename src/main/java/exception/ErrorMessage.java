@@ -13,6 +13,7 @@ public enum ErrorMessage {
         String.format("게임 참가자의 이름은 %d~%d글자 사이여야 합니다.", PolicyConstant.PLAYER_NAME_MIN_LENGTH,
             PolicyConstant.PLAYER_NAME_MAX_LENGTH)),
     PLAYER_NAME_BLANK("게임 참가자의 이름은 공백이 될 수 없습니다."),
+    PLAYER_NOT_FOUND("존재하지 않는 플레이어입니다."),
     MONEY_NOT_NUMBER("베팅 금액은 숫자만 입력할 수 있습니다."),
     MONEY_OUT_OF_RANGE(
         String.format("베팅 금액은 %d원 이상 %d원 이하의 정수여야 합니다.", PolicyConstant.MONEY_MIN_VALUE,
