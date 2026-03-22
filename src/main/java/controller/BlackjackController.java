@@ -66,7 +66,7 @@ public class BlackjackController {
     }
 
     private void printBlackjackResult() {
-        List<BlackjackResultDto> blackjackResult = blackjackService.generateBlackjackResultDto();
+        List<BlackjackResultDto> blackjackResult = blackjackService.createBlackjackResultDto();
         outputView.printBlackjackResult(blackjackResult);
     }
 
@@ -91,7 +91,7 @@ public class BlackjackController {
             outputView.printlnPlayer(blackjackService.createPlayerDto(playerIndex));
             return false;
         }
-        blackjackService.updatePlayer(playerIndex);
+        blackjackService.addCardByIndex(playerIndex);
         outputView.printlnPlayer(blackjackService.createPlayerDto(playerIndex));
         return blackjackService.getPlayerScore(playerIndex) <= PolicyConstant.BLACKJACK_SCORE;
     }

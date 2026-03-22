@@ -64,7 +64,7 @@ class BlackjackServiceTest {
             int beforeSize = blackjackService.createPlayerDto(0).hand().size();
 
             // when
-            blackjackService.updatePlayer(0);
+            blackjackService.addCardByIndex(0);
             int afterSize = blackjackService.createPlayerDto(0).hand().size();
 
             // then
@@ -82,7 +82,7 @@ class BlackjackServiceTest {
             blackjackService.dealInitialCards();
             List<ParticipantDto> participantDtos = blackjackService.getAllPlayerDto();
             ParticipantDto dealerOpenCardDto = blackjackService.getDealerPlayerDto();
-            List<BlackjackResultDto> allResultDtos = blackjackService.generateBlackjackResultDto();
+            List<BlackjackResultDto> allResultDtos = blackjackService.createBlackjackResultDto();
 
             // then
             assertThat(participantDtos).allSatisfy(participantDto -> assertThat(participantDto.hand()).hasSize(2));
@@ -99,11 +99,11 @@ class BlackjackServiceTest {
 
             // given
             blackjackService.dealInitialCards();
-            int beforeSize = blackjackService.generateBlackjackResultDto().getFirst().hand().size();
+            int beforeSize = blackjackService.createBlackjackResultDto().getFirst().hand().size();
 
             // when
             boolean drewCard = blackjackService.drawDealerCard();
-            int afterSize = blackjackService.generateBlackjackResultDto().getFirst().hand().size();
+            int afterSize = blackjackService.createBlackjackResultDto().getFirst().hand().size();
 
             // then
             if (drewCard) {
@@ -145,7 +145,7 @@ class BlackjackServiceTest {
             blackjackService.dealInitialCards();
 
             // when
-            List<BlackjackResultDto> actual = blackjackService.generateBlackjackResultDto();
+            List<BlackjackResultDto> actual = blackjackService.createBlackjackResultDto();
 
             // then
             List<String> expectedNames = List.of(

@@ -42,7 +42,7 @@ public class BlackjackService {
         return players.getPlayerNameByIndex(playerIndex);
     }
 
-    public void updatePlayer(int playerIndex) {
+    public void addCardByIndex(int playerIndex) {
         players.addCardPlayer(playerIndex, cardMachine.drawCard());
     }
 
@@ -88,7 +88,7 @@ public class BlackjackService {
         return new ParticipantDto(player.getName(), player.getCardNames());
     }
 
-    public List<BlackjackResultDto> generateBlackjackResultDto() {
+    public List<BlackjackResultDto> createBlackjackResultDto() {
         List<BlackjackResultDto> blackjackResultDtoList = new ArrayList<>();
         addResult(dealer, blackjackResultDtoList);
         for (Player player : players.getAllPlayers()) {
