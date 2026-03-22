@@ -39,7 +39,7 @@ public class BlackjackService {
     }
 
     public String getPlayerName(int playerIndex) {
-        return players.getPlayerByIndex(playerIndex).getName();
+        return players.getPlayerNameByIndex(playerIndex);
     }
 
     public void updatePlayer(int playerIndex) {
@@ -47,7 +47,7 @@ public class BlackjackService {
     }
 
     public int getPlayerScore(int playerIndex) {
-        return players.getPlayerByIndex(playerIndex).calculateScore();
+        return players.calculateScore(playerIndex);
     }
 
     public void dealInitialCards() {
@@ -85,7 +85,7 @@ public class BlackjackService {
 
     public ParticipantDto createPlayerDto(int playerIndex) {
         Player player = players.getPlayerByIndex(playerIndex);
-        return new ParticipantDto(player.getName(), player.getHand().getCardNames());
+        return new ParticipantDto(player.getName(), player.getCardNames());
     }
 
     public List<BlackjackResultDto> generateBlackjackResultDto() {
@@ -101,7 +101,7 @@ public class BlackjackService {
         int score = participant.calculateScore();
         BlackjackResultDto resultDto = new BlackjackResultDto(
             participant.getName(),
-            participant.getHand().getCardNames(),
+            participant.getCardNames(),
             score
         );
         blackjackResultDtoList.add(resultDto);
@@ -114,9 +114,7 @@ public class BlackjackService {
     public List<ParticipantDto> getAllPlayerDto() {
         List<ParticipantDto> participantDtoList = new ArrayList<>();
         for (Player player : players.getAllPlayers()) {
-            participantDtoList.add(
-                new ParticipantDto(player.getName(), player.getHand().getCardNames())
-            );
+            participantDtoList.add(new ParticipantDto(player.getName(), player.getCardNames()));
         }
         return participantDtoList;
     }

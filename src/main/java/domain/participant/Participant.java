@@ -39,4 +39,8 @@ public abstract class Participant {
     public boolean isBlackjack() {
         return hand.isBlackjack();
     }
+
+    public List<String> getCardNames() {
+        return hand.getCardNames();
+    }
 }

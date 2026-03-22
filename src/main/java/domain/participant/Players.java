@@ -29,8 +29,16 @@ public class Players {
         players.get(playerIndex).addCard(List.of(card));
     }
 
+    public int calculateScore(int playerIndex) {
+        return players.get(playerIndex).calculateScore();
+    }
+
     public Player getPlayerByIndex(int playerIndex) {
         return players.get(playerIndex);
+    }
+
+    public String getPlayerNameByIndex(int playerIndex) {
+        return players.get(playerIndex).getName();
     }
 
     public List<Player> getAllPlayers() {
