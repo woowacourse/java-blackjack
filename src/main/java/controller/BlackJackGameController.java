@@ -1,15 +1,25 @@
 package controller;
 
-import domain.*;
+import domain.betting.BettingAmount;
+import domain.betting.Revenue;
+import domain.game.GameManager;
+import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Player;
+import domain.participant.Players;
 import dto.ParticipantCardsDto;
+import dto.ParticipantRevenueDto;
 import view.InputView;
-import view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static view.OutputView.printCards;
+import static view.OutputView.printDealerMessage;
+import static view.OutputView.printFinalCards;
+import static view.OutputView.printGameInitialMessage;
+import static view.OutputView.printParticipantRevenues;
 
 public class BlackJackGameController {
 
@@ -17,27 +27,36 @@ public class BlackJackGameController {
     }
 
     public void run() {
-        List<Player> players = initPlayer();
+        Players players = initPlayer();
         GameManager gameManager = new GameManager(players);
-
-        List<String> playersNames = getPlayerNames(players);
-        OutputView.printGameInitialMessage(playersNames);
-
+        List<String> playerNames = players.getPlayerNames();
+        printGameInitialMessage(playerNames);
         gameManager.distributeInitialCards();
-        printParticipantCards(gameManager);
-
+        printParticipantCards(gameManager.getDealer(), players);
         playGame(players, gameManager);
-
-        Map<String, GameResult> gameResult = gameManager.getGameResult();
-
-        endGame(gameManager, players, gameResult);
+        Map<Name, Revenue> profits = gameManager.getParticipantsProfit();
+        List<ParticipantRevenueDto> revenueDtos = ParticipantRevenueDto.from(profits);
+        endGame(gameManager, players, revenueDtos);
     }
 
-    private void playGame(List<Player> players, GameManager gameManager) {
-        for (Player player : players) {
+    private void playGame(Players players, GameManager gameManager) {
+        for (Player player : players.getPlayers()) {
             playGameWithPlayer(player, gameManager);
         }
         playGameWithDealer(gameManager);
+    }
+
+    private void printParticipantCards(Dealer dealer, Players players) {
+        printCards(ParticipantCardsDto.from(dealer));
+        for (Player player : players.getPlayers()) {
+            printCards(ParticipantCardsDto.from(player));
+        }
+    }
+
+    private void printFinalScores(Players players) {
+        for (Player player : players.getPlayers()) {
+            printFinalCards(ParticipantCardsDto.from(player));
+        }
     }
 
     public void playGameWithDealer(GameManager gameManager) {
@@ -46,7 +65,7 @@ public class BlackJackGameController {
                 break;
             }
             gameManager.drawCardTo(gameManager.getDealer());
-            OutputView.printDealerMessage();
+            printDealerMessage();
         }
     }
 
@@ -56,53 +75,35 @@ public class BlackJackGameController {
                 break;
             }
             gameManager.drawCardTo(player);
-            printCards(player.getParticipantCardsDto());
+            printCards(ParticipantCardsDto.from(player));
         }
     }
 
     private boolean isStopGame(Player player) {
-        String response = InputView.askContinue(player.getName());
+        String response = InputView.askContinue(player.getParticipantName());
         if (response.equals("n")) {
-            printCards(player.getParticipantCardsDto());
+            printCards(ParticipantCardsDto.from(player));
             return true;
         }
         return false;
     }
 
-    private void printParticipantCards(GameManager gameManager) {
-        ParticipantCardsDto dealerDto = gameManager.getDealerDto();
-        OutputView.printCards(dealerDto);
-        List<ParticipantCardsDto> playerDtos = gameManager.getPlayerDtos();
-        for (ParticipantCardsDto playerDto : playerDtos) {
-            OutputView.printCards(playerDto);
-        }
-    }
-
-    private void endGame(GameManager gameManager, List<Player> players, Map<String, GameResult> gameResult) {
-        OutputView.printFinalCards(gameManager.getDealerDto());
+    private void endGame(GameManager gameManager, Players players, List<ParticipantRevenueDto> participantRevenueDtos) {
+        printFinalCards(ParticipantCardsDto.from(gameManager.getDealer()));
         printFinalScores(players);
-        OutputView.printGameResult(gameResult);
+        printParticipantRevenues(participantRevenueDtos);
     }
 
-    private void printFinalScores(List<Player> players) {
-        for (Player player : players) {
-            OutputView.printFinalCards(player.getParticipantCardsDto());
-        }
-    }
-
-    private List<String> getPlayerNames(List<Player> players) {
-        return players.stream().map(Participant::getName).toList();
-    }
-
-    private List<Player> initPlayer() {
+    private Players initPlayer() {
         List<Player> players = new ArrayList<>();
         List<String> playerNames = getPlayerNames();
 
         for (String name : playerNames) {
             Name playerName = new Name(name);
-            players.add(new Player(playerName));
+            BettingAmount bettingAmount = InputView.askBettingAmount(playerName.getName());
+            players.add(new Player(playerName, bettingAmount));
         }
-        return players;
+        return new Players(players);
     }
 
     private List<String> getPlayerNames() {

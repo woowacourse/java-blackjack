@@ -1,29 +1,45 @@
 package view;
 
-import static domain.GameManager.validatePlayersNumber;
-
+import domain.betting.BettingAmount;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
+    private static final Scanner SCANNER = new Scanner(System.in);
 
     public static List<String> askPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-        Scanner sc = new Scanner(System.in);
-        String input = sc.nextLine();
+        String input = SCANNER.nextLine();
         List<String> playerNames = getPlayerNames(input);
-        validatePlayersNumber(playerNames);
-
         return playerNames;
     }
 
     public static String askContinue(String player) {
-        System.out.println(player + "는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)");
-        Scanner sc = new Scanner(System.in);
-        String input = sc.nextLine();
-        validateContinueResponse(input);
-        return input;
+        while (true) {
+            try {
+                System.out.println();
+                System.out.println(player + "는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)");
+                String input = SCANNER.nextLine();
+                validateContinueResponse(input);
+                return input;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public static BettingAmount askBettingAmount(String player) {
+        while (true) {
+            try {
+                System.out.println();
+                System.out.println(player + "의 배팅 금액은?");
+                String input = SCANNER.nextLine();
+                return new BettingAmount(input);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     private static List<String> getPlayerNames(String input) {
