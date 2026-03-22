@@ -12,11 +12,15 @@ public class Card {
     }
 
     public boolean isAce() {
-        return this.getCardValue() == CardScore.ACE;
+        return this.getCardScoreName() == CardScore.ACE;
     }
 
-    public CardScore getCardValue() {
+    public CardScore getCardScoreName() {
         return cardScore;
+    }
+
+    public int getCardScore() {
+        return cardScore.getScore();
     }
 
     public CardSuit getCardSuit() {

@@ -21,7 +21,7 @@ public class Cards {
     public int calculateScore() {
         int results = 0;
         for (Card holdCard : hand) {
-            results += holdCard.getCardValue().getScore();
+            results += holdCard.getCardScore();
         }
 
         return applyAce(results);

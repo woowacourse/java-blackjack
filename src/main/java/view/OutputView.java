@@ -17,7 +17,7 @@ public class OutputView {
     }
 
     public void printDealerStartCard(Card dealerFirstCard) {
-        System.out.println("딜러카드: " + CardValueFormatter.from(dealerFirstCard.getCardValue()) + CardSuitFormatter.from(dealerFirstCard.getCardSuit()));
+        System.out.println("딜러카드: " + CardValueFormatter.from(dealerFirstCard.getCardScoreName()) + CardSuitFormatter.from(dealerFirstCard.getCardSuit()));
     }
 
     public void printStartCard(Players players) {
@@ -61,6 +61,6 @@ public class OutputView {
     }
 
     private String cardsToString(List<Card> hand) {
-        return String.join(", ", hand.stream().map(card -> CardValueFormatter.from(card.getCardValue()) + CardSuitFormatter.from(card.getCardSuit())).toList());
+        return String.join(", ", hand.stream().map(card -> CardValueFormatter.from(card.getCardScoreName()) + CardSuitFormatter.from(card.getCardSuit())).toList());
     }
 }
