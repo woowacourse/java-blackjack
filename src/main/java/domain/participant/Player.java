@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.Result;
-import domain.card.Deck;
 import domain.card.Hand;
 import domain.state.Hit;
 import domain.state.State;
@@ -18,10 +17,6 @@ public class Player extends Participant {
 
     public static Player of(Hand hand, String name, String betMoney) {
         return new Player(Hit.of(hand), Name.valueOf(name), BetMoney.valueOf(betMoney));
-    }
-
-    public static Player of(Deck deck, String name, String betMoney) {
-        return new Player(Hit.of(deck.drawInitialCards()), Name.valueOf(name), BetMoney.valueOf(betMoney));
     }
 
     public BetMoney getProfit(Result result) {
