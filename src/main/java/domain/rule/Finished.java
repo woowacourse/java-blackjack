@@ -1,7 +1,5 @@
 package domain.rule;
 
-import static exception.ErrorMessage.GAME_IS_FINISHED;
-
 import domain.card.Card;
 import domain.card.Cards;
 
@@ -12,12 +10,12 @@ public abstract class Finished extends Started {
 
     @Override
     public State draw(Card card) {
-        throw new IllegalStateException(GAME_IS_FINISHED.getMessage());
+        throw new IllegalStateException("[ERROR] 게임이 이미 종료되었습니다.");
     }
 
     @Override
     public State stay() {
-        throw new IllegalStateException(GAME_IS_FINISHED.getMessage());
+        throw new IllegalStateException("[ERROR] 게임이 이미 종료되었습니다.");
     }
 
     @Override

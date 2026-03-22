@@ -1,7 +1,5 @@
 package view.formatter;
 
-import static exception.ErrorMessage.CARD_SUIT_NOT_EXIST;
-
 import domain.card.CardSuit;
 import java.util.Arrays;
 
@@ -25,7 +23,7 @@ public enum CardSuitFormatter {
                 .filter(cardSuitFormatter -> cardSuitFormatter.cardSuit == cardSuit)
                 .map(CardSuitFormatter::getPrintMessage)
                 .findAny()
-                .orElseThrow(() -> new IllegalStateException(CARD_SUIT_NOT_EXIST.getMessage()));
+                .orElseThrow(() -> new IllegalStateException("ERROR] 존재하지 않는 카드 문양입니다."));
     }
 
     public String getPrintMessage() {

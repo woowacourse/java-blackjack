@@ -7,7 +7,6 @@ import domain.card.Card;
 import domain.card.CardScore;
 import domain.card.CardSuit;
 import domain.card.Cards;
-import exception.ErrorMessage;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +23,7 @@ public class PlayerTest {
 
         assertThatThrownBy(() -> new Player(cards, "", new Money(10000)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.PLAYER_NAME_IS_EMPTY.getMessage());
+                .hasMessage("[ERROR] 플레이어의 이름은 빈 값이 아니여야 합니다.");
     }
 
     @Test

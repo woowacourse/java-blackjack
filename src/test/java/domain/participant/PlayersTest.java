@@ -1,14 +1,11 @@
 package domain.participant;
 
-import static domain.participant.Players.MAXIMUM_PLAYER_COUNT;
-import static domain.participant.Players.MINIMUM_PLAYER_COUNT;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import domain.card.Card;
 import domain.card.CardScore;
 import domain.card.CardSuit;
 import domain.card.Cards;
-import exception.ErrorMessage;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +24,7 @@ class PlayersTest {
 
         assertThatThrownBy(() -> new Players(List.of(player1, player2)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.PLAYER_NAME_IS_DUPLICATE.getMessage());
+                .hasMessage("[ERROR] 플레이어의 이름은 중복되지 않아야 합니다.");
     }
 
     @Test
@@ -50,6 +47,6 @@ class PlayersTest {
 
         assertThatThrownBy(() -> new Players(List.of(player1, player2, player3, player4, player5, player6, player7, player8, player9)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.PLAYERS_INVALID_COUNT.getMessage(MINIMUM_PLAYER_COUNT, MAXIMUM_PLAYER_COUNT));
+                .hasMessage("[ERROR] 플레이어의 수는 1명 이상 8명 이하여야 합니다.");
     }
 }

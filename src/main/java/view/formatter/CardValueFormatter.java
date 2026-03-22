@@ -1,7 +1,5 @@
 package view.formatter;
 
-import static exception.ErrorMessage.CARD_VALUE_NOT_EXIST;
-
 import domain.card.CardScore;
 import java.util.Arrays;
 
@@ -34,7 +32,7 @@ public enum CardValueFormatter {
                 .filter(cardValueFormatter -> cardValueFormatter.cardScore == cardScore)
                 .map(CardValueFormatter::getPrintMessage)
                 .findAny()
-                .orElseThrow(() -> new IllegalStateException(CARD_VALUE_NOT_EXIST.getMessage()));
+                .orElseThrow(() -> new IllegalStateException("[ERROR] 존재하지 않는 카드 점수입니다."));
     }
 
     public String getPrintMessage() {

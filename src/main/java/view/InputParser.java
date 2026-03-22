@@ -1,7 +1,5 @@
 package view;
 
-import static exception.ErrorMessage.MONEY_INVALID_FORMAT;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,7 +14,7 @@ public class InputParser {
         try {
             return Integer.parseInt(money);
         } catch (NumberFormatException exception) {
-            throw new IllegalArgumentException(MONEY_INVALID_FORMAT.getMessage());
+            throw new IllegalArgumentException("[ERROR] 베팅 금액은 숫자만 가능합니다.");
         }
     }
 }
