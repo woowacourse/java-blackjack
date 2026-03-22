@@ -1,21 +1,29 @@
 package domain.card;
 
+import domain.rule.Hit;
+import domain.rule.State;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-    private static final int INITIAL_CARD_COUNT = 2;
     private static final int BLACKJACK_SCORE = 21;
     private static final int ACE_ADDITIONAL_SCORE = 10;
 
     private final List<Card> cards;
+    private State state;
 
     public Hand(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
+        this.state = new Hit(this);
     }
 
     public void addCard(Card card) {
         cards.add(card);
+        this.state = state.draw(card);
+    }
+
+    public void stay() {
+        state = state.stay();
     }
 
     public int calculateScore() {
@@ -25,10 +33,6 @@ public class Hand {
         }
 
         return applyAce(results);
-    }
-
-    public boolean isBlackjack() {
-        return cards.size() == INITIAL_CARD_COUNT && calculateScore() == BLACKJACK_SCORE;
     }
 
     public boolean isBust() {
@@ -50,5 +54,9 @@ public class Hand {
 
     public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    public State getState() {
+        return state;
     }
 }

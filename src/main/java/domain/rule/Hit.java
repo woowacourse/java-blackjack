@@ -8,13 +8,6 @@ public class Hit extends Running {
         super(hand);
     }
 
-    public static State of(Hand hand) {
-        if (hand.isBlackjack()) {
-            return new Blackjack(hand);
-        }
-        return new Hit(hand);
-    }
-
     @Override
     public State draw(Card card) {
         hand.addCard(card);

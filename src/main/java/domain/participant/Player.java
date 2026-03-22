@@ -21,11 +21,11 @@ public class Player extends Participant {
     }
 
     public boolean canHit() {
-        return !state.isFinished();
+        return !hand.getState().isFinished();
     }
 
     public double profit(State dealerState) {
-        return state.profit(money.getBetAmount(), dealerState);
+        return hand.getState().profit(money.getBetAmount(), dealerState);
     }
 
     public String getName() {
