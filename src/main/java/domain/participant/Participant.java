@@ -9,7 +9,7 @@ import java.util.List;
 public abstract class Participant {
     protected State state;
 
-    public Participant(Hand hand) {
+    protected Participant(Hand hand) {
         this.state = Hit.of(hand);
     }
 

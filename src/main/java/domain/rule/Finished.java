@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.card.Hand;
 
 public abstract class Finished extends Started {
-    public Finished(Hand hand) {
+    protected Finished(Hand hand) {
         super(hand);
     }
 
