@@ -4,11 +4,13 @@ import domain.state.HitStand;
 import dto.domain.PlayerNameAndBettingDto;
 import java.util.List;
 import java.util.Scanner;
-import message.IOMessage;
 import util.NameParser;
 
 public class InputView {
     private static final int MIN_BETTING_AMOUNT = 10;
+    private static final String ASK_GAME_PARTICIPANT = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String ASK_HIT_OR_STAND = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+    private static final String ASK_PLAYER_BETTING = "의 배팅 금액은?";
     private static final String INVALID_HIT_OR_STAND = "y 또는 n만 입력해주세요.";
     private static final String INVALID_BETTING_FORMAT = "숫자만 입력해주세요.";
     private static final String INVALID_BETTING_AMOUNT = "배팅 금액은 10 이상이며 10원 단위여야 합니다.";
@@ -19,7 +21,7 @@ public class InputView {
     private final Scanner scanner = new Scanner(System.in);
 
     public List<String> getPlayerNames() {
-        System.out.println(IOMessage.ASK_GAME_PARTICIPANT.message());
+        System.out.println(ASK_GAME_PARTICIPANT);
         final List<String> playerNames = NameParser.makeNameList(scanner.nextLine());
         if (isValidPlayerNames(playerNames)) {
             return playerNames;
@@ -29,7 +31,7 @@ public class InputView {
 
     public HitStand askHitOrStand(final String playerName) {
         while (true) {
-            System.out.println(playerName + IOMessage.ASK_HIT_OR_STAND.message());
+            System.out.println(playerName + ASK_HIT_OR_STAND);
             final String input = scanner.nextLine().trim().toLowerCase();
             if (HitStand.validate(input)) {
                 return HitStand.from(input);
@@ -45,7 +47,7 @@ public class InputView {
     }
 
     private PlayerNameAndBettingDto readPlayerBetting(String name) {
-        System.out.println(name + IOMessage.ASK_PLAYER_BETTING.message());
+        System.out.println(name + ASK_PLAYER_BETTING);
         final String input = scanner.nextLine().trim();
         final Integer betting = parseBetting(input);
         if (betting == null) {

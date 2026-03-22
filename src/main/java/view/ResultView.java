@@ -8,9 +8,13 @@ import dto.view.PlayerProfitDto;
 import dto.view.ResultDto;
 import dto.view.StartBlackJackDto;
 import java.util.List;
-import message.IOMessage;
 
 public class ResultView {
+    private static final String DEALER_HIT_ONE_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String WINNING_STATISTICS = "## 최종 승패";
+    private static final String FINAL_PROFIT = "## 최종 수익";
+    private static final String DEALER_NAME = "딜러";
+
     public void printLineBreak() {
         System.out.println();
     }
@@ -24,7 +28,7 @@ public class ResultView {
     }
 
     public void printDealerDrawMessage() {
-        System.out.println(IOMessage.DEALER_HIT_ONE_CARD.message());
+        System.out.println(DEALER_HIT_ONE_CARD);
     }
 
     public void printDealerBust() {
@@ -59,15 +63,15 @@ public class ResultView {
 
     public void printWinner(ParticipantStatsDto participantStatsDto) {
         System.out.println();
-        System.out.println(IOMessage.WINNING_STATISTICS.message());
+        System.out.println(WINNING_STATISTICS);
         printDealerOutcome(participantStatsDto);
         printPlayerOutcomes(participantStatsDto);
     }
 
     public void printFinalProfit(ParticipantProfitDto participantProfitDto) {
         System.out.println();
-        System.out.println(IOMessage.FINAL_PROFIT.message());
-        System.out.printf("%s: %d%n", IOMessage.DEALER_NAME.message(), participantProfitDto.dealerProfit());
+        System.out.println(FINAL_PROFIT);
+        System.out.printf("%s: %d%n", DEALER_NAME, participantProfitDto.dealerProfit());
         participantProfitDto.playerProfits().forEach(this::printPlayerProfit);
     }
 

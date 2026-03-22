@@ -18,9 +18,9 @@ import dto.view.StartBlackJackDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import message.IOMessage;
 
 public class ResultViewMapper {
+    private static final String DEALER_NAME = "딜러";
 
     public StartBlackJackDto toStartBlackJackDto(Players players, Dealer dealer) {
         return new StartBlackJackDto(
@@ -31,7 +31,7 @@ public class ResultViewMapper {
 
     public ResultDto toResultDto(Players players, Dealer dealer) {
         final ParticipantResultDto dealerResult = new ParticipantResultDto(
-                IOMessage.DEALER_NAME.message(),
+                DEALER_NAME,
                 joinCardNames(dealer.getCards()),
                 dealer.getScore()
         );
