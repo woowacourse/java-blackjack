@@ -41,7 +41,7 @@ public class BlackJackGame {
     }
 
     public int getDealerProfit() {
-        return -players.getTotalProfit();
+        return dealer.getBalance();
     }
 
     public static BlackJackGame startGame(List<PlayerNameAndBettingDto> playerInfos) {

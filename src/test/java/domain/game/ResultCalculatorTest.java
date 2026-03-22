@@ -38,5 +38,7 @@ public class ResultCalculatorTest {
         GameResult result = calculator.calculate(dealer, players);
 
         assertEquals(Outcome.LOSE, result.getPlayerOutcome(playerRef[0].getName()));
+        assertEquals(-1000, playerRef[0].getBalance());
+        assertEquals(1000, dealer.getBalance());
     }
 }

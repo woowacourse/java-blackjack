@@ -20,4 +20,8 @@ public final class Dealer extends Participant {
         }
         return TurnState.FINISHED;
     }
+
+    public void applyAgainstPlayerProfit(int playerProfit) {
+        addBalance(-playerProfit);
+    }
 }
