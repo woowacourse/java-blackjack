@@ -1,26 +1,30 @@
-package domain;
+package domain.card;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 
 public class Deck {
-    private final List<Card> cards = new ArrayList<>();
+    private final Deque<Card> cards;
 
     public Deck() {
+        List<Card> allCards = new ArrayList<>();
         for (Rank rank : Rank.values()) {
             for (Suit suit : Suit.values()) {
-                cards.add(new Card(rank, suit));
+                allCards.add(new Card(rank, suit));
             }
         }
-        Collections.shuffle(cards);
+        Collections.shuffle(allCards);
+        this.cards = new ArrayDeque<>(allCards);
     }
 
     public Card draw() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("덱에 카드가 없습니다.");
         }
-        return cards.removeLast();
+        return cards.pop();
     }
 
 }

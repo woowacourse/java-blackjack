@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 public enum Rank {
     ACE(1),
@@ -17,7 +17,7 @@ public enum Rank {
 
     private final int score;
 
-    Rank(int score) {
+    private Rank(int score) {
         this.score = score;
     }
 

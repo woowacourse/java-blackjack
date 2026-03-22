@@ -1,18 +1,21 @@
-package domain;
+package domain.participant;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class DealerTest {
+class DealerTest {
 
     private Dealer dealer;
 
     @BeforeEach
     void beforeEach() {
-        dealer = new Dealer("딜러");
+        dealer = new Dealer();
     }
 
     @DisplayName("점수가 16 이하면 히트할 수 있다")

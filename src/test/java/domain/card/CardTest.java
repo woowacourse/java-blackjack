@@ -1,10 +1,10 @@
-package domain;
+package domain.card;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class CardTest {
+class CardTest {
     @Test
     void 카드의_점수를_반환한다() {
         Card card = new Card(Rank.KING, Suit.SPADE);
