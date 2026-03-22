@@ -18,10 +18,14 @@ public class Deck {
         return cards.pop();
     }
 
+    public Hand drawInitialCards() {
+        return new Hand(List.of(cards.pop(), cards.pop()));
+    }
+
     private Deque<Card> initialize() {
         Deque<Card> results = new ArrayDeque<>();
         for (CardSuit cardSuit : CardSuit.values()) {
-            Arrays.stream(CardNumber.values())
+            Arrays.stream(CardScore.values())
                     .forEach(cardNumber -> results.add(new Card(cardNumber, cardSuit)));
         }
         return shuffle(results);

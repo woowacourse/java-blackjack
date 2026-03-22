@@ -1,19 +1,18 @@
 package controller;
 
+import domain.HitOption;
 import domain.card.Card;
-import domain.participant.Dealer;
 import domain.card.Deck;
-import domain.GameResult;
-import domain.Judgement;
+import domain.participant.Dealer;
+import domain.participant.Money;
+import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import dto.ParticipantDto;
-import dto.PlayerResultDto;
+import dto.PlayerProfitDto;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import view.InputParser;
-import view.InputValidator;
 import view.InputView;
 import view.OutputView;
 
@@ -28,27 +27,29 @@ public class GameController {
     }
 
     public void run() {
-        List<String> playerNames = getPlayerNames();
         Deck deck = new Deck();
-        Dealer dealer = new Dealer(new ArrayList<>(List.of(deck.draw(), deck.draw())), deck);
+        List<String> playerNames = getPlayerNames();
         Players players = getPlayers(playerNames, deck);
+        Dealer dealer = new Dealer(deck.drawInitialCards());
 
         printGameStart(playerNames, dealer, players);
-        receiveMoreCard(players, dealer);
+
+        receiveMoreCard(players, dealer, deck);
 
         printFinalScore(players, dealer);
-        printFinalResults(players, dealer);
+        printFinalProfit(players, dealer);
     }
 
     private List<String> getPlayerNames() {
-        String rawPlayerNames = inputView.readPlayerName();
-        return InputParser.parsePlayerNames(rawPlayerNames);
+        String input = inputView.readPlayerName();
+        return InputParser.parsePlayerNames(input);
     }
 
     private Players getPlayers(List<String> playerNames, Deck deck) {
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            Player player = new Player(playerName, new ArrayList<>(List.of(deck.draw(), deck.draw())));
+            Money money = getMoney(playerName);
+            Player player = new Player(deck.drawInitialCards(), playerName, money);
             players.add(player);
         }
         return new Players(players);
@@ -58,47 +59,66 @@ public class GameController {
         outputView.printStartCardMessage(playerNames);
 
         Card dealerFirstCard = dealer.getHand().getFirst();
-        outputView.printDealerStartCard(dealerFirstCard.getCardNumber(), dealerFirstCard.getCardSuit());
-        outputView.printStartCard(
-                players.getPlayers().stream().map(player -> ParticipantDto.of(player.getName(), player)).toList());
+        outputView.printDealerStartCard(dealerFirstCard);
+        outputView.printStartCard(players);
     }
 
-    private void receiveMoreCard(Players players, Dealer dealer) {
+    private void receiveMoreCard(Players players, Dealer dealer, Deck deck) {
         for (Player player : players.getPlayers()) {
-            processRound(player, dealer);
+            processRound(player, deck);
         }
 
         while (dealer.canReceiveCard()) {
-            dealer.addCard(dealer.dealCard());
+            dealer.draw(deck.draw());
             outputView.printDealerReceiveCard();
         }
+        dealer.stay();
     }
 
-    private void printFinalScore(Players players, Dealer dealer) {
-        List<ParticipantDto> participantDtos = players.getPlayers().stream()
+    private void printFinalScore(Players players, Participant dealer) {
+        List<ParticipantDto> participantDtos = getParticipantDtos(players);
+        outputView.printFinalScore(ParticipantDto.of("딜러", dealer), participantDtos);
+    }
+
+    private void printFinalProfit(Players players, Dealer dealer) {
+        List<PlayerProfitDto> playerProfitDtos = getPlayerProfitDtos(players, dealer);
+        int dealerFinalProfit = -playerProfitDtos.stream()
+                .mapToInt(PlayerProfitDto::profit)
+                .sum();
+        outputView.printDealerFinalProfit(dealerFinalProfit);
+        outputView.printPlayerFinalProfit(playerProfitDtos);
+    }
+
+    private Money getMoney(String playerName) {
+        String input = inputView.readMoney(playerName);
+        return new Money(InputParser.parseMoney(input));
+    }
+
+    private void processRound(Player player, Deck deck) {
+        while (player.canHit()) {
+            String input = inputView.readHitOption(player.getName());
+            HitOption hitOption = HitOption.from(input);
+            if (hitOption.isStay()) {
+                player.stay();
+                return;
+            }
+            player.draw(deck.draw());
+            outputView.printCurrentHoldCard(player);
+        }
+    }
+
+    private List<ParticipantDto> getParticipantDtos(Players players) {
+        return players.getPlayers().stream()
                 .map(player -> ParticipantDto.of(player.getName(), player))
                 .toList();
-        outputView.printFinalScore(
-                ParticipantDto.of("딜러", dealer), participantDtos);
     }
 
-    private void printFinalResults(Players players, Dealer dealer) {
-        Judgement judgement = new Judgement();
-        Map<String, GameResult> playerResults = judgement.judgePlayerResults(players, dealer);
-        Map<GameResult, Integer> dealerResults = judgement.judgeDealerResults(playerResults);
-        outputView.printDealerFinalCount(dealerResults);
-        outputView.printPlayerFinalResults(PlayerResultDto.from(playerResults));
-    }
-
-    private void processRound(Player player, Dealer dealer) {
-        while (!player.isBust()) {
-            String hitOption = inputView.readHitOption(player.getName());
-            InputValidator.validateHitOption(hitOption);
-            if (hitOption.equals("n")) {
-                break;
-            }
-            player.addCard(dealer.dealCard());
-            outputView.printCurrentHoldCard(ParticipantDto.of(player.getName(), player));
+    private List<PlayerProfitDto> getPlayerProfitDtos(Players players, Dealer dealer) {
+        List<PlayerProfitDto> playerProfitDtos = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            int finalProfit = (int) player.profit(dealer.getState());
+            playerProfitDtos.add(PlayerProfitDto.of(player.getName(), finalProfit));
         }
+        return playerProfitDtos;
     }
 }

@@ -3,24 +3,28 @@ package domain.card;
 import java.util.Objects;
 
 public class Card {
-    private final CardNumber cardNumber;
+    private final CardScore cardScore;
     private final CardSuit cardSuit;
 
-    public Card(CardNumber cardNumber, CardSuit cardSuit) {
-        this.cardNumber = cardNumber;
+    public Card(CardScore cardScore, CardSuit cardSuit) {
+        this.cardScore = cardScore;
         this.cardSuit = cardSuit;
     }
 
-    public CardNumber getCardNumber() {
-        return cardNumber;
+    public boolean isAce() {
+        return this.getCardScoreName() == CardScore.ACE;
+    }
+
+    public CardScore getCardScoreName() {
+        return cardScore;
+    }
+
+    public int getCardScore() {
+        return cardScore.getScore();
     }
 
     public CardSuit getCardSuit() {
         return cardSuit;
-    }
-
-    public int getScore() {
-        return CardNumber.fromScore(cardNumber);
     }
 
     @Override
@@ -29,11 +33,11 @@ public class Card {
             return false;
         }
         Card card = (Card) object;
-        return cardNumber == card.cardNumber && cardSuit == card.cardSuit;
+        return cardScore == card.cardScore && cardSuit == card.cardSuit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cardNumber, cardSuit);
+        return Objects.hash(cardScore, cardSuit);
     }
 }

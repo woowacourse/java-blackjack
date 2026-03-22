@@ -1,22 +1,15 @@
 package domain.participant;
 
-import domain.card.Card;
-import domain.card.Deck;
-import java.util.List;
+import domain.card.Hand;
 
 public class Dealer extends Participant {
-    private final Deck deck;
+    private static final int RECEIVE_CARD_CONDITION = 16;
 
-    public Dealer(List<Card> hand, Deck deck) {
+    public Dealer(Hand hand) {
         super(hand);
-        this.deck = deck;
-    }
-
-    public Card dealCard() {
-        return deck.draw();
     }
 
     public boolean canReceiveCard() {
-        return calculateScore() <= 16;
+        return calculateScore() <= RECEIVE_CARD_CONDITION;
     }
 }
