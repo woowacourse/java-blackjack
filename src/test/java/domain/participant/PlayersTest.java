@@ -3,7 +3,6 @@ package domain.participant;
 import static org.junit.jupiter.api.Assertions.*;
 
 import domain.betting.BettingAmount;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -51,6 +50,6 @@ class PlayersTest {
     }
 
     private Player createPlayer(String name) {
-        return new Player(new Name(name), new BettingAmount(BigDecimal.valueOf(1000)));
+        return new Player(new Name(name), new BettingAmount("1000"));
     }
 }

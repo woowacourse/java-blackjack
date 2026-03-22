@@ -1,7 +1,7 @@
 package view;
 
+import domain.betting.BettingAmount;
 import java.util.Arrays;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -29,17 +29,15 @@ public class InputView {
         }
     }
 
-    public static Integer askBettingAmount(String player) {
+    public static BettingAmount askBettingAmount(String player) {
         while (true) {
             try {
                 System.out.println();
                 System.out.println(player + "의 배팅 금액은?");
-                Integer input = SCANNER.nextInt();
-                SCANNER.nextLine(); // nextInt 뒤에 남은 개행 제거용
-                return input;
-            } catch (InputMismatchException e) {
-                SCANNER.nextLine();
-                System.out.println("입력은 정수만 허용합니다.");
+                String input = SCANNER.nextLine();
+                return new BettingAmount(input);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
         }
     }

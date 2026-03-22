@@ -10,7 +10,6 @@ import domain.card.Shape;
 import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -36,14 +35,14 @@ class GameResultManagerTest {
 
         assertEquals(List.of("딜러", "pobi", "crong"),
                 profits.keySet().stream().map(Name::getName).toList());
-        assertEquals(0, BigDecimal.valueOf(1000).compareTo(profits.get(new Name("딜러")).getMoney()));
-        assertEquals(0, BigDecimal.valueOf(1000).compareTo(profits.get(new Name("pobi")).getMoney()));
-        assertEquals(0, BigDecimal.valueOf(-2000).compareTo(profits.get(new Name("crong")).getMoney()));
+        assertEquals(0, new Revenue("1000").getMoney().compareTo(profits.get(new Name("딜러")).getMoney()));
+        assertEquals(0, new Revenue("1000").getMoney().compareTo(profits.get(new Name("pobi")).getMoney()));
+        assertEquals(0, new Revenue("-2000").getMoney().compareTo(profits.get(new Name("crong")).getMoney()));
     }
 
     private TestFixture createFixture() {
-        Player pobi = new Player(new Name("pobi"), new BettingAmount(BigDecimal.valueOf(1000)));
-        Player crong = new Player(new Name("crong"), new BettingAmount(BigDecimal.valueOf(2000)));
+        Player pobi = new Player(new Name("pobi"), new BettingAmount("1000"));
+        Player crong = new Player(new Name("crong"), new BettingAmount("2000"));
         Players players = new Players(List.of(pobi, crong));
         return new TestFixture(new GameManager(players), pobi, crong);
     }

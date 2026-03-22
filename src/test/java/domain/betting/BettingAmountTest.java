@@ -22,4 +22,18 @@ class BettingAmountTest {
             new BettingAmount(testBettingAmount);
         });
     }
+
+    @Test
+    void 문자열로도_베팅금액을_생성할_수_있다() {
+        BettingAmount bettingAmount = new BettingAmount("1000");
+
+        assertEquals(0, BigDecimal.valueOf(1000).compareTo(bettingAmount.getMoney()));
+    }
+
+    @Test
+    void 숫자가_아닌_문자열이면_예외가_발생한다() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new BettingAmount("abc");
+        });
+    }
 }

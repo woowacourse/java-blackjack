@@ -6,8 +6,24 @@ import java.util.Objects;
 public class Revenue {
     private final BigDecimal money;
 
+    public Revenue(String money) {
+        this(parse(money));
+    }
+
+    public Revenue(int money) {
+        this(BigDecimal.valueOf(money));
+    }
+
     public Revenue(BigDecimal money) {
         this.money = money;
+    }
+
+    private static BigDecimal parse(String money) {
+        try {
+            return new BigDecimal(money);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("수익 값이 올바르지 않습니다.");
+        }
     }
 
     public BigDecimal getMoney() {

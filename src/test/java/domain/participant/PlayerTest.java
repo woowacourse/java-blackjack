@@ -8,7 +8,6 @@ import domain.card.Card;
 import domain.card.Number;
 import domain.card.Shape;
 import domain.game.GameResult;
-import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
@@ -189,10 +188,10 @@ class PlayerTest {
 
         Revenue revenue = player.calculateRevenueAgainst(dealer);
 
-        assertEquals(0, BigDecimal.valueOf(1000).compareTo(revenue.getMoney()));
+        assertEquals(0, new BettingAmount("1000").getMoney().compareTo(revenue.getMoney()));
     }
 
     private Player createPlayer() {
-        return new Player(new Name("pobi"), new BettingAmount(BigDecimal.valueOf(1000)));
+        return new Player(new Name("pobi"), new BettingAmount("1000"));
     }
 }

@@ -9,7 +9,6 @@ import domain.participant.Player;
 import domain.participant.Players;
 import dto.ParticipantCardsDto;
 import dto.ParticipantRevenueDto;
-import java.math.BigDecimal;
 import view.InputView;
 
 import java.util.ArrayList;
@@ -101,8 +100,8 @@ public class BlackJackGameController {
 
         for (String name : playerNames) {
             Name playerName = new Name(name);
-            int amount = InputView.askBettingAmount(playerName.getName());
-            players.add(new Player(playerName, new BettingAmount(BigDecimal.valueOf(amount))));
+            BettingAmount bettingAmount = InputView.askBettingAmount(playerName.getName());
+            players.add(new Player(playerName, bettingAmount));
         }
         return new Players(players);
     }
