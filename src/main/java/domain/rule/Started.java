@@ -1,16 +1,16 @@
 package domain.rule;
 
-import domain.card.Cards;
+import domain.card.Hand;
 
 public abstract class Started implements State {
-    protected final Cards cards;
+    protected final Hand hand;
 
-    public Started(Cards cards) {
-        this.cards = cards;
+    public Started(Hand hand) {
+        this.hand = hand;
     }
 
     @Override
-    public Cards cards() {
-        return cards;
+    public Hand cards() {
+        return hand;
     }
 }

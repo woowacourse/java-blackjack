@@ -1,7 +1,7 @@
 package domain.rule;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Hand;
 
 public interface State {
     State draw(Card card);
@@ -9,6 +9,6 @@ public interface State {
     boolean isBust();
     boolean isBlackjack();
     boolean isFinished();
-    Cards cards();
+    Hand cards();
     double profit(double betAmount, State dealerState);
 }

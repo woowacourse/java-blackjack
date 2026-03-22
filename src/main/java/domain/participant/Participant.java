@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Hand;
 import domain.rule.Hit;
 import domain.rule.State;
 import java.util.List;
@@ -9,8 +9,8 @@ import java.util.List;
 public abstract class Participant {
     protected State state;
 
-    public Participant(Cards cards) {
-        this.state = Hit.of(cards);
+    public Participant(Hand hand) {
+        this.state = Hit.of(hand);
     }
 
     public void draw(Card card) {
@@ -30,7 +30,7 @@ public abstract class Participant {
     }
 
     public List<Card> getHand() {
-        return state.cards().getHand();
+        return state.cards().getCards();
     }
 
     public State getState() {

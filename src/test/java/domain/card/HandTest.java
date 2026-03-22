@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class CardsTest {
+public class HandTest {
     @Test
     @DisplayName("숫자에 대한 카드 점수를 계산한다.")
     void calculateNumberTotalScoreTest() {
@@ -16,15 +16,15 @@ public class CardsTest {
                 new Card(CardScore.EIGHT, CardSuit.CLUB),
                 new Card(CardScore.FOUR, CardSuit.CLUB)
         );
-        Cards cards1 = new Cards(cardsList1);
-        int totalScore1 = cards1.calculateScore();
+        Hand hand1 = new Hand(cardsList1);
+        int totalScore1 = hand1.calculateScore();
 
         List<Card> cardList2 = List.of(
                 new Card(CardScore.EIGHT, CardSuit.CLUB),
                 new Card(CardScore.TWO, CardSuit.CLUB)
         );
-        Cards cards2 = new Cards(cardList2);
-        int totalScore2 = cards2.calculateScore();
+        Hand hand2 = new Hand(cardList2);
+        int totalScore2 = hand2.calculateScore();
 
         assertThat(totalScore1).isEqualTo(12);
         assertThat(totalScore2).isEqualTo(10);
@@ -37,8 +37,8 @@ public class CardsTest {
                 new Card(CardScore.JACK, CardSuit.CLUB),
                 new Card(CardScore.FOUR, CardSuit.CLUB)
         );
-        Cards cards = new Cards(cardList);
-        int totalScore = cards.calculateScore();
+        Hand hand = new Hand(cardList);
+        int totalScore = hand.calculateScore();
 
         assertThat(totalScore).isEqualTo(14);
     }
@@ -50,16 +50,16 @@ public class CardsTest {
                 new Card(CardScore.JACK, CardSuit.CLUB),
                 new Card(CardScore.FOUR, CardSuit.CLUB)
         ));
-        Cards cards1 = new Cards(cardList1);
-        cards1.addCard(new Card(CardScore.ACE, CardSuit.CLUB));
-        int player1TotalScore = cards1.calculateScore();
+        Hand hand1 = new Hand(cardList1);
+        hand1.addCard(new Card(CardScore.ACE, CardSuit.CLUB));
+        int player1TotalScore = hand1.calculateScore();
 
         List<Card> cardList2 = new ArrayList(List.of(
                 new Card(CardScore.FOUR, CardSuit.CLUB),
                 new Card(CardScore.ACE, CardSuit.CLUB)
         ));
-        Cards cards2 = new Cards(cardList2);
-        int player2TotalScore = cards2.calculateScore();
+        Hand hand2 = new Hand(cardList2);
+        int player2TotalScore = hand2.calculateScore();
 
         assertThat(player1TotalScore).isEqualTo(15);
         assertThat(player2TotalScore).isEqualTo(15);
@@ -72,18 +72,18 @@ public class CardsTest {
                 new Card(CardScore.EIGHT, CardSuit.CLUB),
                 new Card(CardScore.ACE, CardSuit.CLUB)
         ));
-        Cards cards1 = new Cards(cardList1);
-        cards1.addCard(new Card(CardScore.ACE, CardSuit.SPADE));
-        int player1TotalScore = cards1.calculateScore();
+        Hand hand1 = new Hand(cardList1);
+        hand1.addCard(new Card(CardScore.ACE, CardSuit.SPADE));
+        int player1TotalScore = hand1.calculateScore();
 
         List<Card> cardList2 = new ArrayList<>(List.of(
                 new Card(CardScore.FOUR, CardSuit.CLUB),
                 new Card(CardScore.ACE, CardSuit.CLUB)
         ));
-        Cards cards2 = new Cards(cardList2);
-        cards2.addCard(new Card(CardScore.ACE, CardSuit.SPADE));
-        cards2.addCard(new Card(CardScore.ACE, CardSuit.HEART));
-        int player2TotalScore = cards2.calculateScore();
+        Hand hand2 = new Hand(cardList2);
+        hand2.addCard(new Card(CardScore.ACE, CardSuit.SPADE));
+        hand2.addCard(new Card(CardScore.ACE, CardSuit.HEART));
+        int player2TotalScore = hand2.calculateScore();
 
         assertThat(player1TotalScore).isEqualTo(20);
         assertThat(player2TotalScore).isEqualTo(17);
@@ -96,9 +96,9 @@ public class CardsTest {
                 new Card(CardScore.JACK, CardSuit.CLUB),
                 new Card(CardScore.FOUR, CardSuit.CLUB)
         ));
-        Cards cards = new Cards(cardList);
-        cards.addCard(new Card(CardScore.EIGHT, CardSuit.CLUB));
-        boolean isBust = cards.isBust();
+        Hand hand = new Hand(cardList);
+        hand.addCard(new Card(CardScore.EIGHT, CardSuit.CLUB));
+        boolean isBust = hand.isBust();
 
         assertTrue(isBust);
     }

@@ -18,8 +18,8 @@ public class Deck {
         return cards.pop();
     }
 
-    public Cards drawInitialCards() {
-        return new Cards(List.of(cards.pop(), cards.pop()));
+    public Hand drawInitialCards() {
+        return new Hand(List.of(cards.pop(), cards.pop()));
     }
 
     private Deque<Card> initialize() {

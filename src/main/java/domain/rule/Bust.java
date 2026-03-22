@@ -1,10 +1,10 @@
 package domain.rule;
 
-import domain.card.Cards;
+import domain.card.Hand;
 
 public class Bust extends Finished {
-    public Bust(Cards cards) {
-        super(cards);
+    public Bust(Hand hand) {
+        super(hand);
     }
 
     @Override

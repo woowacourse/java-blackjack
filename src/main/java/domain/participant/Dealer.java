@@ -1,12 +1,12 @@
 package domain.participant;
 
-import domain.card.Cards;
+import domain.card.Hand;
 
 public class Dealer extends Participant {
     private static final int RECEIVE_CARD_CONDITION = 16;
 
-    public Dealer(Cards cards) {
-        super(cards);
+    public Dealer(Hand hand) {
+        super(hand);
     }
 
     public boolean canReceiveCard() {

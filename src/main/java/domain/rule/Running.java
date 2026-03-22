@@ -1,11 +1,11 @@
 package domain.rule;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Hand;
 
 public abstract class Running extends Started {
-    public Running(Cards cards) {
-        super(cards);
+    public Running(Hand hand) {
+        super(hand);
     }
 
     public abstract State draw(Card card);

@@ -6,7 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import domain.card.Card;
 import domain.card.CardScore;
 import domain.card.CardSuit;
-import domain.card.Cards;
+import domain.card.Hand;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,9 +19,9 @@ public class PlayerTest {
                 new Card(CardScore.EIGHT, CardSuit.CLUB),
                 new Card(CardScore.FOUR, CardSuit.CLUB)
         );
-        Cards cards = new Cards(cardsList);
+        Hand hand = new Hand(cardsList);
 
-        assertThatThrownBy(() -> new Player(cards, "", new Money(10000)))
+        assertThatThrownBy(() -> new Player(hand, "", new Money(10000)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 플레이어의 이름은 빈 값이 아니여야 합니다.");
     }
@@ -33,8 +33,8 @@ public class PlayerTest {
                 new Card(CardScore.EIGHT, CardSuit.CLUB),
                 new Card(CardScore.FOUR, CardSuit.CLUB)
         );
-        Cards cards = new Cards(cardsList);
-        Player player = new Player(cards, "pobi", new Money(10000));
+        Hand hand = new Hand(cardsList);
+        Player player = new Player(hand, "pobi", new Money(10000));
 
         assertThat(player.canHit()).isTrue();
     }

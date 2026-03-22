@@ -3,24 +3,24 @@ package domain.card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cards {
+public class Hand {
     private static final int INITIAL_CARD_COUNT = 2;
     private static final int BLACKJACK_SCORE = 21;
     private static final int ACE_ADDITIONAL_SCORE = 10;
 
-    private final List<Card> hand;
+    private final List<Card> cards;
 
-    public Cards(List<Card> hand) {
-        this.hand = new ArrayList<>(hand);
+    public Hand(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
     }
 
     public void addCard(Card card) {
-        hand.add(card);
+        cards.add(card);
     }
 
     public int calculateScore() {
         int results = 0;
-        for (Card holdCard : hand) {
+        for (Card holdCard : cards) {
             results += holdCard.getCardScore();
         }
 
@@ -28,7 +28,7 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return hand.size() == INITIAL_CARD_COUNT && calculateScore() == BLACKJACK_SCORE;
+        return cards.size() == INITIAL_CARD_COUNT && calculateScore() == BLACKJACK_SCORE;
     }
 
     public boolean isBust() {
@@ -40,14 +40,14 @@ public class Cards {
     }
 
     private int applyAce(int results) {
-        boolean isAceExist = hand.stream().anyMatch(Card::isAce);
+        boolean isAceExist = cards.stream().anyMatch(Card::isAce);
         if (isSoftHand(isAceExist, results)) {
             return results + ACE_ADDITIONAL_SCORE;
         }
         return results;
     }
 
-    public List<Card> getHand() {
-        return List.copyOf(hand);
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 }

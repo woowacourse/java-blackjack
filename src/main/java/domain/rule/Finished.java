@@ -1,11 +1,11 @@
 package domain.rule;
 
 import domain.card.Card;
-import domain.card.Cards;
+import domain.card.Hand;
 
 public abstract class Finished extends Started {
-    public Finished(Cards cards) {
-        super(cards);
+    public Finished(Hand hand) {
+        super(hand);
     }
 
     @Override

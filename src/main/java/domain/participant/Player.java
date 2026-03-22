@@ -1,14 +1,14 @@
 package domain.participant;
 
-import domain.card.Cards;
+import domain.card.Hand;
 import domain.rule.State;
 
 public class Player extends Participant {
     private final String name;
     private final Money money;
 
-    public Player(Cards cards, String name, Money money) {
-        super(cards);
+    public Player(Hand hand, String name, Money money) {
+        super(hand);
         validateEmptyNames(name);
         this.name = name;
         this.money = money;

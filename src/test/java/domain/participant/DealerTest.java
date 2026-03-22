@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.CardScore;
 import domain.card.CardSuit;
-import domain.card.Cards;
+import domain.card.Hand;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +18,7 @@ class DealerTest {
         List<Card> hand = new ArrayList<>(List.of(
                 new Card(CardScore.THREE, CardSuit.CLUB),
                 new Card(CardScore.FOUR, CardSuit.CLUB)));
-        Dealer dealer = new Dealer(new Cards(hand));
+        Dealer dealer = new Dealer(new Hand(hand));
 
         assertThat(dealer.canReceiveCard()).isTrue();
     }
@@ -29,7 +29,7 @@ class DealerTest {
         List<Card> hand = new ArrayList<>(List.of(
                 new Card(CardScore.TEN, CardSuit.CLUB),
                 new Card(CardScore.SEVEN, CardSuit.CLUB)));
-        Dealer dealer = new Dealer(new Cards(hand));
+        Dealer dealer = new Dealer(new Hand(hand));
 
         assertThat(dealer.canReceiveCard()).isFalse();
     }

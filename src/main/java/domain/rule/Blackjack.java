@@ -1,12 +1,12 @@
 package domain.rule;
 
-import domain.card.Cards;
+import domain.card.Hand;
 
 public class Blackjack extends Finished {
     public static final double BLACKJACK_EARNING_RATE = 1.5;
 
-    public Blackjack(Cards cards) {
-        super(cards);
+    public Blackjack(Hand hand) {
+        super(hand);
     }
 
     @Override

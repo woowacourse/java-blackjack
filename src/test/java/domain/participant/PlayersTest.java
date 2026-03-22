@@ -5,7 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import domain.card.Card;
 import domain.card.CardScore;
 import domain.card.CardSuit;
-import domain.card.Cards;
+import domain.card.Hand;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,9 +18,9 @@ class PlayersTest {
                 new Card(CardScore.EIGHT, CardSuit.CLUB),
                 new Card(CardScore.FOUR, CardSuit.CLUB)
         );
-        Cards cards = new Cards(cardsList);
-        Player player1 = new Player(cards, "pobi", new Money(10000));
-        Player player2 = new Player(cards, "pobi", new Money(10000));
+        Hand hand = new Hand(cardsList);
+        Player player1 = new Player(hand, "pobi", new Money(10000));
+        Player player2 = new Player(hand, "pobi", new Money(10000));
 
         assertThatThrownBy(() -> new Players(List.of(player1, player2)))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -34,16 +34,16 @@ class PlayersTest {
                 new Card(CardScore.EIGHT, CardSuit.CLUB),
                 new Card(CardScore.FOUR, CardSuit.CLUB)
         );
-        Cards cards = new Cards(cardsList);
-        Player player1 = new Player(cards, "pobi", new Money(10000));
-        Player player2 = new Player(cards, "woni", new Money(10000));
-        Player player3 = new Player(cards, "stark", new Money(10000));
-        Player player4 = new Player(cards, "downer", new Money(10000));
-        Player player5 = new Player(cards, "chorok", new Money(10000));
-        Player player6 = new Player(cards, "logi", new Money(10000));
-        Player player7 = new Player(cards, "neo", new Money(10000));
-        Player player8 = new Player(cards, "brown", new Money(10000));
-        Player player9 = new Player(cards, "lisa", new Money(10000));
+        Hand hand = new Hand(cardsList);
+        Player player1 = new Player(hand, "pobi", new Money(10000));
+        Player player2 = new Player(hand, "woni", new Money(10000));
+        Player player3 = new Player(hand, "stark", new Money(10000));
+        Player player4 = new Player(hand, "downer", new Money(10000));
+        Player player5 = new Player(hand, "chorok", new Money(10000));
+        Player player6 = new Player(hand, "logi", new Money(10000));
+        Player player7 = new Player(hand, "neo", new Money(10000));
+        Player player8 = new Player(hand, "brown", new Money(10000));
+        Player player9 = new Player(hand, "lisa", new Money(10000));
 
         assertThatThrownBy(() -> new Players(List.of(player1, player2, player3, player4, player5, player6, player7, player8, player9)))
                 .isInstanceOf(IllegalArgumentException.class)
