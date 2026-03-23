@@ -1,45 +1,53 @@
 package domain.card;
 
-import domain.Rank;
-import domain.Score;
+import static domain.BlackjackGame.INITIAL_CARD_COUNT;
 
+import domain.Score;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
     private final List<Card> cards;
 
-    public Hand() {
-        this.cards = new ArrayList<>();
+    private Hand(List<Card> cards) {
+        this.cards = cards;
     }
 
-    public Hand(Hand hand) {
-        this.cards = List.copyOf(hand.getCards());
+    public static Hand of(List<Card> cards) {
+        return new Hand(cards);
+    }
+
+    public static Hand mutableCopyOf(Hand hand) {
+        return new Hand(new ArrayList<>(hand.cards));
     }
 
     public void add(Card card) {
         cards.add(card);
     }
 
-    public void addAll(List<Card> cards) {
-        this.cards.addAll(cards);
-    }
-
     public Card peek() {
         return cards.getFirst();
     }
 
-    public int size() {
-        return cards.size();
+    public boolean isBlackjack() {
+        return cards.size() == INITIAL_CARD_COUNT && totalSum().isBlackjack();
+    }
+
+    public boolean isBust() {
+        return totalSum().isBust();
     }
 
     public Score totalSum() {
-        return Rank.totalSum(getAceAmount(), getSumWithoutAce());
+        return getSumWithoutAce().sumWithAce(getAceAmount());
+    }
+
+    public boolean isScoreLessThanOrEqualTo(Score target) {
+        return totalSum().isLessThanOrEqualTo(target);
     }
 
     private int getAceAmount() {
         return (int) cards.stream()
-                .filter(card -> card.isAce())
+                .filter(Card::isAce)
                 .count();
     }
 
@@ -47,7 +55,11 @@ public class Hand {
         return cards.stream()
                 .filter(card -> !card.isAce())
                 .map(card -> card.getRank().getScore())
-                .reduce(new Score(0), Score::add);
+                .reduce(Score.ZERO, Score::add);
+    }
+
+    public int size() {
+        return cards.size();
     }
 
     public List<Card> getCards() {

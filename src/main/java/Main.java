@@ -1,5 +1,6 @@
-import view.InputView;
-import view.ResultView;
+import ui.BlackjackController;
+import ui.view.InputView;
+import ui.view.ResultView;
 
 public class Main {
     public static void main(String[] args) {

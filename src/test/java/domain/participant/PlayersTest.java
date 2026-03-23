@@ -1,41 +1,41 @@
 package domain.participant;
 
-import domain.card.Deck;
+import domain.card.Hand;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 public class PlayersTest {
+    private final Hand dummy = Hand.of(List.of());
+
+    @Test
+    void 생성자에_null이_입력된_경우_예외가_발생해야_한다() {
+        Assertions.assertThatThrownBy(() -> Players.from(null))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
     @Test
     void 중복된_플레이어_이름은_등록할_수_없다() {
         // given
-        List<String> duplicatedNames = List.of("jeje", "mingu", "jeje");
+        List<Player> duplicatedNames = List.of(
+                Player.of(dummy, "jeje", "1000"),
+                Player.of(dummy, "mingu", "1000"),
+                Player.of(dummy, "jeje", "10000"));
 
         // when & then
-        Assertions.assertThatThrownBy(() -> Players.from(duplicatedNames)).isInstanceOf(IllegalArgumentException.class);
+        Assertions.assertThatThrownBy(() -> Players.from(duplicatedNames))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 닉네임이_중복되지_않으면_정상적으로_생성되어야_한다() {
         // given
-        List<String> uniqueNames = List.of("jeje", "mingu", "minseo");
+        List<Player> uniqueNames = List.of(
+                Player.of(dummy, "jeje", "1000"),
+                Player.of(dummy, "mingu", "1000"),
+                Player.of(dummy, "minseo", "1000"));
 
         // when & then
         Assertions.assertThat(Players.from(uniqueNames).getPlayers()).hasSize(3);
-    }
-
-    @Test
-    void getter로_받은_Player는_수정할_수_없다() {
-        //given
-        Players players = Players.from(List.of("jeje", "mingu", "minseo"));
-        Deck deck = new Deck();
-        players.giveCardsToEachPlayers(deck, 2);
-
-        Player player = players.getPlayers().get(0);
-
-        players.giveCardsToEachPlayers(deck, 2);
-
-        Assertions.assertThat(player.getCards().size()).isEqualTo(2);
     }
 }

@@ -1,6 +1,8 @@
-package domain;
+package ui.dto;
 
-public enum Suit {
+import domain.card.Suit;
+
+public enum SuitDto {
     SPADE("스페이드"),
     HEART("하트"),
     DIAMOND("다이아몬드"),
@@ -8,8 +10,12 @@ public enum Suit {
 
     private final String value;
 
-    Suit(String value) {
+    SuitDto(String value) {
         this.value = value;
+    }
+
+    public static SuitDto toDto(Suit suit) {
+        return SuitDto.valueOf(suit.name());
     }
 
     public String getValue() {
