@@ -43,16 +43,20 @@ public class Players {
         return playerTurn < players.size();
     }
 
-    public void hit(int playerTurn, Card card) {
-        players.get(playerTurn).draw(card);
+    public void hit(int index, Card card) {
+        get(index).draw(card);
     }
 
-    public void stay(int playerTurn) {
-        players.get(playerTurn).stay();
+    private Player get(int index) {
+        return players.get(index);
     }
 
-    public boolean isFinished(int hitSequence) {
-        return players.get(hitSequence).isFinished();
+    public void stay(int index) {
+        players.get(index).stay();
+    }
+
+    public boolean isFinished(int index) {
+        return get(index).isFinished();
     }
 
     public List<Player> getPlayers() {
@@ -60,6 +64,6 @@ public class Players {
     }
 
     public Player getPlayer(int index) {
-        return players.get(index);
+        return get(index);
     }
 }

@@ -15,6 +15,10 @@ public interface State {
 
     Result judge(State state);
 
+    boolean isBlackjack();
+
+    boolean isBust();
+
     Hand hand();
 
     Score totalSum();

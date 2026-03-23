@@ -11,10 +11,10 @@ public class Stay extends Finished {
 
     @Override
     public Result judge(State state) {
-        if (state.hand().isBlackjack()) {
+        if (state.isBlackjack()) {
             return Result.LOSE;
         }
-        if (state.hand().isBust()) {
+        if (state.isBust()) {
             return Result.WIN;
         }
         return judgeByScore(state);
@@ -31,5 +31,15 @@ public class Stay extends Finished {
             return Result.WIN;
         }
         return Result.LOSE;
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
+    public boolean isBust() {
+        return false;
     }
 }
