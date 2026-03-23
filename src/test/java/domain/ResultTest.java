@@ -11,10 +11,10 @@ public class ResultTest {
         int dealerSum = 20;
 
         // when
-        Result judgement = Result.judge(playerSum, dealerSum);
+        GameResult judgement = GameResult.judge(playerSum, dealerSum);
 
         //then
-        Assertions.assertEquals(Result.WIN, judgement);
+        Assertions.assertEquals(GameResult.WIN, judgement);
     }
 
     @Test
@@ -24,10 +24,10 @@ public class ResultTest {
         int dealerSum = 21;
 
         // when
-        Result judgement = Result.judge(playerSum, dealerSum);
+        GameResult judgement = GameResult.judge(playerSum, dealerSum);
 
         //then
-        Assertions.assertEquals(Result.LOSE, judgement);
+        Assertions.assertEquals(GameResult.LOSE, judgement);
     }
 
     @Test
@@ -37,10 +37,10 @@ public class ResultTest {
         int dealerSum = 20;
 
         // when
-        Result judgement = Result.judge(playerSum, dealerSum);
+        GameResult judgement = GameResult.judge(playerSum, dealerSum);
 
         //then
-        Assertions.assertEquals(Result.LOSE, judgement);
+        Assertions.assertEquals(GameResult.LOSE, judgement);
     }
 
     @Test
@@ -50,10 +50,10 @@ public class ResultTest {
         int dealerSum = 20;
 
         // when
-        Result judgement = Result.judge(playerSum, dealerSum);
+        GameResult judgement = GameResult.judge(playerSum, dealerSum);
 
         //then
-        Assertions.assertEquals(Result.DRAW, judgement);
+        Assertions.assertEquals(GameResult.DRAW, judgement);
     }
 
     @Test
@@ -63,9 +63,9 @@ public class ResultTest {
         int dealerSum = 24;
 
         // when
-        Result judgement = Result.judge(playerSum, dealerSum);
+        GameResult judgement = GameResult.judge(playerSum, dealerSum);
 
         //then
-        Assertions.assertEquals(Result.DRAW, judgement);
+        Assertions.assertEquals(GameResult.DRAW, judgement);
     }
 }

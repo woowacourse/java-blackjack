@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.GameResult;
 import domain.card.Card;
 import domain.card.Cards;
 import java.util.List;
@@ -27,5 +28,13 @@ public abstract class Participant {
 
     public int getTotalSum() {
         return cards.getTotalSum();
+    }
+
+    public boolean isBust() {
+        return getTotalSum() > GameResult.BLACKJACK_MAX_NUMBER;
+    }
+
+    public boolean isBlackjack() {
+        return cards.isSize(2) && getTotalSum() == GameResult.BLACKJACK_MAX_NUMBER;
     }
 }

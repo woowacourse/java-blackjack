@@ -3,7 +3,7 @@ package domain.card;
 import static domain.Constant.DELIMITER;
 
 import domain.Rank;
-import domain.Result;
+import domain.GameResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +27,10 @@ public class Cards {
         return cards.size();
     }
 
+    public boolean isSize(int size) {
+        return cards.size() == size;
+    }
+
     public List<String> getCardNames() {
         return cards.stream()
                 .map(Card::toString)
@@ -38,7 +42,7 @@ public class Cards {
         int sum = getBaseSum();
 
         for (int i = 0; i < aceCount; i++) {
-            if ((sum + Rank.ACE_ADDITIONAL_VALUE) <= Result.BLACKJACK_MAX_NUMBER) {
+            if ((sum + Rank.ACE_ADDITIONAL_VALUE) <= GameResult.BLACKJACK_MAX_NUMBER) {
                 sum += Rank.ACE_ADDITIONAL_VALUE;
             }
         }

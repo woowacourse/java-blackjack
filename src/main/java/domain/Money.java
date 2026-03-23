@@ -14,6 +14,10 @@ public class Money {
         this.money = money;
     }
 
+    public int getMoney() {
+        return money;
+    }
+
     private void validate(int input) {
         if (input < MIN_BETTING_AMOUNT || MAX_BETTING_AMOUNT < input) {
             throw new BettingAmountOutOfRangeException(MIN_BETTING_AMOUNT, MAX_BETTING_AMOUNT);

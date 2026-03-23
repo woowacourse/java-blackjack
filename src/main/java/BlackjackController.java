@@ -3,8 +3,10 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import dto.DealerDto;
 import dto.PlayerDto;
+import dto.TotalProfitResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import view.InputView;
 import view.ResultView;
@@ -42,7 +44,13 @@ public class BlackjackController {
         DealerDto finalDealerDto = DealerDto.from(dealer);
 
         resultView.printCardsWithResult(finalPlayerDtos, finalDealerDto);
-        resultView.printResultStatistics(finalPlayerDtos, finalDealerDto);
+
+        Map<String, Integer> playerProfits = blackjackGame.calculatePlayerProits();
+        Map<String, Integer> dealerProfit = blackjackGame.calculateDealerProit(playerProfits);
+
+        TotalProfitResponse response = new TotalProfitResponse(playerProfits, dealerProfit);
+
+        resultView.printFinalProfit(response);
     }
 
     private List<String> readPlayers() {

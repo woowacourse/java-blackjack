@@ -4,10 +4,10 @@ import static domain.BlackjackGame.INITIAL_CARD_COUNT;
 import static domain.Constant.DELIMITER;
 import static domain.participant.Dealer.DEALER_HIT_STAND_BOUNDARY;
 
-import domain.Result;
 import dto.DealerDto;
 import dto.ParticipantDto;
 import dto.PlayerDto;
+import dto.TotalProfitResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -65,46 +65,17 @@ public class ResultView {
         System.out.println(participant.getName() + "카드: " + cardNames + " - 결과: " + participant.getTotalSum());
     }
 
+    public void printFinalProfit(TotalProfitResponse response) {
+        printEmptyLine();
+        System.out.println("## 최종 수익");
 
-    public void printResultStatistics(List<PlayerDto> players, DealerDto dealer) {
-        StringBuilder sb = new StringBuilder();
-        sb.append('\n');
-        sb.append("## 최종 승패\n");
+        response.dealerProfit().forEach((name, profit) -> {
+            System.out.println(name + ": " + profit);
+        });
 
-        int playerWinCount = 0;
-        int playerDrawCount = 0;
-        int playerLoseCount = 0;
-
-        for (PlayerDto player : players) {
-            Result result = Result.judge(player.getTotalSum(), dealer.getTotalSum());
-            if (result == Result.WIN) {
-                playerWinCount += 1;
-            }
-            if (result == Result.DRAW) {
-                playerDrawCount += 1;
-            }
-            if (result == Result.LOSE) {
-                playerLoseCount += 1;
-            }
-        }
-
-        sb.append("딜러: " + playerLoseCount + "승 " + playerDrawCount + "무 " + playerWinCount + "패\n");
-
-        for (PlayerDto player : players) {
-            sb.append(player.getName() + ": ");
-            Result result = Result.judge(player.getTotalSum(), dealer.getTotalSum());
-
-            if (result == Result.WIN) {
-                sb.append("승\n");
-                continue;
-            }
-            if (result == Result.LOSE) {
-                sb.append("패\n");
-                continue;
-            }
-            sb.append("무\n");
-        }
-        System.out.println(sb);
+        response.playerProfits().forEach((name, profit) -> {
+            System.out.println(name + ": " + profit);
+        });
     }
 
     private void printEmptyLine() {

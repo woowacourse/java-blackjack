@@ -7,7 +7,9 @@ import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Player;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackGame {
     public static final int INITIAL_CARD_COUNT = 2;
@@ -31,9 +33,9 @@ public class BlackjackGame {
     }
 
     public void registPlayers(List<String> names, List<Integer> betAmounts) {
-        for (int i = 0; i< names.size(); i++) {
-            String name = names.getFirst();
-            int money = betAmounts.getFirst();
+        for (int i = 0; i < names.size(); i++) {
+            String name = names.get(i);
+            int money = betAmounts.get(i);
 
             players.add(new Player(new Name(name), new Money(money)));
 
@@ -64,5 +66,26 @@ public class BlackjackGame {
             return true;
         }
         return false;
+    }
+
+    public Map<String, Integer> calculatePlayerProits() {
+        Map<String, Integer> playerProfits = new HashMap<>();
+
+        for (Player player : players) {
+            GameResult result = GameResult.judge(player, dealer);
+            int profit = result.calculateProfit(player.getMoneyValue());
+
+            playerProfits.put(player.getName(), profit);
+        }
+
+        return playerProfits;
+    }
+
+    public Map<String, Integer> calculateDealerProit(Map<String, Integer> playerProfits) {
+        int totalPlayerProfit = playerProfits.values().stream()
+                        .mapToInt(Integer::intValue)
+                                .sum();
+
+        return Map.of(dealer.getName(), totalPlayerProfit * -1);
     }
 }
