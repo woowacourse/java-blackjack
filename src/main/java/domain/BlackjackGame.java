@@ -68,7 +68,7 @@ public class BlackjackGame {
         return false;
     }
 
-    public Map<String, Integer> calculatePlayerProits() {
+    public Map<String, Integer> calculatePlayerProfits() {
         Map<String, Integer> playerProfits = new HashMap<>();
 
         for (Player player : players) {

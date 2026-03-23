@@ -21,24 +21,15 @@ public class ResultView {
         printEmptyLine();
     }
 
-    private String joinPlayersNameByDelimiter(List<PlayerDto> players) {
-        return players.stream()
-                .map(PlayerDto::getName)
-                .collect(Collectors.joining(DELIMITER));
-    }
-
-    private void printParticipantsCard(List<PlayerDto> players) {
-        for (PlayerDto player : players) {
-            printCards(player);
-        }
-    }
-
     public void printCards(PlayerDto player) {
         String cardNames = player.getCards().stream()
                         .collect(Collectors.joining(DELIMITER));
         System.out.println(player.getName() + "카드: " + cardNames);
     }
 
+    public void printBustMessage(String playerName) {
+        System.out.println(playerName + "는 버스트로 패배하였습니다.");
+    }
 
     public void printDealerHitStand(boolean value) {
         printEmptyLine();
@@ -59,12 +50,6 @@ public class ResultView {
         }
     }
 
-    private void printCardWithResult(ParticipantDto participant) {
-        String cardNames = participant.getCards().stream()
-                .collect(Collectors.joining(DELIMITER));
-        System.out.println(participant.getName() + "카드: " + cardNames + " - 결과: " + participant.getTotalSum());
-    }
-
     public void printFinalProfit(TotalProfitResponse response) {
         printEmptyLine();
         System.out.println("## 최종 수익");
@@ -76,6 +61,24 @@ public class ResultView {
         response.playerProfits().forEach((name, profit) -> {
             System.out.println(name + ": " + profit);
         });
+    }
+
+    private String joinPlayersNameByDelimiter(List<PlayerDto> players) {
+        return players.stream()
+                .map(PlayerDto::getName)
+                .collect(Collectors.joining(DELIMITER));
+    }
+
+    private void printParticipantsCard(List<PlayerDto> players) {
+        for (PlayerDto player : players) {
+            printCards(player);
+        }
+    }
+
+    private void printCardWithResult(ParticipantDto participant) {
+        String cardNames = participant.getCards().stream()
+                .collect(Collectors.joining(DELIMITER));
+        System.out.println(participant.getName() + "카드: " + cardNames + " - 결과: " + participant.getTotalSum());
     }
 
     private void printEmptyLine() {

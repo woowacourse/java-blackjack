@@ -45,7 +45,7 @@ public class BlackjackController {
 
         resultView.printCardsWithResult(finalPlayerDtos, finalDealerDto);
 
-        Map<String, Integer> playerProfits = blackjackGame.calculatePlayerProits();
+        Map<String, Integer> playerProfits = blackjackGame.calculatePlayerProfits();
         Map<String, Integer> dealerProfit = blackjackGame.calculateDealerProit(playerProfits);
 
         TotalProfitResponse response = new TotalProfitResponse(playerProfits, dealerProfit);
@@ -75,11 +75,26 @@ public class BlackjackController {
     }
 
     private void hitStand(Player player) {
-        while (inputView.readHitStand(player.getName()).equals("y")) {
+        if (player.isBust()) {
+            resultView.printBustMessage(player.getName());
+            return;
+        }
+
+        while (true) {
+            String choice = inputView.readHitStand(player.getName());
+
+            if (choice.equals("n")) {
+                break;
+            }
+
             blackjackGame.giveCard(player);
             resultView.printCards(PlayerDto.from(player));
+
+            if (player.isBust()) {
+                resultView.printBustMessage(player.getName());
+                return;
+            }
         }
-        resultView.printCards(PlayerDto.from(player));
     }
 
     private List<PlayerDto> toPlayerDtos(List<Player> players) {
