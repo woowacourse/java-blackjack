@@ -1,16 +1,22 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Amount;
+import blackjack.domain.Hand;
 import blackjack.domain.MatchResult;
-import blackjack.domain.PlayingCards;
+import blackjack.domain.Nickname;
 import blackjack.dto.PlayerGameResult;
 
 public class Player extends Participant {
 
+    private static final double BLACKJACK_PAYOUT_RATE = 2.5;
+    private static final double WIN_PAYOUT_RATE = 2.0;
     private boolean stopDrawing;
+    private final Amount amount;
 
-    public Player(String nickname, Role role) {
-        super(nickname, PlayingCards.createEmptyHands(), role);
+    public Player(Nickname nickname, Role role, Amount amount) {
+        super(nickname, Hand.createEmptyHands(), role);
         stopDrawing = false;
+        this.amount = amount;
     }
 
     public void stop() {
@@ -21,20 +27,41 @@ public class Player extends Participant {
         if (stopDrawing) {
             return false;
         }
-        return hand.isDrawable();
+        return !hand.isBusted();
     }
 
     public PlayerGameResult determinePlayerResult(Dealer dealer) {
         MatchResult matchResult = determineGameResult(dealer);
-        return new PlayerGameResult(nickname, matchResult);
+        double payout = determinePayout(matchResult);
+        long profit = Math.round(payout - amount.getValue());
+        return PlayerGameResult.of(nickname.getValue(), matchResult, profit);
     }
 
-    public MatchResult determineGameResult(Dealer dealer) {
+    private double determinePayout(MatchResult matchResult) {
+        if (matchResult == MatchResult.LOSE) {
+            return 0;
+        }
+        if (matchResult == MatchResult.TIE) {
+            return amount.getValue();
+        }
+        if (hand.isBlackJack()) {
+            return amount.getValue() * BLACKJACK_PAYOUT_RATE;
+        }
+        return amount.getValue() * WIN_PAYOUT_RATE;
+    }
+
+    private MatchResult determineGameResult(Dealer dealer) {
         if (hand.isBusted()) {
             return MatchResult.LOSE;
         }
         if (dealer.isBusted()) {
             return MatchResult.WIN;
+        }
+        if (hand.isBlackJack() && !dealer.isBlackJack()) {
+            return MatchResult.WIN;
+        }
+        if (!hand.isBlackJack() && dealer.isBlackJack()) {
+            return MatchResult.LOSE;
         }
         return compareScore(dealer.getTotalScore(), getTotalScore());
     }

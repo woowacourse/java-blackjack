@@ -26,7 +26,7 @@ public class OutputView {
 
     public void printInitialResult(List<ParticipantResult> participantsInitialResult) {
         for (ParticipantResult result : participantsInitialResult) {
-            printLine(result.toString());
+            printLine(makeParticipantCardResult(result));
         }
         printNewLine();
     }
@@ -35,36 +35,15 @@ public class OutputView {
         printLine(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", nickname));
     }
 
-    public void printPlayerStatus(String drawablePlayerNickname, String statusByDisplayName) {
-        printLine(String.format("%s카드: %s", drawablePlayerNickname, statusByDisplayName));
-    }
-
-    public void printWinner(TotalGameResult gameResult) {
-        printNewLine();
-        printLine("## 최종 승패");
-        printDealerGameResult(gameResult.dealerGameResult());
-        printPlayersGameResult(gameResult.playerGameResult());
-    }
-
-    private void printPlayersGameResult(List<PlayerGameResult> playerGameResults) {
-        for (PlayerGameResult playerGameResult : playerGameResults) {
-            printLine(
-                String.format("%s: %s",
-                    playerGameResult.nickname(),
-                    playerGameResult.matchResult().getMessage()
-                )
-            );
-        }
-    }
-
-    private void printDealerGameResult(DealerGameResult dealerGameResult) {
-        printLine(String.format("딜러: %d승 %d패", dealerGameResult.dealerWin(), dealerGameResult.dealerLose()));
+    public void printPlayerStatus(String drawablePlayerNickname, List<String> cardDisplayNames) {
+        String joinedDisplayName = joinCardDisplayName(cardDisplayNames);
+        printLine(String.format("%s카드: %s", drawablePlayerNickname, joinedDisplayName));
     }
 
     public void printGameResult(List<ParticipantResult> participantResult) {
         printNewLine();
         for (ParticipantResult result : participantResult) {
-            printLine(result.toFullString());
+            printLine(makeParticipantGameResult(result));
         }
     }
 
@@ -75,5 +54,45 @@ public class OutputView {
 
     private void printNewLine() {
         System.out.println();
+    }
+
+    public void askBetAmount(String playerName) {
+        printNewLine();
+        printLine(String.format("%s의 배팅 금액은?", playerName));
+    }
+
+    public void printTotalProfitResult(TotalGameResult totalGameResult) {
+        printNewLine();
+        printLine("## 최종 수익");
+        printDealerProfitResult(totalGameResult.dealerGameResult());
+        printPlayersProfitResult(totalGameResult.playerGameResult());
+    }
+
+    private void printPlayersProfitResult(List<PlayerGameResult> playerGameResults) {
+        for (PlayerGameResult playerGameResult : playerGameResults) {
+            printLine(String.format("%s: %s", playerGameResult.nickname(), playerGameResult.profit()));
+        }
+    }
+
+    private void printDealerProfitResult(DealerGameResult dealerGameResult) {
+        printLine(String.format("딜러: %s", dealerGameResult.profit()));
+    }
+
+    private String joinCardDisplayName(List<String> cardDisplayNames) {
+        return String.join(", ", cardDisplayNames);
+    }
+
+    private String makeParticipantGameResult(ParticipantResult participantResult) {
+        String joinedDisplayName = joinCardDisplayName(participantResult.cardStatus());
+        return String.format("%s카드: %s - 결과: %d",
+            participantResult.nickname(),
+            joinedDisplayName,
+            participantResult.totalScore()
+        );
+    }
+
+    private String makeParticipantCardResult(ParticipantResult participantResult) {
+        String joinedDisplayName = joinCardDisplayName(participantResult.cardStatus());
+        return String.format("%s카드: %s", participantResult.nickname(), joinedDisplayName);
     }
 }

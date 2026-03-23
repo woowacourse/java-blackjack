@@ -1,113 +1,135 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.dto.PlayerGameResult;
+import blackjack.fixture.PlayersFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
 
+    @Test
     @DisplayName("이름 목록으로 플레이어 일급 컬렉션을 생성한다.")
-    @Test
     void createPlayers() {
-        Players players = Players.makePlayers(List.of("pobi", "jason"));
+        // given
+        Players players = PlayersFixture.createValidTwoPlayers();
 
+        // then
         assertThat(players.getAllPlayers()).hasSize(2);
-        assertThat(players.getAllPlayerNickname()).containsExactly("pobi", "jason");
+        assertThat(players.getAllPlayerNickname()).containsExactly("boye", "sumin");
     }
 
-    @DisplayName("이름이 공백일 경우 예외가 발생한다.")
     @Test
-    void validateEmptyName() {
-        assertThatThrownBy(() -> Players.makePlayers(List.of("pobi", "")))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("이름은 공백이 될 수 없습니다.");
+    @DisplayName("첫 번째 드로우 가능 플레이어를 찾는다.")
+    void getFirstDrawablePlayer() {
+        // given
+        Players players = PlayersFixture.createValidTwoPlayers();
+
+        // when & then
+        assertThat(players.hasDrawablePlayer()).isTrue();
+        assertThat(players.getDrawablePlayerNickname()).isEqualTo("boye");
     }
 
-    @DisplayName("카드를 받을 수 있는 플레이어를 순서대로 찾는다.")
     @Test
-    void findDrawablePlayer() {
-        Players players = Players.makePlayers(List.of("pobi", "jason"));
+    @DisplayName("플레이어가 드로우를 멈추면 다음 플레이어가 드로우 대상이 된다.")
+    void moveToNextDrawablePlayerWhenCurrentPlayerStops() {
+        // given
+        Players players = PlayersFixture.createValidTwoPlayers();
 
-        assertThat(players.findDrawablePlayerNickname()).isEqualTo("pobi");
-
+        // when
         players.dontWantDraw();
-        assertThat(players.findDrawablePlayerNickname()).isEqualTo("jason");
 
-        players.dontWantDraw();
-        assertThat(players.findDrawablePlayerNickname()).isNull();
+        // then
+        assertThat(players.hasDrawablePlayer()).isTrue();
+        assertThat(players.getDrawablePlayerNickname()).isEqualTo("sumin");
     }
 
+    @Test
     @DisplayName("버스트된 플레이어는 건너뛰고 다음 드로우 가능 플레이어를 찾는다.")
-    @Test
     void skipBustedPlayerWhenFindingDrawable() {
-        Players players = Players.makePlayers(List.of("pobi", "jason"));
-        PlayingCards bustedCards = PlayingCards.from(List.of(
+        // given
+        Nickname boyeNickname = Nickname.from("boye");
+        Nickname suminNickname = Nickname.from("sumin");
+        Amount boyeAmount = Amount.from("1000");
+        Amount suminAmount = Amount.from("20000");
+        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, boyeAmount)
+            .addPlayer(suminNickname, suminAmount);
+        Hand bustedCards = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.TEN, Suit.HEART),
             new Card(Rank.TWO, Suit.DIAMOND)
         ));
 
-        players.addCardToAvailablePlayer(bustedCards);
+        // when
+        players.hitPlayer(bustedCards.getCards());
 
-        assertThat(players.findDrawablePlayerNickname()).isEqualTo("jason");
+        // then
+        assertThat(players.getDrawablePlayerNickname()).isEqualTo("sumin");
     }
 
-    @DisplayName("모든 플레이어가 카드를 받을 수 없는 상태면 null을 반환한다.")
     @Test
-    void findDrawablePlayerReturnsNullWhenAllDone() {
-        Players players = Players.makePlayers(List.of("pobi"));
+    @DisplayName("모든 플레이어가 카드를 받을 수 없는 상태면 drawable player가 없다.")
+    void hasNoDrawablePlayerWhenAllDone() {
+        // given
+        Players players = PlayersFixture.createValidSinglePlayer();
 
+        // when
         players.dontWantDraw();
 
-        assertThat(players.findDrawablePlayerNickname()).isNull();
+        // then
+        assertThat(players.hasDrawablePlayer()).isFalse();
     }
 
-    @DisplayName("플레이어가 딜러보다 점수가 높으면 승리로 기록되어야 한다.")
     @Test
+    @DisplayName("플레이어가 딜러보다 점수가 높으면 승리로 기록되어야 한다.")
     void getPlayerWinningResultsPlayerWins() {
-        Players players = Players.makePlayers(List.of("pobi"));
-        PlayingCards playerCards = PlayingCards.from(List.of(
+        // given
+        Players players = PlayersFixture.createValidSinglePlayer();
+        Hand playerCards = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.TEN, Suit.HEART)
         ));
-        players.addCardToAvailablePlayer(playerCards);
         Dealer dealer = Dealer.from();
-        PlayingCards dealerCards = PlayingCards.from(List.of(
+        Hand dealerCards = Hand.from(List.of(
             new Card(Rank.TEN, Suit.DIAMOND),
             new Card(Rank.EIGHT, Suit.HEART)
         ));
-        dealer.receiveCard(dealerCards);
+        players.hitPlayer(playerCards.getCards());
+        dealer.receiveCard(dealerCards.getCards());
 
+        // when
         List<PlayerGameResult> winningResultsWithDealer = players.getWinningResultsWithDealer(dealer);
         PlayerGameResult result = winningResultsWithDealer.getFirst();
 
+        // then
         assertThat(result.matchResult()).isEqualTo(MatchResult.WIN);
     }
 
-    @DisplayName("플레이어가 딜러보다 점수가 낮으면 패배로 기록되어야 한다.")
     @Test
+    @DisplayName("플레이어가 딜러보다 점수가 낮으면 패배로 기록되어야 한다.")
     void getPlayerWinningResultsPlayerLoses() {
-        Players players = Players.makePlayers(List.of("pobi"));
-        PlayingCards playerCards = PlayingCards.from(List.of(
+        // given
+        Players players = PlayersFixture.createValidSinglePlayer();
+        Hand playerCards = Hand.from(List.of(
             new Card(Rank.TEN, Suit.DIAMOND),
             new Card(Rank.EIGHT, Suit.HEART)
         ));
-        players.addCardToAvailablePlayer(playerCards);
         Dealer dealer = Dealer.from();
-        PlayingCards dealerCards = PlayingCards.from(List.of(
+        Hand dealerCards = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.TEN, Suit.HEART)
         ));
-        dealer.receiveCard(dealerCards);
+        players.hitPlayer(playerCards.getCards());
+        dealer.receiveCard(dealerCards.getCards());
 
+        // when
         List<PlayerGameResult> winningResultsWithDealer = players.getWinningResultsWithDealer(dealer);
         PlayerGameResult result = winningResultsWithDealer.getFirst();
 
+        // then
         assertThat(result.matchResult()).isEqualTo(MatchResult.LOSE);
     }
 }

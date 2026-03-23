@@ -1,27 +1,27 @@
 package blackjack.dto;
 
 import blackjack.domain.participant.Participant;
+import java.util.List;
 
 public record ParticipantResult(
     String nickname,
-    String cardStatus,
+    List<String> cardStatus,
     int totalScore
 ) {
 
-    public ParticipantResult(Participant participant) {
-        this(
+    public static ParticipantResult from(Participant participant) {
+        return new ParticipantResult(
             participant.getNickname(),
             participant.getCardStatus(),
             participant.getTotalScore()
         );
     }
 
-    @Override
-    public String toString() {
-        return String.format("%s카드: %s", nickname, cardStatus);
-    }
-
-    public String toFullString() {
-        return String.format("%s카드: %s - 결과: %d", nickname, cardStatus, totalScore);
+    public static ParticipantResult of(String nickname, List<String> cardStatus, int totalScore) {
+        return new ParticipantResult(
+            nickname,
+            cardStatus,
+            totalScore
+        );
     }
 }

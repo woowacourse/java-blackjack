@@ -3,7 +3,7 @@ package blackjack.domain;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.dto.DealerGameResult;
-import blackjack.dto.DrawResult;
+import blackjack.dto.DrawOutcome;
 import blackjack.dto.ParticipantResult;
 import blackjack.dto.PlayerGameResult;
 import blackjack.dto.TotalGameResult;
@@ -20,11 +20,11 @@ public class Participants {
         this.dealer = dealer;
     }
 
-    public PlayingCards distributeCards(PlayingCards deck) {
+    public Deck dealInitialCards(Deck deck) {
         List<Participant> participants = getParticipants();
         for (Participant participant : participants) {
-            DrawResult drawResult = participant.distributeCards(deck);
-            deck = drawResult.drewDeck();
+            DrawOutcome drawOutcome = participant.dealInitialCards(deck);
+            deck = drawOutcome.drewDeck();
         }
         return deck;
     }
@@ -49,24 +49,28 @@ public class Participants {
         List<Participant> participants = getParticipants();
         List<ParticipantResult> participantsTotalGameResult = new ArrayList<>();
         for (Participant participant : participants) {
-            participantsTotalGameResult.add(new ParticipantResult(participant));
+            participantsTotalGameResult.add(ParticipantResult.from(participant));
         }
         return participantsTotalGameResult;
     }
 
 
-    public String findDrawablePlayer() {
-        return players.findDrawablePlayerNickname();
+    public boolean hasDrawablePlayer() {
+        return players.hasDrawablePlayer();
     }
 
-    public DrawResult addCardToAvailablePlayer(PlayingCards deck) {
-        DrawResult drawResult = deck.draw();
-        PlayingCards drawCard = drawResult.drewCard();
-        PlayingCards drawDeck = drawResult.drewDeck();
+    public String getDrawablePlayerNickname() {
+        return players.getDrawablePlayerNickname();
+    }
 
-        PlayingCards playerHand = players.addCardToAvailablePlayer(drawCard);
+    public DrawOutcome hitPlayer(Deck deck) {
+        DrawOutcome drawOutcome = deck.draw();
+        List<Card> drawCard = drawOutcome.drewCard().getCards();
+        List<Card> drawDeck = drawOutcome.drewDeck().getCards();
 
-        return new DrawResult(playerHand, drawDeck);
+        Hand playerHand = players.hitPlayer(drawCard);
+
+        return DrawOutcome.of(playerHand.getCards(), drawDeck);
     }
 
     public void dontWantDraw() {
@@ -77,11 +81,11 @@ public class Participants {
         return dealer.isDealerDraw();
     }
 
-    public PlayingCards dealerDraw(PlayingCards deck) {
-        DrawResult drawResult = deck.draw();
-        PlayingCards drawCard = drawResult.drewCard();
-        dealer.receiveCard(drawCard);
-        return drawResult.drewDeck();
+    public Deck dealerDraw(Deck deck) {
+        DrawOutcome drawOutcome = deck.draw();
+        Hand drawCard = drawOutcome.drewCard();
+        dealer.receiveCard(drawCard.getCards());
+        return drawOutcome.drewDeck();
     }
 
     public List<String> getAllPlayerNickname() {
@@ -90,7 +94,7 @@ public class Participants {
 
     public TotalGameResult getWinningResult() {
         List<PlayerGameResult> winningResultsWithDealer = players.getWinningResultsWithDealer(dealer);
-        DealerGameResult dealerWinningResult = dealer.getDealerWinningResult(winningResultsWithDealer);
-        return new TotalGameResult(dealerWinningResult, winningResultsWithDealer);
+        DealerGameResult dealerWinningResult = dealer.calculateDealerProfitResult(winningResultsWithDealer);
+        return TotalGameResult.of(dealerWinningResult, winningResultsWithDealer);
     }
 }

@@ -1,17 +1,21 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.PlayingCards;
-import blackjack.dto.DrawResult;
+import blackjack.domain.Card;
+import blackjack.domain.Deck;
+import blackjack.domain.Hand;
+import blackjack.domain.Nickname;
+import blackjack.dto.DrawOutcome;
+import java.util.List;
 
 public abstract class Participant {
 
     private static final int FIRST_DRAW_COUNT = 2;
 
-    protected String nickname;
-    protected PlayingCards hand;
+    protected Nickname nickname;
+    protected Hand hand;
     protected Role role;
 
-    public Participant(String nickname, PlayingCards hand, Role role) {
+    public Participant(Nickname nickname, Hand hand, Role role) {
         this.nickname = nickname;
         this.hand = hand;
         this.role = role;
@@ -21,11 +25,7 @@ public abstract class Participant {
         return role == Role.DEALER;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public String getCardStatus() {
+    public List<String> getCardStatus() {
         return hand.getStatusByDisplayName();
     }
 
@@ -33,14 +33,22 @@ public abstract class Participant {
         return hand.calculateTotalScore();
     }
 
-    public DrawResult distributeCards(PlayingCards deck) {
-        DrawResult drawResult = deck.draw(FIRST_DRAW_COUNT);
-        receiveCard(drawResult.drewCard());
-        return drawResult;
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
     }
 
-    public PlayingCards receiveCard(PlayingCards drewCards) {
-        hand = hand.add(drewCards);
+    public DrawOutcome dealInitialCards(Deck deck) {
+        DrawOutcome drawOutcome = deck.draw(FIRST_DRAW_COUNT);
+        receiveCard(drawOutcome.drewCard().getCards());
+        return drawOutcome;
+    }
+
+    public Hand receiveCard(List<Card> drewCards) {
+        hand = hand.receive(drewCards);
         return hand;
+    }
+
+    public String getNickname() {
+        return nickname.getValue();
     }
 }

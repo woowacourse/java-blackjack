@@ -20,19 +20,14 @@ public class Players {
         return new Players(players);
     }
 
-    public static Players makePlayers(List<String> names) {
-        List<Player> result = new ArrayList<>();
-        for (String name : names) {
-            validate(name);
-            result.add(new Player(name, Role.PLAYER));
-        }
-        return from(result);
+    public static Players makeEmptyPlayers() {
+        return from(List.of());
     }
 
-    private static void validate(String name) {
-        if (name.isEmpty()) {
-            throw new IllegalArgumentException("이름은 공백이 될 수 없습니다.");
-        }
+    public Players addPlayer(Nickname nickname, Amount amount) {
+        List<Player> nowPlayers = new ArrayList<>(getPlayers());
+        nowPlayers.add(new Player(nickname, Role.PLAYER, amount));
+        return Players.from(nowPlayers);
     }
 
     public List<String> getAllPlayerNickname() {
@@ -47,28 +42,37 @@ public class Players {
         return List.copyOf(players);
     }
 
-    public String findDrawablePlayerNickname() {
-        Player player = findDrawablePlayer();
-        if (player == null) {
-            return null;
-        }
-        return player.getNickname();
+    public boolean hasDrawablePlayer() {
+        return players.stream()
+            .anyMatch(Player::isDrawable);
     }
 
-    public PlayingCards addCardToAvailablePlayer(PlayingCards card) throws IllegalArgumentException {
-        Player player = findDrawablePlayer();
-        return player.receiveCard(card);
+    public String getDrawablePlayerNickname() {
+        return getDrawablePlayer().getNickname();
     }
 
-    public Player findDrawablePlayer() {
+    public Hand hitPlayer(List<Card> cards) throws IllegalArgumentException {
+        Player player = getDrawablePlayer();
+        return player.receiveCard(cards);
+    }
+
+    private Player findDrawablePlayer() {
         return players.stream()
             .filter(Player::isDrawable)
             .findFirst()
             .orElse(null);
     }
 
-    public void dontWantDraw() {
+    private Player getDrawablePlayer() {
         Player player = findDrawablePlayer();
+        if (player == null) {
+            throw new IllegalStateException("카드를 더 받을 수 있는 플레이어가 없습니다.");
+        }
+        return player;
+    }
+
+    public void dontWantDraw() {
+        Player player = getDrawablePlayer();
         player.stop();
     }
 
@@ -84,8 +88,12 @@ public class Players {
     public List<ParticipantResult> getInitialResult() {
         List<ParticipantResult> initialResults = new ArrayList<>();
         for (Player player : players) {
-            initialResults.add(new ParticipantResult(player));
+            initialResults.add(ParticipantResult.from(player));
         }
         return initialResults;
+    }
+
+    private List<Player> getPlayers() {
+        return List.copyOf(players);
     }
 }

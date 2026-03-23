@@ -7,9 +7,7 @@ public record PlayerNicknamesResult(
     List<String> nicknames
 ) {
 
-    public PlayerNicknamesResult(Participants participants) {
-        this(
-            participants.getAllPlayerNickname()
-        );
+    public static PlayerNicknamesResult from(Participants participants) {
+        return new PlayerNicknamesResult(participants.getAllPlayerNickname());
     }
 }
