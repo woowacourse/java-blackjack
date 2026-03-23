@@ -5,7 +5,6 @@ import static domain.Constant.DELIMITER;
 import static domain.participant.Dealer.DEALER_HIT_STAND_BOUNDARY;
 
 import dto.DealerDto;
-import dto.ParticipantDto;
 import dto.PlayerDto;
 import dto.TotalProfitResponse;
 import java.util.List;
@@ -40,13 +39,12 @@ public class ResultView {
         System.out.println("딜러는 " + (DEALER_HIT_STAND_BOUNDARY + 1) + "이상이라 카드를 받지 않았습니다.");
     }
 
-
     public void printCardsWithResult(List<PlayerDto> players, DealerDto dealer) {
         printEmptyLine();
-        printCardWithResult(dealer);
+        printDealerCardWithResult(dealer);
 
         for (PlayerDto player : players) {
-            printCardWithResult(player);
+            printPlayerCardWithResult(player);
         }
     }
 
@@ -75,10 +73,14 @@ public class ResultView {
         }
     }
 
-    private void printCardWithResult(ParticipantDto participant) {
-        String cardNames = participant.getCards().stream()
-                .collect(Collectors.joining(DELIMITER));
-        System.out.println(participant.getName() + "카드: " + cardNames + " - 결과: " + participant.getTotalSum());
+    private void printDealerCardWithResult(DealerDto dealer) {
+        String cardNames = String.join(DELIMITER, dealer.getCards());
+        System.out.printf("%s 카드: %s - 결과: %d%n", dealer.getName(), cardNames, dealer.getTotalSum());
+    }
+
+    private void printPlayerCardWithResult(PlayerDto player) {
+        String cardNames = String.join(DELIMITER, player.getCards());
+        System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), cardNames, player.getTotalSum());
     }
 
     private void printEmptyLine() {
