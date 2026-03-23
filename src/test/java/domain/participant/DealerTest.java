@@ -23,8 +23,8 @@ class DealerTest {
                 Dealer dealer = new Dealer();
                 Card firstCard = new Card(Rank.TEN, Suit.HEART);
                 Card secondCard = new Card(Rank.ACE, Suit.SPADE);
-                dealer.addCard(firstCard);
-                dealer.addCard(secondCard);
+                dealer.drawCard(firstCard);
+                dealer.drawCard(secondCard);
 
                 // when
                 var actual = dealer.getOnlyFirstHand();
@@ -33,6 +33,60 @@ class DealerTest {
                 assertThat(actual)
                     .hasSize(1)
                     .containsExactly(firstCard);
+            }
+        }
+    }
+
+    @Nested
+    class ShouldHitTest {
+
+        @Nested
+        class Success {
+
+            @Test
+            void 딜러_점수가_16_이하면_카드를_더_뽑는다() {
+
+                // given
+                Dealer dealer = new Dealer();
+                dealer.drawCard(new Card(Rank.TEN, Suit.HEART));
+                dealer.drawCard(new Card(Rank.SIX, Suit.SPADE));
+
+                // when
+                boolean actual = dealer.shouldHit();
+
+                // then
+                assertThat(actual).isTrue();
+            }
+
+            @Test
+            void 딜러_점수가_17이면_카드를_더_뽑지_않는다() {
+
+                // given
+                Dealer dealer = new Dealer();
+                dealer.drawCard(new Card(Rank.TEN, Suit.HEART));
+                dealer.drawCard(new Card(Rank.SEVEN, Suit.SPADE));
+
+                // when
+                boolean actual = dealer.shouldHit();
+
+                // then
+                assertThat(actual).isFalse();
+            }
+
+            @Test
+            void 딜러_점수가_21_초과면_카드를_더_뽑지_않는다() {
+
+                // given
+                Dealer dealer = new Dealer();
+                dealer.drawCard(new Card(Rank.TEN, Suit.HEART));
+                dealer.drawCard(new Card(Rank.NINE, Suit.SPADE));
+                dealer.drawCard(new Card(Rank.THREE, Suit.CLOVER));
+
+                // when
+                boolean actual = dealer.shouldHit();
+
+                // then
+                assertThat(actual).isFalse();
             }
         }
     }

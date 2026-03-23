@@ -16,29 +16,25 @@ public class CardMachine {
 
     public CardMachine() {
         List<Card> decks = new ArrayList<>();
-        setInitialDecks(decks);
+        makeShoe(decks);
         Collections.shuffle(decks);
         this.decks = new ArrayDeque<>(decks);
     }
 
-    private void setInitialDecks(List<Card> decks) {
-        setRanksAndSuits(decks);
-    }
-
-    private void setRanksAndSuits(List<Card> decks) {
-        for (Rank rank : Rank.values()) {
-            setSuits(decks, rank);
-        }
-    }
-
-    private void setSuits(List<Card> decks, Rank rank) {
-        for (Suit suit : Suit.values()) {
-            addRepeatSix(decks, rank, suit);
-        }
-    }
-
-    private void addRepeatSix(List<Card> decks, Rank rank, Suit suit) {
+    private void makeShoe(List<Card> decks) {
         for (int i = 0; i < DECK_COUNT; i++) {
+            makeSingleDeck(decks);
+        }
+    }
+
+    private void makeSingleDeck(List<Card> decks) {
+        for (Rank rank : Rank.values()) {
+            makeCardsForRank(decks, rank);
+        }
+    }
+
+    private void makeCardsForRank(List<Card> decks, Rank rank) {
+        for (Suit suit : Suit.values()) {
             decks.add(new Card(rank, suit));
         }
     }
@@ -47,7 +43,6 @@ public class CardMachine {
         if (isDrawFinished()) {
             throw new BlackjackException(NO_EXIST_CARDS);
         }
-
         return this.decks.pollFirst();
     }
 

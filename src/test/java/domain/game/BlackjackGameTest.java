@@ -1,0 +1,403 @@
+package domain.game;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import domain.card.Card;
+import domain.card.CardMachine;
+import domain.card.Rank;
+import domain.card.Suit;
+import domain.game.result.BlackjackStatistics;
+import domain.participant.BetAmount;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.PlayerName;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.List;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+
+class BlackjackGameTest {
+
+    @Nested
+    class DrawInitialCardsTest {
+
+        @Test
+        void 딜러와_모든_플레이어에게_초기_카드를_분배한다() {
+            // given
+            BlackjackGame blackjackGame = fixedDeckBlackjackGame(List.of(
+                    card(Rank.TEN, Suit.HEART), card(Rank.SIX, Suit.SPADE),
+                    card(Rank.ACE, Suit.CLOVER), card(Rank.K, Suit.DIAMOND),
+                    card(Rank.NINE, Suit.HEART), card(Rank.SEVEN, Suit.CLOVER)
+            ));
+
+            // when
+            blackjackGame.drawInitialCards();
+
+            // then
+            Dealer dealer = blackjackGame.getDealer();
+            List<Player> players = blackjackGame.getPlayers();
+
+            assertThat(cardStrings(dealer.getHand())).containsExactly("10하트", "6스페이드");
+            assertThat(cardStrings(players.get(0).getHand())).containsExactly("A클로버", "K다이아몬드");
+            assertThat(cardStrings(players.get(1).getHand())).containsExactly("9하트", "7클로버");
+        }
+    }
+
+    @Nested
+    class DrawDealerCardTest {
+
+        @Test
+        void 딜러_점수가_16_이하면_카드를_한장_추가한다() {
+            // given
+            BlackjackGame blackjackGame = fixedDeckBlackjackGame(List.of(
+                    card(Rank.TEN, Suit.HEART), card(Rank.SIX, Suit.SPADE),
+                    card(Rank.TWO, Suit.CLOVER), card(Rank.THREE, Suit.DIAMOND),
+                    card(Rank.FOUR, Suit.HEART), card(Rank.FIVE, Suit.SPADE),
+                    card(Rank.NINE, Suit.CLOVER)
+            ));
+            blackjackGame.drawInitialCards();
+
+            // when
+            boolean actual = blackjackGame.drawDealerCard();
+
+            // then
+            assertThat(actual).isTrue();
+            assertThat(cardStrings(blackjackGame.getDealer().getHand())).containsExactly("10하트", "6스페이드", "9클로버");
+        }
+
+        @Test
+        void 딜러_점수가_17_이상이면_카드를_추가하지_않는다() {
+            // given
+            BlackjackGame blackjackGame = fixedDeckBlackjackGame(List.of(
+                    card(Rank.TEN, Suit.HEART), card(Rank.SEVEN, Suit.SPADE),
+                    card(Rank.TWO, Suit.CLOVER), card(Rank.THREE, Suit.DIAMOND),
+                    card(Rank.FOUR, Suit.HEART), card(Rank.FIVE, Suit.SPADE),
+                    card(Rank.NINE, Suit.CLOVER)
+            ));
+            blackjackGame.drawInitialCards();
+
+            // when
+            boolean actual = blackjackGame.drawDealerCard();
+
+            // then
+            assertThat(actual).isFalse();
+            assertThat(cardStrings(blackjackGame.getDealer().getHand())).containsExactly("10하트", "7스페이드");
+        }
+    }
+
+    @Nested
+    class UpdatePlayerTest {
+
+        @Test
+        void 플레이어에게_카드를_추가하고_업데이트된_플레이어를_반환한다() {
+            // given
+            BlackjackGame blackjackGame = fixedDeckBlackjackGame(List.of(
+                    card(Rank.TEN, Suit.HEART), card(Rank.SIX, Suit.SPADE),
+                    card(Rank.TWO, Suit.CLOVER), card(Rank.THREE, Suit.DIAMOND),
+                    card(Rank.FOUR, Suit.HEART), card(Rank.FIVE, Suit.SPADE),
+                    card(Rank.ACE, Suit.CLOVER)
+            ));
+            blackjackGame.drawInitialCards();
+
+            // when
+            Player actual = blackjackGame.hitPlayer("jacob");
+
+            // then
+            assertThat(actual.getName()).isEqualTo("jacob");
+            assertThat(cardStrings(actual.getHand())).containsExactly("2클로버", "3다이아몬드", "A클로버");
+            assertThat(actual.calculateScore()).isEqualTo(16);
+        }
+    }
+
+    @Nested
+    class DealerVisibleHandTest {
+
+        @Test
+        void 딜러의_초기_공개_카드를_확인한다() {
+            // given
+            BlackjackGame blackjackGame = fixedDeckBlackjackGame(List.of(
+                    card(Rank.TEN, Suit.HEART), card(Rank.SIX, Suit.SPADE),
+                    card(Rank.ACE, Suit.CLOVER), card(Rank.K, Suit.DIAMOND),
+                    card(Rank.NINE, Suit.HEART), card(Rank.SEVEN, Suit.CLOVER)
+            ));
+            blackjackGame.drawInitialCards();
+
+            // when
+            Dealer dealer = blackjackGame.getDealer();
+
+            // then
+            assertThat(dealer.getName()).isEqualTo("딜러");
+            assertThat(cardStrings(dealer.getOnlyFirstHand())).containsExactly("10하트");
+            assertThat(dealer.calculateScore()).isEqualTo(16);
+        }
+    }
+
+    @Nested
+    class PlayerAndDealerHandsTest {
+
+        @Test
+        void 플레이어가_카드를_추가로_받으면_최종_손패에_반영된다() {
+            // given
+            BlackjackGame blackjackGame = fixedDeckBlackjackGame(List.of(
+                    card(Rank.TEN, Suit.HEART), card(Rank.SIX, Suit.SPADE),
+                    card(Rank.TEN, Suit.CLOVER), card(Rank.NINE, Suit.DIAMOND),
+                    card(Rank.FOUR, Suit.HEART), card(Rank.FIVE, Suit.SPADE),
+                    card(Rank.ACE, Suit.CLOVER)
+            ));
+            blackjackGame.drawInitialCards();
+            blackjackGame.hitPlayer("jacob");
+
+            // when
+            Dealer dealer = blackjackGame.getDealer();
+            Player jacob = playerByName(blackjackGame.getPlayers(), "jacob");
+            Player seoye = playerByName(blackjackGame.getPlayers(), "seoye");
+
+            // then
+            assertThat(cardStrings(dealer.getHand())).containsExactly("10하트", "6스페이드");
+            assertThat(cardStrings(jacob.getHand())).containsExactly("10클로버", "9다이아몬드", "A클로버");
+            assertThat(cardStrings(seoye.getHand())).containsExactly("4하트", "5스페이드");
+        }
+    }
+
+    @Nested
+    class CalculateStatisticsTest {
+
+        @Test
+        void 플레이어가_버스트면_패배한다() {
+            // given
+            BlackjackGame blackjackGame = fixedDeckBlackjackGame(List.of(
+                    card(Rank.TEN, Suit.HEART), card(Rank.SEVEN, Suit.SPADE),
+                    card(Rank.EIGHT, Suit.CLOVER), card(Rank.EIGHT, Suit.DIAMOND),
+                    card(Rank.TEN, Suit.CLOVER), card(Rank.EIGHT, Suit.DIAMOND),
+                    card(Rank.K, Suit.HEART)
+            ));
+            blackjackGame.drawInitialCards();
+            blackjackGame.hitPlayer("seoye");
+
+            // when
+            BlackjackStatistics actual = blackjackGame.calculateStatistics();
+
+            // then
+            assertThat(profitOf(actual, "jacob")).isEqualTo(-1000);
+            assertThat(profitOf(actual, "seoye")).isEqualTo(-1000);
+            assertThat(actual.dealerProfit()).isEqualTo(2000);
+        }
+
+        @Test
+        void 플레이어와_딜러가_모두_블랙잭이면_무승부다() {
+            // given
+            BlackjackGame blackjackGame = fixedDeckBlackjackGame(List.of(
+                    card(Rank.ACE, Suit.HEART), card(Rank.K, Suit.SPADE),
+                    card(Rank.ACE, Suit.CLOVER), card(Rank.Q, Suit.DIAMOND),
+                    card(Rank.TEN, Suit.CLOVER), card(Rank.NINE, Suit.DIAMOND)
+            ));
+            blackjackGame.drawInitialCards();
+
+            // when
+            BlackjackStatistics actual = blackjackGame.calculateStatistics();
+
+            // then
+            assertThat(profitOf(actual, "jacob")).isEqualTo(0);
+            assertThat(profitOf(actual, "seoye")).isEqualTo(-1000);
+            assertThat(actual.dealerProfit()).isEqualTo(1000);
+        }
+
+        @Test
+        void 플레이어만_블랙잭이면_배팅_금액의_1_5배를_번다() {
+            // given
+            BlackjackGame blackjackGame = fixedDeckBlackjackGame(List.of(
+                    card(Rank.TEN, Suit.HEART), card(Rank.NINE, Suit.SPADE),
+                    card(Rank.ACE, Suit.CLOVER), card(Rank.K, Suit.DIAMOND),
+                    card(Rank.EIGHT, Suit.HEART), card(Rank.SEVEN, Suit.CLOVER)
+            ));
+            blackjackGame.drawInitialCards();
+
+            // when
+            BlackjackStatistics actual = blackjackGame.calculateStatistics();
+
+            // then
+            assertThat(profitOf(actual, "jacob")).isEqualTo(1500);
+            assertThat(profitOf(actual, "seoye")).isEqualTo(-1000);
+            assertThat(actual.dealerProfit()).isEqualTo(-500);
+        }
+
+        @Test
+        void 딜러가_버스트면_살아있는_플레이어는_승리한다() {
+            // given
+            BlackjackGame blackjackGame = fixedDeckBlackjackGame(List.of(
+                    card(Rank.TEN, Suit.HEART), card(Rank.SIX, Suit.SPADE),
+                    card(Rank.TEN, Suit.CLOVER), card(Rank.SEVEN, Suit.DIAMOND),
+                    card(Rank.NINE, Suit.HEART), card(Rank.EIGHT, Suit.CLOVER),
+                    card(Rank.NINE, Suit.DIAMOND)
+            ));
+            blackjackGame.drawInitialCards();
+            blackjackGame.drawDealerCard();
+
+            // when
+            BlackjackStatistics actual = blackjackGame.calculateStatistics();
+
+            // then
+            assertThat(profitOf(actual, "jacob")).isEqualTo(1000);
+            assertThat(profitOf(actual, "seoye")).isEqualTo(1000);
+            assertThat(actual.dealerProfit()).isEqualTo(-2000);
+        }
+
+        @Test
+        void 플레이어_점수가_딜러보다_크면_승리한다() {
+            // given
+            BlackjackGame blackjackGame = fixedDeckBlackjackGame(List.of(
+                    card(Rank.TEN, Suit.HEART), card(Rank.EIGHT, Suit.SPADE),
+                    card(Rank.TEN, Suit.CLOVER), card(Rank.NINE, Suit.DIAMOND),
+                    card(Rank.NINE, Suit.HEART), card(Rank.SEVEN, Suit.CLOVER)
+            ));
+            blackjackGame.drawInitialCards();
+
+            // when
+            BlackjackStatistics actual = blackjackGame.calculateStatistics();
+
+            // then
+            assertThat(profitOf(actual, "jacob")).isEqualTo(1000);
+            assertThat(profitOf(actual, "seoye")).isEqualTo(-1000);
+            assertThat(actual.dealerProfit()).isEqualTo(0);
+        }
+
+        @Test
+        void 플레이어_점수가_딜러와_같으면_무승부다() {
+            // given
+            BlackjackGame blackjackGame = fixedDeckBlackjackGame(List.of(
+                    card(Rank.TEN, Suit.HEART), card(Rank.EIGHT, Suit.SPADE),
+                    card(Rank.NINE, Suit.CLOVER), card(Rank.NINE, Suit.DIAMOND),
+                    card(Rank.TEN, Suit.HEART), card(Rank.SEVEN, Suit.CLOVER)
+            ));
+            blackjackGame.drawInitialCards();
+
+            // when
+            BlackjackStatistics actual = blackjackGame.calculateStatistics();
+
+            // then
+            assertThat(profitOf(actual, "jacob")).isEqualTo(0);
+            assertThat(profitOf(actual, "seoye")).isEqualTo(-1000);
+            assertThat(actual.dealerProfit()).isEqualTo(1000);
+        }
+
+        @Test
+        void 플레이어_점수가_딜러보다_작으면_패배한다() {
+            // given
+            BlackjackGame blackjackGame = fixedDeckBlackjackGame(List.of(
+                    card(Rank.TEN, Suit.HEART), card(Rank.EIGHT, Suit.SPADE),
+                    card(Rank.NINE, Suit.CLOVER), card(Rank.EIGHT, Suit.DIAMOND),
+                    card(Rank.TEN, Suit.HEART), card(Rank.SEVEN, Suit.CLOVER)
+            ));
+            blackjackGame.drawInitialCards();
+
+            // when
+            BlackjackStatistics actual = blackjackGame.calculateStatistics();
+
+            // then
+            assertThat(profitOf(actual, "jacob")).isEqualTo(-1000);
+            assertThat(profitOf(actual, "seoye")).isEqualTo(-1000);
+            assertThat(actual.dealerProfit()).isEqualTo(2000);
+        }
+
+        @Test
+        void 플레이어가_블랙잭이고_딜러가_버스트여도_승리다() {
+            // given
+            BlackjackGame blackjackGame = fixedDeckBlackjackGame(List.of(
+                    card(Rank.TEN, Suit.HEART), card(Rank.SIX, Suit.SPADE),
+                    card(Rank.ACE, Suit.CLOVER), card(Rank.K, Suit.DIAMOND),
+                    card(Rank.NINE, Suit.HEART), card(Rank.EIGHT, Suit.CLOVER),
+                    card(Rank.NINE, Suit.DIAMOND)
+            ));
+            blackjackGame.drawInitialCards();
+            blackjackGame.drawDealerCard();
+
+            // when
+            BlackjackStatistics actual = blackjackGame.calculateStatistics();
+
+            // then
+            assertThat(profitOf(actual, "jacob")).isEqualTo(1000);
+            assertThat(profitOf(actual, "seoye")).isEqualTo(1000);
+            assertThat(actual.dealerProfit()).isEqualTo(-2000);
+        }
+    }
+
+    @Nested
+    class IsPlayerBustTest {
+
+        @Test
+        void 플레이어_버스트_여부를_반환한다() {
+            // given
+            BlackjackGame blackjackGame = fixedDeckBlackjackGame(List.of(
+                    card(Rank.TEN, Suit.HEART), card(Rank.SIX, Suit.SPADE),
+                    card(Rank.TEN, Suit.CLOVER), card(Rank.NINE, Suit.DIAMOND),
+                    card(Rank.FOUR, Suit.HEART), card(Rank.FIVE, Suit.SPADE),
+                    card(Rank.K, Suit.HEART)
+            ));
+            blackjackGame.drawInitialCards();
+            blackjackGame.hitPlayer("jacob");
+
+            // when
+            boolean actual = blackjackGame.isPlayerBust("jacob");
+
+            // then
+            assertThat(actual).isTrue();
+        }
+    }
+
+    private static int profitOf(BlackjackStatistics blackjackStatistics, String name) {
+        return blackjackStatistics.playerProfits().stream()
+                .filter(player -> player.name().equals(name))
+                .findFirst()
+                .orElseThrow()
+                .profit();
+    }
+
+    private static Player playerByName(List<Player> players, String name) {
+        return players.stream()
+                .filter(player -> player.getName().equals(name))
+                .findFirst()
+                .orElseThrow();
+    }
+
+    private static List<String> cardStrings(List<Card> cards) {
+        return cards.stream()
+                .map(card -> card.rank().getRank() + card.suit().getSuit())
+                .toList();
+    }
+
+    private static BlackjackGame fixedDeckBlackjackGame(List<Card> cards) {
+        return new BlackjackGame(
+                new FixedDeckCardMachine(cards),
+                new BlackjackJudge(),
+                playerNames(),
+                betAmounts("1000", "1000")
+        );
+    }
+
+    private static List<PlayerName> playerNames() {
+        return List.of(new PlayerName("jacob"), new PlayerName("seoye"));
+    }
+
+    private static List<BetAmount> betAmounts(String first, String second) {
+        return List.of(new BetAmount(first), new BetAmount(second));
+    }
+
+    private static Card card(Rank rank, Suit suit) {
+        return new Card(rank, suit);
+    }
+
+    private static class FixedDeckCardMachine extends CardMachine {
+
+        private final Deque<Card> cards;
+
+        private FixedDeckCardMachine(List<Card> cards) {
+            this.cards = new ArrayDeque<>(cards);
+        }
+
+        @Override
+        public Card drawCard() {
+            return cards.removeFirst();
+        }
+    }
+}

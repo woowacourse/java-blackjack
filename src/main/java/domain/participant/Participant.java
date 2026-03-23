@@ -3,8 +3,9 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.Hand;
 import java.util.List;
+import java.util.function.Supplier;
 
-public class Participant {
+public abstract class Participant {
 
     protected final Hand hand;
 
@@ -12,7 +13,12 @@ public class Participant {
         this.hand = new Hand();
     }
 
-    public void addCard(Card card) {
+    public void drawInitialCards(Supplier<Card> cardSupplier) {
+        drawCard(cardSupplier.get());
+        drawCard(cardSupplier.get());
+    }
+
+    public void drawCard(Card card) {
         hand.addCard(card);
     }
 
@@ -21,10 +27,16 @@ public class Participant {
     }
 
     public int calculateScore() {
-        return hand.calculateScore();
+        return hand.calculateTotalScore();
+    }
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
     }
 
     public List<Card> getHand() {
         return hand.getCard();
     }
+
+    public abstract String getName();
 }
