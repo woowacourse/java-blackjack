@@ -1,8 +1,10 @@
 package view;
 
+import exception.DuplicateNameException;
 import exception.EmptyInputException;
 import exception.InvalidBettingAmountFormatException;
 import exception.InvalidHitStandInputException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,8 +19,13 @@ public class InputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = readLine();
         validateHasInput(input);
-        String[] split = input.split(",");
-        return List.of(split);
+
+        List<String> names = parseNames(input);
+
+        validateEmptyList(names);
+        validateDuplicate(names);
+
+        return names;
     }
 
     public int readBetAmount(String name) {
@@ -40,9 +47,32 @@ public class InputView {
         return input;
     }
 
+    private List<String> parseNames(String input) {
+        return Arrays.stream(input.split(","))
+                .map(String::trim)
+                .filter(name -> !name.isEmpty())
+                .toList();
+    }
+
     private static void validateHasInput(String input) {
         if (input == null || input.isBlank()) {
             throw new EmptyInputException();
+        }
+    }
+    
+    private void validateEmptyList(List<String> names) {
+        if (names.isEmpty()) {
+            throw new EmptyInputException();    // 빈 값이 있는 경우에도 예외 반환되도록 수정
+        }
+    }
+    
+    private void validateDuplicate(List<String> names) {
+        long uniqueCount = names.stream()   //왜 long 이어야 하는가
+                .distinct()
+                .count();
+
+        if (uniqueCount != names.size()) {
+            throw new DuplicateNameException();
         }
     }
 
