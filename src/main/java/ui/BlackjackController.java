@@ -1,20 +1,13 @@
 package ui;
 
 import domain.BlackjackGame;
-import domain.card.Deck;
-import domain.dto.PlayerCreateInfo;
-import domain.dto.PlayerResult;
-import domain.dto.Profit;
-import domain.participant.BetMoney;
-import domain.participant.Dealer;
+import domain.dto.PlayerCreateDto;
+import domain.dto.TotalProfit;
 import domain.participant.Player;
-import domain.participant.Players;
 import java.util.List;
+import ui.dto.GameResultDto;
 import ui.dto.ParticipantCardsDto;
-import ui.dto.ParticipantResultDto;
-import ui.dto.PlayerCreateDto;
 import ui.dto.PlayerDto;
-import ui.dto.ProfitsDto;
 import ui.view.InputView;
 import ui.view.ResultView;
 
@@ -28,69 +21,49 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<PlayerCreateInfo> playerInfos = readPlayerInfo();
+        List<PlayerCreateDto> playerInfos = readPlayerInfo();
 
         BlackjackGame blackjackGame = BlackjackGame.createNewGame(playerInfos);
 
-        Players players = blackjackGame.getPlayers();
-        Dealer dealer = blackjackGame.getDealer();
-        Deck deck = blackjackGame.getDeck();
+        resultView.printParticipantsCards(
+                ParticipantCardsDto.from(blackjackGame.getPlayers(), blackjackGame.getDealer()));
 
-        resultView.printParticipantsCards(ParticipantCardsDto.from(players, dealer));
+        playerHitStand(blackjackGame);
+        dealerHitStand(blackjackGame);
 
-        hitStandPlayers(players, deck);
-        hitStandDealer(dealer, deck);
+        TotalProfit participantsProfits = blackjackGame.getParticipantsProfits();
 
-        List<PlayerResult> playerResults = blackjackGame.collectPlayerResults();
+        GameResultDto gameResultDto = GameResultDto.toDto(blackjackGame.getDealer(),
+                participantsProfits.playerProfits(),
+                participantsProfits.dealerProfit());
 
-        List<Profit> profits = blackjackGame.calculatePlayerProfits(playerResults);
-
-        BetMoney dealerProfit = blackjackGame.calculateDealerResult(profits);
-
-        resultView.printCardsWithResult(ParticipantResultDto.toDto(players, dealer));
-        resultView.printProfits(ProfitsDto.toDto(profits, dealerProfit));
+        resultView.printGameResult(gameResultDto);
     }
 
-    private List<PlayerCreateInfo> readPlayerInfo() {
+    private List<PlayerCreateDto> readPlayerInfo() {
         return inputView.readPlayersInfo().stream()
-                .map(PlayerCreateDto::toDomain)
+                .map(ui.dto.PlayerCreateDto::toDomain)
                 .toList();
     }
 
-    private void hitStandPlayers(Players players, Deck deck) {
-        for (Player player : players.getPlayers()) {
-            hitStandPlayer(deck, player);
+    private void playerHitStand(BlackjackGame blackjackGame) {
+        while (blackjackGame.isPlayerHitAvailable()) {
+            hitPlayer(blackjackGame);
         }
     }
 
-    private void hitStandPlayer(Deck deck, Player player) {
-        while (!player.isFinished()) {
-            hitByDecision(deck, player);
+    private void hitPlayer(BlackjackGame blackjackGame) {
+        if (!blackjackGame.isCurrentPlayerFinished()) {
+            Player player = blackjackGame.currentHitPlayer();
+            blackjackGame.hitPlayer(inputView.readHitStand(player.getName().getValue()));
             resultView.printCards(PlayerDto.toDto(player));
-        }
-    }
-
-    private void hitByDecision(Deck deck, Player player) {
-        if (inputView.readHitStand(player.getName().getValue())) {
-            player.draw(deck.draw());
             return;
         }
-        player.stay();
+        blackjackGame.changeToNextPlayer();
     }
 
-    private void hitStandDealer(Dealer dealer, Deck deck) {
-        while (!dealer.isFinished()) {
-            hitDealerByCondition(deck, dealer);
-        }
-        resultView.printDealerHitStand(false);
-    }
-
-    private void hitDealerByCondition(Deck deck, Dealer dealer) {
-        if (dealer.isHittable()) {
-            dealer.draw(deck.draw());
-            resultView.printDealerHitStand(true);
-            return;
-        }
-        dealer.stay();
+    private void dealerHitStand(BlackjackGame blackjackGame) {
+        List<Boolean> hitHistory = blackjackGame.hitStandDealer();
+        resultView.printDealerHitStand(hitHistory);
     }
 }

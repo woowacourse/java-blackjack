@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.CommonExceptionMessage;
+import domain.card.Card;
 import java.util.List;
 
 public class Players {
@@ -38,7 +39,27 @@ public class Players {
         }
     }
 
+    public boolean canHit(int playerTurn) {
+        return playerTurn < players.size();
+    }
+
+    public void hit(int playerTurn, Card card) {
+        players.get(playerTurn).draw(card);
+    }
+
+    public void stay(int playerTurn) {
+        players.get(playerTurn).stay();
+    }
+
+    public boolean isFinished(int hitSequence) {
+        return players.get(hitSequence).isFinished();
+    }
+
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public Player getPlayer(int index) {
+        return players.get(index);
     }
 }

@@ -1,15 +1,15 @@
 package ui.view;
 
 
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.stream.Collectors;
 import ui.dto.CardDto;
+import ui.dto.GameResultDto;
 import ui.dto.ParticipantCardsDto;
-import ui.dto.ParticipantResultDto;
 import ui.dto.PlayerDto;
 import ui.dto.PlayerDtoWithProfit;
-import ui.dto.ProfitsDto;
 
 public class ResultView {
     public static final int DEALER_HIT_STAND_BOUNDARY = 16;
@@ -55,7 +55,13 @@ public class ResultView {
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    public void printDealerHitStand(boolean hit) {
+    public void printDealerHitStand(List<Boolean> hitHistory) {
+        for (boolean isHit : hitHistory) {
+            printDealerHitStand(isHit);
+        }
+    }
+
+    private void printDealerHitStand(boolean hit) {
         printEmptyLine();
         if (hit) {
             System.out.println("딜러는 " + DEALER_HIT_STAND_BOUNDARY + " 이하라 한장의 카드를 더 받았습니다.");
@@ -64,30 +70,35 @@ public class ResultView {
         System.out.println("딜러는 " + (DEALER_HIT_STAND_BOUNDARY + 1) + " 이상이라 카드를 받지 않았습니다.");
     }
 
-    public void printProfits(ProfitsDto dto) {
+    public void printGameResult(GameResultDto gameResultDto) {
+        printCardsWithResult(gameResultDto);
+        printProfits(gameResultDto.dealerProfit(), gameResultDto.players());
+    }
+
+    private void printProfits(BigDecimal dealerProfit, List<PlayerDtoWithProfit> players) {
         printEmptyLine();
         System.out.println("## 최종 승패");
-        System.out.println("딜러: " + dto.dealerProfit().setScale(0, RoundingMode.DOWN));
+        System.out.println("딜러: " + dealerProfit.setScale(0, RoundingMode.DOWN));
 
-        for (PlayerDtoWithProfit profit : dto.players()) {
+        for (PlayerDtoWithProfit profit : players) {
             System.out.println(profit.name() + ": " + profit.profit()
                     .setScale(0, RoundingMode.DOWN));
         }
     }
 
-    public void printCardsWithResult(ParticipantResultDto dto) {
+    private void printCardsWithResult(GameResultDto dto) {
         printEmptyLine();
         System.out.println(
                 "딜러카드: " + cardsToString(
                         dto.dealerCards()) + " - 결과: "
                         + dto.dealerScore());
 
-        for (PlayerDto player : dto.players()) {
+        for (PlayerDtoWithProfit player : dto.players()) {
             printCardWithResult(player);
         }
     }
 
-    private void printCardWithResult(PlayerDto player) {
+    private void printCardWithResult(PlayerDtoWithProfit player) {
         System.out.println(
                 player.name() + "카드: " + cardsToString(
                         player.cards()) + " - 결과: "
