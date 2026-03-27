@@ -3,7 +3,9 @@ package domain.participant;
 import domain.card.Card;
 
 public class Dealer extends Participant {
-    public Dealer(String name) {
+    public static int DEALER_HIT_STAND_BOUNDARY = 16;
+
+    public Dealer(Name name) {
         super(name);
     }
 
@@ -11,8 +13,8 @@ public class Dealer extends Participant {
         return cards.peek();
     }
 
-    public boolean decideHitStand(int boundary) {
-        return cards.getTotalSum() <= boundary;
+    public boolean decideHitStand() {
+        return cards.getTotalSum() <= DEALER_HIT_STAND_BOUNDARY;
     }
 
     @Override

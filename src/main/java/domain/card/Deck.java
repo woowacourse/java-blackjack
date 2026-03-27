@@ -2,9 +2,9 @@ package domain.card;
 
 import static domain.Constant.DELIMITER;
 
-import domain.ExceptionMessage;
 import domain.Rank;
 import domain.Suit;
+import exception.EmptyDeckException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,7 +36,7 @@ public class Deck {
 
     private void validateIsEmpty() {
         if (deck.isEmpty()) {
-            throw new IllegalArgumentException(ExceptionMessage.EMPTY_CARDS.getMessage());
+            throw new EmptyDeckException();
         }
     }
 

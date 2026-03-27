@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.ExceptionMessage;
+import exception.NameOutOfRangeException;
 
 public class Name {
     private final String name;
@@ -13,11 +13,8 @@ public class Name {
     }
 
     private void validate(String name) {
-        if (name.isBlank()) {
-            throw new IllegalArgumentException(ExceptionMessage.BLANK_NAME_NOT_ALLOWED.getMessage());
-        }
         if (name.length() < NAME_MIN_LENGTH || name.length() > NAME_MAX_LENGTH) {
-            throw new IllegalArgumentException(ExceptionMessage.NAME_OUT_OF_RANGE.getMessage());
+            throw new NameOutOfRangeException(NAME_MIN_LENGTH, NAME_MAX_LENGTH);
         }
     }
 

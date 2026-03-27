@@ -1,13 +1,12 @@
 package view;
 
-import static domain.BlackjackGame.DEALER_HIT_STAND_BOUNDARY;
 import static domain.BlackjackGame.INITIAL_CARD_COUNT;
 import static domain.Constant.DELIMITER;
+import static domain.participant.Dealer.DEALER_HIT_STAND_BOUNDARY;
 
-import domain.Result;
 import dto.DealerDto;
-import dto.ParticipantDto;
 import dto.PlayerDto;
+import dto.TotalProfitResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,9 +15,50 @@ public class ResultView {
         printEmptyLine();
         System.out.println(dealer.getName() + "와 " + joinPlayersNameByDelimiter(players) + "에게 " + INITIAL_CARD_COUNT
                 + "장을 나누었습니다.");
-        System.out.println("딜러카드: " + dealer.getFirstCard());
+        System.out.println("딜러: " + dealer.getFirstCard());
         printParticipantsCard(players);
         printEmptyLine();
+    }
+
+    public void printCards(PlayerDto player) {
+        String cardNames = player.getCards().stream()
+                        .collect(Collectors.joining(DELIMITER));
+        System.out.println(player.getName() + "카드: " + cardNames);
+    }
+
+    public void printBustMessage(String playerName) {
+        System.out.println(playerName + "는 버스트로 패배하였습니다.");
+    }
+
+    public void printDealerHitStand(boolean value) {
+        printEmptyLine();
+        if (value) {
+            System.out.println("딜러는 " + DEALER_HIT_STAND_BOUNDARY + "이하라 한장의 카드를 더 받았습니다.");
+            return;
+        }
+        System.out.println("딜러는 " + (DEALER_HIT_STAND_BOUNDARY + 1) + "이상이라 카드를 받지 않았습니다.");
+    }
+
+    public void printCardsWithResult(List<PlayerDto> players, DealerDto dealer) {
+        printEmptyLine();
+        printDealerCardWithResult(dealer);
+
+        for (PlayerDto player : players) {
+            printPlayerCardWithResult(player);
+        }
+    }
+
+    public void printFinalProfit(TotalProfitResponse response) {
+        printEmptyLine();
+        System.out.println("## 최종 수익");
+
+        response.dealerProfit().forEach((name, profit) -> {
+            System.out.println(name + ": " + profit);
+        });
+
+        response.playerProfits().forEach((name, profit) -> {
+            System.out.println(name + ": " + profit);
+        });
     }
 
     private String joinPlayersNameByDelimiter(List<PlayerDto> players) {
@@ -33,78 +73,14 @@ public class ResultView {
         }
     }
 
-    public void printCards(PlayerDto player) {
-        String cardNames = player.getCards().stream()
-                        .collect(Collectors.joining(DELIMITER));
-        System.out.println(player.getName() + "카드: " + cardNames);
+    private void printDealerCardWithResult(DealerDto dealer) {
+        String cardNames = String.join(DELIMITER, dealer.getCards());
+        System.out.printf("%s 카드: %s - 결과: %d%n", dealer.getName(), cardNames, dealer.getTotalSum());
     }
 
-
-    public void printDealerHitStand(boolean value) {
-        printEmptyLine();
-        if (value) {
-            System.out.println("딜러는 " + DEALER_HIT_STAND_BOUNDARY + "이하라 한장의 카드를 더 받았습니다.");
-            return;
-        }
-        System.out.println("딜러는 " + (DEALER_HIT_STAND_BOUNDARY + 1) + "이상이라 카드를 받지 않았습니다.");
-    }
-
-
-    public void printCardsWithResult(List<PlayerDto> players, DealerDto dealer) {
-        printEmptyLine();
-        printCardWithResult(dealer);
-
-        for (PlayerDto player : players) {
-            printCardWithResult(player);
-        }
-    }
-
-    private void printCardWithResult(ParticipantDto participant) {
-        String cardNames = participant.getCards().stream()
-                .collect(Collectors.joining(DELIMITER));
-        System.out.println(participant.getName() + "카드: " + cardNames + " - 결과: " + participant.getTotalSum());
-    }
-
-
-    public void printResultStatistics(List<PlayerDto> players, DealerDto dealer) {
-        StringBuilder sb = new StringBuilder();
-        sb.append('\n');
-        sb.append("## 최종 승패\n");
-
-        int playerWinCount = 0;
-        int playerDrawCount = 0;
-        int playerLoseCount = 0;
-
-        for (PlayerDto player : players) {
-            Result result = Result.judge(player.getTotalSum(), dealer.getTotalSum());
-            if (result == Result.WIN) {
-                playerWinCount += 1;
-            }
-            if (result == Result.DRAW) {
-                playerDrawCount += 1;
-            }
-            if (result == Result.LOSE) {
-                playerLoseCount += 1;
-            }
-        }
-
-        sb.append("딜러: " + playerLoseCount + "승 " + playerDrawCount + "무 " + playerWinCount + "패\n");
-
-        for (PlayerDto player : players) {
-            sb.append(player.getName() + ": ");
-            Result result = Result.judge(player.getTotalSum(), dealer.getTotalSum());
-
-            if (result == Result.WIN) {
-                sb.append("승\n");
-                continue;
-            }
-            if (result == Result.LOSE) {
-                sb.append("패\n");
-                continue;
-            }
-            sb.append("무\n");
-        }
-        System.out.println(sb);
+    private void printPlayerCardWithResult(PlayerDto player) {
+        String cardNames = String.join(DELIMITER, player.getCards());
+        System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), cardNames, player.getTotalSum());
     }
 
     private void printEmptyLine() {

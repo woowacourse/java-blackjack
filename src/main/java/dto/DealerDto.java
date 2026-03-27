@@ -10,7 +10,7 @@ public class DealerDto extends ParticipantDto{
 
     public static DealerDto from(Dealer dealer) {
         return new DealerDto(
-                dealer.getName().toString(),
+                dealer.getName(),
                 dealer.getCardNames(),
                 dealer.getTotalSum()
         );

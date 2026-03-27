@@ -1,7 +1,5 @@
 package domain.card;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
 import domain.Rank;
 import domain.Suit;
 import org.junit.jupiter.api.Assertions;
@@ -9,8 +7,12 @@ import org.junit.jupiter.api.Test;
 
 public class CardsTest {
     @Test
-    void 카드_더미가_정상적으로_생성되어야_한다() {
-        assertDoesNotThrow(() -> new Cards());
+    void 카드_더미를_생성하면_비어있어야_한다() {
+        //given & when
+        Cards cards = new Cards();
+
+        //then
+        Assertions.assertEquals(cards.size(), 0);
     }
 
     @Test
@@ -27,7 +29,7 @@ public class CardsTest {
     }
 
     @Test
-    void 카드_합계가_정상적으로_수행되어야_한다() {
+    void 에이스를_11로_계산해도_카드_합계가_21을_넘지_않으면_에이스를_11로_취급한다() {
         //given
         Card card1 = new Card(Suit.SPADE, Rank.ACE);
         Card card2 = new Card(Suit.SPADE, Rank.TEN);
@@ -42,7 +44,7 @@ public class CardsTest {
     }
 
     @Test
-    void 에이스가_여러개인_경우_카드_합계가_정상적으로_수행되어야_한다() {
+    void 에이스를_11로_계산했을_때_카드_합계가_21을_넘으면_에이스를_1로_취급한다() {
         //given
         Card card1 = new Card(Suit.SPADE, Rank.ACE);
         Card card2 = new Card(Suit.HEART, Rank.ACE);

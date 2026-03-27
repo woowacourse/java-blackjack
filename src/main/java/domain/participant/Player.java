@@ -1,12 +1,21 @@
 package domain.participant;
 
+import domain.Money;
+
 public class Player extends Participant {
-    public Player(String name) {
+    private Money money;
+
+    public Player(Name name, Money money) {
         super(name);
+        this.money = money;
     }
 
     @Override
     public String toString() {
         return cards.toString();
+    }
+
+    public int getMoneyValue() {
+        return money.getMoney();
     }
 }

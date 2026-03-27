@@ -3,22 +3,24 @@ package domain;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.participant.Dealer;
+import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Player;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackGame {
-    public static int DEALER_HIT_STAND_BOUNDARY = 16;
+    public static final int INITIAL_CARD_COUNT = 2;
     private final List<Player> players;
     private final Dealer dealer;
     private final Deck deck;
 
-    public static final int INITIAL_CARD_COUNT = 2;
 
     public BlackjackGame() {
         this.players = new ArrayList<>();
-        this.dealer = new Dealer("딜러");
+        this.dealer = new Dealer(new Name("딜러"));
         this.deck = new Deck();
     }
 
@@ -30,14 +32,14 @@ public class BlackjackGame {
         return dealer;
     }
 
-    public void registPlayers(List<String> names) {
-        for (String name : names) {
-            registPlayer(name);
-        }
-    }
+    public void registPlayers(List<String> names, List<Integer> betAmounts) {
+        for (int i = 0; i < names.size(); i++) {
+            String name = names.get(i);
+            int money = betAmounts.get(i);
 
-    private void registPlayer(String name) {
-        players.add(new Player(name));
+            players.add(new Player(new Name(name), new Money(money)));
+
+        }
     }
 
     public void giveHand() {
@@ -58,12 +60,32 @@ public class BlackjackGame {
         participant.add(card);
     }
 
-    // 고민) 이 메서드가 여기 있는게 맞나?
     public boolean dealerHitsStand() {
-        if (dealer.decideHitStand(DEALER_HIT_STAND_BOUNDARY)) {
+        if (dealer.decideHitStand()) {
             giveCard(dealer);
             return true;
         }
         return false;
+    }
+
+    public Map<String, Integer> calculatePlayerProfits() {
+        Map<String, Integer> playerProfits = new HashMap<>();
+
+        for (Player player : players) {
+            GameResult result = GameResult.judge(player, dealer);
+            int profit = result.calculateProfit(player.getMoneyValue());
+
+            playerProfits.put(player.getName(), profit);
+        }
+
+        return playerProfits;
+    }
+
+    public Map<String, Integer> calculateDealerProit(Map<String, Integer> playerProfits) {
+        int totalPlayerProfit = playerProfits.values().stream()
+                        .mapToInt(Integer::intValue)
+                                .sum();
+
+        return Map.of(dealer.getName(), totalPlayerProfit * -1);
     }
 }

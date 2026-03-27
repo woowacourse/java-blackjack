@@ -1,6 +1,6 @@
 package domain.card;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.Rank;
 import domain.Suit;
@@ -9,8 +9,23 @@ import org.junit.jupiter.api.Test;
 
 public class CardTest {
     @Test
-    void 카드가_정상적으로_생성되어야_한다() {
-        assertDoesNotThrow(() -> new Card(Suit.SPADE, Rank.ACE));
+    void 카드의_점수를_반환한다() {
+        Card ace = new Card(Suit.DIAMOND, Rank.ACE);
+        Card ten = new Card(Suit.DIAMOND, Rank.TEN);
+        Card four = new Card(Suit.DIAMOND, Rank.FOUR);
+
+        Assertions.assertEquals(ace.getRankValue(), 1);
+        Assertions.assertEquals(ten.getRankValue(), 10);
+        Assertions.assertEquals(four.getRankValue(), 4);
+    }
+
+    @Test
+    void 에이스_여부를_확인한다() {
+        Card ace = new Card(Suit.DIAMOND, Rank.ACE);
+        Card king = new Card(Suit.DIAMOND, Rank.K);
+
+        assertThat(ace.isAce());
+        assertThat(king.isAce());
     }
 
     @Test
@@ -28,18 +43,11 @@ public class CardTest {
     }
 
     @Test
-    void 카드가_에이스이면_0을_반환한다() {
+    void 문양과_숫자가_같으면_같은_카드로_간주한다() {
+        Card card1 = new Card(Suit.DIAMOND, Rank.ACE);
+        Card card2 = new Card(Suit.DIAMOND, Rank.ACE);
 
-        Card card = new Card(Suit.DIAMOND, Rank.ACE);
-
-        Assertions.assertEquals(card.getRankValueIfNotAce(), 0);
-    }
-
-    @Test
-    void 카드가_에이스가_아니면_값을_반환한다() {
-
-        Card card = new Card(Suit.DIAMOND, Rank.SEVEN);
-
-        Assertions.assertEquals(card.getRankValueIfNotAce(), 7);
+        Assertions.assertEquals(card1, card2);
+        Assertions.assertEquals(card1.hashCode(), card2.hashCode());
     }
 }
